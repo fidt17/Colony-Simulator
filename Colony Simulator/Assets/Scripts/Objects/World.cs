@@ -17,4 +17,10 @@ public class World
         WorldGenerator wg = new WorldGenerator();
         wg.GenerateEmptyWorld(dimensions, ref grid);
     }
+
+    public void GenerateTerrain() {
+
+        WorldGenerator wg = new WorldGenerator();
+        wg.GenerateTerrainWithPerlinNoise(dimensions, ref grid);
+    }
 }

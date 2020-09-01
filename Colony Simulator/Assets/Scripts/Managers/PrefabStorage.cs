@@ -18,6 +18,8 @@ public class PrefabStorage : MonoBehaviour
         Instance = this;
     }
     
-
+    [Header("Tile prefabs")]
     public GameObject protoTile;
+    public GameObject waterTile;
+    public GameObject sandTile, grassTile;
 }

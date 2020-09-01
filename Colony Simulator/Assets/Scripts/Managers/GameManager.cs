@@ -30,6 +30,6 @@ public class GameManager : MonoBehaviour
         Vector2Int dimensions = new Vector2Int(50, 50);
 
         world = new World(dimensions);
-        world.GenerateEmptyWorld();
+        world.GenerateTerrain();
     }
 }

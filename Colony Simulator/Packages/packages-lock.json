@@ -140,6 +140,13 @@
         "com.unity.modules.ui": "1.0.0"
       }
     },
+    "com.xeleh.enhancer": {
+      "version": "https://github.com/xeleh/enhancer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "78e062bf5467bb3a4caae6315aaf74352050d116"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
