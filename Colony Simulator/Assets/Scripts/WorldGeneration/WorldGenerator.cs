@@ -25,7 +25,7 @@ public class WorldGenerator
             for (int y = 0; y < dimensions.y; y++) {
 
                 GameObject newTile = GameObject.Instantiate(PrefabStorage.Instance.protoTile);
-                newTile.transform.position = new Vector3(x, y, 0);
+                newTile.transform.position = new Vector3(x, y, -10);
                 newTile.transform.parent = tileParent.transform;
                 newTile.name = "Tile (" + x + ";" + y + ")";
 

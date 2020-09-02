@@ -36,11 +36,20 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\CursorManager.cs" />
+     <Compile Include="Assets\Scripts\Abstract\Character.cs" />
      <Compile Include="Assets\Scripts\Abstract\StaticObject.cs" />
+     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Characters Controllers\MotionController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Characters Controllers\SelectableController.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\ISelectable.cs" />
+     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PrefabStorage.cs" />
+     <Compile Include="Assets\Scripts\Objects\Characters\Human.cs" />
      <Compile Include="Assets\Scripts\Objects\Tile.cs" />
      <Compile Include="Assets\Scripts\Objects\World.cs" />
+     <Compile Include="Assets\Scripts\WorldGeneration\CharacterGenerator.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\PerlinNoise.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\WorldGenerator.cs" />
     <Reference Include="UnityEngine">
@@ -637,6 +646,9 @@
     <Reference Include="Unity.2D.Animation.Editor">
         <HintPath>C:/Users/ppkmv/OneDrive/Документы/GitHub/Colony-Simulator/Colony Simulator/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Enhancer.Editor">
+        <HintPath>C:/Users/ppkmv/OneDrive/Документы/GitHub/Colony-Simulator/Colony Simulator/Library/ScriptAssemblies/Enhancer.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
         <HintPath>C:/Users/ppkmv/OneDrive/Документы/GitHub/Colony-Simulator/Colony Simulator/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
@@ -651,9 +663,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>C:/Users/ppkmv/OneDrive/Документы/GitHub/Colony-Simulator/Colony Simulator/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Enhancer.Editor">
-        <HintPath>C:/Users/ppkmv/OneDrive/Документы/GitHub/Colony-Simulator/Colony Simulator/Library/ScriptAssemblies/Enhancer.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

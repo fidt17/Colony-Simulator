@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -147,6 +148,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36decb7824dcd00409c286de57d99a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -157,7 +171,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.15566039, g: 0.17583859, b: 0.20754719, a: 0.9137255}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -174,7 +188,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -214,8 +228,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1134704349}
   - component: {fileID: 1134704350}
+  - component: {fileID: 1134704351}
+  - component: {fileID: 1134704352}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,6 +263,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e037c3cb7eda674fb86d6fbb250b686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1134704351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134704348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d20e26bee604a844bb4b68a20a6f5f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1134704352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134704348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f752ec53992716a49a65778ed32c81ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorTex: {fileID: 2800000, guid: 75d2502f3dec3674b8e11e6d8d517343, type: 3}
+  cursorSize: 30
 --- !u!1 &1926822495
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +331,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: AssetsManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8935346969214726222, guid: 55fb4fa6bf2c644499c8956381e0180e,
+        type: 3}
+      propertyPath: human
+      value: 
+      objectReference: {fileID: 5526020460281864154, guid: 6489bfb87908ef24886fc3cb50459d0a,
+        type: 3}
     - target: {fileID: 8935346969214726223, guid: 55fb4fa6bf2c644499c8956381e0180e,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -12,28 +12,28 @@ public enum TileType {
 
 public class Tile : StaticObject
 {
-    public TileType _type { get; protected set; }
+    public TileType type { get; protected set; }
 
-    public Tile(Vector2Int pos, GameObject gameObject)
+    public Tile(Vector2Int pos, GameObject go)
     {
-        _position = pos;
-        _dimensions = Vector2Int.one;
-        _isTraversable = true;
-        _type = TileType.empty;
-        _gameObject = gameObject;
+        position = pos;
+        dimensions = Vector2Int.one;
+        isTraversable = true;
+        type = TileType.empty;
+        this.gameObject = go;
 
     }
 
     public void SetTileType(TileType newType, bool traversable, SpriteRenderer newSR) {
 
-        _type = newType;
-        _isTraversable = traversable;
+        type = newType;
+        isTraversable = traversable;
         ChangeTileSprite(newSR);
     }
 
     public void ChangeTileSprite(SpriteRenderer newSR) {
 
-        _gameObject.GetComponent<SpriteRenderer>().sprite = newSR.sprite;
-        _gameObject.GetComponent<SpriteRenderer>().color = newSR.color;
+        gameObject.GetComponent<SpriteRenderer>().sprite = newSR.sprite;
+        gameObject.GetComponent<SpriteRenderer>().color = newSR.color;
     }
 }

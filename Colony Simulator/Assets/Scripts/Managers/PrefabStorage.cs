@@ -22,4 +22,7 @@ public class PrefabStorage : MonoBehaviour
     public GameObject protoTile;
     public GameObject waterTile;
     public GameObject sandTile, grassTile;
+
+    [Header("Humanlike")]
+    public GameObject human;
 }

@@ -23,13 +23,16 @@ public class GameManager : MonoBehaviour
     private void Start() {
 
         InitializeWorld();
+
+        Camera.main.GetComponent<CameraController>().Init();
     }
 
     private void InitializeWorld() {
 
-        Vector2Int dimensions = new Vector2Int(50, 50);
+        Vector2Int dimensions = new Vector2Int(100, 100);
 
         world = new World(dimensions);
         world.GenerateTerrain();
+        world.CharacterInit();
     }
 }
