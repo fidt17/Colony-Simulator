@@ -10,10 +10,6 @@ public class CameraController : MonoBehaviour {
 	private float defTSM = 0.5f;
 	private float cameraSpeed = 0.5f;
 	private float defCameraSpeed = 0.5f;
-	private float speedModificator = 20;
-
-	//Предыдущее положение курсора.
-	Vector3 prevMousePos = new Vector3(0f, 0f, 0f);
 
 	private void Start() {
 
@@ -25,7 +21,7 @@ public class CameraController : MonoBehaviour {
                                                     GameManager.Instance.world.dimensions.y / 2, -100);
     }
 
-	private void Update() {
+	private void LateUpdate() {
 
 		KeyboardListener();
 		MouseListener();
@@ -78,21 +74,28 @@ public class CameraController : MonoBehaviour {
 		}
 	}
 
+	private Vector3 dragOrigin;
+	private Vector3 dragDiff;
+	private bool isDragging = false;
+
     private void MouseListener() {
 
-        Vector3 curMousePos = Input.mousePosition;
-		
-		if(!Input.GetKey(KeyCode.Mouse2)) {
-			prevMousePos = curMousePos;
-			return;
+		Vector3 currMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+		if (Input.GetMouseButton (2)) {
+
+			dragDiff = currMousePos - Camera.main.transform.position;
+			if (!isDragging){
+
+				isDragging = true;
+				dragOrigin = currMousePos;
+			}
+		} else {
+			isDragging = false;
 		}
 
-        float horDist = prevMousePos.x - curMousePos.x;
-        float verDist = prevMousePos.y - curMousePos.y;
-
-        cameraVelocity = new Vector2(horDist, verDist) / speedModificator;
-		prevMousePos = curMousePos;
-        TSM = defTSM;
+		if (isDragging)
+			Camera.main.transform.position = dragOrigin-dragDiff;
     }
 
     private void KeyboardListener() {

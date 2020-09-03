@@ -36,22 +36,44 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\CursorManager.cs" />
      <Compile Include="Assets\Scripts\Abstract\Character.cs" />
      <Compile Include="Assets\Scripts\Abstract\StaticObject.cs" />
      <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Characters Controllers\CharacterAnimationController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Characters Controllers\HumanAnimationController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Characters Controllers\MotionController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Characters Controllers\SelectableController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\SelectionController.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\CursorManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PrefabStorage.cs" />
+     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
      <Compile Include="Assets\Scripts\Objects\Characters\Human.cs" />
      <Compile Include="Assets\Scripts\Objects\Tile.cs" />
      <Compile Include="Assets\Scripts\Objects\World.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\CharacterGenerator.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\PerlinNoise.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\WorldGenerator.cs" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

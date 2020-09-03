@@ -7,6 +7,7 @@ public abstract class Character : ISelectable
     public GameObject gameObject;
     public MotionController motionController;
     public SelectableController selectableController;
+    public CharacterAnimationController animationController;
 
     public Character(GameObject go) {
 
@@ -35,4 +36,6 @@ public abstract class Character : ISelectable
 
         selectableController.Deselect();
     }
+
+    protected abstract void SetAnimationController();
 }

@@ -30,7 +30,13 @@ public class MotionController : MonoBehaviour
 
     public void SetDestination(Tile destTile) {
 
+        ResetPath();
         destinationTile = destTile;
+    }
+
+    public void ResetPath() {
+
+        destinationTile = null;
     }
 
     private void MoveTowardsDestination() {
@@ -45,6 +51,8 @@ public class MotionController : MonoBehaviour
         if (dest.sqrMagnitude <= Mathf.Pow(dSpeed, 2)) {
             SetPosition(destinationTile.position);
             destinationTile = null;
+
+            entity.animationController.SetVelocity(new Vector2(0, 0));
             return;   
         }
 
@@ -52,5 +60,7 @@ public class MotionController : MonoBehaviour
         
         gameObject.transform.Translate(dest * dSpeed);
         position = gameObject.transform.position;
+
+        entity.animationController.SetVelocity(dest);
     }
 }

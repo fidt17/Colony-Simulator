@@ -70,8 +70,8 @@ public class WorldGenerator
         float sand = sea + (maxP - sea) * 0.2f;
 
         SpriteRenderer waterSR = PrefabStorage.Instance.waterTile.GetComponent<SpriteRenderer>();
-        SpriteRenderer sandSR = PrefabStorage.Instance.sandTile.GetComponent<SpriteRenderer>();
-        SpriteRenderer grassSR = PrefabStorage.Instance.grassTile.GetComponent<SpriteRenderer>();
+        SpriteRenderer greenBrickSR = PrefabStorage.Instance.greenBrickTile.GetComponent<SpriteRenderer>();
+        SpriteRenderer redBrickSR = PrefabStorage.Instance.redBrickTile.GetComponent<SpriteRenderer>();
 
         for (int x = 0; x < dimensions.x; x++) {
             for(int y = 0; y < dimensions.y; y++) {
@@ -85,10 +85,10 @@ public class WorldGenerator
                     tile.SetTileType(TileType.water, false, waterSR);
 				} else if(height < sand) {
                     
-                    tile.SetTileType(TileType.water, true, sandSR);
+                    tile.SetTileType(TileType.water, true, greenBrickSR);
 				} else {
 
-                    tile.SetTileType(TileType.water, true, grassSR);
+                    tile.SetTileType(TileType.water, true, redBrickSR);
 				}
 			}
 		}

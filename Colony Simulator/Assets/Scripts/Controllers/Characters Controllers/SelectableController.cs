@@ -10,15 +10,6 @@ public class SelectableController : MonoBehaviour
 
     public bool isSelected { get; private set; }
 
-    private void OnMouseUp() {
-        
-        if (isSelected) {
-            Deselect();
-        } else {
-            Select();
-        }
-    }
-
     public void Select() {
 
         isSelected = true;
