@@ -9,6 +9,7 @@ public abstract class StaticObject
     public GameObject gameObject { get; protected set; }
 
     public bool isTraversable { get; protected set; }
+    
     public void DestroyGO() {
 
         GameObject.Destroy(gameObject);

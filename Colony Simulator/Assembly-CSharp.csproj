@@ -53,6 +53,11 @@
      <Compile Include="Assets\Scripts\Objects\Characters\Human.cs" />
      <Compile Include="Assets\Scripts\Objects\Tile.cs" />
      <Compile Include="Assets\Scripts\Objects\World.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\PathGrid.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\Pathfinder.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\PathfinderRegionSystem.cs" />
+     <Compile Include="Assets\Scripts\TestScript.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\CharacterGenerator.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\PerlinNoise.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\WorldGenerator.cs" />

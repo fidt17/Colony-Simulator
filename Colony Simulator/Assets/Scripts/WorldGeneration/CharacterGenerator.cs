@@ -11,13 +11,6 @@ public class CharacterGenerator
 
         newHuman.motionController.SetPosition(position);
 
-        //delete me
-
-        Tile t = GameManager.Instance.world.GetTileAt(new Vector2Int(40, 40));
-
-        newHuman.motionController.SetDestination(t);
-        //
-
         return newHuman;
     }
 }

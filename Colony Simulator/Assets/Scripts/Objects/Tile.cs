@@ -24,6 +24,12 @@ public class Tile : StaticObject
 
     }
 
+    //DELETE ME
+    public void TestFunc(bool b) {
+
+        isTraversable = b;
+    }
+
     public void SetTileType(TileType newType, bool traversable, SpriteRenderer newSR) {
 
         type = newType;

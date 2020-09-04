@@ -23,13 +23,9 @@ public class CharacterManager : MonoBehaviour
         _CG = new CharacterGenerator();
     }
 
-    private void Update() {
-
-    }
-
     public void CreateInitialCharacters() {
 
-        Human human = _CG.CreateHuman(new Vector2Int(10, 10));
+        Human human = _CG.CreateHuman(new Vector2Int(45, 35));
         colonists.Add(human);        
     }
 }

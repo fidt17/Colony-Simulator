@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public World world { get; private set; }
+    public Pathfinder pathfinder { get; private set; }
 
     private void Awake() {
 
@@ -33,6 +34,19 @@ public class GameManager : MonoBehaviour
 
         world = new World(dimensions);
         world.GenerateTerrain();
+        InitializePathfinder();
         world.CharacterInit();
+    }
+
+    private void InitializePathfinder() {
+
+        if (world == null) {
+            
+            Debug.LogError("Cannot create Pathfinder because the world is not yet created.");
+            return;
+        }
+
+        pathfinder = new Pathfinder(world.dimensions);
+        pathfinder.CreateRegionSystem();
     }
 }
