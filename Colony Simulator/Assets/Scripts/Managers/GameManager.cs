@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     
     //TODO
     //Create startup settings system
-    private Vector2Int _dimensions = new Vector2Int(100, 100);
+    private Vector2Int _dimensions = new Vector2Int(50, 50);
 
 
     private void Awake() {

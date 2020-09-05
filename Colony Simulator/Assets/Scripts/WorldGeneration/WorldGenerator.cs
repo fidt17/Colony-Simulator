@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldGenerator
 {   
-    public int perlinSeed = 10;
+    public int perlinSeed = 11;
     private GameObject tileParent;
 
     public WorldGenerator() {

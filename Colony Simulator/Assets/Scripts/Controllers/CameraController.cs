@@ -11,6 +11,10 @@ public class CameraController : MonoBehaviour {
 	private float cameraSpeed = 0.5f;
 	private float defCameraSpeed = 0.5f;
 
+	private float minZoom = 5;
+	private float maxZoom = 18;
+	private int maxOffset = 5;
+
 	private void Start() {
 
 		mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -19,6 +23,8 @@ public class CameraController : MonoBehaviour {
     public void Init() {
         mainCamera.transform.position = new Vector3(GameManager.Instance.world.dimensions.x / 2,
                                                     GameManager.Instance.world.dimensions.y / 2, -100);
+
+		mainCamera.orthographicSize = maxZoom;
     }
 
 	private void LateUpdate() {
@@ -34,10 +40,10 @@ public class CameraController : MonoBehaviour {
 
 	private void Scale() {
 		
-		if(Input.GetAxis("Mouse ScrollWheel") > 0 && mainCamera.orthographicSize > 5f) {
+		if(Input.GetAxis("Mouse ScrollWheel") > 0 && mainCamera.orthographicSize > minZoom) {
 
 			mainCamera.orthographicSize -= 1f;
-		} else if(Input.GetAxis("Mouse ScrollWheel") < 0 && mainCamera.orthographicSize < 30f) {
+		} else if(Input.GetAxis("Mouse ScrollWheel") < 0 && mainCamera.orthographicSize < maxZoom) {
 
 			mainCamera.orthographicSize += 1f;
 		}
@@ -50,16 +56,16 @@ public class CameraController : MonoBehaviour {
 		Vector3 rightUp = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
 		Vector3 newPos = gameObject.transform.position;
 
-        if (leftDown.x + cameraVelocity.x < -5 && cameraVelocity.x < 0)
+        if (leftDown.x + cameraVelocity.x < -maxOffset && cameraVelocity.x < 0)
             cameraVelocity.x = 0;
 
-        if (rightUp.x + cameraVelocity.x > GameManager.Instance.world.dimensions.x + 5 && cameraVelocity.x > 0)
+        if (rightUp.x + cameraVelocity.x > GameManager.Instance.world.dimensions.x + maxOffset && cameraVelocity.x > 0)
             cameraVelocity.x = 0;
 
-        if (leftDown.y + cameraVelocity.y < -5 && cameraVelocity.y < 0)
+        if (leftDown.y + cameraVelocity.y < -maxOffset && cameraVelocity.y < 0)
             cameraVelocity.y = 0;
 
-        if (rightUp.y + cameraVelocity.y > GameManager.Instance.world.dimensions.y + 5 && cameraVelocity.y > 0)
+        if (rightUp.y + cameraVelocity.y > GameManager.Instance.world.dimensions.y + maxOffset && cameraVelocity.y > 0)
             cameraVelocity.y = 0;
 	}
 
@@ -94,8 +100,10 @@ public class CameraController : MonoBehaviour {
 			isDragging = false;
 		}
 
-		if (isDragging)
-			Camera.main.transform.position = dragOrigin-dragDiff;
+		if (isDragging) {
+			cameraVelocity = (Vector2) ( (dragOrigin - dragDiff) - Camera.main.transform.position);
+			TSM = defTSM;
+		}
     }
 
     private void KeyboardListener() {
