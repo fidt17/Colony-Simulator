@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour
 
     public World world { get; private set; }
     public Pathfinder pathfinder { get; private set; }
+    public CharacterManager characterManager { get; private set; }
+    
+    //TODO
+    //Create startup settings system
+    private Vector2Int _dimensions = new Vector2Int(100, 100);
+
 
     private void Awake() {
 
@@ -23,22 +29,30 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
 
-        InitializeWorld();
+        Initialize();
+    }
 
+    #region Initialization
+
+    private void Initialize() {
+
+
+        CreateWorld();
+        CreatePathfinder();
+        CreateCharacters();
         Camera.main.GetComponent<CameraController>().Init();
     }
 
-    private void InitializeWorld() {
+    private void CreateWorld() {
 
-        Vector2Int dimensions = new Vector2Int(100, 100);
 
-        world = new World(dimensions);
-        world.GenerateTerrain();
-        InitializePathfinder();
-        world.CharacterInit();
+        world = new World(_dimensions);
+
+        WorldGenerator wg = new WorldGenerator();
+        wg.GenerateTerrainWithPerlinNoise(_dimensions, ref world.grid);
     }
 
-    private void InitializePathfinder() {
+    private void CreatePathfinder() {
 
         if (world == null) {
             
@@ -49,4 +63,12 @@ public class GameManager : MonoBehaviour
         pathfinder = new Pathfinder(world.dimensions);
         pathfinder.CreateRegionSystem();
     }
+
+    private void CreateCharacters() {
+
+        characterManager = new CharacterManager();
+        characterManager.CreateInitialCharacters();
+    }
+
+    #endregion
 }

@@ -9,7 +9,9 @@ public class CharacterGenerator
         GameObject humanGO = GameObject.Instantiate(PrefabStorage.Instance.human);
         Human newHuman = new Human(humanGO);
 
-        newHuman.motionController.SetPosition(position);
+        Tile startTile = GameManager.Instance.world.GetTileAt(position);
+
+        newHuman.SetPosition(startTile);
 
         return newHuman;
     }

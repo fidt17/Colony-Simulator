@@ -4,26 +4,13 @@ using UnityEngine;
 
 public class SelectionController : MonoBehaviour
 {
-    public static SelectionController Instance;
+    List<SelectableComponent> selected = new List<SelectableComponent>();
 
-    List<SelectableController> selected = new List<SelectableController>();
-
-    private void Awake() {
-
-        if (Instance != null) {
-
-            Debug.LogError("Only one SelectionController can exist at a time!");
-            Destroy(gameObject);
-        }
-
-        Instance = this;
-    }
-
-    private Vector3 currMousePosition;
+    private Vector2 currMousePosition;
 
     private void LateUpdate() {
 
-        currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        currMousePosition = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         CheckRightClick();
         CheckLeftClick();
@@ -36,16 +23,17 @@ public class SelectionController : MonoBehaviour
 
             DeselectEverything();
 
-            Vector2 mousePos2D = new Vector2(currMousePosition.x, currMousePosition.y);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(currMousePosition, Vector2.zero);
 
             if (hit.collider != null) {
                 
-                SelectableController selectable = hit.collider.gameObject.GetComponent<SelectableController>();
+                SelectableComponent selectable = hit.collider.gameObject.GetComponent<SelectableComponent>();
 
                 if (selectable != null) {
 
-                    selectable?.Select();
+                    //TODO verify that all selected objects are of one type
+
+                    selectable.Select();
                     selected.Add(selectable);
                 }
             }
@@ -59,28 +47,35 @@ public class SelectionController : MonoBehaviour
             //TODO
             //Add check on what types of objects are selected
 
-            foreach (SelectableController sc in selected) {
+            foreach (SelectableComponent sc in selected) {
 
                 Human h = (Human) sc.entity;
 
-                Vector2Int tileCoords = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
+                Vector2Int tileCoords = CursorToTileCoordinates();
                 Tile t = GameManager.Instance.world.GetTileAt(tileCoords);
 
-                h.motionController.SetDestination(t);
+                h.SetDestination(t);
             }
         }
     }
 
     private void DeselectEverything() {
 
-        foreach (SelectableController s in selected) {
+        foreach (SelectableComponent s in selected)
             s.Deselect();
-        }
     }
+
+    #region UI
 
     private void UpdateTileCoordsTMP() {
 
-        Vector2Int tileCoords = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
+        Vector2Int tileCoords = CursorToTileCoordinates();
         UIManager.Instance.SetTileCoords(tileCoords);
+    }
+
+    #endregion
+
+    private Vector2Int CursorToTileCoordinates() {
+        return new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
     }
 }

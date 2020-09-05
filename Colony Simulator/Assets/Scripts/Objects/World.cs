@@ -4,28 +4,11 @@ using UnityEngine;
 
 public class World
 {
-    private Tile[,] grid;
-    public Vector2Int dimensions { get; private set; }
+    public Tile[,] grid;
+    public Vector2Int dimensions;
+
     public World(Vector2Int mapDimensions) {
-
         dimensions = mapDimensions;
-    }
-
-    public void GenerateEmptyWorld() {
-
-        WorldGenerator wg = new WorldGenerator();
-        wg.GenerateEmptyWorld(dimensions, ref grid);
-    }
-
-    public void GenerateTerrain() {
-
-        WorldGenerator wg = new WorldGenerator();
-        wg.GenerateTerrainWithPerlinNoise(dimensions, ref grid);
-    }
-
-    public void CharacterInit() {
-
-        CharacterManager.Instance.CreateInitialCharacters();
     }
 
     public Tile GetTileAt(Vector2Int position) {

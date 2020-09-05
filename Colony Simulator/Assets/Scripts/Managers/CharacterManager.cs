@@ -2,24 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour
+public class CharacterManager
 {
-    public static CharacterManager Instance;
-
     private CharacterGenerator _CG;
 
     List<Human> colonists = new List<Human>();
 
-    private void Awake() {
-
-        if (Instance != null) {
-
-            Debug.LogError("Only one CharacterManager can exist!");
-            Destroy(gameObject);
-        }
-
-        Instance = this;
-
+    public CharacterManager() {
+        
         _CG = new CharacterGenerator();
     }
 

@@ -109,7 +109,7 @@ public class WorldGenerator
         for (int x = 0; x < grid.GetLength(0); x++) {
             for (int y = 0; y < grid.GetLength(1); y++) {
 
-                grid[x,y].DestroyGO();
+                grid[x,y].DestroyGameObject();
             }
         }
     }
