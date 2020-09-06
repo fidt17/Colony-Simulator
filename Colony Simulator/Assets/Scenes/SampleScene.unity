@@ -604,6 +604,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e037c3cb7eda674fb86d6fbb250b686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1262698560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8935346969214726217, guid: 55fb4fa6bf2c644499c8956381e0180e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8935346970156199338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1262698561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262698560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b7f1f480bf2843948f7edf0602882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sand_central: {fileID: -4743005804774045339, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_border_N: {fileID: -89533908723591481, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_border_E: {fileID: 6900206889160500208, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_border_S: {fileID: -1141799023321265235, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_border_W: {fileID: 2758772168323404995, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  grass_border_corner: {fileID: 7445496974405382553, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  grass_border_Lcorner: {fileID: 5717776428800766030, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  grass_border_side: {fileID: 7666434569925838446, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  grass_border_pi: {fileID: -793943671134504141, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  grass_border_tunnel: {fileID: 8311634869345633331, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  grass_border_all: {fileID: -5377247009674673478, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
 --- !u!1 &1444618013
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +859,24 @@ PrefabInstance:
       propertyPath: redBrickTile
       value: 
       objectReference: {fileID: 648464067653732436, guid: 783799b4cc8da57458b817ef5311ffb2,
+        type: 3}
+    - target: {fileID: 8935346969214726222, guid: 55fb4fa6bf2c644499c8956381e0180e,
+        type: 3}
+      propertyPath: protoTile
+      value: 
+      objectReference: {fileID: 7857810238489946679, guid: c514aa5896b963743a22546f11bf2402,
+        type: 3}
+    - target: {fileID: 8935346969214726222, guid: 55fb4fa6bf2c644499c8956381e0180e,
+        type: 3}
+      propertyPath: sandTile
+      value: 
+      objectReference: {fileID: 5805897410039987249, guid: e8024b6d1ef688745b59f5d7979e3a1f,
+        type: 3}
+    - target: {fileID: 8935346969214726222, guid: 55fb4fa6bf2c644499c8956381e0180e,
+        type: 3}
+      propertyPath: grassTile
+      value: 
+      objectReference: {fileID: 5805897410039987249, guid: b01775b16fd77034ca484339cca135af,
         type: 3}
     - target: {fileID: 8935346969214726223, guid: 55fb4fa6bf2c644499c8956381e0180e,
         type: 3}

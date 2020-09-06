@@ -14,6 +14,9 @@ public class Tile : StaticObject
 {
     public TileType type { get; protected set; }
 
+    private SpriteRenderer mainSprite, northBorder, eastBorder, southBorder, westBorder;
+    private TileType[,] borderMatrix = new TileType[3,3];
+
     public Tile(Vector2Int pos, GameObject go)
     {
         position = pos;
@@ -22,6 +25,7 @@ public class Tile : StaticObject
         type = TileType.empty;
         this.gameObject = go;
 
+        mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
     }
 
     //DELETE ME
@@ -29,6 +33,7 @@ public class Tile : StaticObject
 
         isTraversable = b;
     }
+    //
 
     public void SetTileType(TileType newType, bool traversable, SpriteRenderer newSR) {
 
@@ -39,7 +44,7 @@ public class Tile : StaticObject
 
     public void ChangeTileSprite(SpriteRenderer newSR) {
 
-        gameObject.GetComponent<SpriteRenderer>().sprite = newSR.sprite;
-        gameObject.GetComponent<SpriteRenderer>().color = newSR.color;
+        mainSprite.sprite = newSR.sprite;
+        mainSprite.color = newSR.color;
     }
 }

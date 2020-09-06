@@ -20,13 +20,7 @@ public abstract class Character : ISelectable
 
         selectableComponent = gameObject.AddComponent<SelectableComponent>();
         selectableComponent.entity = this;
-
-        foreach(Transform child in gameObject.transform) {
-            if (child.name == "SelectionRim") {
-                selectableComponent.selectionRim = child.gameObject;
-                return;
-            }
-        }
+        selectableComponent.selectionRim = gameObject.transform.Find("SelectionRim").gameObject;
 
         if (selectableComponent.selectionRim == null)
             Debug.LogError("No SelectionRim was found on this gameObject:", gameObject);
