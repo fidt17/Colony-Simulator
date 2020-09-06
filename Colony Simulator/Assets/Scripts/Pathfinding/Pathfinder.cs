@@ -7,6 +7,10 @@ public class Pathfinder
     public PathGrid grid;
     public PathfinderRegionSystem regionSystem;
     private Vector2Int dimensions;
+
+    public delegate void OnPathFound(List<PathNode> closedSet);
+    public event OnPathFound PathHandler;
+
     public Pathfinder(Vector2Int dimensions) {
 
         this.dimensions = dimensions;
@@ -31,7 +35,6 @@ public class Pathfinder
 
         List<PathNode> openSet   = new List<PathNode>();
         List<PathNode> closedSet = new List<PathNode>();
-        List<PathNode> path      = new List<PathNode>();
 
         openSet.Add(startNode);
 
@@ -50,12 +53,9 @@ public class Pathfinder
             closedSet.Add(currentNode);
 
             if (currentNode == targetNode) {
-                path = RetracePath(startNode, targetNode);
+                List<PathNode> path = RetracePath(startNode, targetNode);
                 
-                ////
-                //DrawPath(path);
-                ////
-
+                PathHandler?.Invoke(closedSet);
                 return path;
             }
 
@@ -63,7 +63,6 @@ public class Pathfinder
 
                 if(closedSet.Contains(neighbour) || !neighbour.isTraversable)
                     continue;
-
 
                 int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
 
@@ -97,17 +96,6 @@ public class Pathfinder
         path.Reverse();
 
         return path;
-    }
-
-    private void DrawPath(List<PathNode> path) {
-
-        foreach (PathNode node in path) {
-
-            Tile t = GameManager.Instance.world.GetTileAt(node.position);
-            SpriteRenderer sr = t.gameObject.GetComponent<SpriteRenderer>();
-            float r = Random.Range(0f, 1f);
-            sr.color = new Color(r, r, r);
-        }
     }
 
     private List<PathNode> GetNeighbours(PathNode node) {

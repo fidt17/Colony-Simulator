@@ -14,7 +14,6 @@ public class SelectionController : MonoBehaviour
 
         CheckRightClick();
         CheckLeftClick();
-        UpdateTileCoordsTMP();
     }
 
     private void CheckLeftClick() {
@@ -64,16 +63,6 @@ public class SelectionController : MonoBehaviour
         foreach (SelectableComponent s in selected)
             s.Deselect();
     }
-
-    #region UI
-
-    private void UpdateTileCoordsTMP() {
-
-        Vector2Int tileCoords = CursorToTileCoordinates();
-        UIManager.Instance.SetTileCoords(tileCoords);
-    }
-
-    #endregion
 
     private Vector2Int CursorToTileCoordinates() {
         return new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );

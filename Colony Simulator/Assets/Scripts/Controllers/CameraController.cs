@@ -9,7 +9,6 @@ public class CameraController : MonoBehaviour {
 	private float TSM = 0f;//time for smooth movement
 	private float defTSM = 0.5f;
 	private float cameraSpeed = 0.5f;
-	private float defCameraSpeed = 0.5f;
 
 	private float minZoom = 5;
 	private float maxZoom = 18;
@@ -25,11 +24,12 @@ public class CameraController : MonoBehaviour {
                                                     GameManager.Instance.world.dimensions.y / 2, -100);
 
 		mainCamera.orthographicSize = maxZoom;
+
+		SubscribeToInput();
     }
 
 	private void LateUpdate() {
 
-		KeyboardListener();
 		MouseListener();
 		SmoothMovement();
 		Scale();
@@ -106,27 +106,52 @@ public class CameraController : MonoBehaviour {
 		}
     }
 
-    private void KeyboardListener() {
+	private void MoveUp() {
 
-        if(Input.GetKey(KeyCode.LeftShift))
-			cameraSpeed *= 1.5f;
+		cameraVelocity.y = cameraSpeed;
+        TSM = defTSM;
+	}
 
-        if (Input.GetKey(KeyCode.W)) {
-            cameraVelocity.y = cameraSpeed;
-            TSM = defTSM;
-        } else if (Input.GetKey(KeyCode.S)) {
-            cameraVelocity.y = -cameraSpeed;
-            TSM = defTSM;
-        }
+	private void MoveDown() {
 
-        if (Input.GetKey(KeyCode.A)) {
-            cameraVelocity.x = -cameraSpeed;
-            TSM = defTSM;
-        } else if (Input.GetKey(KeyCode.D)) {
-            cameraVelocity.x = cameraSpeed;
-            TSM = defTSM;
-        }
+		cameraVelocity.y = -cameraSpeed;
+        TSM = defTSM;
+	}
 
-        cameraSpeed = defCameraSpeed;
-    }
+	private void MoveLeft() {
+
+		cameraVelocity.x = -cameraSpeed;
+        TSM = defTSM;
+	}
+
+	private void MoveRight() {
+
+		cameraVelocity.x = cameraSpeed;
+        TSM = defTSM;
+	}
+
+	private void OnDestroy() {
+
+		UnsubscribeFromInput();
+	}
+
+	private void SubscribeToInput() {
+
+		InputController input = InputController.Instance;
+
+		input.OnW_Pressed += MoveUp;
+		input.OnA_Pressed += MoveLeft;
+		input.OnS_Pressed += MoveDown;
+		input.OnD_Pressed += MoveRight;
+	}
+
+	private void UnsubscribeFromInput() {
+
+		InputController input = InputController.Instance;
+
+		input.OnW_Pressed -= MoveUp;
+		input.OnA_Pressed -= MoveLeft;
+		input.OnS_Pressed -= MoveDown;
+		input.OnD_Pressed -= MoveRight;
+	}
 }

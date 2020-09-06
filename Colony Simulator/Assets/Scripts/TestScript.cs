@@ -8,9 +8,6 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
             BuildWall();
-
-        if (Input.GetKeyDown(KeyCode.R))
-            StartCoroutine(GameManager.Instance.pathfinder.regionSystem.DrawRegions());
     }
 
     private void BuildWall() {

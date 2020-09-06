@@ -14,7 +14,9 @@ public class Tile : StaticObject
 {
     public TileType type { get; protected set; }
 
-    private SpriteRenderer mainSprite, northBorder, eastBorder, southBorder, westBorder;
+    public SpriteRenderer mainSprite { get; private set; }
+    public Color defaultSpriteColor;
+
     private TileType[,] borderMatrix = new TileType[3,3];
 
     public Tile(Vector2Int pos, GameObject go)
@@ -26,6 +28,7 @@ public class Tile : StaticObject
         this.gameObject = go;
 
         mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        defaultSpriteColor = mainSprite.color;
     }
 
     //DELETE ME
@@ -46,5 +49,6 @@ public class Tile : StaticObject
 
         mainSprite.sprite = newSR.sprite;
         mainSprite.color = newSR.color;
+        defaultSpriteColor = mainSprite.color;
     }
 }

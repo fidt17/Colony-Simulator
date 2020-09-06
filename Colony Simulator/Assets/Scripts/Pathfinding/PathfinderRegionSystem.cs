@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class PathfinderRegionSystem
 {   
-    private List<Region> _regions;
-    private List<Subregion> _subregions = new List<Subregion>();
-
-    private const int subregionSize = 10;
+    public List<Region> regions { get; private set; }
 
     private Vector2Int dimensions;
     public PathfinderRegionSystem(Vector2Int dimensions) {
@@ -24,13 +21,13 @@ public class PathfinderRegionSystem
 
     private void ResetRegions() {
 
-        foreach (Region r in _regions)
+        foreach (Region r in regions)
             r.ResetRegion();
     }
 
     private void CreateRegions() {
 
-        _regions = new List<Region>();
+        regions = new List<Region>();
 
         for (int x = 0; x < dimensions.x; x++) {
             for (int y = 0; y < dimensions.y; y++) {
@@ -40,50 +37,11 @@ public class PathfinderRegionSystem
                 if (node.region == null && node.isTraversable) {
 
                     Region newRegion = CreateRegionAt(node);
-                    _regions.Add(newRegion);
+                    regions.Add(newRegion);
                 }
             }
         }
     }
-
-    #region Debug Functions
-
-    private bool drawingRegions = false;
-    public IEnumerator DrawRegions() {
-
-        if (drawingRegions)
-            yield break;
-
-        drawingRegions = true;
-
-        foreach (Region r in _regions) {
-            
-            Color regionColor = new Color(Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, 1f);
-
-            foreach (PathNode node in r.nodes) {
-
-                Tile t = GameManager.Instance.world.GetTileAt(node.position);
-                t.gameObject.GetComponent<SpriteRenderer>().color = regionColor;
-            }
-        }
-
-        yield return new WaitForSeconds(2f);
-
-        foreach (Region r in _regions) {
-            
-            Color regionColor = Color.white;
-
-            foreach (PathNode node in r.nodes) {
-
-                Tile t = GameManager.Instance.world.GetTileAt(node.position);
-                t.gameObject.GetComponent<SpriteRenderer>().color = regionColor;
-            }
-        }
-
-        drawingRegions = false;
-    }
-
-    #endregion
 
     #region Wave generation of regions
 
@@ -176,24 +134,11 @@ public class PathfinderRegionSystem
 
 public class Region {
 
-    private List<Subregion> _subregions = new List<Subregion>();
     public List<PathNode> nodes = new List<PathNode>();
-
-    public List<Subregion> GetSubregions() {
-
-        return _subregions;
-    }
 
     public void ResetRegion() {
 
         foreach (PathNode n in nodes)
             n.region = null;
     }
-}
-
-public class Subregion {
-
-    public Region region;
-
-    public List<PathNode> nodes = new List<PathNode>();
 }
