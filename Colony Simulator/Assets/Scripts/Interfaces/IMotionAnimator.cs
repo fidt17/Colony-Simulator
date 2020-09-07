@@ -2,5 +2,6 @@
 
 public interface IMotionAnimator
 {
-    void InitMotionAnimator();
+    MotionAnimatorComponent motionAnimator { get; }
+    void InitializeMotionAnimator();
 }

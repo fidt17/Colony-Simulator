@@ -2,17 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterGenerator
+public static class CharacterGenerator
 {
-    public Human CreateHuman(Vector2Int position) {
+    public static Human CreateHuman(Vector2Int position) {
 
-        GameObject humanGO = GameObject.Instantiate(PrefabStorage.Instance.human);
-        Human newHuman = new Human(humanGO);
+        var character = CharacterSpawnFactory.GetNewCharacter("human") as Human;
 
-        Tile startTile = GameManager.Instance.world.GetTileAt(position);
+        if (character == null) {
 
-        newHuman.SetPosition(startTile);
+            Debug.LogError("Was not able to create new character.");
+            return null;
+        }
 
-        return newHuman;
+        character.motionComponent.SetPosition(position);
+
+        return character;
+    }
+
+    public static Rabbit CreateRabbit(Vector2Int position) {
+        
+        var character = CharacterSpawnFactory.GetNewCharacter("rabbit") as Rabbit;
+
+        if (character == null) {
+
+            Debug.LogError("Was not able to create new character.");
+            return null;
+        }
+
+        character.motionComponent.SetPosition(position);
+
+        return character;
     }
 }

@@ -1,4 +1,5 @@
 ﻿public interface IMovable
-{
-    void InitMotionComponent();
+{   
+    MotionComponent motionComponent { get; }
+    void InitializeMotionComponent();
 }

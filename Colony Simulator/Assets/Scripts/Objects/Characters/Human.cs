@@ -6,43 +6,44 @@ public class Human : Character, IMovable, IMotionAnimator
 {   
     #region Components
 
-    protected MotionComponent motionComponent;
-    protected MotionAnimatorComponent motionAnimator;
+    public MotionComponent motionComponent { get; protected set; }
+    public MotionAnimatorComponent motionAnimator { get; protected set; }
 
     #endregion
 
-    public Human(GameObject go) : base(go) {
+    public override string Name {
 
-        InitMotionComponent();
-        InitMotionAnimator();
+        get {
+            return "human";
+        }
+    }
+
+    public Human() { }
+
+    public override void SetGameObject(GameObject gameObject) {
+
+        base.SetGameObject(gameObject);
+        InitializeMotionComponent();
+        InitializeMotionAnimator();
     }
 
     #region Motion Component
 
-    public void InitMotionComponent() {
+    public void InitializeMotionComponent() {
 
-        motionComponent = this.gameObject.AddComponent<MotionComponent>();
-        motionComponent.SetSpeed(5f);
-        motionComponent.SetPosition(new Vector2(0, 0));
-    }
+        motionComponent = gameObject.AddComponent<MotionComponent>();
 
-    public void SetDestination(Tile destinationTile) {
-
-        motionComponent.SetDestination(destinationTile);
-    }
-
-    public void SetPosition(Tile destinationTile) {
-
-        motionComponent.SetPosition(destinationTile.position);
+        motionComponent.SetSpeed(CharacterSpawnFactory.GetScriptableObject(Name).movementSpeed);
     }
 
     #endregion
 
     #region Animation Component
 
-    public void InitMotionAnimator() {
+    public void InitializeMotionAnimator() {
 
-        motionAnimator = this.gameObject.AddComponent<MotionAnimatorComponent>();
+        motionAnimator = gameObject.AddComponent<MotionAnimatorComponent>();
+
         motionComponent.VelocityHandler += new MotionComponent.OnVelocityChange(motionAnimator.HandleVelocity);
     }
 

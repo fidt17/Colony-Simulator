@@ -24,7 +24,4 @@ public class PrefabStorage : MonoBehaviour
     public GameObject greenBrickTile, redBrickTile;
     public GameObject sandTile;
     public GameObject grassTile;
-
-    [Header("Humanlike")]
-    public GameObject human;
 }

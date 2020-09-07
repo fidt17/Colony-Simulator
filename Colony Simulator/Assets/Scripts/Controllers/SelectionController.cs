@@ -48,12 +48,12 @@ public class SelectionController : MonoBehaviour
 
             foreach (SelectableComponent sc in selected) {
 
-                Human h = (Human) sc.entity;
+                IMovable h = (IMovable) sc.entity;
 
                 Vector2Int tileCoords = CursorToTileCoordinates();
                 Tile t = GameManager.Instance.world.GetTileAt(tileCoords);
 
-                h.SetDestination(t);
+                h.motionComponent.SetDestination(t);
             }
         }
     }
@@ -62,6 +62,8 @@ public class SelectionController : MonoBehaviour
 
         foreach (SelectableComponent s in selected)
             s.Deselect();
+
+        selected = new List<SelectableComponent>();
     }
 
     private Vector2Int CursorToTileCoordinates() {

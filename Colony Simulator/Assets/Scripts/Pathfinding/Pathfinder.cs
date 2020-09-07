@@ -29,9 +29,12 @@ public class Pathfinder
     }
 
     public List<PathNode> GetPath(Vector2Int start, Vector2Int target) {
-
+        
         PathNode startNode  = grid.GetNodeAt(start);
         PathNode targetNode = grid.GetNodeAt(target);
+
+        if (startNode.region != targetNode.region)
+            return null;
 
         List<PathNode> openSet   = new List<PathNode>();
         List<PathNode> closedSet = new List<PathNode>();
@@ -44,7 +47,7 @@ public class Pathfinder
 
             for (int i = 1; i < openSet.Count; i++) {
 
-                if ((openSet[i].fCost() < currentNode.fCost() || openSet[i].fCost() == currentNode.fCost())
+                if ((openSet[i].fCost() <= currentNode.fCost())
                     && (openSet[i].hCost < currentNode.hCost))
                         currentNode = openSet[i];
             }
@@ -61,7 +64,7 @@ public class Pathfinder
 
             foreach(PathNode neighbour in GetNeighbours(currentNode)) {
 
-                if(closedSet.Contains(neighbour) || !neighbour.isTraversable)
+                if(closedSet.Contains(neighbour))
                     continue;
 
                 int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
@@ -120,45 +123,6 @@ public class Pathfinder
 
 		return neighbours;
 	}
-
-    private List<PathNode> GetNeighbours2(PathNode node)
-    {
-        List<PathNode> neighbours = new List<PathNode>();
-        int X = node.position.x;
-        int Y = node.position.y;
-
-        int GRID_SIZE = 100;
-
-        int checkX = X;
-        int checkY = Y-1;
-
-        if((checkX >= 0 && checkX < GRID_SIZE) &&
-            (checkY >= 0 && checkY < GRID_SIZE))
-            neighbours.Add(grid.GetNodeAt(new Vector2Int(checkX, checkY)));
-
-        checkX = X;
-        checkY = Y+1;
-
-        if((checkX >= 0 && checkX < GRID_SIZE) &&
-            (checkY >= 0 && checkY < GRID_SIZE))
-            neighbours.Add(grid.GetNodeAt(new Vector2Int(checkX, checkY)));
-
-        checkX = X-1;
-        checkY = Y;
-
-        if((checkX >= 0 && checkX < GRID_SIZE) &&
-            (checkY >= 0 && checkY < GRID_SIZE))
-            neighbours.Add(grid.GetNodeAt(new Vector2Int(checkX, checkY)));
-
-        checkX = X+1;
-        checkY = Y;
-
-        if((checkX >= 0 && checkX < GRID_SIZE) &&
-            (checkY >= 0 && checkY < GRID_SIZE))
-            neighbours.Add(grid.GetNodeAt(new Vector2Int(checkX, checkY)));
-
-        return neighbours;
-    }
 
     private int GetDistance(PathNode A, PathNode B) {
 

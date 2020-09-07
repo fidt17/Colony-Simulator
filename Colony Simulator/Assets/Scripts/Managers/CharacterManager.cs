@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class CharacterManager
 {
-    private CharacterGenerator _CG;
-
     List<Human> colonists = new List<Human>();
-
-    public CharacterManager() {
-        
-        _CG = new CharacterGenerator();
-    }
+    List<Rabbit> rabbits = new List<Rabbit>();
 
     public void CreateInitialCharacters() {
 
-        Human human = _CG.CreateHuman(new Vector2Int(45, 35));
-        colonists.Add(human);        
+        Human human = CharacterGenerator.CreateHuman(new Vector2Int(45, 35));
+        if (human != null)
+            colonists.Add(human);
+
+        int rabbitCount = 1;
+
+        for (int i = 0; i < rabbitCount; i++) {
+            
+            Rabbit rabbit = CharacterGenerator.CreateRabbit(new Vector2Int(40, 35));
+            if (rabbit != null)
+                rabbits.Add(rabbit);
+        }
     }
 }

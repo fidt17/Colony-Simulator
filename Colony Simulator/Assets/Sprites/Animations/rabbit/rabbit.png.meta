@@ -1,0 +1,1241 @@
+fileFormatVersion: 2
+guid: e7cf216ba949be84284f40cd7a4cb4b8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5362292703166988329
+    second: rabbit_jump_N_0
+  - first:
+      213: -9183474814421927023
+    second: rabbit_jump_N_1
+  - first:
+      213: 4094930355834545784
+    second: rabbit_jump_N_2
+  - first:
+      213: -2956455614790974670
+    second: rabbit_jump_N_3
+  - first:
+      213: 6646757335500350731
+    second: rabbit_jump_W_0
+  - first:
+      213: 2205422856068950921
+    second: rabbit_jump_W_1
+  - first:
+      213: -1710025177234258205
+    second: rabbit_jump_W_2
+  - first:
+      213: -1520130438184224705
+    second: rabbit_jump_W_3
+  - first:
+      213: 6978142131542690387
+    second: rabbit_jump_S_0
+  - first:
+      213: -3811027324686367218
+    second: rabbit_jump_S_1
+  - first:
+      213: -8275629492349689178
+    second: rabbit_jump_S_2
+  - first:
+      213: -3615608086160406521
+    second: rabbit_jump_S_3
+  - first:
+      213: -1894917469346153302
+    second: rabbit_jump_E_0
+  - first:
+      213: -2372467105192624143
+    second: rabbit_jump_E_1
+  - first:
+      213: -3077199415608434654
+    second: rabbit_jump_E_2
+  - first:
+      213: -7045262923644442350
+    second: rabbit_jump_E_3
+  - first:
+      213: -4225237170577684106
+    second: rabbit_eat_N_0
+  - first:
+      213: 6936936390665181255
+    second: rabbit_eat_N_1
+  - first:
+      213: 7883382996675992782
+    second: rabbit_eat_N_2
+  - first:
+      213: 143845118681758527
+    second: rabbit_eat_N_3
+  - first:
+      213: -6467757756869755992
+    second: rabbit_eat_W_0
+  - first:
+      213: 948255897717971748
+    second: rabbit_eat_W_1
+  - first:
+      213: 1766657420179315841
+    second: rabbit_eat_W_2
+  - first:
+      213: -6564935879877128957
+    second: rabbit_eat_W_3
+  - first:
+      213: -3522069782953225726
+    second: rabbit_eat_S_0
+  - first:
+      213: -3552774187790864373
+    second: rabbit_eat_S_1
+  - first:
+      213: 8575596585305872293
+    second: rabbit_eat_S_2
+  - first:
+      213: -9081657590426361374
+    second: rabbit_eat_S_3
+  - first:
+      213: 6608755186358171840
+    second: rabbit_eat_E_0
+  - first:
+      213: -2695748297747032253
+    second: rabbit_eat_E_1
+  - first:
+      213: -8460768854200333260
+    second: rabbit_eat_E_2
+  - first:
+      213: 410833370176303670
+    second: rabbit_eat_E_3
+  - first:
+      213: -4319117739628686116
+    second: rabbit_0
+  - first:
+      213: -8318455891613035452
+    second: rabbit_1
+  - first:
+      213: -5898836688014686371
+    second: rabbit_2
+  - first:
+      213: 862768247936079584
+    second: rabbit_3
+  - first:
+      213: 5987219317995173943
+    second: rabbit_4
+  - first:
+      213: -6139173697439351666
+    second: rabbit_5
+  - first:
+      213: -3296008925349825875
+    second: rabbit_6
+  - first:
+      213: 7333132739888061037
+    second: rabbit_7
+  - first:
+      213: -5455618821387493904
+    second: rabbit_8
+  - first:
+      213: 5114598327182581164
+    second: rabbit_9
+  - first:
+      213: 8688015323748414307
+    second: rabbit_10
+  - first:
+      213: 1585483868372494873
+    second: rabbit_11
+  - first:
+      213: 5714235092270093670
+    second: rabbit_12
+  - first:
+      213: -3076187673222101429
+    second: rabbit_13
+  - first:
+      213: -5729367230187793814
+    second: rabbit_14
+  - first:
+      213: 7907300422961574937
+    second: rabbit_15
+  - first:
+      213: 597107171923409042
+    second: rabbit_16
+  - first:
+      213: -2326541210482789047
+    second: rabbit_17
+  - first:
+      213: 6732566832630207597
+    second: rabbit_18
+  - first:
+      213: 5669991450780378124
+    second: rabbit_19
+  - first:
+      213: -7740900059832856356
+    second: rabbit_20
+  - first:
+      213: 1942055898318385685
+    second: rabbit_21
+  - first:
+      213: 4502551945957609831
+    second: rabbit_22
+  - first:
+      213: -3342776930946458752
+    second: rabbit_23
+  - first:
+      213: 1252109100623391488
+    second: rabbit_24
+  - first:
+      213: -7296433938668916013
+    second: rabbit_25
+  - first:
+      213: 8626261507718353228
+    second: rabbit_26
+  - first:
+      213: -8755107595545075185
+    second: rabbit_27
+  - first:
+      213: -8444483410379938819
+    second: rabbit_28
+  - first:
+      213: -5470079587530974827
+    second: rabbit_29
+  - first:
+      213: -1912308558377918117
+    second: rabbit_30
+  - first:
+      213: 6837566973350475015
+    second: rabbit_31
+  - first:
+      213: -4038557369473716751
+    second: rabbit_32
+  - first:
+      213: 4421703558607400904
+    second: rabbit_33
+  - first:
+      213: -997897648477186570
+    second: rabbit_34
+  - first:
+      213: -8087868909941780803
+    second: rabbit_35
+  - first:
+      213: -2418784550695788354
+    second: rabbit_36
+  - first:
+      213: 2922060544714877707
+    second: rabbit_37
+  - first:
+      213: 3624077124972423566
+    second: rabbit_38
+  - first:
+      213: -6662810464874587783
+    second: rabbit_39
+  - first:
+      213: -7960392373605680558
+    second: rabbit_40
+  - first:
+      213: -1460418623759250586
+    second: rabbit_41
+  - first:
+      213: -6765340781962590163
+    second: rabbit_42
+  - first:
+      213: 5715764316128717845
+    second: rabbit_43
+  - first:
+      213: 6619696216216752028
+    second: rabbit_44
+  - first:
+      213: 3122031940452528383
+    second: rabbit_45
+  - first:
+      213: -4577069341172870095
+    second: rabbit_46
+  - first:
+      213: -2958923871650188859
+    second: rabbit_47
+  - first:
+      213: 6508168129262607001
+    second: rabbit_48
+  - first:
+      213: 687055317387652636
+    second: rabbit_49
+  - first:
+      213: 6764867681103149488
+    second: rabbit_50
+  - first:
+      213: 1981922502563315173
+    second: rabbit_51
+  - first:
+      213: 5501385344615059680
+    second: rabbit_52
+  - first:
+      213: -7585980767812847813
+    second: rabbit_53
+  - first:
+      213: -7056043465318418682
+    second: rabbit_54
+  - first:
+      213: -1531186663575807287
+    second: rabbit_55
+  - first:
+      213: 1338541664716827320
+    second: rabbit_56
+  - first:
+      213: 4218529465346329413
+    second: rabbit_57
+  - first:
+      213: -275222530638179414
+    second: rabbit_58
+  - first:
+      213: -5029267802603910421
+    second: rabbit_59
+  - first:
+      213: 8505261869667852391
+    second: rabbit_60
+  - first:
+      213: 6468181410584926309
+    second: rabbit_61
+  - first:
+      213: -1351950246063975860
+    second: rabbit_62
+  - first:
+      213: -6331878232103208358
+    second: rabbit_63
+  - first:
+      213: 7462454142031340788
+    second: rabbit_64
+  - first:
+      213: 2731662897172141731
+    second: rabbit_65
+  - first:
+      213: -2496866581414594573
+    second: rabbit_66
+  - first:
+      213: -1317049177623234761
+    second: rabbit_67
+  - first:
+      213: 556744903771146333
+    second: rabbit_68
+  - first:
+      213: 1345269363143201724
+    second: rabbit_69
+  - first:
+      213: 1368213227737152494
+    second: rabbit_70
+  - first:
+      213: -4945140995767582271
+    second: rabbit_71
+  - first:
+      213: 5200032240263695947
+    second: rabbit_72
+  - first:
+      213: -4911565652969225791
+    second: rabbit_73
+  - first:
+      213: -4382133386250003383
+    second: rabbit_74
+  - first:
+      213: 5082395726679784401
+    second: rabbit_75
+  - first:
+      213: -1674497841449473753
+    second: rabbit_76
+  - first:
+      213: 8399608059320487678
+    second: rabbit_77
+  - first:
+      213: 2301695411666425988
+    second: rabbit_78
+  - first:
+      213: -6440253727301458518
+    second: rabbit_79
+  - first:
+      213: 6858954506470021059
+    second: rabbit_80
+  - first:
+      213: 5955224674140186850
+    second: rabbit_81
+  - first:
+      213: 7673803876561148009
+    second: rabbit_82
+  - first:
+      213: 8216971576308237243
+    second: rabbit_83
+  - first:
+      213: 829281780027031779
+    second: rabbit_84
+  - first:
+      213: 4474890226838333196
+    second: rabbit_85
+  - first:
+      213: -1533983927350488034
+    second: rabbit_86
+  - first:
+      213: -6095406349331141099
+    second: rabbit_87
+  - first:
+      213: -3918254466896555302
+    second: rabbit_88
+  - first:
+      213: 2550654861436755704
+    second: rabbit_89
+  - first:
+      213: -3007790487592233296
+    second: rabbit_90
+  - first:
+      213: -5856988842139000166
+    second: rabbit_91
+  - first:
+      213: 3530489785279408260
+    second: rabbit_92
+  - first:
+      213: -2081203705251126437
+    second: rabbit_93
+  - first:
+      213: -5514708053597819235
+    second: rabbit_94
+  - first:
+      213: -2967326282307016519
+    second: rabbit_95
+  - first:
+      213: 7410262684751060299
+    second: rabbit_96
+  - first:
+      213: -7914625059815548805
+    second: rabbit_97
+  - first:
+      213: 3194798538191604303
+    second: rabbit_98
+  - first:
+      213: -8870004680438702721
+    second: rabbit_99
+  - first:
+      213: 6156238981509784984
+    second: rabbit_100
+  - first:
+      213: 2062855646550567478
+    second: rabbit_101
+  - first:
+      213: -1795427446265869110
+    second: rabbit_102
+  - first:
+      213: -2637587754142556585
+    second: rabbit_103
+  - first:
+      213: 545335505518179536
+    second: rabbit_104
+  - first:
+      213: -6017660386723456081
+    second: rabbit_105
+  - first:
+      213: 5398746126691270369
+    second: rabbit_106
+  - first:
+      213: -348843135057917309
+    second: rabbit_107
+  - first:
+      213: -2238596845270692370
+    second: rabbit_108
+  - first:
+      213: -6470554923324260699
+    second: rabbit_109
+  - first:
+      213: -2427487844838775518
+    second: rabbit_110
+  - first:
+      213: -834094219588749465
+    second: rabbit_111
+  - first:
+      213: 5188903256538346254
+    second: rabbit_112
+  - first:
+      213: 1745367686714223549
+    second: rabbit_113
+  - first:
+      213: -1749193133787524372
+    second: rabbit_114
+  - first:
+      213: 4980034017426345796
+    second: rabbit_115
+  - first:
+      213: -4769833589500930149
+    second: rabbit_116
+  - first:
+      213: 2046799775818832376
+    second: rabbit_117
+  - first:
+      213: 529451259259501952
+    second: rabbit_118
+  - first:
+      213: 2079602575855730358
+    second: rabbit_119
+  - first:
+      213: 7371805327052778805
+    second: rabbit_120
+  - first:
+      213: 588640427765985656
+    second: rabbit_121
+  - first:
+      213: -4520853642699757005
+    second: rabbit_122
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 72
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: rabbit_jump_N_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 504
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dfff06723f4595b0800000000000000
+      internalID: -5362292703166988329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_N_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 498
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b72aaff4ebd8080800000000000000
+      internalID: -9183474814421927023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_N_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 491
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8766b77767d14d830800000000000000
+      internalID: 4094930355834545784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_N_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 500
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 233cc26484f88f6d0800000000000000
+      internalID: -2956455614790974670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_W_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0568b2a4960e3c50800000000000000
+      internalID: 6646757335500350731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_W_1
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 429
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98b648b176c3b9e10800000000000000
+      internalID: 2205422856068950921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_W_2
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 427
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e64af15925c448e0800000000000000
+      internalID: -1710025177234258205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_W_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 425
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3835c3ab6967eae0800000000000000
+      internalID: -1520130438184224705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_S_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35a0acefb4757d060800000000000000
+      internalID: 6978142131542690387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_S_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 362
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0603c207d28c1bc0800000000000000
+      internalID: -3811027324686367218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_S_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 365
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a220c7a2de072d80800000000000000
+      internalID: -8275629492349689178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_S_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 364
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70801691a97c2ddc0800000000000000
+      internalID: -3615608086160406521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_E_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aacb0f0f996e3b5e0800000000000000
+      internalID: -1894917469346153302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_E_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 283
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ffb1b9dcbd431fd0800000000000000
+      internalID: -2372467105192624143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_E_2
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 284
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 220ae996f679b45d0800000000000000
+      internalID: -3077199415608434654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_jump_E_3
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 282
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21961f6c2b23a3e90800000000000000
+      internalID: -7045262923644442350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_N_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 216
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 679c0fbfd21fc55c0800000000000000
+      internalID: -4225237170577684106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_N_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 216
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7481413d4e2f44060800000000000000
+      internalID: 6936936390665181255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_N_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 216
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecc1a394117676d60800000000000000
+      internalID: 7883382996675992782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_N_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 216
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b33b19f5a0ff100800000000000000
+      internalID: 143845118681758527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_W_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ab30887698ed36a0800000000000000
+      internalID: -6467757756869755992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_W_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 144
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42b16a307b1e82d00800000000000000
+      internalID: 948255897717971748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_W_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 144
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18c9891409d648810800000000000000
+      internalID: 1766657420179315841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_W_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 144
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30d05ba8999a4e4a0800000000000000
+      internalID: -6564935879877128957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_S_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 72
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2029fe071381f1fc0800000000000000
+      internalID: -3522069782953225726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_S_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 72
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b007c8913b202bec0800000000000000
+      internalID: -3552774187790864373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_S_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 72
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a7953ca8a3a20770800000000000000
+      internalID: 8575596585305872293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_S_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 72
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e128e6c98877f180800000000000000
+      internalID: -9081657590426361374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_E_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c8366ac3d307bb50800000000000000
+      internalID: 6608755186358171840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_E_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3479ce4b437c69ad0800000000000000
+      internalID: -2695748297747032253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_E_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43c43bedd8f459a80800000000000000
+      internalID: -8460768854200333260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabbit_eat_E_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6323c3306c293b500800000000000000
+      internalID: 410833370176303670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
