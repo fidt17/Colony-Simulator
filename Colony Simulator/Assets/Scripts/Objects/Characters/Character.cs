@@ -18,6 +18,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable
 
     public MotionComponent motionComponent { get; protected set; }
     public SelectableComponent selectableComponent;
+    public CommandProcessor commandProcessor;
 
     #endregion
 
@@ -32,8 +33,9 @@ public abstract class Character : IGameObject, ISelectable, IMovable
 
         _gameObject = gameObject;
 
-        InitSelectableComponent();
+        InitializeSelectableComponent();
         InitializeMotionComponent();
+        InitializeCommandProcessor();
 
         motionComponent.SetPosition(position);
     }
@@ -50,7 +52,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable
 
     #region Selectable Component
 
-    public void InitSelectableComponent() {
+    public void InitializeSelectableComponent() {
 
         selectableComponent = _gameObject.AddComponent<SelectableComponent>();
         selectableComponent.entity = this;
@@ -62,5 +64,30 @@ public abstract class Character : IGameObject, ISelectable, IMovable
         selectableComponent.Deselect();
     }
     
+    #endregion
+
+    #region Command Processor
+
+    public void InitializeCommandProcessor() {
+
+        commandProcessor = _gameObject.AddComponent<CommandProcessor>();
+    }
+
+    public void AddCommand(Command command) {
+
+        commandProcessor.AddCommand(command);
+    }
+
+    public void AddUrgentCommand(Command command) {
+        
+        commandProcessor.ResetCommands();
+        AddCommand(command);
+    }
+
+    public void StartCommandExecution() {
+
+        commandProcessor.ExecuteNextCommand();
+    }
+
     #endregion
 }

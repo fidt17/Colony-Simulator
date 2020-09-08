@@ -47,13 +47,18 @@ public class SelectionController : MonoBehaviour
             //Add check on what types of objects are selected
 
             foreach (SelectableComponent sc in selected) {
+                
+                if (!(sc.entity is Character))
+                    continue;
 
-                IMovable h = (IMovable) sc.entity;
+                Character h = (Character) sc.entity;
 
                 Vector2Int tileCoords = CursorToTileCoordinates();
                 Tile t = GameManager.Instance.world.GetTileAt(tileCoords);
 
-                h.motionComponent.SetDestination(t);
+                Command moveCommand = new MoveCommand(h.motionComponent, t);
+                h.AddUrgentCommand(moveCommand);
+                h.StartCommandExecution();
             }
         }
     }

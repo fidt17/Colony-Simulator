@@ -127,7 +127,7 @@ public static class WorldGenerator
 
         for (int i = 0; i < rabbitCount; i++) {
             
-            Rabbit rabbit = CharacterSpawnFactory.GetNewCharacter("rabbit", "rabbit", new Vector2Int(40, 35)) as Rabbit;
+            Rabbit rabbit = CharacterSpawnFactory.GetNewCharacter("rabbit", "rabbit", new Vector2Int(6, 24)) as Rabbit;
             if (rabbit != null)
                 GameManager.Instance.characterManager.rabbits.Add(rabbit);
         }

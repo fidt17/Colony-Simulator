@@ -43,6 +43,9 @@
      <Compile Include="Assets\Scripts\Character Components\MotionAnimatorComponent.cs" />
      <Compile Include="Assets\Scripts\Character Components\MotionComponent.cs" />
      <Compile Include="Assets\Scripts\Character Components\SelectableController.cs" />
+     <Compile Include="Assets\Scripts\Command System\Command.cs" />
+     <Compile Include="Assets\Scripts\Command System\CommandProcessor.cs" />
+     <Compile Include="Assets\Scripts\Command System\MoveCommand.cs" />
      <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
      <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
      <Compile Include="Assets\Scripts\Controllers\SelectionController.cs" />
