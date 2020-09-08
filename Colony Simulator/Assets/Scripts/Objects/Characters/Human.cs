@@ -2,15 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Human : Character, IMovable, IMotionAnimator
+public class Human : Character, IMotionAnimator
 {   
-    #region Components
-
-    public MotionComponent motionComponent { get; protected set; }
-    public MotionAnimatorComponent motionAnimator { get; protected set; }
-
-    #endregion
-
     public override string Name {
 
         get {
@@ -18,32 +11,26 @@ public class Human : Character, IMovable, IMotionAnimator
         }
     }
 
-    public Human() { }
+    #region Components
 
-    public override void SetGameObject(GameObject gameObject) {
-
-        base.SetGameObject(gameObject);
-        InitializeMotionComponent();
-        InitializeMotionAnimator();
-    }
-
-    #region Motion Component
-
-    public void InitializeMotionComponent() {
-
-        motionComponent = gameObject.AddComponent<MotionComponent>();
-
-        motionComponent.SetSpeed(CharacterSpawnFactory.GetScriptableObject(Name).movementSpeed);
-    }
+    public MotionAnimatorComponent motionAnimator { get; protected set; }
 
     #endregion
+
+    public Human() { }
+
+    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
+
+        base.SetGameObject(gameObject, position);
+
+        InitializeMotionAnimator();
+    }
 
     #region Animation Component
 
     public void InitializeMotionAnimator() {
 
-        motionAnimator = gameObject.AddComponent<MotionAnimatorComponent>();
-
+        motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
         motionComponent.VelocityHandler += new MotionComponent.OnVelocityChange(motionAnimator.HandleVelocity);
     }
 

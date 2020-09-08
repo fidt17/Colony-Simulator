@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldGenerator
+public static class WorldGenerator
 {   
-    public int perlinSeed = 12;
-    private GameObject tileParent;
+    public static int perlinSeed = 12;
+    private static GameObject tileParent;
 
-    public WorldGenerator() {
+    private static void FindTileParent() {
 
         tileParent = GameObject.Find("World_Tiles");
 
@@ -17,28 +17,32 @@ public class WorldGenerator
         }
     }
 
-    public void GenerateEmptyWorld(Vector2Int dimensions, ref Tile[,] grid) {
+    private static void GenerateEmptyWorld(Vector2Int dimensions, ref Tile[,] grid) {
 
-        InitializeGrid(dimensions, ref grid);
+        grid = new Tile[dimensions.x, dimensions.y];
 
         for (int x = 0; x < dimensions.x; x++) {
             for (int y = 0; y < dimensions.y; y++) {
 
-                GameObject newTile = GameObject.Instantiate(PrefabStorage.Instance.protoTile);
-                newTile.transform.position = new Vector3(x, y, -10);
-                newTile.transform.parent = tileParent.transform;
-                newTile.name = "Tile (" + x + ";" + y + ")";
+                Tile tile = StaticObjectSpawnFactory.GetNewStaticObject("tile","tile",new Vector2Int(x, y)) as Tile;
+                tile.GameObject.transform.parent = tileParent.transform;
 
-                Tile t = new Tile(new Vector2Int(x, y), newTile);
-
-                grid[x, y] = t;
+                grid[x, y] = tile;
             }
         }
     }
 
-    public void GenerateTerrainWithPerlinNoise(Vector2Int dimensions, ref Tile[,] grid, float seaLevel = 0.33f) {
+    public static void GenerateWorld(Vector2Int dimensions, ref Tile[,] grid) {
 
-        GenerateEmptyWorld(dimensions, ref grid);
+        grid = new Tile[dimensions.x, dimensions.y];
+
+        FindTileParent();
+        GenerateTerrainWithPerlinNoise(dimensions, ref grid);
+        GenerateVegetation(dimensions, ref grid);
+        GenerateCharacters();
+    }
+
+    private static void GenerateTerrainWithPerlinNoise(Vector2Int dimensions, ref Tile[,] grid, float seaLevel = 0.33f) {
 
         PerlinNoise pn = new PerlinNoise(perlinSeed);
 
@@ -69,56 +73,63 @@ public class WorldGenerator
         float sea = minP + elevationRange * seaLevel;
         float sand = sea + (maxP - sea) * 0.2f;
 
-        SpriteRenderer waterSR = PrefabStorage.Instance.waterTile.GetComponent<SpriteRenderer>();
-        SpriteRenderer sandSR = PrefabStorage.Instance.sandTile.GetComponent<SpriteRenderer>();
-        SpriteRenderer grassSR = PrefabStorage.Instance.grassTile.GetComponent<SpriteRenderer>();
-
         for (int x = 0; x < dimensions.x; x++) {
             for(int y = 0; y < dimensions.y; y++) {
 
                 float height = perlinArray[x,y];
 
-                Tile tile = grid[x,y];
+                string dataName = "tile";
 
                 if(height < sea) {
-                    
-                    tile.SetTileType(TileType.water, false, waterSR);
+                    dataName = "water_tile";
 				} else if(height < sand) {
-                    
-                    tile.SetTileType(TileType.sand, true, sandSR);
+                    dataName = "sand_tile";
 				} else {
-
-                    tile.SetTileType(TileType.grass, true, grassSR);
+                    dataName = "grass_tile";
 				}
+
+                Tile tile = StaticObjectSpawnFactory.GetNewStaticObject("tile", dataName, new Vector2Int(x, y)) as Tile;
+                grid[x, y] = tile;
 			}
 		}
 
-        for (int x = 0; x < dimensions.x; x++) {
+        for (int x = 0; x < dimensions.x; x++)
+            for(int y = 0; y < dimensions.y; y++)
+                TileSpriteRenderer.Instance.UpdateTileBorders(grid[x,y]);
+    }
+
+    private static void GenerateVegetation(Vector2Int dimensions, ref Tile[,] grid) {
+        
+        for(int x = 0; x < dimensions.x; x++) {
             for(int y = 0; y < dimensions.y; y++) {
+                
+                Tile tile = grid[x, y];
 
-                Tile tile = grid[x,y];
-                TileSpriteRenderer.Instance.UpdateTileBorders(tile);
+                if (tile.type != TileType.grass)
+                    continue;
+
+                if (Random.Range(0f, 1f) > 0.8f) {
+                    
+                    Grass grass = StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y)) as Grass;
+                    GameManager.Instance.natureManager.grass.Add(grass);
+                }
 			}
 		}
     }
 
-    private void InitializeGrid(Vector2Int dimensions, ref Tile[,] grid) {
+    private static void GenerateCharacters() {
+        
+        Human human = CharacterSpawnFactory.GetNewCharacter("human", "human", new Vector2Int(45, 35)) as Human;
+        if (human != null)
+            GameManager.Instance.characterManager.colonists.Add(human);
 
-        DestroyGrid(ref grid);
+        int rabbitCount = 1;
 
-        grid = new Tile[dimensions.x, dimensions.y];
-    }
-
-    private void DestroyGrid(ref Tile[,] grid) {
-
-        if (grid == null)
-            return;
-
-        for (int x = 0; x < grid.GetLength(0); x++) {
-            for (int y = 0; y < grid.GetLength(1); y++) {
-
-                grid[x,y].DestroyGameObject();
-            }
+        for (int i = 0; i < rabbitCount; i++) {
+            
+            Rabbit rabbit = CharacterSpawnFactory.GetNewCharacter("rabbit", "rabbit", new Vector2Int(40, 35)) as Rabbit;
+            if (rabbit != null)
+                GameManager.Instance.characterManager.rabbits.Add(rabbit);
         }
     }
 }

@@ -42,7 +42,7 @@ public class TileSpriteRenderer : MonoBehaviour
 
         TileType type = tile.type;
         
-        SpriteRenderer mainSprite  = tile.gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        SpriteRenderer mainSprite  = tile.GameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
         SpriteRenderer northBorder = null;
         SpriteRenderer eastBorder  = null;
         SpriteRenderer southBorder = null;
@@ -64,10 +64,10 @@ public class TileSpriteRenderer : MonoBehaviour
                              ref SpriteRenderer westBorder,
                              ref TileType[,] borderMatrix) {
 
-        northBorder = tile.gameObject.transform.Find("N Border").GetComponent<SpriteRenderer>();
-        eastBorder  = tile.gameObject.transform.Find("E Border").GetComponent<SpriteRenderer>();
-        southBorder = tile.gameObject.transform.Find("S Border").GetComponent<SpriteRenderer>();
-        westBorder  = tile.gameObject.transform.Find("W Border").GetComponent<SpriteRenderer>();
+        northBorder = tile.GameObject.transform.Find("N Border").GetComponent<SpriteRenderer>();
+        eastBorder  = tile.GameObject.transform.Find("E Border").GetComponent<SpriteRenderer>();
+        southBorder = tile.GameObject.transform.Find("S Border").GetComponent<SpriteRenderer>();
+        westBorder  = tile.GameObject.transform.Find("W Border").GetComponent<SpriteRenderer>();
 
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {

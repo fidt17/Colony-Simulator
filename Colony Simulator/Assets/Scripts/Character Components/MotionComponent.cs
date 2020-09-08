@@ -14,35 +14,6 @@ public class MotionComponent : MonoBehaviour
     public delegate void OnVelocityChange(Vector2 newVelocty);
     public event OnVelocityChange VelocityHandler;
 
-    #region InProgress
-
-    public void A() {
-
-        StartCoroutine(Wander());
-    }
-
-    public IEnumerator Wander() {
-
-        while (true) {
-
-            if (path == null) {
-
-                Tile t = null;
-
-                while(t == null) {
-
-                    t = GameManager.Instance.world.GetTileAt(new Vector2Int((int) Random.Range(0, 50), (int) Random.Range(0, 50)));
-                }
-
-                SetDestination(t);
-            }
-
-            yield return new WaitForSeconds(2f);
-        }
-    }
-
-    #endregion
-
     private void Update() {
 
         MoveTowardsDestination();

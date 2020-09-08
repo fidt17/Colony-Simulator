@@ -1954,8 +1954,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1134704349}
   - component: {fileID: 1134704350}
+  - component: {fileID: 1134704351}
+  - component: {fileID: 1134704352}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: Game Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1985,6 +1987,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e037c3cb7eda674fb86d6fbb250b686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1134704351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134704348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d20e26bee604a844bb4b68a20a6f5f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1134704352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134704348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b5c33ea280bab4fb15052f37d3901e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1262698560 stripped
@@ -2412,5 +2438,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8935346969214726222, guid: 55fb4fa6bf2c644499c8956381e0180e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 55fb4fa6bf2c644499c8956381e0180e, type: 3}

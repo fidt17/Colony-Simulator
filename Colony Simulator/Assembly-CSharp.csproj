@@ -37,7 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\ScriptableObjects\Characters\CharacterScriptableObject.cs" />
-     <Compile Include="Assets\Scripts\Assets Manager\PrefabStorage.cs" />
+     <Compile Include="Assets\ScriptableObjects\Static\StaticScriptableObject.cs" />
+     <Compile Include="Assets\ScriptableObjects\Static\Tiles\TileScriptableObject.cs" />
      <Compile Include="Assets\Scripts\Assets Manager\TileSpriteRenderer.cs" />
      <Compile Include="Assets\Scripts\Character Components\MotionAnimatorComponent.cs" />
      <Compile Include="Assets\Scripts\Character Components\MotionComponent.cs" />
@@ -54,15 +55,23 @@
      <Compile Include="Assets\Scripts\Debug\DebugManager.cs" />
      <Compile Include="Assets\Scripts\Debug\PathfinderRenderer.cs" />
      <Compile Include="Assets\Scripts\Factories\CharacterSpawnFactory.cs" />
+     <Compile Include="Assets\Scripts\Factories\StaticObjectSpawnFactory.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IEdible.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IGameObject.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IHarvestable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IMotionAnimator.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IMovable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
      <Compile Include="Assets\Scripts\Managers\CursorManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\NatureManager.cs" />
      <Compile Include="Assets\Scripts\Objects\Characters\Character.cs" />
      <Compile Include="Assets\Scripts\Objects\Characters\Human.cs" />
      <Compile Include="Assets\Scripts\Objects\Characters\Rabbit.cs" />
+     <Compile Include="Assets\Scripts\Objects\Items\Food\Food.cs" />
+     <Compile Include="Assets\Scripts\Objects\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\Objects\Nature\Grass.cs" />
      <Compile Include="Assets\Scripts\Objects\StaticObject.cs" />
      <Compile Include="Assets\Scripts\Objects\Tile.cs" />
      <Compile Include="Assets\Scripts\Objects\World.cs" />
@@ -71,7 +80,6 @@
      <Compile Include="Assets\Scripts\Pathfinding\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathfinderRegionSystem.cs" />
      <Compile Include="Assets\Scripts\TestScript.cs" />
-     <Compile Include="Assets\Scripts\WorldGeneration\CharacterGenerator.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\PerlinNoise.cs" />
      <Compile Include="Assets\Scripts\WorldGeneration\WorldGenerator.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

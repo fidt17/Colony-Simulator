@@ -4,45 +4,31 @@ using UnityEngine;
 
 public class Rabbit : Character, IMovable, IMotionAnimator
 {   
-    #region Components
-
-    public MotionComponent motionComponent { get; protected set; }
-    public MotionAnimatorComponent motionAnimator { get; protected set; }
-
-    #endregion
-
     public override string Name {
-
         get {
             return "rabbit";
         }
     }
 
-    public Rabbit() { }
+    #region Components
 
-    public override void SetGameObject(GameObject gameObject) {
-
-        base.SetGameObject(gameObject);
-        InitializeMotionComponent();
-        InitializeMotionAnimator();
-    }
-
-    #region Motion Component
-
-    public void InitializeMotionComponent() {
-
-        motionComponent = gameObject.AddComponent<MotionComponent>();
-
-        motionComponent.SetSpeed(CharacterSpawnFactory.GetScriptableObject(Name).movementSpeed);
-    }
+    public MotionAnimatorComponent motionAnimator { get; protected set; }
 
     #endregion
+
+    public Rabbit() { }
+
+    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
+
+        base.SetGameObject(gameObject, position);
+        InitializeMotionAnimator();
+    }
 
     #region Animation Component
 
     public void InitializeMotionAnimator() {
 
-        motionAnimator = gameObject.AddComponent<MotionAnimatorComponent>();
+        motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
 
         motionComponent.VelocityHandler += new MotionComponent.OnVelocityChange(motionAnimator.HandleVelocity);
     }

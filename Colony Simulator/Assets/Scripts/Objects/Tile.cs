@@ -12,23 +12,39 @@ public enum TileType {
 
 public class Tile : StaticObject
 {
-    public TileType type { get; protected set; }
+    public TileType type { get; set; }
+
+    public override string Name {
+        get {
+            return "tile";
+        }
+    }
 
     public SpriteRenderer mainSprite { get; private set; }
     public Color defaultSpriteColor;
 
     private TileType[,] borderMatrix = new TileType[3,3];
 
-    public Tile(Vector2Int pos, GameObject go)
+    public Tile() : base (Vector2Int.one)
     {
-        position = pos;
-        dimensions = Vector2Int.one;
         isTraversable = true;
         type = TileType.empty;
-        this.gameObject = go;
+    }
+
+    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
+
+        base.SetGameObject(gameObject, position);
 
         mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
         defaultSpriteColor = mainSprite.color;
+    }
+
+    public override void SetData(StaticScriptableObject data) {
+
+        base.SetData(data);
+
+        type = ((TileScriptableObject) data).tileType;
+        isTraversable = ((TileScriptableObject) data).isTraversable;
     }
 
     //DELETE ME
@@ -37,18 +53,4 @@ public class Tile : StaticObject
         isTraversable = b;
     }
     //
-
-    public void SetTileType(TileType newType, bool traversable, SpriteRenderer newSR) {
-
-        type = newType;
-        isTraversable = traversable;
-        ChangeTileSprite(newSR);
-    }
-
-    public void ChangeTileSprite(SpriteRenderer newSR) {
-
-        mainSprite.sprite = newSR.sprite;
-        mainSprite.color = newSR.color;
-        defaultSpriteColor = mainSprite.color;
-    }
 }

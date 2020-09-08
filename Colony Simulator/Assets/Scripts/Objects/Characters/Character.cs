@@ -2,35 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : ISelectable
+public abstract class Character : IGameObject, ISelectable, IMovable
 {
-    public GameObject gameObject { get; protected set; }
+    public abstract string Name { get; }
+    public CharacterScriptableObject data;
 
-    public abstract string Name {
-
-        get;
+    protected GameObject _gameObject;
+    public GameObject GameObject {
+        get {
+            return _gameObject;
+        }
     }
 
+    #region Components
+
+    public MotionComponent motionComponent { get; protected set; }
     public SelectableComponent selectableComponent;
+
+    #endregion
 
     public Character() { }
 
-    public virtual void SetGameObject(GameObject gameObject) {
+    public virtual void SetData(CharacterScriptableObject data) {
 
-        this.gameObject = gameObject;
-        InitSelectableComponent();
+        this.data = data;
     }
+
+    public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
+
+        _gameObject = gameObject;
+
+        InitSelectableComponent();
+        InitializeMotionComponent();
+
+        motionComponent.SetPosition(position);
+    }
+
+    #region Motion Component
+
+    public void InitializeMotionComponent() {
+
+        motionComponent = _gameObject.AddComponent<MotionComponent>();
+        motionComponent.SetSpeed(data.movementSpeed);
+    }
+
+    #endregion
 
     #region Selectable Component
 
     public void InitSelectableComponent() {
 
-        selectableComponent = gameObject.AddComponent<SelectableComponent>();
+        selectableComponent = _gameObject.AddComponent<SelectableComponent>();
         selectableComponent.entity = this;
-        selectableComponent.selectionRim = gameObject.transform.Find("SelectionRim").gameObject;
+        selectableComponent.selectionRim = _gameObject.transform.Find("SelectionRim").gameObject;
 
         if (selectableComponent.selectionRim == null)
-            Debug.LogError("No SelectionRim was found on this gameObject:", gameObject);
+            Debug.LogError("No SelectionRim was found on this gameObject:", _gameObject);
 
         selectableComponent.Deselect();
     }

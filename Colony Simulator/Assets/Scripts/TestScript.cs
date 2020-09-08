@@ -19,9 +19,9 @@ public class TestScript : MonoBehaviour
         t.TestFunc(!t.isTraversable);
 
         if (t.isTraversable)
-            t.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            t.GameObject.GetComponent<SpriteRenderer>().color = Color.white;
         else
-            t.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            t.GameObject.GetComponent<SpriteRenderer>().color = Color.red;
 
         GameManager.Instance.pathfinder.UpdateSystem();
     }

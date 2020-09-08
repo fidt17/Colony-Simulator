@@ -40,35 +40,23 @@ public static class CharacterSpawnFactory
             scriptableObjects.Add(soInstance.name, soInstance);
         }
 
-        if (scriptableObjects.Count != types.Count)
-            Debug.LogWarning("Count of scriptableobject are not the same as count of types. Did you misspelled the name?");
-
         isInitialized = true;
     }
 
-    public static Character GetNewCharacter(string name) {
+    public static Character GetNewCharacter(string typeName, string dataName, Vector2Int position) {
 
         if (!isInitialized)
             Initialize();
 
-        if (!scriptableObjects.ContainsKey(name) || !types.ContainsKey(name))
+        if (!scriptableObjects.ContainsKey(dataName) || !types.ContainsKey(typeName))
             return null;
 
-        GameObject go = GameObject.Instantiate(scriptableObjects[name].prefab);
-        Character character = Activator.CreateInstance(types[name], go) as Character;
-        character.SetGameObject(go);
+        GameObject gameObject = GameObject.Instantiate(scriptableObjects[dataName].prefab);
+        Character character = Activator.CreateInstance(types[typeName], gameObject) as Character;
+
+        character.SetData(scriptableObjects[dataName]);
+        character.SetGameObject(gameObject, position);
 
         return character;
-    }
-
-    public static CharacterScriptableObject GetScriptableObject(string name) {
-
-        if (!isInitialized)
-            Initialize();
-
-        if (!scriptableObjects.ContainsKey(name))
-            return null;
-
-        return scriptableObjects[name];
     }
 }

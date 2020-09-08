@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public World world { get; private set; }
     public Pathfinder pathfinder { get; private set; }
     public CharacterManager characterManager { get; private set; }
+    public NatureManager natureManager { get; private set; }
     
     //TODO
     //Create startup settings system
@@ -25,6 +26,10 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+
+
+        characterManager = GetComponent<CharacterManager>();
+        natureManager = GetComponent<NatureManager>();
     }
 
     private void Start() {
@@ -36,20 +41,15 @@ public class GameManager : MonoBehaviour
 
     private void Initialize() {
 
-
         CreateWorld();
         CreatePathfinder();
-        CreateCharacters();
         Camera.main.GetComponent<CameraController>().Init();
     }
 
     private void CreateWorld() {
 
-
         world = new World(_dimensions);
-
-        WorldGenerator wg = new WorldGenerator();
-        wg.GenerateTerrainWithPerlinNoise(_dimensions, ref world.grid);
+        WorldGenerator.GenerateWorld(_dimensions, ref world.grid);
     }
 
     private void CreatePathfinder() {
@@ -62,12 +62,6 @@ public class GameManager : MonoBehaviour
 
         pathfinder = new Pathfinder(world.dimensions);
         pathfinder.CreateRegionSystem();
-    }
-
-    private void CreateCharacters() {
-
-        characterManager = new CharacterManager();
-        characterManager.CreateInitialCharacters();
     }
 
     #endregion
