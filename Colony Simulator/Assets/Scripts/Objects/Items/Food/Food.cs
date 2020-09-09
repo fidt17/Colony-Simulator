@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : Item, IEdible
+public abstract class Food : Item, IEdible
 {   
     public override string Name {
         get {
@@ -10,9 +10,9 @@ public class Food : Item, IEdible
         }
     }
 
-    public virtual float NutritionValue {
+    public virtual int NutritionValue {
         get {
-            return 1f;
+            return 1;
         }
     }
 

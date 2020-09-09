@@ -3,58 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CommandProcessor : MonoBehaviour
-{
-    public Queue<Command> commandList = new Queue<Command>();
-    private Command currentCommand = null;
-    private bool isRunning = false;
+{   
+    public Queue<Task> taskList = new Queue<Task>();
 
-    public void AddCommand(Command command) {
+    private Task currentTask = null;
+    public bool isRunning = false;
 
-        commandList.Enqueue(command);
+    public void AddTask(Task task) {
+
+        taskList.Enqueue(task);
     }
 
-    public void ExecuteNextCommand() {
+    public void ResetTasks() {
 
-        currentCommand = null;
-
-        if (commandList.Count == 0)
-            return;
-
-        isRunning = true;
-        currentCommand = commandList.Dequeue();
-    }
-
-    public void ResetCommands() {
-
-        commandList = new Queue<Command>();
+        foreach(Task task in taskList)
+            task.FinishTask(false);
+        
+        taskList = new Queue<Task>();
         isRunning = false;
     }
 
-    private void ExecuteCurrentCommand() {
+    public void NextTask() {
 
-        if (currentCommand == null)
+        currentTask = null;
+
+        if (taskList.Count == 0) {
+            isRunning = false;
             return;
+        }
 
-        if (currentCommand.inProgress == false)
-            currentCommand.CommandResultHandler += FinishCommand;
-
-        currentCommand.Execute();
+        isRunning = true;
+        currentTask = taskList.Dequeue();
+        currentTask.TaskResultHandler += FinishTask;
     }
 
-    private void FinishCommand(bool succeed) {
+    private void ExecuteCurrentTask() {
 
-        currentCommand.CommandResultHandler -= FinishCommand;
+        if (isRunning == false)
+            NextTask();
+        else
+            currentTask.ExecuteTask();
+    }
+
+    private void FinishTask(bool succeed) {
 
         if (succeed)
-            ExecuteNextCommand();
+            NextTask();
         else
-            ResetCommands();
+            ResetTasks();
     }
 
     private void Update() {
 
         if (isRunning)
-            ExecuteCurrentCommand();
+            ExecuteCurrentTask();
     }
-
 }

@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grass : StaticObject, IHarvestable
+public class Grass : StaticObject, IEdible
 {   
     public override string Name {
         get {
             return "grass";
+        }
+    }
+
+    public int NutritionValue {
+        get {
+            return 20;
         }
     }
 
@@ -15,9 +21,9 @@ public class Grass : StaticObject, IHarvestable
         isTraversable = true;
     }
 
-    public Item Harvest() {
+    public void Eat() {
 
-        Debug.Log(Name + " was harvested");
-        return new Food();
+        GameManager.Instance.natureManager.grass.Remove(this);
+        GameObject.Destroy(_gameObject);
     }
 }

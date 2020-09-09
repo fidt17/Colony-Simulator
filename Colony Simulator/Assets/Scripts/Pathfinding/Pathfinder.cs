@@ -36,6 +36,9 @@ public class Pathfinder
         if (startNode.region != targetNode.region)
             return null;
 
+        if (startNode == targetNode)
+            return new List<PathNode>();
+
         List<PathNode> openSet   = new List<PathNode>();
         List<PathNode> closedSet = new List<PathNode>();
 

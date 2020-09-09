@@ -34,6 +34,9 @@ public class SelectionController : MonoBehaviour
 
                     selectable.Select();
                     selected.Add(selectable);
+
+                    if (selectable.entity is Character)
+                        UIManager.Instance.OpenCharacterWindow(selectable.entity as Character);
                 }
             }
         }
@@ -56,9 +59,9 @@ public class SelectionController : MonoBehaviour
                 Vector2Int tileCoords = CursorToTileCoordinates();
                 Tile t = GameManager.Instance.world.GetTileAt(tileCoords);
 
-                Command moveCommand = new MoveCommand(h.motionComponent, t);
-                h.AddUrgentCommand(moveCommand);
-                h.StartCommandExecution();
+                Task moveTask = new Task();
+                moveTask.AddCommand(new MoveCommand(h.motionComponent, t));
+                h.AddUrgentTask(moveTask);
             }
         }
     }
@@ -67,6 +70,8 @@ public class SelectionController : MonoBehaviour
 
         foreach (SelectableComponent s in selected)
             s.Deselect();
+        
+        UIManager.Instance.CloseCharacterWindow();
 
         selected = new List<SelectableComponent>();
     }

@@ -34,4 +34,15 @@ public class Rabbit : Character, IMovable, IMotionAnimator
     }
 
     #endregion
+
+    #region Hunger Component
+
+    public override void InitializeHungerComponent() {
+
+        base.InitializeHungerComponent();
+        hungerComponent.hungerTick = 0.5f;
+        hungerComponent.edibles.Add(typeof(Grass));
+    }
+
+    #endregion
 }

@@ -29,14 +29,14 @@ public class WindowSystem : MonoBehaviour
         CloseWindows();
     }
 
-    private WindowComponent FindWindowOfType(WindowType type) {
+    public WindowComponent FindWindowOfType(WindowType type) {
 
         WindowComponent window = windows.Find(w => w.windowType == type);
 
         return window;
     }
 
-    public void SwitchWindow(WindowType type) {
+    public WindowComponent SwitchWindow(WindowType type) {
 
         WindowComponent desiredWindow = FindWindowOfType(type);
 
@@ -45,12 +45,16 @@ public class WindowSystem : MonoBehaviour
             if (desiredWindow.gameObject.active) {
 
                 desiredWindow.CloseWindow();
+                return null;
             } else {
 
                 CloseWindows();
                 desiredWindow.gameObject.SetActive(true);
+                return desiredWindow;
             }
         }
+
+        return null;
     }
 
     public void SwitchSubWindow(WindowComponent parent, WindowType type) {

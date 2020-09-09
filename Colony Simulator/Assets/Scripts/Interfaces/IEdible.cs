@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IEdible
 {   
-    float NutritionValue { get; }
+    int NutritionValue { get; }
     void Eat();
 }

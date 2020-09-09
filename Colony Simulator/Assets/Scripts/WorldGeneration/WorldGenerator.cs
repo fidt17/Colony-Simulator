@@ -123,11 +123,16 @@ public static class WorldGenerator
         if (human != null)
             GameManager.Instance.characterManager.colonists.Add(human);
 
-        int rabbitCount = 1;
+        int rabbitCount = 50;
 
         for (int i = 0; i < rabbitCount; i++) {
             
-            Rabbit rabbit = CharacterSpawnFactory.GetNewCharacter("rabbit", "rabbit", new Vector2Int(6, 24)) as Rabbit;
+            Tile t = null;
+
+            while (t == null || !t.isTraversable)
+                t = GameManager.Instance.world.GetTileAt(new Vector2Int((int) Random.Range(0, 50), (int) Random.Range(0, 50)));
+
+            Rabbit rabbit = CharacterSpawnFactory.GetNewCharacter("rabbit", "rabbit", t.position) as Rabbit;
             if (rabbit != null)
                 GameManager.Instance.characterManager.rabbits.Add(rabbit);
         }

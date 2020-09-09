@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : IGameObject, ISelectable, IMovable
+public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
 {
     public abstract string Name { get; }
     public CharacterScriptableObject data;
@@ -16,9 +16,10 @@ public abstract class Character : IGameObject, ISelectable, IMovable
 
     #region Components
 
-    public MotionComponent motionComponent { get; protected set; }
-    public SelectableComponent selectableComponent;
-    public CommandProcessor commandProcessor;
+    public MotionComponent     motionComponent     { get; protected set; }
+    public HungerComponent     hungerComponent     { get; protected set; }
+    public SelectableComponent selectableComponent { get; protected set; }
+    public CommandProcessor    commandProcessor    { get; protected set; }
 
     #endregion
 
@@ -36,13 +37,14 @@ public abstract class Character : IGameObject, ISelectable, IMovable
         InitializeSelectableComponent();
         InitializeMotionComponent();
         InitializeCommandProcessor();
+        InitializeHungerComponent();
 
         motionComponent.SetPosition(position);
     }
 
     #region Motion Component
 
-    public void InitializeMotionComponent() {
+    public virtual void InitializeMotionComponent() {
 
         motionComponent = _gameObject.AddComponent<MotionComponent>();
         motionComponent.SetSpeed(data.movementSpeed);
@@ -50,9 +52,19 @@ public abstract class Character : IGameObject, ISelectable, IMovable
 
     #endregion
 
+    #region Hunger Component
+
+    public virtual void InitializeHungerComponent() {
+
+        hungerComponent = _gameObject.AddComponent<HungerComponent>();
+        hungerComponent.character = this;
+    }
+
+    #endregion
+
     #region Selectable Component
 
-    public void InitializeSelectableComponent() {
+    public virtual void InitializeSelectableComponent() {
 
         selectableComponent = _gameObject.AddComponent<SelectableComponent>();
         selectableComponent.entity = this;
@@ -68,25 +80,29 @@ public abstract class Character : IGameObject, ISelectable, IMovable
 
     #region Command Processor
 
-    public void InitializeCommandProcessor() {
+    public virtual void InitializeCommandProcessor() {
 
         commandProcessor = _gameObject.AddComponent<CommandProcessor>();
     }
 
-    public void AddCommand(Command command) {
+    public virtual void AddTask(Task task) {
 
-        commandProcessor.AddCommand(command);
+        commandProcessor.AddTask(task);
     }
 
-    public void AddUrgentCommand(Command command) {
+    public virtual void AddUrgentTask(Task command) {
         
-        commandProcessor.ResetCommands();
-        AddCommand(command);
+        commandProcessor.ResetTasks();
+        AddTask(command);
+        StartTaskExecution();
     }
 
-    public void StartCommandExecution() {
+    public virtual void StartTaskExecution() {
 
-        commandProcessor.ExecuteNextCommand();
+        if (commandProcessor.isRunning)
+            return;
+            
+        commandProcessor.NextTask();
     }
 
     #endregion
