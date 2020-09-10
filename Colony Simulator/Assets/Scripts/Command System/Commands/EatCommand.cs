@@ -11,20 +11,29 @@ public class EatCommand : Command
 
         this.hungerComponent = hungerComponent;
         this.food = food;
+
+        ((StaticObject) food).OnDestroy += OnFoodDestroyed;
+    }
+
+    public override void Abort() { 
+
+        ((StaticObject) food).OnDestroy -= OnFoodDestroyed;
     }
 
     public override void Execute() {
 
-        base.Execute();
-
         if (food == null) {
-            Abort();
+            Finish(false);
             return;
         }
 
-        hungerComponent.ChangeHunger(food.NutritionValue);
-        food.Eat();
+        ((StaticObject) food).OnDestroy -= OnFoodDestroyed;
+        food.Eat(hungerComponent);
+        Finish(true);
+    }
 
-        Finish();
+    private void OnFoodDestroyed(StaticObject food) {
+
+        Finish(false);
     }
 }

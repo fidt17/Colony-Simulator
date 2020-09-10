@@ -28,7 +28,7 @@ public class MoveCommand : Command
             FindPath();
 
             if (path == null) {
-                Abort();
+                Finish(false);
                 return false;
             }
         }
@@ -38,18 +38,21 @@ public class MoveCommand : Command
 
     public override void Execute() {
 
-        base.Execute();
-
         if (HasPath() == false)
             return;
 
         MoveTowardsDestination();
     }
 
+    public override void Abort() {
+
+        motionComponent.Stop();
+    }
+
     private void MoveTowardsDestination() {
         
         if (path.Count == 0) {
-            Finish();
+            Finish(true);
             return;
         }
 
@@ -63,14 +66,10 @@ public class MoveCommand : Command
 
             motionComponent.SetPosition(nextNode);
             path.RemoveAt(0);
+        } else {
 
-            if (path.Count == 0)
-                Finish();
-
-            return;   
+            destination.Normalize();
+            motionComponent.Translate(destination);
         }
-
-        destination.Normalize();
-        motionComponent.Translate(destination);
     }
 }

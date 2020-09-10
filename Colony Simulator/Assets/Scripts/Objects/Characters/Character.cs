@@ -16,9 +16,9 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
 
     #region Components
 
+    public SelectableComponent selectableComponent { get; protected set; }
     public MotionComponent     motionComponent     { get; protected set; }
     public HungerComponent     hungerComponent     { get; protected set; }
-    public SelectableComponent selectableComponent { get; protected set; }
     public CommandProcessor    commandProcessor    { get; protected set; }
 
     #endregion
@@ -35,19 +35,25 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
         _gameObject = gameObject;
 
         InitializeSelectableComponent();
-        InitializeMotionComponent();
-        InitializeCommandProcessor();
+        InitializeMotionComponent(position);
         InitializeHungerComponent();
+        InitializeCommandProcessor();
+    }
 
-        motionComponent.SetPosition(position);
+    public virtual void Die() {
+
+        _gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+
+        GameObject.Destroy(_gameObject, 1);
     }
 
     #region Motion Component
 
-    public virtual void InitializeMotionComponent() {
+    public virtual void InitializeMotionComponent(Vector2Int position) {
 
         motionComponent = _gameObject.AddComponent<MotionComponent>();
-        motionComponent.SetSpeed(data.movementSpeed);
+        motionComponent.speed = data.movementSpeed;
+        motionComponent.SetPosition(position);
     }
 
     #endregion
@@ -83,26 +89,6 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
     public virtual void InitializeCommandProcessor() {
 
         commandProcessor = _gameObject.AddComponent<CommandProcessor>();
-    }
-
-    public virtual void AddTask(Task task) {
-
-        commandProcessor.AddTask(task);
-    }
-
-    public virtual void AddUrgentTask(Task command) {
-        
-        commandProcessor.ResetTasks();
-        AddTask(command);
-        StartTaskExecution();
-    }
-
-    public virtual void StartTaskExecution() {
-
-        if (commandProcessor.isRunning)
-            return;
-            
-        commandProcessor.NextTask();
     }
 
     #endregion

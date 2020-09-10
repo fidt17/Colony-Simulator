@@ -19,14 +19,16 @@ public class HungerComponent : MonoBehaviour
 
     private void Update() {
 
-        if (hunger < 95)
+        if (hunger < 85)
             StartCoroutine(StartFoodSearch());
+
+        if (hunger == 0)
+            character.Die();
     }
 
     public void ChangeHunger(int value) {
 
-        hunger += value;
-        hunger = Mathf.Clamp(hunger, 0, 100);
+        hunger = Mathf.Clamp(hunger + value, 0, 100);
     }
 
     private bool isSearchingForFood = false;
@@ -38,37 +40,28 @@ public class HungerComponent : MonoBehaviour
         
         isSearchingForFood = true;
         
-        Grass food = null;
+        IEdible food = null;
         while (food == null) {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 10f));
-
-            //temporal solution
-            //float startTime = Time.realtimeSinceStartup;//Debug
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 2f));
             food = GameManager.Instance.natureManager.FindClosestFood(edibles, character.motionComponent.GetGridPosition());
-            //Debug.Log("Found food in: " + (Time.realtimeSinceStartup - startTime));//Debug
-
-            if( food != null )
-                break;
         }
 
         getFoodTask = new Task();
-        getFoodTask.AddCommand(new MoveCommand(character.motionComponent, GameManager.Instance.world.GetTileAt(food.position)));
+        getFoodTask.AddCommand(new MoveCommand(character.motionComponent, GameManager.Instance.world.GetTileAt(food.GetEdiblePosition())));
         getFoodTask.AddCommand(new EatCommand(this, food));
         getFoodTask.TaskResultHandler += HandleGetFoodTaskResult;
 
-        character.AddTask(getFoodTask);
-        character.StartTaskExecution();
+        character.commandProcessor.AddTask(getFoodTask);
+        character.commandProcessor.StartExecution();
 
-        while(getFoodTask != null) {
+        while(getFoodTask != null)
             yield return null;
-        }
-
-        isSearchingForFood = false;
     }
 
     private void HandleGetFoodTaskResult(bool result) {
 
         getFoodTask = null;
+        isSearchingForFood = false;
     }
 
     private IEnumerator DecreaseHunger() {

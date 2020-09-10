@@ -12,12 +12,12 @@ public class SelectableComponent : MonoBehaviour
     public void Select() {
 
         isSelected = true;
-        selectionRim.SetActive(true);
+        selectionRim?.SetActive(true);
     }
 
     public void Deselect() {
 
         isSelected = false;
-        selectionRim.SetActive(false);
+        selectionRim?.SetActive(false);
     }
 }

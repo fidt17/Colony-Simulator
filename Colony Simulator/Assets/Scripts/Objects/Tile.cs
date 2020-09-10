@@ -20,6 +20,8 @@ public class Tile : StaticObject
         }
     }
 
+    public StaticObject objectOnTile = null;
+
     public SpriteRenderer mainSprite { get; private set; }
     public Color defaultSpriteColor;
 
@@ -37,6 +39,13 @@ public class Tile : StaticObject
 
         mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
         defaultSpriteColor = mainSprite.color;
+    }
+
+    public override void Destroy() {
+
+        Debug.LogWarning("Something went wrong. Tiles are not supposed to be destroyed.");
+        
+        base.Destroy();
     }
 
     public override void SetData(StaticScriptableObject data) {

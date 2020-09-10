@@ -35,7 +35,15 @@ public abstract class StaticObject : IGameObject
 
         _gameObject = gameObject;
         _gameObject.transform.position = new Vector3(position.x, position.y, 0);
-
         this.position = position;
     }
+
+    public virtual void Destroy() {
+        
+        GameObject.Destroy(_gameObject);
+        OnDestroy?.Invoke(this);
+    }
+
+    public delegate void OnObjectDestroyed(StaticObject staticObject);
+    public event OnObjectDestroyed OnDestroy;
 }

@@ -5,29 +5,42 @@ using System;
 
 public class NatureManager : MonoBehaviour
 {
-    public List<Grass> grass = new List<Grass>();
+    #region Food
 
-    public Grass FindClosestFood(List<Type> edibles, Vector2Int sourcePosition) {
+    public List<IEdible> edibleList = new List<IEdible>();
+
+    #endregion
+
+    #region Vegetation
+    
+    public List<Grass> grassList = new List<Grass>();
+
+    #endregion
+
+    public IEdible FindClosestFood(List<Type> canEat, Vector2Int sourcePosition) {
 
         //temporal solution. I should change this to wave search later on.
 
         int minDistance = 100 * 100;
-        Grass result = null;
+        IEdible result = null;
 
-        foreach (Grass e in grass) {
+        foreach(IEdible edible in edibleList) {
+            
+            if (!canEat.Contains(edible.GetType()))
+                continue;
 
-            int sqrDistance = (e.position - sourcePosition).sqrMagnitude;
+            int sqrDistance = (edible.GetEdiblePosition() - sourcePosition).sqrMagnitude;
 
             if (sqrDistance < minDistance) {
 
                 PathNode characterPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition);
-                PathNode foodPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(e.position);
+                PathNode foodPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(edible.GetEdiblePosition());
 
                 if ( characterPosition.region != foodPosition.region )
                     continue;
 
                 minDistance = sqrDistance;
-                result = e;
+                result = edible;
             }
         }
 

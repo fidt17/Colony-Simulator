@@ -1,5 +1,7 @@
-﻿public interface IMovable
+﻿using UnityEngine;
+
+public interface IMovable
 {   
     MotionComponent motionComponent { get; }
-    void InitializeMotionComponent();
+    void InitializeMotionComponent(Vector2Int position);
 }

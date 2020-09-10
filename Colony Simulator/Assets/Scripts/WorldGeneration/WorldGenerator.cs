@@ -108,11 +108,8 @@ public static class WorldGenerator
                 if (tile.type != TileType.grass)
                     continue;
 
-                if (Random.Range(0f, 1f) > 0.8f) {
-                    
-                    Grass grass = StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y)) as Grass;
-                    GameManager.Instance.natureManager.grass.Add(grass);
-                }
+                if (Random.Range(0f, 1f) > 0.8f)
+                    StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y));
 			}
 		}
     }
@@ -123,7 +120,7 @@ public static class WorldGenerator
         if (human != null)
             GameManager.Instance.characterManager.colonists.Add(human);
 
-        int rabbitCount = 50;
+        int rabbitCount = 200;
 
         for (int i = 0; i < rabbitCount; i++) {
             

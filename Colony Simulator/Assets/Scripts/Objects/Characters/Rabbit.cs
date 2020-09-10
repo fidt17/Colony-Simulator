@@ -24,13 +24,21 @@ public class Rabbit : Character, IMovable, IMotionAnimator
         InitializeMotionAnimator();
     }
 
+    public override void Die() {
+
+        base.Die();
+        GameManager.Instance.characterManager.rabbits.Remove(this);
+
+        motionComponent.VelocityHandler -= motionAnimator.HandleVelocity;
+    }
+
     #region Animation Component
 
     public void InitializeMotionAnimator() {
 
         motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
 
-        motionComponent.VelocityHandler += new MotionComponent.OnVelocityChange(motionAnimator.HandleVelocity);
+        motionComponent.VelocityHandler += motionAnimator.HandleVelocity;
     }
 
     #endregion

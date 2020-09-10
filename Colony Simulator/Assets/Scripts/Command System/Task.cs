@@ -11,49 +11,31 @@ public class Task
     public event OnTaskResult TaskResultHandler;
 
     private Command currentCommand = null;
-    private bool isRunning = false;
-
-    private bool is_disposed = false;
 
     public void AddCommand(Command command) {
 
+        command.CommandResultHandler += OnCommandFinish;
         commandList.Enqueue(command);
     }
 
     public void ExecuteTask() {
 
-        if (isRunning == false) {
-
+        if (currentCommand == null)
             NextCommand();
-        } else {
-
-            if (currentCommand == null)
-                return;
-
-            if (currentCommand.inProgress == false)
-                currentCommand.CommandResultHandler += FinishCommand;
-
-            currentCommand.Execute();
-        }
+        
+        currentCommand?.Execute();
     }
 
     private void NextCommand() {
 
-        currentCommand = null;
-
         if (commandList.Count == 0) {
-
             FinishTask(true);
-            return;
+        } else {
+            currentCommand = commandList.Dequeue();
         }
-
-        isRunning = true;
-        currentCommand = commandList.Dequeue();
     }
 
-    private void FinishCommand(bool succeed) {
-
-        currentCommand.CommandResultHandler -= FinishCommand;
+    private void OnCommandFinish(bool succeed) {
 
         if (succeed)
             NextCommand();
@@ -62,6 +44,9 @@ public class Task
     }
 
     public void FinishTask(bool succeed) {
+
+        if (!succeed)
+            currentCommand?.Abort();
 
         TaskResultHandler?.Invoke(succeed);
     }

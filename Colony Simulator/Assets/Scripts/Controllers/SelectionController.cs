@@ -54,14 +54,14 @@ public class SelectionController : MonoBehaviour
                 if (!(sc.entity is Character))
                     continue;
 
-                Character h = (Character) sc.entity;
+                Character character = (Character) sc.entity;
 
                 Vector2Int tileCoords = CursorToTileCoordinates();
                 Tile t = GameManager.Instance.world.GetTileAt(tileCoords);
 
                 Task moveTask = new Task();
-                moveTask.AddCommand(new MoveCommand(h.motionComponent, t));
-                h.AddUrgentTask(moveTask);
+                moveTask.AddCommand(new MoveCommand(character.motionComponent, t));
+                character.commandProcessor.AddUrgentTask(moveTask);
             }
         }
     }

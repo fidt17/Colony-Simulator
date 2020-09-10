@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     //Create startup settings system
     private Vector2Int _dimensions = new Vector2Int(50, 50);
 
-
     private void Awake() {
 
         if(Instance != null) {
@@ -26,7 +25,6 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-
 
         characterManager = GetComponent<CharacterManager>();
         natureManager = GetComponent<NatureManager>();

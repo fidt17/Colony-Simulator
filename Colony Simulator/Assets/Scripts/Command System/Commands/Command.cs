@@ -7,27 +7,15 @@ public abstract class Command
     public delegate void OnCommandResult(bool result);
     public event OnCommandResult CommandResultHandler;
 
-    public bool inProgress = false;
+    public abstract void Execute();
 
-    public virtual void Execute() {
-
-        inProgress = true;
+    public virtual void Finish(bool result) {
+        OnCommandResultChanged(result);
     }
 
-    public virtual void Finish() {
-
-        inProgress = false;
-        OnCommandResultChanged(true);
-    }
-
-    public virtual void Abort() {
-
-        inProgress = false;
-        OnCommandResultChanged(false);
-    }
+    public abstract void Abort();
 
     protected void OnCommandResultChanged(bool result) {
-
         CommandResultHandler?.Invoke(result);
     }
 }

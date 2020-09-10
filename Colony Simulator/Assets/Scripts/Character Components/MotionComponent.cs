@@ -1,26 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class MotionComponent : MonoBehaviour
 {
-    [SerializeField]
     public float speed;
 
     //Control 8-way animation on a characted (at least for now it is the only use).
     public delegate void OnVelocityChange(Vector2 newVelocty);
     public event OnVelocityChange VelocityHandler;
 
+    public void Stop() {
+
+        VelocityHandler?.Invoke(Vector2.zero);
+    }
+
     public void SetPosition(Vector2 position) {
 
         gameObject.transform.position = position;
         VelocityHandler?.Invoke(Vector2.zero);
-    }
-
-    public void SetSpeed(float newSpeed) {
-
-        speed = newSpeed;
     }
 
     public void Translate(Vector2 normalizedDestination) {
@@ -36,7 +34,7 @@ public class MotionComponent : MonoBehaviour
 
     public Vector2Int GetGridPosition() {
 
-        Vector3 worldPosition = GetWorldPosition();
+        Vector2 worldPosition = GetWorldPosition();
         return new Vector2Int( (int) (worldPosition.x + 0.5f), (int) (worldPosition.y + 0.5f) );
     }
 }

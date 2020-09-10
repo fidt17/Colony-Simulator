@@ -7,55 +7,53 @@ public class CommandProcessor : MonoBehaviour
     public Queue<Task> taskList = new Queue<Task>();
 
     private Task currentTask = null;
-    public bool isRunning = false;
 
-    public void AddTask(Task task) {
+    public void StartExecution() {
 
-        taskList.Enqueue(task);
+        if (currentTask == null)
+            NextTask();
     }
 
     public void ResetTasks() {
 
         foreach(Task task in taskList)
             task.FinishTask(false);
+
+        currentTask?.FinishTask(false);
+        currentTask = null;
         
         taskList = new Queue<Task>();
-        isRunning = false;
+    }
+
+    public void AddTask(Task task) {
+
+        taskList.Enqueue(task);
+    }
+
+    public void AddUrgentTask(Task task) {
+
+        ResetTasks();
+        AddTask(task);
+        StartExecution();
     }
 
     public void NextTask() {
 
-        currentTask = null;
-
-        if (taskList.Count == 0) {
-            isRunning = false;
+        if (taskList.Count == 0)
             return;
-        }
 
-        isRunning = true;
         currentTask = taskList.Dequeue();
-        currentTask.TaskResultHandler += FinishTask;
+        currentTask.TaskResultHandler += OnTaskFinish;
     }
 
-    private void ExecuteCurrentTask() {
+    private void OnTaskFinish(bool succeed) {
 
-        if (isRunning == false)
-            NextTask();
-        else
-            currentTask.ExecuteTask();
-    }
-
-    private void FinishTask(bool succeed) {
-
-        if (succeed)
-            NextTask();
-        else
-            ResetTasks();
+        currentTask = null;
+        NextTask();
     }
 
     private void Update() {
 
-        if (isRunning)
-            ExecuteCurrentTask();
+        currentTask?.ExecuteTask();
     }
 }

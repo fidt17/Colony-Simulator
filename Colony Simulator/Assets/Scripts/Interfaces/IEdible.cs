@@ -5,5 +5,7 @@ using UnityEngine;
 public interface IEdible
 {   
     int NutritionValue { get; }
-    void Eat();
+    Vector2Int GetEdiblePosition();
+    void AddToGlobalEdiblesList();
+    void Eat(HungerComponent eater);
 }

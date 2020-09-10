@@ -26,6 +26,12 @@ public class Human : Character, IMotionAnimator
         InitializeMotionAnimator();
     }
 
+    public override void Die() {
+
+        base.Die();
+        GameManager.Instance.characterManager.colonists.Remove(this);
+    }
+
     #region Animation Component
 
     public void InitializeMotionAnimator() {
