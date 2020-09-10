@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class MotionComponent : MonoBehaviour
 {
-    public float speed;
+    private float _speed;
+    public float SpeedValue {
+        get {
+            return _speed;
+        }
+    }
 
     //Control 8-way animation on a characted (at least for now it is the only use).
     public delegate void OnVelocityChange(Vector2 newVelocty);
     public event OnVelocityChange VelocityHandler;
+
+    public void Initialize(float speed, Vector2Int position) {
+
+        _speed = speed;
+        SetPosition(position);
+    }
 
     public void Stop() {
 
@@ -18,12 +29,11 @@ public class MotionComponent : MonoBehaviour
     public void SetPosition(Vector2 position) {
 
         gameObject.transform.position = position;
-        VelocityHandler?.Invoke(Vector2.zero);
     }
 
     public void Translate(Vector2 normalizedDestination) {
 
-        gameObject.transform.Translate(normalizedDestination * speed * Time.deltaTime);
+        gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
         VelocityHandler?.Invoke(normalizedDestination);
     }
 
@@ -36,5 +46,9 @@ public class MotionComponent : MonoBehaviour
 
         Vector2 worldPosition = GetWorldPosition();
         return new Vector2Int( (int) (worldPosition.x + 0.5f), (int) (worldPosition.y + 0.5f) );
+    }
+
+    public void OnDestroy() {
+        
     }
 }

@@ -10,10 +10,16 @@ public class WindowSwitcher : MonoBehaviour
     public bool isSubWindow = false;
 
     private Button button;
+    private WindowComponent parentWindow;
+
+    private void Awake() {
+
+        parentWindow = transform.parent.GetComponent<WindowComponent>();
+        button = GetComponent<Button>();
+    }
 
     private void Start() {
 
-        button = GetComponent<Button>();
         button.onClick.AddListener(OnButtonClick);    
     }
 
@@ -22,6 +28,6 @@ public class WindowSwitcher : MonoBehaviour
         if(!isSubWindow)
             WindowSystem.Instance.SwitchWindow(windowType);
         else
-            WindowSystem.Instance.SwitchSubWindow(transform.parent.GetComponent<WindowComponent>(), windowType);
+            WindowSystem.Instance.SwitchSubWindow(parentWindow, windowType);
     }
 }

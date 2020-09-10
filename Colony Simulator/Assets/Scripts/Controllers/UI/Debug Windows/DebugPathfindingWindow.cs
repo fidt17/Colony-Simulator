@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DebugPathfindingWindow : WindowComponent
 {   
-    public Toggle drawPathToggle;
-    public Toggle drawRegionsToggle;
+    private Toggle _drawPathToggle;
+    private Toggle _drawRegionsToggle;
 
     private void Awake() {
 
@@ -15,13 +15,13 @@ public class DebugPathfindingWindow : WindowComponent
 
     private void Start() {
 
-        drawPathToggle.onValueChanged.AddListener(delegate{ DebugManager.Instance.OnDrawPathToggleChanged(drawPathToggle.isOn); });
-        drawRegionsToggle.onValueChanged.AddListener(delegate{ DebugManager.Instance.OnDrawRegionsToggleChanged(drawRegionsToggle.isOn); });
+        _drawPathToggle.onValueChanged.AddListener(delegate{ DebugManager.Instance.OnDrawPathToggleChanged(_drawPathToggle.isOn); });
+        _drawRegionsToggle.onValueChanged.AddListener(delegate{ DebugManager.Instance.OnDrawRegionsToggleChanged(_drawRegionsToggle.isOn); });
     }
 
     private void FindWindowObjects() {
 
-        drawPathToggle = transform.Find("Draw Path Toggle").GetComponent<Toggle>();
-        drawRegionsToggle = transform.Find("Draw Regions Toggle").GetComponent<Toggle>();
+        _drawPathToggle = transform.Find("Draw Path Toggle").GetComponent<Toggle>();
+        _drawRegionsToggle = transform.Find("Draw Regions Toggle").GetComponent<Toggle>();
     }
 }

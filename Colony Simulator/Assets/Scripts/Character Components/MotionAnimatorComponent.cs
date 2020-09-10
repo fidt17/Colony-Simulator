@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class MotionAnimatorComponent : MonoBehaviour {
 
-    public Animator animator;
+    private Animator _animator;
+
+    private MotionComponent motionComponent;
 
     private void Awake() {
 
-        animator = gameObject.GetComponent<Animator>();
+        _animator = gameObject.GetComponent<Animator>();
     }
 
-    public void HandleVelocity(Vector2 velocity) {
+    public void Initialize(MotionComponent motionComponent) {
 
-        animator.SetFloat("velocityX", velocity.x);
-        animator.SetFloat("velocityY", velocity.y);
+        this.motionComponent = motionComponent;
+        motionComponent.VelocityHandler += HandleVelocity;
+    }
+
+    private void HandleVelocity(Vector2 velocity) {
+
+        _animator.SetFloat("velocityX", velocity.x);
+        _animator.SetFloat("velocityY", velocity.y);
+    }
+
+    private void OnDestroy() {
+
+        motionComponent.VelocityHandler -= HandleVelocity;
     }
 }

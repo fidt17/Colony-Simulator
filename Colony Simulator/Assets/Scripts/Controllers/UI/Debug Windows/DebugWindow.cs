@@ -5,7 +5,7 @@ using TMPro;
 
 public class DebugWindow : WindowComponent
 {   
-    public TextMeshProUGUI tileCoordinatesTMP;
+    private TextMeshProUGUI _tileCoordinatesTMP;
 
     private void Awake() {
 
@@ -19,14 +19,14 @@ public class DebugWindow : WindowComponent
 
     private void FindWindowObjects() {
 
-        tileCoordinatesTMP = transform.Find("Tile Coordinates TMP").GetComponent<TextMeshProUGUI>();
+        _tileCoordinatesTMP = transform.Find("Tile Coordinates TMP").GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetTileCoordinates() {
+    private void SetTileCoordinates() {
 
         Vector2 currentCursorPosition = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int gridCoordinates = new Vector2Int( (int) (currentCursorPosition.x + 0.5f), (int) (currentCursorPosition.y + 0.5f) );
 
-        tileCoordinatesTMP.text = "Coordinates: (" + gridCoordinates.x + "; " + gridCoordinates.y + ")";
+        _tileCoordinatesTMP.text = "Coordinates: (" + gridCoordinates.x + "; " + gridCoordinates.y + ")";
     }
 }

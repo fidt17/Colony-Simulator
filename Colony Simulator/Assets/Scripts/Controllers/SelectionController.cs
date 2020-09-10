@@ -26,17 +26,17 @@ public class SelectionController : MonoBehaviour
 
             if (hit.collider != null) {
                 
-                SelectableComponent selectable = hit.collider.gameObject.GetComponent<SelectableComponent>();
+                SelectableComponent selectableComponent = hit.collider.gameObject.GetComponent<SelectableComponent>();
 
-                if (selectable != null) {
+                if (selectableComponent != null) {
 
                     //TODO verify that all selected objects are of one type
 
-                    selectable.Select();
-                    selected.Add(selectable);
+                    selectableComponent.Select();
+                    selected.Add(selectableComponent);
 
-                    if (selectable.entity is Character)
-                        UIManager.Instance.OpenCharacterWindow(selectable.entity as Character);
+                    if (selectableComponent.selectable is Character)
+                        UIManager.Instance.OpenCharacterWindow(selectableComponent.selectable as Character);
                 }
             }
         }
@@ -49,12 +49,12 @@ public class SelectionController : MonoBehaviour
             //TODO
             //Add check on what types of objects are selected
 
-            foreach (SelectableComponent sc in selected) {
+            foreach (SelectableComponent selectableComponent in selected) {
                 
-                if (!(sc.entity is Character))
+                if (!(selectableComponent.selectable is Character))
                     continue;
 
-                Character character = (Character) sc.entity;
+                Character character = (Character) selectableComponent.selectable;
 
                 Vector2Int tileCoords = CursorToTileCoordinates();
                 Tile t = GameManager.Instance.world.GetTileAt(tileCoords);

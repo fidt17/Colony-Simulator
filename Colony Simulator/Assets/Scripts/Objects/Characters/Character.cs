@@ -52,8 +52,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
     public virtual void InitializeMotionComponent(Vector2Int position) {
 
         motionComponent = _gameObject.AddComponent<MotionComponent>();
-        motionComponent.speed = data.movementSpeed;
-        motionComponent.SetPosition(position);
+        motionComponent.Initialize(data.movementSpeed, position);
     }
 
     #endregion
@@ -63,7 +62,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
     public virtual void InitializeHungerComponent() {
 
         hungerComponent = _gameObject.AddComponent<HungerComponent>();
-        hungerComponent.character = this;
+        hungerComponent.Initialize(this, data.hungerDecreasePerSecond);
     }
 
     #endregion
@@ -73,13 +72,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
     public virtual void InitializeSelectableComponent() {
 
         selectableComponent = _gameObject.AddComponent<SelectableComponent>();
-        selectableComponent.entity = this;
-        selectableComponent.selectionRim = _gameObject.transform.Find("SelectionRim").gameObject;
-
-        if (selectableComponent.selectionRim == null)
-            Debug.LogError("No SelectionRim was found on this gameObject:", _gameObject);
-
-        selectableComponent.Deselect();
+        selectableComponent.Initialize(this, _gameObject.transform.Find("SelectionRim").gameObject);
     }
     
     #endregion

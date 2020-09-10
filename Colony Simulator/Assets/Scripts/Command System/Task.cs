@@ -5,33 +5,32 @@ using System;
 
 public class Task
 {
-    public Queue<Command> commandList = new Queue<Command>();
+    private Queue<Command> _commandList = new Queue<Command>();
+    private Command _currentCommand = null;
 
     public delegate void OnTaskResult(bool result);
     public event OnTaskResult TaskResultHandler;
 
-    private Command currentCommand = null;
-
     public void AddCommand(Command command) {
 
         command.CommandResultHandler += OnCommandFinish;
-        commandList.Enqueue(command);
+        _commandList.Enqueue(command);
     }
 
     public void ExecuteTask() {
 
-        if (currentCommand == null)
+        if (_currentCommand == null)
             NextCommand();
         
-        currentCommand?.Execute();
+        _currentCommand?.Execute();
     }
 
     private void NextCommand() {
 
-        if (commandList.Count == 0) {
+        if (_commandList.Count == 0) {
             FinishTask(true);
         } else {
-            currentCommand = commandList.Dequeue();
+            _currentCommand = _commandList.Dequeue();
         }
     }
 
@@ -46,7 +45,7 @@ public class Task
     public void FinishTask(bool succeed) {
 
         if (!succeed)
-            currentCommand?.Abort();
+            _currentCommand?.Abort();
 
         TaskResultHandler?.Invoke(succeed);
     }

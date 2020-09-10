@@ -4,30 +4,12 @@ using UnityEngine;
 
 public class CommandProcessor : MonoBehaviour
 {   
-    public Queue<Task> taskList = new Queue<Task>();
-
-    private Task currentTask = null;
-
-    public void StartExecution() {
-
-        if (currentTask == null)
-            NextTask();
-    }
-
-    public void ResetTasks() {
-
-        foreach(Task task in taskList)
-            task.FinishTask(false);
-
-        currentTask?.FinishTask(false);
-        currentTask = null;
-        
-        taskList = new Queue<Task>();
-    }
+    private Queue<Task> _taskList = new Queue<Task>();
+    private Task _currentTask = null;
 
     public void AddTask(Task task) {
 
-        taskList.Enqueue(task);
+        _taskList.Enqueue(task);
     }
 
     public void AddUrgentTask(Task task) {
@@ -37,23 +19,46 @@ public class CommandProcessor : MonoBehaviour
         StartExecution();
     }
 
-    public void NextTask() {
+    public void ResetTasks() {
 
-        if (taskList.Count == 0)
-            return;
+        foreach(Task task in _taskList)
+            task.FinishTask(false);
 
-        currentTask = taskList.Dequeue();
-        currentTask.TaskResultHandler += OnTaskFinish;
+        _currentTask?.FinishTask(false);
+        _currentTask = null;
+        
+        _taskList = new Queue<Task>();
     }
 
-    private void OnTaskFinish(bool succeed) {
+    public void StartExecution() {
 
-        currentTask = null;
-        NextTask();
+        if (_currentTask == null)
+            NextTask();
+    }
+
+    public void NextTask() {
+
+        if (_taskList.Count == 0)
+            return;
+
+        _currentTask = _taskList.Dequeue();
+        _currentTask.TaskResultHandler += OnTaskFinish;
     }
 
     private void Update() {
 
-        currentTask?.ExecuteTask();
+        _currentTask?.ExecuteTask();
+    }
+
+    private void OnTaskFinish(bool succeed) {
+
+        _currentTask = null;
+        NextTask();
+    }
+
+    public void OnDestroy() {
+
+        if (_currentTask != null)
+            _currentTask.TaskResultHandler -= OnTaskFinish;
     }
 }

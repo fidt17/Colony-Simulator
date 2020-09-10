@@ -7,6 +7,10 @@ public class CharacterScriptableObject : ScriptableObject
 {
     public string name;
 
+    [Range(0, 10)]
     public float movementSpeed;
     public GameObject prefab;
+
+    [Range(0, 10)]
+    public float hungerDecreasePerSecond;
 }

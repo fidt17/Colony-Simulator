@@ -5,30 +5,30 @@ using UnityEngine;
 public class EatCommand : Command
 {
     private HungerComponent hungerComponent;
-    private IEdible food;
+    private IEdible _food;
 
     public EatCommand(HungerComponent hungerComponent, IEdible food) {
 
         this.hungerComponent = hungerComponent;
-        this.food = food;
+        _food = food;
 
-        ((StaticObject) food).OnDestroy += OnFoodDestroyed;
+        ((StaticObject) _food).OnDestroy += OnFoodDestroyed;
     }
 
     public override void Abort() { 
 
-        ((StaticObject) food).OnDestroy -= OnFoodDestroyed;
+        ((StaticObject) _food).OnDestroy -= OnFoodDestroyed;
     }
 
     public override void Execute() {
 
-        if (food == null) {
+        if (_food == null) {
             Finish(false);
             return;
         }
 
-        ((StaticObject) food).OnDestroy -= OnFoodDestroyed;
-        food.Eat(hungerComponent);
+        ((StaticObject) _food).OnDestroy -= OnFoodDestroyed;
+        _food.Eat(hungerComponent);
         Finish(true);
     }
 

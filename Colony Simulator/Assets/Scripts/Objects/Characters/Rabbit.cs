@@ -28,8 +28,6 @@ public class Rabbit : Character, IMovable, IMotionAnimator
 
         base.Die();
         GameManager.Instance.characterManager.rabbits.Remove(this);
-
-        motionComponent.VelocityHandler -= motionAnimator.HandleVelocity;
     }
 
     #region Animation Component
@@ -37,8 +35,7 @@ public class Rabbit : Character, IMovable, IMotionAnimator
     public void InitializeMotionAnimator() {
 
         motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
-
-        motionComponent.VelocityHandler += motionAnimator.HandleVelocity;
+        motionAnimator.Initialize(motionComponent);
     }
 
     #endregion
@@ -48,7 +45,6 @@ public class Rabbit : Character, IMovable, IMotionAnimator
     public override void InitializeHungerComponent() {
 
         base.InitializeHungerComponent();
-        hungerComponent.hungerTick = 0.5f;
         hungerComponent.edibles.Add(typeof(Grass));
     }
 

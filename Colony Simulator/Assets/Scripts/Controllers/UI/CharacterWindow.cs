@@ -7,8 +7,8 @@ public class CharacterWindow : WindowComponent
 {
     public Character character;
 
-    public TextMeshProUGUI characterName;
-    public TextMeshProUGUI characterHunger;
+    private TextMeshProUGUI characterName;
+    private TextMeshProUGUI characterHunger;
 
     private void Awake() {
 
@@ -27,7 +27,7 @@ public class CharacterWindow : WindowComponent
             return;
 
         characterName.text = character.data.name;
-        characterHunger.text = "Hunger: " + character.hungerComponent.hunger;
+        characterHunger.text = "Hunger: " + character.hungerComponent.HungerLevel.ToString("0.0");
     }
 
     public override void CloseWindow() {

@@ -37,7 +37,7 @@ public class Human : Character, IMotionAnimator
     public void InitializeMotionAnimator() {
 
         motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
-        motionComponent.VelocityHandler += new MotionComponent.OnVelocityChange(motionAnimator.HandleVelocity);
+        motionAnimator.Initialize(motionComponent);
     }
 
     #endregion

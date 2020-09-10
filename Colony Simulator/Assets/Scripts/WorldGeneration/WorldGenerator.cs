@@ -120,7 +120,7 @@ public static class WorldGenerator
         if (human != null)
             GameManager.Instance.characterManager.colonists.Add(human);
 
-        int rabbitCount = 200;
+        int rabbitCount = 20;
 
         for (int i = 0; i < rabbitCount; i++) {
             

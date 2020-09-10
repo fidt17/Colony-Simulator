@@ -4,36 +4,15 @@ using UnityEngine;
 
 public class MoveCommand : Command
 {   
-    private MotionComponent motionComponent;
+    private MotionComponent _motionComponent;
 
-    private Tile destinationTile;
-    private List<PathNode> path;
+    private Tile _destinationTile;
+    private List<PathNode> _path;
 
     public MoveCommand(MotionComponent motionComponent, Tile destinationTile) {
         
-        this.motionComponent = motionComponent;
-        this.destinationTile = destinationTile;
-    }
-
-    public void FindPath() {
-
-        //float startTime = Time.realtimeSinceStartup;
-        path = GameManager.Instance.pathfinder.GetPath(motionComponent.GetGridPosition(), destinationTile.position);
-        //Debug.Log(Time.realtimeSinceStartup - startTime);
-    }
-
-    private bool HasPath() {
-
-        if (path == null) {
-            FindPath();
-
-            if (path == null) {
-                Finish(false);
-                return false;
-            }
-        }
-
-        return true;
+        _motionComponent = motionComponent;
+        _destinationTile = destinationTile;
     }
 
     public override void Execute() {
@@ -44,32 +23,59 @@ public class MoveCommand : Command
         MoveTowardsDestination();
     }
 
-    public override void Abort() {
+    private bool HasPath() {
 
-        motionComponent.Stop();
+        if (_path == null) {
+            FindPath();
+
+            if (_path == null) {
+                Finish(false);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void FindPath() {
+
+        //float startTime = Time.realtimeSinceStartup;
+        _path = GameManager.Instance.pathfinder.GetPath(_motionComponent.GetGridPosition(), _destinationTile.position);
+        //Debug.Log(Time.realtimeSinceStartup - startTime);
     }
 
     private void MoveTowardsDestination() {
         
-        if (path.Count == 0) {
+        if (_path.Count == 0) {
             Finish(true);
             return;
         }
 
-        Vector2 nextNode = path[0].position;
-        Vector2 destination = nextNode - motionComponent.GetWorldPosition();
+        Vector2 nextNode = _path[0].position;
+        Vector2 destination = nextNode - _motionComponent.GetWorldPosition();
 
-        float deltaSpeed = motionComponent.speed * Time.deltaTime;
+        float deltaSpeed = _motionComponent.SpeedValue * Time.deltaTime;
 
         //If character is close enough to the destination tile
         if (destination.sqrMagnitude <= Mathf.Pow(deltaSpeed, 2)) {
 
-            motionComponent.SetPosition(nextNode);
-            path.RemoveAt(0);
+            _motionComponent.SetPosition(nextNode);
+            _path.RemoveAt(0);
         } else {
 
             destination.Normalize();
-            motionComponent.Translate(destination);
+            _motionComponent.Translate(destination);
         }
+    }
+
+    public override void Abort() {
+
+        _motionComponent.Stop();
+    }
+
+    public override void Finish(bool succeed) {
+        
+        base.Finish(succeed);
+        _motionComponent.Stop();
     }
 }
