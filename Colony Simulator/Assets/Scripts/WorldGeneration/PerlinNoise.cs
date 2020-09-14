@@ -24,7 +24,7 @@ public class PerlinNoise
 	
 	public void Get2DPerlinNoise(int xSize, int ySize, int nOctaves, float fBias, ref float[,] perlinArray)
 	{
-		Random.seed = seed;
+		Random.InitState(seed);
 		float [,] seedArray = new float[xSize, ySize];
 
 		for(int x = 0; x < xSize; x++) {

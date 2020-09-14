@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "Characters/CharacterScriptableObject", order = 1)]
 public class CharacterScriptableObject : ScriptableObject
 {
-    public string name;
+    public new string name;
 
     [Range(0, 10)]
     public float movementSpeed;
