@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ScriptableObjects\Characters\CharacterScriptableObject.cs" />
+     <Compile Include="Assets\ScriptableObjects\Game Settings\GameSettingsScriptableObject.cs" />
      <Compile Include="Assets\ScriptableObjects\Static\StaticScriptableObject.cs" />
      <Compile Include="Assets\ScriptableObjects\Static\Tiles\TileScriptableObject.cs" />
      <Compile Include="Assets\Scripts\Assets Manager\TileSpriteRenderer.cs" />
@@ -67,6 +68,7 @@
      <Compile Include="Assets\Scripts\Command System\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Command System\Commands\EatCommand.cs" />
      <Compile Include="Assets\Scripts\Command System\Commands\MoveCommand.cs" />
+     <Compile Include="Assets\Scripts\Command System\Commands\RotateToCommand.cs" />
      <Compile Include="Assets\Scripts\Command System\Task.cs" />
      <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
      <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
@@ -92,6 +94,7 @@
      <Compile Include="Assets\Scripts\Objects\StaticObject.cs" />
      <Compile Include="Assets\Scripts\Objects\Tile.cs" />
      <Compile Include="Assets\Scripts\Objects\World.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\ItemFinder.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathGrid.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\Pathfinder.cs" />

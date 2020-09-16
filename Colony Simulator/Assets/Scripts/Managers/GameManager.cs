@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
     public Pathfinder pathfinder { get; private set; }
     public CharacterManager characterManager { get; private set; }
     public NatureManager natureManager { get; private set; }
-    
+
     //TODO
     //Create startup settings system
+    public GameSettingsScriptableObject gameSettings;
+
     private Vector2Int _dimensions = new Vector2Int(50, 50);
 
     private void Awake() {
@@ -40,14 +42,16 @@ public class GameManager : MonoBehaviour
     private void Initialize() {
 
         CreateWorld();
-        CreatePathfinder();
         Camera.main.GetComponent<CameraController>().Init();
     }
 
     private void CreateWorld() {
 
-        world = new World(_dimensions);
-        WorldGenerator.GenerateWorld(_dimensions, ref world.grid);
+        Vector2Int dimensions = new Vector2Int(gameSettings.worldWidth, gameSettings.worldHeight);
+
+        world = new World(dimensions);
+        WorldGenerator.GenerateWorld(gameSettings, ref world.grid);
+        CreatePathfinder();
     }
 
     private void CreatePathfinder() {

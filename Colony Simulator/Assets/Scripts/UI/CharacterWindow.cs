@@ -7,8 +7,8 @@ public class CharacterWindow : WindowComponent
 {
     public Character character;
 
-    [SerializeField] private TextMeshProUGUI characterName;
-    [SerializeField] private Transform characterHungerFillImage;
+    [SerializeField] private TextMeshProUGUI characterName = null;
+    [SerializeField] private Transform characterHungerFillImage = null;
 
     private void Update() {
 

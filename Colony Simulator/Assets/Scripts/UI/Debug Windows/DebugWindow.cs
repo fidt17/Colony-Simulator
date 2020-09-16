@@ -5,7 +5,7 @@ using TMPro;
 
 public class DebugWindow : WindowComponent
 {   
-    [SerializeField] private TextMeshProUGUI _tileCoordinatesTMP;
+    [SerializeField] private TextMeshProUGUI _tileCoordinatesTMP = null;
 
     private void Update() {
 

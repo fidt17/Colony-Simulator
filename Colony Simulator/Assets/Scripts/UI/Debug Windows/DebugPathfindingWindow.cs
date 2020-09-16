@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DebugPathfindingWindow : WindowComponent
 {   
-    [SerializeField] private Toggle _drawPathToggle;
-    [SerializeField] private Toggle _drawRegionsToggle;
+    [SerializeField] private Toggle _drawPathToggle = null;
+    [SerializeField] private Toggle _drawRegionsToggle = null;
 
     private void Start() {
 

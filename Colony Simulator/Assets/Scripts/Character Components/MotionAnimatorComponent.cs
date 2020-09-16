@@ -19,10 +19,12 @@ public class MotionAnimatorComponent : MonoBehaviour {
         motionComponent.VelocityHandler += HandleVelocity;
     }
 
-    private void HandleVelocity(Vector2 velocity) {
+    private void HandleVelocity(Vector2 velocity, FacingDirection direction) {
 
         _animator.SetFloat("velocityX", velocity.x);
         _animator.SetFloat("velocityY", velocity.y);
+
+        _animator.SetInteger("directionIndex", (velocity != Vector2Int.zero) ? -1 : (int) direction);
     }
 
     private void OnDestroy() {

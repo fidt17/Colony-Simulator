@@ -39,6 +39,8 @@ public class HungerComponent : MonoBehaviour
 
     #region Food searching region
 
+
+    //temporal solution untill I create more advanced AI controller
     private bool isSearchingForFood = false;
     private Task getFoodTask = null;
     private IEnumerator StartFoodSearch() {
@@ -49,13 +51,15 @@ public class HungerComponent : MonoBehaviour
         isSearchingForFood = true;
         
         IEdible food = null;
-        while (food == null) {
+        PathNode targetNode = null;
+        while (food == null || targetNode == null) {
             yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 2f));
-            food = GameManager.Instance.natureManager.FindClosestFood(edibles, _character.motionComponent.GetGridPosition());
+            food = ItemFinder.FindClosestFood(edibles, _character.motionComponent.GetGridPosition(), ref targetNode);
         }
-
+        
         getFoodTask = new Task();
-        getFoodTask.AddCommand(new MoveCommand(_character.motionComponent, GameManager.Instance.world.GetTileAt(food.GetEdiblePosition())));
+        getFoodTask.AddCommand(new MoveCommand(_character.motionComponent, GameManager.Instance.world.GetTileAt(targetNode.position)));
+        getFoodTask.AddCommand(new RotateToCommand(_character.motionComponent, GameManager.Instance.world.GetTileAt(food.GetEdiblePosition())));
         getFoodTask.AddCommand(new EatCommand(this, food));
         getFoodTask.TaskResultHandler += HandleGetFoodTaskResult;
 
@@ -65,6 +69,7 @@ public class HungerComponent : MonoBehaviour
         while(getFoodTask != null)
             yield return null;
     }
+    ///////////
 
     private void HandleGetFoodTaskResult(bool result) {
 

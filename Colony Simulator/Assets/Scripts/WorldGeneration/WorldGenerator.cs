@@ -6,6 +6,7 @@ public static class WorldGenerator
 {   
     public static int perlinSeed = 12;
     private static GameObject tileParent;
+    private static GameSettingsScriptableObject _gameSettings;
 
     private static void FindTileParent() {
 
@@ -17,12 +18,12 @@ public static class WorldGenerator
         }
     }
 
-    private static void GenerateEmptyWorld(Vector2Int dimensions, ref Tile[,] grid) {
+    private static void GenerateEmptyWorld(ref Tile[,] grid) {
 
-        grid = new Tile[dimensions.x, dimensions.y];
+        grid = new Tile[_gameSettings.worldWidth, _gameSettings.worldHeight];
 
-        for (int x = 0; x < dimensions.x; x++) {
-            for (int y = 0; y < dimensions.y; y++) {
+        for (int x = 0; x < _gameSettings.worldWidth; x++) {
+            for (int y = 0; y < _gameSettings.worldHeight; y++) {
 
                 Tile tile = StaticObjectSpawnFactory.GetNewStaticObject("tile","tile",new Vector2Int(x, y)) as Tile;
                 tile.GameObject.transform.parent = tileParent.transform;
@@ -32,34 +33,35 @@ public static class WorldGenerator
         }
     }
 
-    public static void GenerateWorld(Vector2Int dimensions, ref Tile[,] grid) {
+    public static void GenerateWorld(GameSettingsScriptableObject gameSettings, ref Tile[,] grid) {
 
-        grid = new Tile[dimensions.x, dimensions.y];
+        _gameSettings = gameSettings;
+        grid = new Tile[_gameSettings.worldWidth, _gameSettings.worldHeight];
 
         FindTileParent();
-        GenerateTerrainWithPerlinNoise(dimensions, ref grid);
-        GenerateVegetation(dimensions, ref grid);
+        GenerateTerrainWithPerlinNoise(ref grid);
+        GenerateVegetation(ref grid);
         GenerateCharacters();
     }
 
-    private static void GenerateTerrainWithPerlinNoise(Vector2Int dimensions, ref Tile[,] grid, float seaLevel = 0.33f) {
+    private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {
 
         PerlinNoise pn = new PerlinNoise(perlinSeed);
 
-        int nOctaves = pn.CalculateMaxOctavesCount(dimensions.x);
+        int nOctaves = pn.CalculateMaxOctavesCount(_gameSettings.worldWidth);
         float fBias = 2f;
 
-        float[,] perlinArray = new float[dimensions.x, dimensions.y];
+        float[,] perlinArray = new float[_gameSettings.worldWidth, _gameSettings.worldHeight];
 
-        pn.Get2DPerlinNoise(dimensions.x, dimensions.y, nOctaves, fBias, ref perlinArray);
+        pn.Get2DPerlinNoise(_gameSettings.worldWidth, _gameSettings.worldHeight, nOctaves, fBias, ref perlinArray);
 
         //Min and max values that perlin array has
         float minP = 1;
         float maxP = 0;
 
         //calculating max and min values of perlin array
-        for(int x = 0; x < dimensions.x; x++) {
-            for(int y = 0; y < dimensions.y; y++) {
+        for(int x = 0; x < _gameSettings.worldWidth; x++) {
+            for(int y = 0; y < _gameSettings.worldHeight; y++) {
                 
                 float v = perlinArray[x,y];
 
@@ -73,8 +75,8 @@ public static class WorldGenerator
         float sea = minP + elevationRange * seaLevel;
         float sand = sea + (maxP - sea) * 0.2f;
 
-        for (int x = 0; x < dimensions.x; x++) {
-            for(int y = 0; y < dimensions.y; y++) {
+        for (int x = 0; x < _gameSettings.worldWidth; x++) {
+            for(int y = 0; y < _gameSettings.worldHeight; y++) {
 
                 float height = perlinArray[x,y];
 
@@ -93,15 +95,15 @@ public static class WorldGenerator
 			}
 		}
 
-        for (int x = 0; x < dimensions.x; x++)
-            for(int y = 0; y < dimensions.y; y++)
+        for (int x = 0; x < _gameSettings.worldWidth; x++)
+            for(int y = 0; y < _gameSettings.worldHeight; y++)
                 TileSpriteRenderer.Instance.UpdateTileBorders(grid[x,y]);
     }
 
-    private static void GenerateVegetation(Vector2Int dimensions, ref Tile[,] grid) {
+    private static void GenerateVegetation(ref Tile[,] grid) {
         
-        for(int x = 0; x < dimensions.x; x++) {
-            for(int y = 0; y < dimensions.y; y++) {
+        for(int x = 0; x < _gameSettings.worldWidth; x++) {
+            for(int y = 0; y < _gameSettings.worldHeight; y++) {
                 
                 Tile tile = grid[x, y];
 
@@ -116,13 +118,14 @@ public static class WorldGenerator
 
     private static void GenerateCharacters() {
         
-        Human human = CharacterSpawnFactory.GetNewCharacter("human", "human", new Vector2Int(45, 35)) as Human;
-        if (human != null)
-            GameManager.Instance.characterManager.colonists.Add(human);
+        for (int i = 0; i < _gameSettings.humanCount; i++) {
 
-        int rabbitCount = 20;
+            Human human = CharacterSpawnFactory.GetNewCharacter("human", "human", new Vector2Int(45, 35)) as Human;
+            if (human != null)
+                GameManager.Instance.characterManager.colonists.Add(human);
+        }
 
-        for (int i = 0; i < rabbitCount; i++) {
+        for (int i = 0; i < _gameSettings.rabbitCount; i++) {
             
             Tile t = null;
 
