@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathfinderRegionSystem
-{   
+public class PathfinderRegionSystem {
+
     public List<Region> regions { get; private set; }
 
-    private Vector2Int dimensions;
+    private Vector2Int _dimensions;
+
     public PathfinderRegionSystem(Vector2Int dimensions) {
 
-        this.dimensions = dimensions;
+        _dimensions = dimensions;
         CreateRegions();
     }
 
@@ -29,11 +30,10 @@ public class PathfinderRegionSystem
 
         regions = new List<Region>();
 
-        for (int x = 0; x < dimensions.x; x++) {
-            for (int y = 0; y < dimensions.y; y++) {
+        for (int x = 0; x < _dimensions.x; x++) {
+            for (int y = 0; y < _dimensions.y; y++) {
 
                 PathNode node = GameManager.Instance.pathfinder.grid.GetNodeAt(new Vector2Int(x, y));
-
                 if (node.region == null && node.isTraversable) {
 
                     Region newRegion = CreateRegionAt(node);
@@ -50,7 +50,6 @@ public class PathfinderRegionSystem
         Region region = new Region();
 
         List<PathNode> openNodes = new List<PathNode>();
-
         openNodes.Add(startNode);
 
         int result = 0;
@@ -104,19 +103,9 @@ public class PathfinderRegionSystem
             for(int y = initialCell.position.y - 1; y <= initialCell.position.y + 1; y++) {
 
                 Vector2Int checkPosition = new Vector2Int(x, y);
-
                 PathNode n = GameManager.Instance.pathfinder.grid.GetNodeAt(checkPosition);
 
-                if (n == null)
-                    continue;
-
-                if (!n.isTraversable)
-                    continue;
-
-                if (n.region != null)
-                    continue;
-                
-                if (openSet.Contains(n))
+                if (n == null || !n.isTraversable || n.region != null || openSet.Contains(n))
                     continue;
 
                 openSet.Insert(0, n);

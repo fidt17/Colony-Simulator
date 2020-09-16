@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugManager : MonoBehaviour
-{
-    public static DebugManager Instance;
+public class DebugManager : MonoBehaviour {
 
+    public static DebugManager Instance;
+    
     public PathfinderRenderer pathfinderRenderer;
 
     private void Awake() {
 
         if (Instance != null) {
 
-            Debug.LogError("Only one DebugManager can exist at a time!");
+            Debug.LogError("Only one DebugManager can exist at a time.");
             Destroy(gameObject);
         }
 
         Instance = this;
-
         pathfinderRenderer = GetComponent<PathfinderRenderer>();
     }
 
@@ -32,10 +31,7 @@ public class DebugManager : MonoBehaviour
         }
     }
 
-    public void OnDrawRegionsToggleChanged(bool toggleValue) {
-
-        pathfinderRenderer.drawRegions = toggleValue;
-    }
+    public void OnDrawRegionsToggleChanged(bool toggleValue) => pathfinderRenderer.drawRegions = toggleValue;
 
     #endregion
 }

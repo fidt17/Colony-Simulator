@@ -6,8 +6,8 @@ using System.Linq;
 using System;
 using UnityEditor;
 
-public static class CharacterSpawnFactory
-{   
+public static class CharacterSpawnFactory {
+       
     public static Dictionary<string, Type> types;
     public static Dictionary<string, CharacterScriptableObject> scriptableObjects;
 

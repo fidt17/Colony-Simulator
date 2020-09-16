@@ -1,20 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
-public class PerlinNoise
-{
-	int seed;
-	
-	public PerlinNoise(int seed)
-	{
-		this.seed = seed;
-	}
+public class PerlinNoise {
 
-    public int CalculateMaxOctavesCount(int worldWidth)
-    {
+	private int _seed;
+	
+	public PerlinNoise(int seed) => _seed = seed;
+
+    public int CalculateMaxOctavesCount(int worldWidth) {
         int maxOctavesCount = 0;
 
-        while(worldWidth != 0) {
+        while (worldWidth != 0) {
             worldWidth /= 2;
             maxOctavesCount++;
 		}
@@ -22,13 +18,13 @@ public class PerlinNoise
         return maxOctavesCount;
 	}
 	
-	public void Get2DPerlinNoise(int xSize, int ySize, int nOctaves, float fBias, ref float[,] perlinArray)
-	{
-		Random.InitState(seed);
+	public void Get2DPerlinNoise(int xSize, int ySize, int nOctaves, float fBias, ref float[,] perlinArray) {
+
+		Random.InitState(_seed);
 		float [,] seedArray = new float[xSize, ySize];
 
-		for(int x = 0; x < xSize; x++) {
-			for(int y = 0; y < ySize; y++) {
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
 				seedArray[x,y] = Random.Range(0.0f, 1.0f);
 			}
 		}
@@ -36,8 +32,7 @@ public class PerlinNoise
 		PerlinNoise2D(xSize, ySize, seedArray, nOctaves, fBias, ref perlinArray);
 	}
 
-	private void PerlinNoise2D(int nWidth, int nHeight, float[,] fSeed, int nOctaves, float fBias, ref float[,] perlinArray) 
-	{
+	private void PerlinNoise2D(int nWidth, int nHeight, float[,] fSeed, int nOctaves, float fBias, ref float[,] perlinArray) {
 
 		for (int x = 0; x < nWidth; x++) {
 			for (int y = 0; y < nHeight; y++)
@@ -75,13 +70,7 @@ public class PerlinNoise
 		}
 	}
 
-	private float fade(float t)
-	{ 
-		return t * t * t * (t * (t * 6 - 15) + 10);
-	}
+	private float fade(float t) => t * t * t * (t * (t * 6 - 15) + 10);
 
-	private float lerp(float t, float a, float b)
-	{
-		return a + t * (b - a); 
-	}
+	private float lerp(float t, float a, float b) => a + t * (b - a); 
 }

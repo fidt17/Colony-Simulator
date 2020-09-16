@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPlacable
-{
+public interface IPlacable {
+    
     void PutOnTile();
     void RemoveFromTile();
 }

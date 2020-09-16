@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EatCommand : Command
-{
-    private HungerComponent hungerComponent;
+public class EatCommand : Command {
+
     private IEdible _food;
+    private HungerComponent _hungerComponent;
 
     public EatCommand(HungerComponent hungerComponent, IEdible food) {
 
-        this.hungerComponent = hungerComponent;
+        _hungerComponent = hungerComponent;
         _food = food;
 
         ((StaticObject) _food).OnDestroy += OnFoodDestroyed;
-    }
-
-    public override void Abort() { 
-
-        ((StaticObject) _food).OnDestroy -= OnFoodDestroyed;
     }
 
     public override void Execute() {
@@ -28,12 +23,11 @@ public class EatCommand : Command
         }
 
         ((StaticObject) _food).OnDestroy -= OnFoodDestroyed;
-        _food.Eat(hungerComponent);
+        _food.Eat(_hungerComponent);
         Finish(true);
     }
 
-    private void OnFoodDestroyed(StaticObject food) {
+    public override void Abort() => ((StaticObject) _food).OnDestroy -= OnFoodDestroyed;
 
-        Finish(false);
-    }
+    private void OnFoodDestroyed(StaticObject food) => Finish(false);
 }

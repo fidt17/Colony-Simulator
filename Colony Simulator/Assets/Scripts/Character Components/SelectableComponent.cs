@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectableComponent : MonoBehaviour
-{
-    public ISelectable selectable;
-    private GameObject _selectionRim;
+public class SelectableComponent : MonoBehaviour {
 
-    public bool isSelected { get; private set; }
+    public ISelectable selectable;
+
+    private GameObject _selectionRim;
 
     public void Initialize(ISelectable selectable, GameObject selectionRim) {
 
@@ -18,18 +17,13 @@ public class SelectableComponent : MonoBehaviour
 
     public void Select() {
 
-        isSelected = true;
-        _selectionRim?.SetActive(true);
+        if(_selectionRim != null)
+            _selectionRim.SetActive(true);
     }
 
     public void Deselect() {
-
-        isSelected = false;
-        _selectionRim?.SetActive(false);
-    }
-
-    public void OnDestroy() {
-
         
+        if(_selectionRim != null)
+            _selectionRim.SetActive(false);
     }
 }

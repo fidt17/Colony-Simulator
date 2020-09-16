@@ -91,6 +91,7 @@
      <Compile Include="Assets\Scripts\Objects\Characters\Human.cs" />
      <Compile Include="Assets\Scripts\Objects\Characters\Rabbit.cs" />
      <Compile Include="Assets\Scripts\Objects\Nature\Grass.cs" />
+     <Compile Include="Assets\Scripts\Objects\Nature\Tree.cs" />
      <Compile Include="Assets\Scripts\Objects\StaticObject.cs" />
      <Compile Include="Assets\Scripts\Objects\Tile.cs" />
      <Compile Include="Assets\Scripts\Objects\World.cs" />

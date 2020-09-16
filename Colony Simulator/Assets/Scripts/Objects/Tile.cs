@@ -10,25 +10,19 @@ public enum TileType {
     water
 }
 
-public class Tile : StaticObject
-{
+public class Tile : StaticObject {
+
+    public override string Name => "tile";
+
     public TileType type { get; set; }
-
-    public override string Name {
-        get {
-            return "tile";
-        }
-    }
-
     public StaticObject objectOnTile = null;
 
     public SpriteRenderer mainSprite { get; private set; }
     public Color defaultSpriteColor;
-
     private TileType[,] borderMatrix = new TileType[3,3];
 
-    public Tile() : base (Vector2Int.one)
-    {
+    public Tile() : base (Vector2Int.one) {
+
         isTraversable = true;
         type = TileType.empty;
     }
@@ -44,7 +38,6 @@ public class Tile : StaticObject
     public override void Destroy() {
 
         Debug.LogWarning("Something went wrong. Tiles are not supposed to be destroyed.");
-        
         base.Destroy();
     }
 
@@ -54,6 +47,30 @@ public class Tile : StaticObject
 
         type = ((TileScriptableObject) data).tileType;
         isTraversable = ((TileScriptableObject) data).isTraversable;
+    }
+
+    public void PutStaticObjectOnTile(StaticObject staticObject, bool isTraversable) {
+
+        if (objectOnTile != null)
+            objectOnTile.Destroy();
+
+        objectOnTile = staticObject;
+
+        if (this.isTraversable != isTraversable)
+            GameManager.Instance.UpdatePathfinder();
+
+        this.isTraversable = isTraversable;
+    }
+
+    public void RemoveStaticObjectFromTile() {
+
+        if (!isTraversable) {
+
+            GameManager.Instance.UpdatePathfinder();
+            isTraversable = true;
+        }
+
+        objectOnTile = null;
     }
 
     //DELETE ME

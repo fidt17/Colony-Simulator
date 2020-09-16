@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class NatureManager : MonoBehaviour
-{
+public class NatureManager : MonoBehaviour {
+
     #region Food
 
     public List<IEdible> edibleList = new List<IEdible>();
@@ -17,9 +17,8 @@ public class NatureManager : MonoBehaviour
 
     #endregion
 
+    //Temporal solution. I should change this to wave search later on.
     public IEdible FindClosestFood(List<Type> canEat, Vector2Int sourcePosition) {
-
-        //temporal solution. I should change this to wave search later on.
 
         int minDistance = 100 * 100;
         IEdible result = null;
@@ -30,7 +29,6 @@ public class NatureManager : MonoBehaviour
                 continue;
 
             int sqrDistance = (edible.GetEdiblePosition() - sourcePosition).sqrMagnitude;
-
             if (sqrDistance < minDistance) {
 
                 PathNode characterPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition);

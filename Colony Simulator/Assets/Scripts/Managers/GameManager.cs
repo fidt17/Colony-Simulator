@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
+
     public static GameManager Instance { get; private set; }
 
     public World world { get; private set; }
@@ -11,31 +11,23 @@ public class GameManager : MonoBehaviour
     public CharacterManager characterManager { get; private set; }
     public NatureManager natureManager { get; private set; }
 
-    //TODO
-    //Create startup settings system
     public GameSettingsScriptableObject gameSettings;
-
-    private Vector2Int _dimensions = new Vector2Int(50, 50);
 
     private void Awake() {
 
         if(Instance != null) {
 
-            Debug.LogError("Only one GameManager can exist at a time!", this);
+            Debug.LogError("Only one GameManager can exist at a time", this);
             Destroy(gameObject);
             return;
         }
 
         Instance = this;
-
         characterManager = GetComponent<CharacterManager>();
         natureManager = GetComponent<NatureManager>();
     }
 
-    private void Start() {
-
-        Initialize();
-    }
+    private void Start() => Initialize();
 
     #region Initialization
 
@@ -47,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private void CreateWorld() {
 
-        Vector2Int dimensions = new Vector2Int(gameSettings.worldWidth, gameSettings.worldHeight);
+        var dimensions = new Vector2Int(gameSettings.worldWidth, gameSettings.worldHeight);
 
         world = new World(dimensions);
         WorldGenerator.GenerateWorld(gameSettings, ref world.grid);
@@ -64,6 +56,14 @@ public class GameManager : MonoBehaviour
 
         pathfinder = new Pathfinder(world.dimensions);
         pathfinder.CreateRegionSystem();
+    }
+
+    public void UpdatePathfinder() {
+
+        if(pathfinder == null)
+            return;
+
+        StartCoroutine(pathfinder.UpdateSystem());
     }
 
     #endregion

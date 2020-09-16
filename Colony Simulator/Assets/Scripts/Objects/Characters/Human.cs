@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Human : Character, IMotionAnimator
-{   
-    public override string Name {
+public class Human : Character, IMotionAnimator {
 
-        get {
-            return "human";
-        }
-    }
+    public override string Name => "human";
 
     #region Components
 
@@ -22,7 +17,6 @@ public class Human : Character, IMotionAnimator
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
 
         base.SetGameObject(gameObject, position);
-
         InitializeMotionAnimator();
     }
 

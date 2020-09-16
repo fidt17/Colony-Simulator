@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathGrid
-{
+public class PathGrid {
+
     public PathNode[,] nodes;
-    private Vector2Int dimensions;
+    
+    private Vector2Int _dimensions;
 
     public PathGrid(Vector2Int dimensions) {
 
-        this.dimensions = dimensions;
+        _dimensions = dimensions;
 
         CreateGrid();
     }
 
     public void CreateGrid() {
 
-        nodes = new PathNode[dimensions.x, dimensions.y];
+        nodes = new PathNode[_dimensions.x, _dimensions.y];
 
-        for (int x = 0; x < dimensions.x; x++) {
-            for (int y = 0; y < dimensions.y; y++) {
+        for (int x = 0; x < _dimensions.x; x++) {
+            for (int y = 0; y < _dimensions.y; y++) {
                 
                 Vector2Int position = new Vector2Int(x, y);
                 bool isTraversable = GameManager.Instance.world.GetTileAt(position).isTraversable;

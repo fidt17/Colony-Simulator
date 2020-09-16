@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public interface IMotionAnimator
-{
+public interface IMotionAnimator {
+    
     MotionAnimatorComponent motionAnimator { get; }
     void InitializeMotionAnimator();
 }

@@ -14,35 +14,25 @@ public class TestScript : MonoBehaviour
             BuildWall();
 
         if (Input.GetKeyDown(KeyCode.G))
-            Test2();
+            SpawnVegetation();
     }
 
-    private IEnumerator spawnGrass() {
+    private void SpawnVegetation() {
 
-        while(true) {
-            
-            Tile t = null;
-
-            while (t == null || t.type != TileType.grass)
-             t = GameManager.Instance.world.GetTileAt(new Vector2Int((int) Random.Range(0, 50), (int) Random.Range(0, 50)));
-            
-            StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", t.position);
-
-            yield return new WaitForSeconds(1f);
-        }
-    }
-
-    private void Test2() {
-
-        for(int x = 0; x < 50; x++) {
-            for(int y = 0; y < 50; y++) {
+        for(int x = 0; x < GameManager.Instance.gameSettings.worldWidth; x++) {
+            for(int y = 0; y < GameManager.Instance.gameSettings.worldHeight; y++) {
                 
                 Tile tile = GameManager.Instance.world.GetTileAt(new Vector2Int(x, y));
 
                 if (tile.type != TileType.grass)
                     continue;
 
-                StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y));
+                float r = Random.Range(0f, 1f);
+
+                if (r > 0.95f)
+                    StaticObjectSpawnFactory.GetNewStaticObject("tree", "tall tree", new Vector2Int(x, y));
+                else if(r > 0.6f)
+                    StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y));
 			}
 		}
     }

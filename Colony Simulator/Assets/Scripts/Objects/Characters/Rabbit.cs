@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rabbit : Character, IMovable, IMotionAnimator
-{   
-    public override string Name {
-        get {
-            return "rabbit";
-        }
-    }
+public class Rabbit : Character, IMovable, IMotionAnimator {
+
+    public override string Name => "rabbit";
 
     #region Components
 

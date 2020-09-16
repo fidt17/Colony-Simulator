@@ -3,46 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class HungerComponent : MonoBehaviour
-{   
-    private Character _character;
-
-    private float _hunger = 100;
-    public float HungerLevel {
-        get {
-            return _hunger;
-        }
-    }
-
-    private float _hungerDecreasePerSecond = 1;
-    private const float _foodSearchThreshold = 70;//if hunger level drops below this value, character will try to find food nearby.
+public class HungerComponent : MonoBehaviour {   
+    
+    public float HungerLevel => _hunger;
 
     public List<Type> edibles = new List<Type>();// List of things character can eat.
 
-    private void Start() {
+    private Character _character;
 
-        StartCoroutine(DecreaseHunger());
-    }
+    private float _hunger = 100;
+    private float _hungerDecreasePerSecond = 1;
+    private const float _foodSearchThreshold = 70;//FIX ME
 
-    public void Initialize(Character character, float hungerDecreasePerSecond) {
+    public void Initialize(Character character) {
 
         _character = character;
-        _hungerDecreasePerSecond = hungerDecreasePerSecond;
+        _hungerDecreasePerSecond = _character.data.hungerDecreasePerSecond;
     }
 
-    private void Update() {
+    private void Start() => StartCoroutine(DecreaseHunger());
 
+    private void OnDestroy() {
+
+        if (getFoodTask != null)
+            getFoodTask.TaskResultHandler -= HandleGetFoodTaskResult;
+    }
+
+    public void ChangeHunger(float value) {
+
+        _hunger = Mathf.Clamp(_hunger + value, 0, 100);
         CheckHunger();
     }
 
-    public void ChangeHunger(float value) { _hunger = Mathf.Clamp(_hunger + value, 0, 100); }
-
-    #region Food searching region
-
+    #region Food search
 
     //temporal solution untill I create more advanced AI controller
     private bool isSearchingForFood = false;
     private Task getFoodTask = null;
+
     private IEnumerator StartFoodSearch() {
 
         if (isSearchingForFood || edibles.Count == 0 || getFoodTask != null)
@@ -52,7 +50,7 @@ public class HungerComponent : MonoBehaviour
         
         IEdible food = null;
         PathNode targetNode = null;
-        while (food == null || targetNode == null) {
+        while (food is null || targetNode is null) {
             yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 2f));
             food = ItemFinder.FindClosestFood(edibles, _character.motionComponent.GetGridPosition(), ref targetNode);
         }
@@ -66,7 +64,7 @@ public class HungerComponent : MonoBehaviour
         _character.commandProcessor.AddTask(getFoodTask);
         _character.commandProcessor.StartExecution();
 
-        while(getFoodTask != null)
+        while (getFoodTask != null)
             yield return null;
     }
     ///////////
@@ -84,21 +82,16 @@ public class HungerComponent : MonoBehaviour
         while (true) {
             yield return new WaitForSeconds(1);
             ChangeHunger(-_hungerDecreasePerSecond);
+            CheckHunger();
         }
     }
 
     private void CheckHunger() {
-
+        
         if (_hunger < _foodSearchThreshold)
             StartCoroutine(StartFoodSearch());
 
         if (_hunger == 0)
             _character.Die();
-    }
-
-    private void OnDestroy() {
-
-        if (getFoodTask != null)
-            getFoodTask.TaskResultHandler -= HandleGetFoodTaskResult;
     }
 }

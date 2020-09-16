@@ -4,25 +4,20 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public static class ItemFinder
-{
-    public static IEdible FindClosestFood(List<Type> canEat, Vector2Int sourcePosition, ref PathNode targetNode) {
+public static class ItemFinder {
 
-        //temporal solution. I should change this to wave search later on.
+    //Temporal solution. I should change this to wave search later on.
+    public static IEdible FindClosestFood(List<Type> canEat, Vector2Int sourcePosition, ref PathNode targetNode) {
 
         int minDistance = Int32.MaxValue;
         IEdible result = null;
 
         foreach(IEdible edible in GameManager.Instance.natureManager.edibleList) {
             
-            if (edible == null)
-                continue;
-
             if (!canEat.Contains(edible.GetType()))
                 continue;
 
             int sqrDistance = (edible.GetEdiblePosition() - sourcePosition).sqrMagnitude;
-
             if (sqrDistance < minDistance) {
 
                 PathNode characterPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition);
@@ -70,7 +65,6 @@ public static class ItemFinder
         foreach(PathNode node in possiblePositions) {
 
             int sqrDistance = (node.position - sourceNode.position).sqrMagnitude;
-
             if (sqrDistance < minDistance) {
 
                 minDistance = sqrDistance;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEdible
-{   
+public interface IEdible {
+       
     int NutritionValue { get; }
     Vector2Int GetEdiblePosition();
     void AddToGlobalEdiblesList();

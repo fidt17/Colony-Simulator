@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathNode
-{
-    public bool isTraversable;
+public class PathNode {
+
     public Vector2Int position;
 
+    public Region region;
+    public PathNode parent;
+
+    public bool isTraversable;
     public int gCost, hCost;
-
-    public PathNode parent = null;
-
-    public Region region = null;
 
     public PathNode(Vector2Int position, bool isTraversable) {
 
@@ -21,11 +20,7 @@ public class PathNode
         hCost = 0;
     }
 
-    public Tile GetTile() {
-        return GameManager.Instance.world.GetTileAt(position);
-    }
+    public Tile GetTile() => GameManager.Instance.world.GetTileAt(position);
 
-    public int fCost() {
-        return gCost + hCost;
-    }
+    public int fCost() => gCost + hCost;
 }

@@ -5,30 +5,32 @@ using UnityEngine;
 public class MotionAnimatorComponent : MonoBehaviour {
 
     private Animator _animator;
+    private MotionComponent _motionComponent;
 
-    private MotionComponent motionComponent;
+    public void Initialize(MotionComponent motionComponent) {
+
+        if (motionComponent is null)
+            Debug.LogError("Motion Component does not exist.", this);
+
+        _motionComponent = motionComponent;
+        _motionComponent.VelocityHandler += HandleVelocity;
+    }
 
     private void Awake() {
 
         _animator = gameObject.GetComponent<Animator>();
+
+        if (_animator is null)
+            Debug.LogWarning("No Animator was found.", this);
     }
 
-    public void Initialize(MotionComponent motionComponent) {
-
-        this.motionComponent = motionComponent;
-        motionComponent.VelocityHandler += HandleVelocity;
-    }
+    private void OnDestroy() => _motionComponent.VelocityHandler -= HandleVelocity;
 
     private void HandleVelocity(Vector2 velocity, FacingDirection direction) {
-
+        
         _animator.SetFloat("velocityX", velocity.x);
         _animator.SetFloat("velocityY", velocity.y);
 
         _animator.SetInteger("directionIndex", (velocity != Vector2Int.zero) ? -1 : (int) direction);
-    }
-
-    private void OnDestroy() {
-
-        motionComponent.VelocityHandler -= HandleVelocity;
     }
 }

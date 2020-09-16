@@ -2,36 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class WorldGenerator
-{   
+public static class WorldGenerator {
+
     public static int perlinSeed = 12;
-    private static GameObject tileParent;
+    
+    private static GameObject _tileParent;
     private static GameSettingsScriptableObject _gameSettings;
-
-    private static void FindTileParent() {
-
-        tileParent = GameObject.Find("World_Tiles");
-
-        if (tileParent == null) {
-            Debug.LogError("World_Tiles GameObject is missing!");
-            return;
-        }
-    }
-
-    private static void GenerateEmptyWorld(ref Tile[,] grid) {
-
-        grid = new Tile[_gameSettings.worldWidth, _gameSettings.worldHeight];
-
-        for (int x = 0; x < _gameSettings.worldWidth; x++) {
-            for (int y = 0; y < _gameSettings.worldHeight; y++) {
-
-                Tile tile = StaticObjectSpawnFactory.GetNewStaticObject("tile","tile",new Vector2Int(x, y)) as Tile;
-                tile.GameObject.transform.parent = tileParent.transform;
-
-                grid[x, y] = tile;
-            }
-        }
-    }
 
     public static void GenerateWorld(GameSettingsScriptableObject gameSettings, ref Tile[,] grid) {
 
@@ -42,6 +18,16 @@ public static class WorldGenerator
         GenerateTerrainWithPerlinNoise(ref grid);
         GenerateVegetation(ref grid);
         GenerateCharacters();
+    }
+
+    private static void FindTileParent() {
+
+        _tileParent = GameObject.Find("World_Tiles");
+
+        if (_tileParent == null) {
+            Debug.LogError("World_Tiles GameObject is missing!");
+            return;
+        }
     }
 
     private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {
@@ -76,41 +62,46 @@ public static class WorldGenerator
         float sand = sea + (maxP - sea) * 0.2f;
 
         for (int x = 0; x < _gameSettings.worldWidth; x++) {
-            for(int y = 0; y < _gameSettings.worldHeight; y++) {
+            for (int y = 0; y < _gameSettings.worldHeight; y++) {
 
                 float height = perlinArray[x,y];
 
                 string dataName = "tile";
 
-                if(height < sea) {
+                if (height < sea) {
                     dataName = "water_tile";
-				} else if(height < sand) {
+				} else if (height < sand) {
                     dataName = "sand_tile";
 				} else {
                     dataName = "grass_tile";
 				}
 
                 Tile tile = StaticObjectSpawnFactory.GetNewStaticObject("tile", dataName, new Vector2Int(x, y)) as Tile;
+                tile.GameObject.transform.parent = _tileParent.transform;
                 grid[x, y] = tile;
 			}
 		}
 
         for (int x = 0; x < _gameSettings.worldWidth; x++)
-            for(int y = 0; y < _gameSettings.worldHeight; y++)
+            for (int y = 0; y < _gameSettings.worldHeight; y++)
                 TileSpriteRenderer.Instance.UpdateTileBorders(grid[x,y]);
     }
 
     private static void GenerateVegetation(ref Tile[,] grid) {
         
-        for(int x = 0; x < _gameSettings.worldWidth; x++) {
-            for(int y = 0; y < _gameSettings.worldHeight; y++) {
+        for (int x = 0; x < _gameSettings.worldWidth; x++) {
+            for (int y = 0; y < _gameSettings.worldHeight; y++) {
                 
                 Tile tile = grid[x, y];
 
                 if (tile.type != TileType.grass)
                     continue;
 
-                if (Random.Range(0f, 1f) > 0.8f)
+                float r = Random.Range(0f, 1f);
+
+                if (r > 0.95f)
+                    StaticObjectSpawnFactory.GetNewStaticObject("tree", "tall tree", new Vector2Int(x, y));
+                else if (r > 0.6f)
                     StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y));
 			}
 		}

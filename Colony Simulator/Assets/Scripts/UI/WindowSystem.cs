@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WindowSystem : MonoBehaviour
-{
+public class WindowSystem : MonoBehaviour {
+
     public static WindowSystem Instance;
 
     List<WindowComponent> windows;
@@ -19,7 +19,6 @@ public class WindowSystem : MonoBehaviour
         Instance = this;
     
         FindWindows();
-
         InputController.Instance.OnEscape_Down += CloseWindows;
     }
 
@@ -29,12 +28,7 @@ public class WindowSystem : MonoBehaviour
         CloseWindows();
     }
 
-    public WindowComponent FindWindowOfType(WindowType type) {
-
-        WindowComponent window = windows.Find(w => w.windowType == type);
-
-        return window;
-    }
+    public WindowComponent FindWindowOfType(WindowType type) => windows.Find(w => w.windowType == type);
 
     public WindowComponent SwitchWindow(WindowType type) {
 
@@ -75,11 +69,7 @@ public class WindowSystem : MonoBehaviour
         }
     }
 
-    private void CloseWindows() {
-        windows.ForEach(w => w.CloseWindow());
-    }
+    private void CloseWindows() => windows.ForEach(w => w.CloseWindow());
 
-    private void OnDestroy() {
-        InputController.Instance.OnEscape_Down -= CloseWindows;
-    }
+    private void OnDestroy() => InputController.Instance.OnEscape_Down -= CloseWindows;
 }

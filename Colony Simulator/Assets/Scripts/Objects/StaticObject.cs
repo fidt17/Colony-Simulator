@@ -2,34 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StaticObject : IGameObject
-{   
-    public abstract string Name { get; }
-    public StaticScriptableObject data;
+public abstract class StaticObject : IGameObject {
 
-    protected GameObject _gameObject;
-    public GameObject GameObject {
-        get {
-            return _gameObject;
-        }
-    }
+    public delegate void OnObjectDestroyed(StaticObject staticObject);
+    public event OnObjectDestroyed OnDestroy;
+
+    public abstract string Name { get; }
+
+    public StaticScriptableObject data;
+    public GameObject GameObject => _gameObject;
 
     public Vector2Int position   { get; protected set; }
     public Vector2Int dimensions { get; protected set; }
+    public bool isTraversable    { get; protected set; }
 
-    public bool isTraversable { get; protected set; }
+    protected GameObject _gameObject;
     
     public StaticObject() {}
 
-    public StaticObject(Vector2Int dimensions) {
+    public StaticObject(Vector2Int dimensions) => this.dimensions = dimensions;
 
-        this.dimensions = dimensions;
-    }
-
-    public virtual void SetData(StaticScriptableObject data) {
-
-        this.data = data;
-    }
+    public virtual void SetData(StaticScriptableObject data) => this.data = data;
 
     public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
 
@@ -43,7 +36,4 @@ public abstract class StaticObject : IGameObject
         GameObject.Destroy(_gameObject);
         OnDestroy?.Invoke(this);
     }
-
-    public delegate void OnObjectDestroyed(StaticObject staticObject);
-    public event OnObjectDestroyed OnDestroy;
 }

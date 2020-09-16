@@ -2,30 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pathfinder
-{   
-    public PathGrid grid;
-    public PathfinderRegionSystem regionSystem;
-    private Vector2Int dimensions;
+public class Pathfinder {
 
     public delegate void OnPathFound(List<PathNode> closedSet);
     public event OnPathFound PathHandler;
 
+    public PathGrid grid;
+    public PathfinderRegionSystem regionSystem;
+    
+    private Vector2Int _dimensions;
+
     public Pathfinder(Vector2Int dimensions) {
 
-        this.dimensions = dimensions;
-
-        grid = new PathGrid(dimensions);
+        _dimensions = dimensions;
+        grid = new PathGrid(_dimensions);
     }
 
-    public void CreateRegionSystem() {
-        regionSystem = new PathfinderRegionSystem(dimensions);
-    }
+    public void CreateRegionSystem() => regionSystem = new PathfinderRegionSystem(_dimensions);
 
-    public void UpdateSystem() {
+    private bool _isUpdatingSystem = false;
+    public IEnumerator UpdateSystem() {
 
-        grid = new PathGrid(dimensions);
+        if(_isUpdatingSystem)
+            yield break;
+
+        _isUpdatingSystem = true;
+
+        yield return new WaitForSeconds(0.25f);
+
+        grid = new PathGrid(_dimensions);
         regionSystem.UpdateSystem();
+
+        _isUpdatingSystem = false;
     }
 
     public List<PathNode> GetPath(Vector2Int start, Vector2Int target) {
@@ -47,7 +55,6 @@ public class Pathfinder
         while (openSet.Count > 0) {
 
             PathNode currentNode = openSet[0];
-
             for (int i = 1; i < openSet.Count; i++) {
 
                 if ((openSet[i].fCost() <= currentNode.fCost())
@@ -71,7 +78,6 @@ public class Pathfinder
                     continue;
 
                 int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
-
                 if(newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour)) {
 
                     neighbour.gCost = newMovementCostToNeighbour;
@@ -81,9 +87,7 @@ public class Pathfinder
                     if (!openSet.Contains(neighbour))
                         openSet.Add(neighbour);
                 }
-
             }
-
         }
 
         return null;
@@ -100,14 +104,12 @@ public class Pathfinder
         }
 
         path.Reverse();
-
         return path;
     }
 
     private List<PathNode> GetNeighbours(PathNode node) {
 
 		List<PathNode> neighbours = new List<PathNode>();
-
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
 

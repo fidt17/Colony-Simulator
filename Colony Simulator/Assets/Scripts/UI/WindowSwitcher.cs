@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class WindowSwitcher : MonoBehaviour
-{
+public class WindowSwitcher : MonoBehaviour {
+
     public WindowType windowType;
     public bool isSubWindow = false;
 
@@ -18,10 +18,7 @@ public class WindowSwitcher : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    private void Start() {
-
-        button.onClick.AddListener(OnButtonClick);    
-    }
+    private void Start() => button.onClick.AddListener(OnButtonClick);    
 
     private void OnButtonClick() {
         

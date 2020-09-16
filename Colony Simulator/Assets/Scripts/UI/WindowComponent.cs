@@ -9,10 +9,9 @@ public enum WindowType {
     DebugPathfinding
 }
 
-public class WindowComponent : MonoBehaviour
-{
-    public WindowType windowType;
+public class WindowComponent : MonoBehaviour {
 
+    public WindowType windowType;
     public List<WindowComponent> subWindows = new List<WindowComponent>();
 
     public virtual void CloseWindow() {

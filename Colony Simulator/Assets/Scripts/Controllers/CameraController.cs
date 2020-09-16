@@ -6,25 +6,23 @@ public class CameraController : MonoBehaviour {
 	public Camera mainCamera;
 
     private Vector2 cameraVelocity = new Vector2();
+
+	private int maxOffset = 5;
+
 	private float TSM = 0f;//time for smooth movement
 	private float defTSM = 0.5f;
 	private float cameraSpeed = 0.5f;
-
 	private float minZoom = 5;
 	private float maxZoom = 18;
-	private int maxOffset = 5;
 
-	private void Start() {
-
-		mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-	}
+	private void Start() => mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 
     public void Init() {
+
         mainCamera.transform.position = new Vector3(GameManager.Instance.world.dimensions.x / 2,
                                                     GameManager.Instance.world.dimensions.y / 2, -100);
 
 		mainCamera.orthographicSize = maxZoom;
-
 		SubscribeToInput();
     }
 
@@ -40,11 +38,9 @@ public class CameraController : MonoBehaviour {
 
 	private void Scale() {
 		
-		if(Input.GetAxis("Mouse ScrollWheel") > 0 && mainCamera.orthographicSize > minZoom) {
-
+		if (Input.GetAxis("Mouse ScrollWheel") > 0 && mainCamera.orthographicSize > minZoom) {
 			mainCamera.orthographicSize -= 1f;
-		} else if(Input.GetAxis("Mouse ScrollWheel") < 0 && mainCamera.orthographicSize < maxZoom) {
-
+		} else if (Input.GetAxis("Mouse ScrollWheel") < 0 && mainCamera.orthographicSize < maxZoom) {
 			mainCamera.orthographicSize += 1f;
 		}
 	}
@@ -56,17 +52,17 @@ public class CameraController : MonoBehaviour {
 		Vector3 rightUp = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
 		Vector3 newPos = gameObject.transform.position;
 
-        if (leftDown.x + cameraVelocity.x < -maxOffset && cameraVelocity.x < 0)
+        if (leftDown.x + cameraVelocity.x < -maxOffset && cameraVelocity.x < 0) {
             cameraVelocity.x = 0;
-
-        if (rightUp.x + cameraVelocity.x > GameManager.Instance.world.dimensions.x + maxOffset && cameraVelocity.x > 0)
+		} else if (rightUp.x + cameraVelocity.x > GameManager.Instance.world.dimensions.x + maxOffset && cameraVelocity.x > 0) {
             cameraVelocity.x = 0;
+		}
 
-        if (leftDown.y + cameraVelocity.y < -maxOffset && cameraVelocity.y < 0)
+        if (leftDown.y + cameraVelocity.y < -maxOffset && cameraVelocity.y < 0) {
             cameraVelocity.y = 0;
-
-        if (rightUp.y + cameraVelocity.y > GameManager.Instance.world.dimensions.y + maxOffset && cameraVelocity.y > 0)
+		} else if (rightUp.y + cameraVelocity.y > GameManager.Instance.world.dimensions.y + maxOffset && cameraVelocity.y > 0) {
             cameraVelocity.y = 0;
+		}
 	}
 
 	private void SmoothMovement() {
@@ -74,7 +70,6 @@ public class CameraController : MonoBehaviour {
 		if(TSM <= 0) {
 			cameraVelocity = Vector2.zero;
 		} else {
-
 			TSM -= Time.deltaTime;
             cameraVelocity *= 0.9f;
 		}
@@ -83,7 +78,6 @@ public class CameraController : MonoBehaviour {
 	private Vector3 dragOrigin;
 	private Vector3 dragDiff;
 	private bool isDragging = false;
-
     private void MouseListener() {
 
 		Vector3 currMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -130,10 +124,7 @@ public class CameraController : MonoBehaviour {
         TSM = defTSM;
 	}
 
-	private void OnDestroy() {
-
-		UnsubscribeFromInput();
-	}
+	private void OnDestroy() => UnsubscribeFromInput();
 
 	private void SubscribeToInput() {
 

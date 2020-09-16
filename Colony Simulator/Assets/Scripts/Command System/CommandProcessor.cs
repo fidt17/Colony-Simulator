@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandProcessor : MonoBehaviour
-{   
+public class CommandProcessor : MonoBehaviour {
+       
     private Queue<Task> _taskList = new Queue<Task>();
-    private Task _currentTask = null;
+    private Task _currentTask;
 
-    public void AddTask(Task task) {
+    private void Update() => _currentTask?.ExecuteTask();
 
-        _taskList.Enqueue(task);
+    private void OnDestroy() {
+
+        if (_currentTask != null)
+            _currentTask.TaskResultHandler -= OnTaskFinish;
     }
+
+    public void AddTask(Task task) => _taskList.Enqueue(task);
 
     public void AddUrgentTask(Task task) {
 
@@ -45,20 +50,9 @@ public class CommandProcessor : MonoBehaviour
         _currentTask.TaskResultHandler += OnTaskFinish;
     }
 
-    private void Update() {
-
-        _currentTask?.ExecuteTask();
-    }
-
     private void OnTaskFinish(bool succeed) {
 
         _currentTask = null;
         NextTask();
-    }
-
-    public void OnDestroy() {
-
-        if (_currentTask != null)
-            _currentTask.TaskResultHandler -= OnTaskFinish;
     }
 }

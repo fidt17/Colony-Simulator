@@ -2,19 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grass : StaticObject, IEdible, IPlacable
-{   
-    public override string Name {
-        get {
-            return "grass";
-        }
-    }
+public class Grass : StaticObject, IEdible, IPlacable {
 
-    public Grass() : base (Vector2Int.one)
-    {
+    public override string Name => "grass";
+
+    public Grass() : base (Vector2Int.one) {
+
         isTraversable = true;
         GameManager.Instance.natureManager.grassList.Add(this);
-
         AddToGlobalEdiblesList();
     }
 
@@ -27,27 +22,18 @@ public class Grass : StaticObject, IEdible, IPlacable
     public override void Destroy() {
 
         base.Destroy();
+        RemoveFromTile();
         GameManager.Instance.natureManager.grassList.Remove(this);
         GameManager.Instance.natureManager.edibleList.Remove(this);
     }
 
     #region IEdible
 
-    public int NutritionValue {
-        get {
-            return 20;
-        }
-    }
+    public int NutritionValue => 20;
 
-    public Vector2Int GetEdiblePosition() {
+    public Vector2Int GetEdiblePosition() => position;
 
-        return position;
-    }
-
-    public void AddToGlobalEdiblesList() {
-
-        GameManager.Instance.natureManager.edibleList.Add(this);
-    }
+    public void AddToGlobalEdiblesList() => GameManager.Instance.natureManager.edibleList.Add(this);
 
     public void Eat(HungerComponent eater) {
 
@@ -62,16 +48,13 @@ public class Grass : StaticObject, IEdible, IPlacable
     public void PutOnTile() {
 
         Tile tile = GameManager.Instance.world.GetTileAt(position);
-
-        tile.objectOnTile?.Destroy();
-        tile.objectOnTile = this;
+        tile.PutStaticObjectOnTile(this, isTraversable);
     }
 
     public void RemoveFromTile() {
 
         Tile tile = GameManager.Instance.world.GetTileAt(position);
-
-        tile.objectOnTile = null;
+        tile.RemoveStaticObjectFromTile();
     }
     
     #endregion  

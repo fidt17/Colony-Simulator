@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Task
-{
-    private Queue<Command> _commandList = new Queue<Command>();
-    private Command _currentCommand = null;
+public class Task {
 
     public delegate void OnTaskResult(bool result);
     public event OnTaskResult TaskResultHandler;
+
+    private Queue<Command> _commandList = new Queue<Command>();
+    private Command _currentCommand;
 
     public void AddCommand(Command command) {
 

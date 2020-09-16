@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
-{
-    public abstract string Name { get; }
-    public CharacterScriptableObject data;
+public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
 
-    protected GameObject _gameObject;
-    public GameObject GameObject {
-        get {
-            return _gameObject;
-        }
-    }
+    public abstract string Name { get; }
+
+    public CharacterScriptableObject data;
+    public GameObject GameObject => _gameObject;
 
     #region Components
 
@@ -23,17 +18,15 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
 
     #endregion
 
+    protected GameObject _gameObject;
+
     public Character() { }
 
-    public virtual void SetData(CharacterScriptableObject data) {
-
-        this.data = data;
-    }
+    public virtual void SetData(CharacterScriptableObject data) => this.data = data;
 
     public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
 
         _gameObject = gameObject;
-
         InitializeSelectableComponent();
         InitializeMotionComponent(position);
         InitializeHungerComponent();
@@ -43,7 +36,6 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
     public virtual void Die() {
 
         _gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-
         GameObject.Destroy(_gameObject, 1);
     }
 
@@ -62,7 +54,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger
     public virtual void InitializeHungerComponent() {
 
         hungerComponent = _gameObject.AddComponent<HungerComponent>();
-        hungerComponent.Initialize(this, data.hungerDecreasePerSecond);
+        hungerComponent.Initialize(this);
     }
 
     #endregion
