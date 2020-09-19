@@ -34,46 +34,8 @@ public static class ItemFinder {
         if (result == null)
             return null;
 
-        targetNode = FindNodeNear(GameManager.Instance.pathfinder.grid.GetNodeAt(result.GetEdiblePosition()), GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition));
-
-        return result;
-    }
-
-    public static PathNode FindNodeNear(PathNode searchNode, PathNode sourceNode) {
-
-        Vector2Int searchPosition = searchNode.position;
-
-        Vector2Int checkN = new Vector2Int(searchPosition.x, searchPosition.y + 1);
-        Vector2Int checkS = new Vector2Int(searchPosition.x, searchPosition.y - 1);
-        Vector2Int checkW = new Vector2Int(searchPosition.x - 1, searchPosition.y);
-        Vector2Int checkE = new Vector2Int(searchPosition.x + 1, searchPosition.y);
-
-        List<PathNode> possiblePositions = new List<PathNode>();
-        possiblePositions.Add(GameManager.Instance.pathfinder.grid.GetNodeAt(checkN));
-        possiblePositions.Add(GameManager.Instance.pathfinder.grid.GetNodeAt(checkS));
-        possiblePositions.Add(GameManager.Instance.pathfinder.grid.GetNodeAt(checkW));
-        possiblePositions.Add(GameManager.Instance.pathfinder.grid.GetNodeAt(checkE));
-
-        possiblePositions.ToList().ForEach(x => {
-            if (x == null || x.region != sourceNode.region)
-                possiblePositions.Remove(x);
-        });
-
-        int minDistance = Int32.MaxValue;
-        PathNode result = null;
-
-        foreach(PathNode node in possiblePositions) {
-
-            int sqrDistance = (node.position - sourceNode.position).sqrMagnitude;
-            if (sqrDistance < minDistance) {
-
-                minDistance = sqrDistance;
-                result = node;
-            }
-        }
-
-        if (result == null)
-            return GameManager.Instance.pathfinder.grid.GetNodeAt(searchPosition);
+        targetNode = GameManager.Instance.pathfinder.FindNodeNear(
+                                GameManager.Instance.pathfinder.grid.GetNodeAt(result.GetEdiblePosition()), GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition));
 
         return result;
     }

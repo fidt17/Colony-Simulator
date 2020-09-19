@@ -17,7 +17,7 @@ public class DebugWindow : WindowComponent {
         Tile t = GameManager.Instance.world.GetTileAt(new Vector2Int(gridCoordinates.x, gridCoordinates.y));
 
         if (t != null) {
-            _tileCoordinatesTMP.text = "Coordinates: (" + t.position.x + "; " + t.position.y + "), Object: " + t.objectOnTile;
+            _tileCoordinatesTMP.text = "Coordinates: (" + t.position.x + "; " + t.position.y + "), Object: " + t.objectOnTile + ", " + t.itemOnTile;
         } else {
             _tileCoordinatesTMP.text = "Coordinates: (" + gridCoordinates.x + "; " + gridCoordinates.y + ")";
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : StaticObject, IPlacable
+public class Tree : StaticObject, IPlacable, IHarvestable
 {   
     public override string Name => "tree";
 
@@ -40,4 +40,14 @@ public class Tree : StaticObject, IPlacable
     }
     
     #endregion  
+
+    #region IHarvestable
+
+    public void Harvest() {
+
+        ItemSpawnFactory.GetNewItem("wood_log", "wood_log", position);
+        Destroy();
+    }
+
+    #endregion
 }

@@ -16,6 +16,7 @@ public class Tile : StaticObject {
 
     public TileType type { get; set; }
     public StaticObject objectOnTile = null;
+    public Item itemOnTile = null;
 
     public SpriteRenderer mainSprite { get; private set; }
     public Color defaultSpriteColor;
@@ -71,6 +72,22 @@ public class Tile : StaticObject {
         }
 
         objectOnTile = null;
+    }
+
+    public void PutItemOnTile(Item item) {
+
+        if (itemOnTile != null) {
+            itemOnTile.Destroy();
+            Debug.LogError("Item was destroyed because another item was placed upon it. Fix this.");
+            ////////////////////////////////////////////////////////////////////////////////////////////////// FIX ME
+        }
+
+        itemOnTile = item;
+    }
+
+    public void RemoveItemFromTile() {
+
+        itemOnTile = null;
     }
 
     //DELETE ME

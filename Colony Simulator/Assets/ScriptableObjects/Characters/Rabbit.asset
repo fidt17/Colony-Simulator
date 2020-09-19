@@ -15,4 +15,5 @@ MonoBehaviour:
   name: rabbit
   movementSpeed: 2.5
   prefab: {fileID: 5526020460281864154, guid: 49b582753f64d85468462c3410559e49, type: 3}
-  hungerDecreasePerSecond: 5
+  hungerDecreasePerSecond: 1
+  hungerSearchThreshold: 80

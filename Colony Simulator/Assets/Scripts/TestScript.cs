@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TestScript : MonoBehaviour
 {
@@ -15,6 +16,54 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
             SpawnVegetation();
+
+        if (Input.GetKeyDown(KeyCode.I))
+            SpawnItem("wood_log");
+
+        if (Input.GetKeyDown(KeyCode.O))
+            CutTree();
+    }
+
+    private void CutTree() {
+
+        Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
+
+        Tile t = GameManager.Instance.world.GetTileAt(mousePos2D);
+
+        if (t == null || t.objectOnTile?.GetType() != typeof(Tree))
+            return;
+
+        Tree tree = (Tree) t.objectOnTile;
+        Character human = GameManager.Instance.characterManager.colonists[0];
+        
+        PathNode targetNode = GameManager.Instance.pathfinder.FindNodeNear(GameManager.Instance.pathfinder.grid.GetNodeAt(tree.position),
+                                                                           GameManager.Instance.pathfinder.grid.GetNodeAt(human.motionComponent.GetGridPosition()));
+
+        CutTask cutTask = new CutTask(human, targetNode, tree);
+        human.AI.commandProcessor.AddTask(cutTask);
+    }
+
+    private void DestroyObject() {
+
+        Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
+
+        Tile t = GameManager.Instance.world.GetTileAt(mousePos2D);
+
+        if (t == null)
+            return;
+
+        t.itemOnTile?.Destroy();
+
+        if (t.objectOnTile != null) {
+
+            if (t.objectOnTile.GetType() == typeof(Tree))
+                ( (IHarvestable) t.objectOnTile).Harvest();
+            else {
+                t.objectOnTile.Destroy();
+            }
+        }
     }
 
     private void SpawnVegetation() {
@@ -27,7 +76,7 @@ public class TestScript : MonoBehaviour
                 if (tile.type != TileType.grass)
                     continue;
 
-                float r = Random.Range(0f, 1f);
+                float r = UnityEngine.Random.Range(0f, 1f);
 
                 if (r > 0.95f)
                     StaticObjectSpawnFactory.GetNewStaticObject("tree", "tall tree", new Vector2Int(x, y));
@@ -35,6 +84,14 @@ public class TestScript : MonoBehaviour
                     StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y));
 			}
 		}
+    }
+
+    private void SpawnItem(string name) {
+
+        Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
+
+        ItemSpawnFactory.GetNewItem(name, name, mousePos2D);
     }
 
     private void BuildWall() {
