@@ -45,4 +45,14 @@ public class Rabbit : Character, IMovable, IMotionAnimator {
     }
 
     #endregion
+
+    #region AI
+
+    protected override void InitializeAI() {
+        
+        AI = _gameObject.AddComponent<RabbitAI>();
+        AI.Initialize(this);
+    }
+
+    #endregion
 }

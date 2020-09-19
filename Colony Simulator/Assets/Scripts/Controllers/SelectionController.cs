@@ -57,12 +57,12 @@ public class SelectionController : MonoBehaviour {
 
                 Character character = (Character) selectableComponent.selectable;
 
-                Vector2Int tileCoords = CursorToTileCoordinates();
-                Tile t = GameManager.Instance.world.GetTileAt(tileCoords);
+                Vector2Int nodeCoordinates = CursorToTileCoordinates();
+                PathNode node = GameManager.Instance.pathfinder.grid.GetNodeAt(nodeCoordinates);
 
                 Task moveTask = new Task();
-                moveTask.AddCommand(new MoveCommand(character.motionComponent, t));
-                character.commandProcessor.AddUrgentTask(moveTask);
+                moveTask.AddCommand(new MoveCommand(character.motionComponent, node));
+                character.AI.commandProcessor.AddUrgentTask(moveTask);
             }
         }
     }

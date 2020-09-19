@@ -8,9 +8,9 @@ public abstract class Command {
     public event OnCommandResult CommandResultHandler;
 
     public abstract void Execute();
-    public abstract void Abort();
 
     public virtual void Finish(bool result) => OnCommandResultChanged(result);
+    public virtual void Abort() {}
 
     protected void OnCommandResultChanged(bool result) => CommandResultHandler?.Invoke(result);
 }

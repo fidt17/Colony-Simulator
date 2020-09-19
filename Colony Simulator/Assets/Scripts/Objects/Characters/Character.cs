@@ -14,7 +14,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
     public SelectableComponent selectableComponent { get; protected set; }
     public MotionComponent     motionComponent     { get; protected set; }
     public HungerComponent     hungerComponent     { get; protected set; }
-    public CommandProcessor    commandProcessor    { get; protected set; }
+    public AIController        AI                  { get; protected set; }
 
     #endregion
 
@@ -30,7 +30,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
         InitializeSelectableComponent();
         InitializeMotionComponent(position);
         InitializeHungerComponent();
-        InitializeCommandProcessor();
+        InitializeAI();
     }
 
     public virtual void Die() {
@@ -71,10 +71,7 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
 
     #region Command Processor
 
-    public virtual void InitializeCommandProcessor() {
-
-        commandProcessor = _gameObject.AddComponent<CommandProcessor>();
-    }
+    protected abstract void InitializeAI();
 
     #endregion
 }

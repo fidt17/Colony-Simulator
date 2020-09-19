@@ -14,6 +14,7 @@ public static class WorldGenerator {
         _gameSettings = gameSettings;
         grid = new Tile[_gameSettings.worldWidth, _gameSettings.worldHeight];
 
+        perlinSeed = gameSettings.seed;
         FindTileParent();
         GenerateTerrainWithPerlinNoise(ref grid);
         GenerateVegetation(ref grid);

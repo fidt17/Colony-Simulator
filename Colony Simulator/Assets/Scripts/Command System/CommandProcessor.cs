@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CommandProcessor : MonoBehaviour {
-       
+    
+    public bool IsFree => _taskList.Count == 0;
+
     private Queue<Task> _taskList = new Queue<Task>();
     private Task _currentTask;
 
@@ -15,7 +17,13 @@ public class CommandProcessor : MonoBehaviour {
             _currentTask.TaskResultHandler -= OnTaskFinish;
     }
 
-    public void AddTask(Task task) => _taskList.Enqueue(task);
+    public void AddTask(Task task) {
+
+        _taskList.Enqueue(task);
+        
+        if (_currentTask == null)
+            StartExecution();
+    }
 
     public void AddUrgentTask(Task task) {
 

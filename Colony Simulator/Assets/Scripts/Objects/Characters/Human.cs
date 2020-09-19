@@ -35,4 +35,14 @@ public class Human : Character, IMotionAnimator {
     }
 
     #endregion
+
+    #region AI
+
+    protected override void InitializeAI() {
+
+        AI = _gameObject.AddComponent<HumanAI>();
+        AI.Initialize(this);
+    }
+
+    #endregion
 }

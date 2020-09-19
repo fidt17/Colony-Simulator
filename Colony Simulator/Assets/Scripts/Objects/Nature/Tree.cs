@@ -14,8 +14,8 @@ public class Tree : StaticObject, IPlacable
 
         base.SetGameObject(gameObject, position);
 
-        SpriteRenderer treeSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
-        treeSprite.sortingOrder = -position.y;
+        //SpriteRenderer treeSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        //treeSprite.sortingOrder = -position.y;
         PutOnTile();
     }
 

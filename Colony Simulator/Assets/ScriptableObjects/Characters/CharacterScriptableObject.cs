@@ -13,4 +13,6 @@ public class CharacterScriptableObject : ScriptableObject
 
     [Range(0, 10)]
     public float hungerDecreasePerSecond;
+    [Range(10, 90)]
+    public float hungerSearchThreshold = 80;
 }

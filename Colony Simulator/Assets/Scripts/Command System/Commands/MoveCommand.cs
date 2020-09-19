@@ -17,15 +17,15 @@ public class MoveCommand : Command {
 
     #endregion
 
-    private Tile _destinationTile;
+    private PathNode _destinationNode;
     private List<PathNode> _path;
 
     private MotionComponent _motionComponent;
 
-    public MoveCommand(MotionComponent motionComponent, Tile destinationTile) {
+    public MoveCommand(MotionComponent motionComponent, PathNode destinationNode) {
         
         _motionComponent = motionComponent;
-        _destinationTile = destinationTile;
+        _destinationNode = destinationNode;
     }
 
     public override void Execute() {
@@ -52,12 +52,12 @@ public class MoveCommand : Command {
 
     private void FindPath() {
 
-        if(_destinationTile == null) {
+        if(_destinationNode == null) {
             Finish(false);
             return;
         }
 
-        _path = GameManager.Instance.pathfinder.GetPath(_motionComponent.GetGridPosition(), _destinationTile.position);
+        _path = GameManager.Instance.pathfinder.GetPath(_motionComponent.GetGridPosition(), _destinationNode.position);
     }
 
     private void MoveTowardsDestination() {
