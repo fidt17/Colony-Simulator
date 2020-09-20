@@ -99,8 +99,10 @@
      <Compile Include="Assets\Scripts\TestScript.cs" />
      <Compile Include="Assets\Scripts\UI\CharacterWindow.cs" />
      <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
+     <Compile Include="Assets\Scripts\UI\Debug Windows\DebugJobSystem.cs" />
      <Compile Include="Assets\Scripts\UI\Debug Windows\DebugPathfindingWindow.cs" />
      <Compile Include="Assets\Scripts\UI\Debug Windows\DebugWindow.cs" />
+     <Compile Include="Assets\Scripts\UI\ScrollViewScript.cs" />
      <Compile Include="Assets\Scripts\UI\UIManager.cs" />
      <Compile Include="Assets\Scripts\UI\WindowComponent.cs" />
      <Compile Include="Assets\Scripts\UI\WindowSwitcher.cs" />

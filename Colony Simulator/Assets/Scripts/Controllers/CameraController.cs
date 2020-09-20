@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour {
 
@@ -38,6 +39,9 @@ public class CameraController : MonoBehaviour {
 
 	private void Scale() {
 		
+		if (EventSystem.current.IsPointerOverGameObject())
+			return;
+
 		if (Input.GetAxis("Mouse ScrollWheel") > 0 && mainCamera.orthographicSize > minZoom) {
 			mainCamera.orthographicSize -= 1f;
 		} else if (Input.GetAxis("Mouse ScrollWheel") < 0 && mainCamera.orthographicSize < maxZoom) {
