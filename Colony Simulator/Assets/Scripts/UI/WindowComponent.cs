@@ -7,7 +7,8 @@ public enum WindowType {
     CharacterWindow,
     DebugWindow,
     DebugPathfinding,
-    DebugJobSystem
+    DebugJobSystem,
+    CommandWindow
 }
 
 public class WindowComponent : MonoBehaviour {

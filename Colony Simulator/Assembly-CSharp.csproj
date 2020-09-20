@@ -51,6 +51,10 @@
      <Compile Include="Assets\Scripts\Character Components\MotionAnimatorComponent.cs" />
      <Compile Include="Assets\Scripts\Character Components\MotionComponent.cs" />
      <Compile Include="Assets\Scripts\Character Components\SelectableComponent.cs" />
+     <Compile Include="Assets\Scripts\Command Input\CommandInput.cs" />
+     <Compile Include="Assets\Scripts\Command Input\CommandInputMode.cs" />
+     <Compile Include="Assets\Scripts\Command Input\EmptyCommandInputMode.cs" />
+     <Compile Include="Assets\Scripts\Command Input\MoveCommandInputMode.cs" />
      <Compile Include="Assets\Scripts\Command System\CommandProcessor.cs" />
      <Compile Include="Assets\Scripts\Command System\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Command System\Commands\DestroyCommand.cs" />
@@ -98,6 +102,7 @@
      <Compile Include="Assets\Scripts\Pathfinding\PathfinderRegionSystem.cs" />
      <Compile Include="Assets\Scripts\TestScript.cs" />
      <Compile Include="Assets\Scripts\UI\CharacterWindow.cs" />
+     <Compile Include="Assets\Scripts\UI\CommandWindow.cs" />
      <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
      <Compile Include="Assets\Scripts\UI\Debug Windows\DebugJobSystem.cs" />
      <Compile Include="Assets\Scripts\UI\Debug Windows\DebugPathfindingWindow.cs" />

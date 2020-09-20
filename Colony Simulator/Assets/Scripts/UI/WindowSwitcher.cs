@@ -28,3 +28,14 @@ public class WindowSwitcher : MonoBehaviour {
             WindowSystem.Instance.SwitchSubWindow(parentWindow, windowType);
     }
 }
+
+/*
+
+    exists in subwindows
+        close desired
+
+
+    !exists in subwindows
+        close subs -> open desired
+
+*/

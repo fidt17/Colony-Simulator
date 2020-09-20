@@ -14,6 +14,9 @@ public class InputController : MonoBehaviour {
     public event OnButtonPressed OnS_Pressed;
     public event OnButtonPressed OnD_Pressed;
 
+    public event OnButtonPressed OnMouse0_Down;
+    public event OnButtonPressed OnMouse1_Down;
+
     private void Awake() {
 
         if (Instance != null) {
@@ -41,5 +44,11 @@ public class InputController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.D))
             OnD_Pressed?.Invoke();
+
+        if (Input.GetMouseButtonDown(0))
+            OnMouse0_Down?.Invoke();
+
+        if (Input.GetMouseButtonDown(1))
+            OnMouse1_Down?.Invoke();
     }
 }

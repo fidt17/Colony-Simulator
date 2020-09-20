@@ -56,12 +56,18 @@ public class WindowSystem : MonoBehaviour {
         WindowComponent desiredWindow = FindWindowOfType(type);
 
         if (desiredWindow != null) {
-
-            if (desiredWindow.gameObject.activeInHierarchy) {
+            
+            if (parent.subWindows.Contains(desiredWindow)) {
 
                 desiredWindow.CloseWindow();
                 parent.subWindows.Remove(desiredWindow);
             } else {
+
+                foreach(WindowComponent w in parent.subWindows) {
+                    w.CloseWindow();
+                }
+                
+                parent.subWindows = new List<WindowComponent>();
 
                 desiredWindow.gameObject.SetActive(true);
                 parent.subWindows.Add(desiredWindow);
