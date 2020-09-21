@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 //TODO verify that all selected objects are of one type
+//Move this thing into command input class
 
 public class SelectionController : MonoBehaviour {
 
@@ -45,7 +46,7 @@ public class SelectionController : MonoBehaviour {
 
     private void CheckLeftClick() {
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && CommandInput.Instance.currentCommandMode?.GetType() != typeof(CutCommandInputMode)) {
 
             if (EventSystem.current.IsPointerOverGameObject())
                 return;

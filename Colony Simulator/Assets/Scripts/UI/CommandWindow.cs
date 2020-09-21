@@ -6,6 +6,6 @@ public class CommandWindow : WindowComponent {
     
     public void ClickOnCutCommand() {
 
-        
+        CommandInput.Instance.SwitchCommand(new CutCommandInputMode());
     }
 }

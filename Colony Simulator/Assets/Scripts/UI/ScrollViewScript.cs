@@ -24,7 +24,7 @@ public class ScrollViewScript : MonoBehaviour
         return newElement;
     }
 
-    private void ClearViewport() {
+    public void ClearViewport() {
 
         foreach(GameObject element in elements)
             Destroy(element);

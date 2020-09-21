@@ -8,7 +8,8 @@ public class Human : Character, IMotionAnimator {
 
     #region Components
 
-    public MotionAnimatorComponent motionAnimator { get; protected set; }
+    public MotionAnimatorComponent motionAnimator  { get; private set; }
+    public JobHandlerComponent jobHandlerComponent { get; private set; }
 
     #endregion
 
@@ -18,6 +19,7 @@ public class Human : Character, IMotionAnimator {
 
         base.SetGameObject(gameObject, position);
         InitializeMotionAnimator();
+        InitializeJobHandler();
     }
 
     public override void Die() {
@@ -32,6 +34,16 @@ public class Human : Character, IMotionAnimator {
 
         motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
         motionAnimator.Initialize(motionComponent);
+    }
+
+    #endregion
+
+    #region Job Handler
+    
+    private void InitializeJobHandler() {
+
+        jobHandlerComponent = _gameObject.AddComponent<JobHandlerComponent>();
+        jobHandlerComponent.Initialize(this);
     }
 
     #endregion

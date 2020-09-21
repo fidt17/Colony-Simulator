@@ -6,6 +6,12 @@ public class Grass : StaticObject, IEdible, IPlacable {
 
     public override string Name => "grass";
 
+    #region Components
+
+    public VegetationComponent vegetationComponent { get; protected set; }
+
+    #endregion
+
     public Grass() : base (Vector2Int.one) {
 
         isTraversable = true;
@@ -16,6 +22,8 @@ public class Grass : StaticObject, IEdible, IPlacable {
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
 
         base.SetGameObject(gameObject, position);
+        InitializeVegetationComponent();
+
         PutOnTile();
     }
 
@@ -26,6 +34,16 @@ public class Grass : StaticObject, IEdible, IPlacable {
         GameManager.Instance.natureManager.grassList.Remove(this);
         GameManager.Instance.natureManager.edibleList.Remove(this);
     }
+
+    #region Vegetation Component
+
+    protected void InitializeVegetationComponent() {
+
+        vegetationComponent = _gameObject.AddComponent<VegetationComponent>();
+        vegetationComponent.Initialize(this, VegetationType.grass);
+    }
+
+    #endregion
 
     #region IEdible
 
