@@ -12,19 +12,15 @@ public static class CharacterSpawnFactory {
     public static Dictionary<string, CharacterScriptableObject> scriptableObjects;
 
     public static string searchFilter = "l:character";
-
     public static bool isInitialized = false;
 
     public static void Initialize() {
-
         //Loading classes
         List<Type> entityTypes = Assembly.GetAssembly( typeof(Character)).GetTypes()
                                                 .Where(myType => myType.IsSubclassOf(typeof(Character))).ToList();
-
         types = new Dictionary<string, Type>();
 
         foreach (Type type in entityTypes) {
-            
             Character tempCharacter = Activator.CreateInstance(type) as Character;
             types.Add(tempCharacter.Name, type);
         }
@@ -32,9 +28,7 @@ public static class CharacterSpawnFactory {
         //Loading scriptable objects
         string[] assetNames = AssetDatabase.FindAssets(searchFilter);
         scriptableObjects = new Dictionary<string, CharacterScriptableObject>();
-
         foreach (string SOName in assetNames) {
-
             var SOpath    = AssetDatabase.GUIDToAssetPath(SOName);
             var soInstance = AssetDatabase.LoadAssetAtPath<CharacterScriptableObject>(SOpath);
             scriptableObjects.Add(soInstance.name, soInstance);
@@ -44,7 +38,6 @@ public static class CharacterSpawnFactory {
     }
 
     public static Character GetNewCharacter(string typeName, string dataName, Vector2Int position) {
-
         if (!isInitialized)
             Initialize();
 

@@ -9,21 +9,19 @@ public class DebugManager : MonoBehaviour {
     public PathfinderRenderer pathfinderRenderer;
 
     private void Awake() {
-
         if (Instance != null) {
-
             Debug.LogError("Only one DebugManager can exist at a time.");
             Destroy(gameObject);
+            return;
         }
-
         Instance = this;
+
         pathfinderRenderer = GetComponent<PathfinderRenderer>();
     }
 
     #region Pathfinding
 
     public void OnDrawPathToggleChanged(bool toggleValue) {
-
         if (toggleValue) {
             GameManager.Instance.pathfinder.PathHandler += pathfinderRenderer.DrawPath;
         } else {

@@ -13,7 +13,6 @@ public class WindowSwitcher : MonoBehaviour {
     private WindowComponent parentWindow;
 
     private void Awake() {
-
         parentWindow = transform.parent.GetComponent<WindowComponent>();
         button = GetComponent<Button>();
     }
@@ -21,21 +20,10 @@ public class WindowSwitcher : MonoBehaviour {
     private void Start() => button.onClick.AddListener(OnButtonClick);    
 
     private void OnButtonClick() {
-        
-        if(!isSubWindow)
+        if(!isSubWindow) {
             WindowSystem.Instance.SwitchWindow(windowType);
-        else
+        } else {
             WindowSystem.Instance.SwitchSubWindow(parentWindow, windowType);
+        }
     }
 }
-
-/*
-
-    exists in subwindows
-        close desired
-
-
-    !exists in subwindows
-        close subs -> open desired
-
-*/

@@ -9,6 +9,8 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
     public CharacterScriptableObject data;
     public GameObject GameObject => _gameObject;
 
+    public CommandProcessor CommandProcessor => AI.commandProcessor;
+
     #region Components
 
     public SelectableComponent selectableComponent { get; protected set; }
@@ -25,7 +27,6 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
     public virtual void SetData(CharacterScriptableObject data) => this.data = data;
 
     public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
-
         _gameObject = gameObject;
         InitializeSelectableComponent();
         InitializeMotionComponent(position);
@@ -34,7 +35,6 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
     }
 
     public virtual void Die() {
-
         _gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         GameObject.Destroy(_gameObject, 1);
     }
@@ -42,7 +42,6 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
     #region Motion Component
 
     public virtual void InitializeMotionComponent(Vector2Int position) {
-
         motionComponent = _gameObject.AddComponent<MotionComponent>();
         motionComponent.Initialize(data.movementSpeed, position);
     }
@@ -52,7 +51,6 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
     #region Hunger Component
 
     public virtual void InitializeHungerComponent() {
-
         hungerComponent = _gameObject.AddComponent<HungerComponent>();
         hungerComponent.Initialize(this);
     }
@@ -62,10 +60,12 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
     #region Selectable Component
 
     public virtual void InitializeSelectableComponent() {
-
         selectableComponent = _gameObject.AddComponent<SelectableComponent>();
         selectableComponent.Initialize(this, _gameObject.transform.Find("SelectionRim").gameObject);
     }
+
+    public virtual void OnSelect() => UIManager.Instance.OpenCharacterWindow(this);
+    public virtual void OnDeselect() => UIManager.Instance.CloseCharacterWindow();
     
     #endregion
 

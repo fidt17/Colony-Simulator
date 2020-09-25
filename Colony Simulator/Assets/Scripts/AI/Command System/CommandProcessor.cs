@@ -5,7 +5,7 @@ using System.Linq;
 
 public class CommandProcessor : MonoBehaviour {
     
-    public bool IsFree => _taskList.Count == 0;
+    public bool IsFree => _currentTask is null;
 
     private Queue<Task> _taskList = new Queue<Task>();
     private Task _currentTask;
@@ -13,51 +13,43 @@ public class CommandProcessor : MonoBehaviour {
     private void Update() => _currentTask?.ExecuteTask();
 
     private void OnDestroy() {
-
         if (_currentTask != null)
             _currentTask.TaskResultHandler -= OnTaskFinish;
     }
 
     public void AddTask(Task task) {
-
         _taskList.Enqueue(task);
-        
+
         if (_currentTask == null)
             StartExecution();
     }
 
     public void AddUrgentTask(Task task) {
-
         ResetTasks();
         AddTask(task);
         StartExecution();
     }
 
     public void ResetTask(Task task) {
-
         task.FinishTask(false);
         _taskList = new Queue<Task>(_taskList.Where(x => x != task));
     }
 
     public void ResetTasks() {
-
         foreach(Task task in _taskList)
             task.FinishTask(false);
 
         _currentTask?.FinishTask(false);
         _currentTask = null;
-        
-        _taskList = new Queue<Task>();
+        _taskList.Clear();
     }
 
     public void StartExecution() {
-
-        if (_currentTask == null)
+        if (_currentTask is null)
             NextTask();
     }
 
     public void NextTask() {
-
         if (_taskList.Count == 0)
             return;
 
@@ -66,7 +58,6 @@ public class CommandProcessor : MonoBehaviour {
     }
 
     private void OnTaskFinish(bool succeed) {
-
         _currentTask = null;
         NextTask();
     }

@@ -10,7 +10,6 @@ public static class WorldGenerator {
     private static GameSettingsScriptableObject _gameSettings;
 
     public static void GenerateWorld(GameSettingsScriptableObject gameSettings, ref Tile[,] grid) {
-
         _gameSettings = gameSettings;
         grid = new Tile[_gameSettings.worldWidth, _gameSettings.worldHeight];
 
@@ -22,22 +21,17 @@ public static class WorldGenerator {
     }
 
     private static void FindTileParent() {
-
         _tileParent = GameObject.Find("World_Tiles");
-
-        if (_tileParent == null) {
+        if (_tileParent is null) {
             Debug.LogError("World_Tiles GameObject is missing!");
             return;
         }
     }
 
     private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {
-
         PerlinNoise pn = new PerlinNoise(perlinSeed);
-
         int nOctaves = pn.CalculateMaxOctavesCount(_gameSettings.worldWidth);
         float fBias = 2f;
-
         float[,] perlinArray = new float[_gameSettings.worldWidth, _gameSettings.worldHeight];
 
         pn.Get2DPerlinNoise(_gameSettings.worldWidth, _gameSettings.worldHeight, nOctaves, fBias, ref perlinArray);
@@ -49,16 +43,13 @@ public static class WorldGenerator {
         //calculating max and min values of perlin array
         for(int x = 0; x < _gameSettings.worldWidth; x++) {
             for(int y = 0; y < _gameSettings.worldHeight; y++) {
-                
                 float v = perlinArray[x,y];
-
                 minP = Mathf.Min(v, minP);
                 maxP = Mathf.Max(v, maxP);
 			}
 		}
 
         float elevationRange = maxP - minP;
-
         float sea = minP + elevationRange * seaLevel;
         float sand = sea + (maxP - sea) * 0.2f;
 
@@ -66,7 +57,6 @@ public static class WorldGenerator {
             for (int y = 0; y < _gameSettings.worldHeight; y++) {
 
                 float height = perlinArray[x,y];
-
                 string dataName = "tile";
 
                 if (height < sea) {
@@ -83,27 +73,29 @@ public static class WorldGenerator {
 			}
 		}
 
-        for (int x = 0; x < _gameSettings.worldWidth; x++)
-            for (int y = 0; y < _gameSettings.worldHeight; y++)
+        for (int x = 0; x < _gameSettings.worldWidth; x++) {
+            for (int y = 0; y < _gameSettings.worldHeight; y++) {
                 TileSpriteRenderer.Instance.UpdateTileBorders(grid[x,y]);
+            }
+        }
     }
 
     private static void GenerateVegetation(ref Tile[,] grid) {
-        
         for (int x = 0; x < _gameSettings.worldWidth; x++) {
             for (int y = 0; y < _gameSettings.worldHeight; y++) {
                 
                 Tile tile = grid[x, y];
-
-                if (tile.type != TileType.grass)
+                if (tile.type != TileType.grass) {
                     continue;
+                }
 
                 float r = Random.Range(0f, 1f);
 
-                if (r > 0.95f)
+                if (r > 0.95f) {
                     StaticObjectSpawnFactory.GetNewStaticObject("tree", "tall tree", new Vector2Int(x, y));
-                else if (r > 0.6f)
+                } else if (r > 0.6f) {
                     StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y));
+                }
 			}
 		}
     }
@@ -111,22 +103,21 @@ public static class WorldGenerator {
     private static void GenerateCharacters() {
         
         for (int i = 0; i < _gameSettings.humanCount; i++) {
-
             Human human = CharacterSpawnFactory.GetNewCharacter("human", "human", new Vector2Int(45, 35)) as Human;
             if (human != null)
                 GameManager.Instance.characterManager.colonists.Add(human);
         }
 
         for (int i = 0; i < _gameSettings.rabbitCount; i++) {
-            
             Tile t = null;
-
-            while (t == null || !t.isTraversable)
+            while (t == null || !t.isTraversable) {
                 t = GameManager.Instance.world.GetTileAt(new Vector2Int((int) Random.Range(0, 50), (int) Random.Range(0, 50)));
+            }
 
             Rabbit rabbit = CharacterSpawnFactory.GetNewCharacter("rabbit", "rabbit", t.position) as Rabbit;
-            if (rabbit != null)
+            if (rabbit != null) {
                 GameManager.Instance.characterManager.rabbits.Add(rabbit);
+            }
         }
     }
 }

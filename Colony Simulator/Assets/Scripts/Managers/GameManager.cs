@@ -14,15 +14,13 @@ public class GameManager : MonoBehaviour {
     public GameSettingsScriptableObject gameSettings;
 
     private void Awake() {
-
         if(Instance != null) {
-
             Debug.LogError("Only one GameManager can exist at a time", this);
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
+
         characterManager = GetComponent<CharacterManager>();
         natureManager = GetComponent<NatureManager>();
     }
@@ -32,38 +30,31 @@ public class GameManager : MonoBehaviour {
     #region Initialization
 
     private void Initialize() {
-
         CreateWorld();
         Camera.main.GetComponent<CameraController>().Init();
+        CommandInputStateMachine.Initialize();
     }
 
     private void CreateWorld() {
-
         var dimensions = new Vector2Int(gameSettings.worldWidth, gameSettings.worldHeight);
-
         world = new World(dimensions);
         WorldGenerator.GenerateWorld(gameSettings, ref world.grid);
         CreatePathfinder();
     }
 
     private void CreatePathfinder() {
-
-        if (world == null) {
-            
+        if (world is null) {
             Debug.LogError("Cannot create Pathfinder because the world is not yet created.");
             return;
         }
-
         pathfinder = new Pathfinder(world.dimensions);
         pathfinder.CreateRegionSystem();
     }
 
     public void UpdatePathfinder() {
-
-        if(pathfinder == null)
-            return;
-
-        StartCoroutine(pathfinder.UpdateSystem());
+        if(pathfinder != null) {
+            StartCoroutine(pathfinder.UpdateSystem());
+        }
     }
 
     #endregion

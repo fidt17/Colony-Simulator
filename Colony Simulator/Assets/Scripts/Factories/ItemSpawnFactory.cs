@@ -16,26 +16,18 @@ public static class ItemSpawnFactory {
     public static bool isInitialized = false;
 
     public static void Initialize() {
-
-        //Loading classes
         List<Type> entityTypes = Assembly.GetAssembly( typeof(Item)).GetTypes()
                                                 .Where(myType => myType.IsSubclassOf(typeof(Item))).ToList();
-
         types = new Dictionary<string, Type>();
 
         foreach (Type type in entityTypes) {
-            
             Item tempItem = Activator.CreateInstance(type) as Item;
             types.Add(tempItem.Name, type);
         }
         
-        //Loading scriptable objects
         string[] assetNames = AssetDatabase.FindAssets(searchFilter);
         scriptableObjects = new Dictionary<string, ItemScriptableObject>();
-
-
         foreach (string name in assetNames) {
-
             var path = AssetDatabase.GUIDToAssetPath(name);
             var instance = AssetDatabase.LoadAssetAtPath<ItemScriptableObject>(path);
             scriptableObjects.Add(instance.name, instance);
@@ -45,7 +37,6 @@ public static class ItemSpawnFactory {
     }
 
     public static Item GetNewItem(string typeName, string dataName, Vector2Int position) {
-
         if (!isInitialized)
             Initialize();
         

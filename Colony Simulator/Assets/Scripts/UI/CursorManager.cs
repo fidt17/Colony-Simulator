@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class CursorManager : MonoBehaviour {
     
-    public Texture2D cursorTexture;
+    public static CursorManager Instance;
+
+    public Texture2D defaultTexture;
+    public Texture2D moveStateTexture;
+    public Texture2D cutStateTexture;
 
     private void Awake() {
-        Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+        if (Instance != null) {
+            Debug.Log("Only one CursorManager can exist at a time.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        SwitchTexture(defaultTexture);
     }
+
+    public void SwitchTexture(Texture2D texture) => Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
 }

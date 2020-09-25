@@ -14,13 +14,16 @@ public class MotionComponent : MonoBehaviour {
     public delegate void OnVelocityChange(Vector2 newVelocty, FacingDirection facingDirection);
     public event OnVelocityChange VelocityHandler;
 
-    public FacingDirection facingDirection = FacingDirection.south;
+    public Vector2 WorldPosition => (Vector2) gameObject.transform.position;
+    public Vector2Int GridPosition => new Vector2Int( (int) (WorldPosition.x + 0.5f), (int) (WorldPosition.y + 0.5f) );
+    public PathNode PathNode => GameManager.Instance.pathfinder.grid.GetNodeAt(GridPosition);
     public float SpeedValue => _speed;
+
+    public FacingDirection facingDirection = FacingDirection.south;
 
     private float _speed;
 
     public void Initialize(float speed, Vector2Int position) {
-
         _speed = speed;
         SetPosition(position);
     }
@@ -30,16 +33,7 @@ public class MotionComponent : MonoBehaviour {
     public void SetPosition(Vector2 position) => gameObject.transform.position = position;
 
     public void Translate(Vector2 normalizedDestination) {
-
         gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
         VelocityHandler?.Invoke(normalizedDestination, facingDirection);
-    }
-
-    public Vector2 GetWorldPosition() => (Vector2) gameObject.transform.position;
-
-    public Vector2Int GetGridPosition() {
-        
-        Vector2 worldPosition = GetWorldPosition();
-        return new Vector2Int( (int) (worldPosition.x + 0.5f), (int) (worldPosition.y + 0.5f) );
     }
 }

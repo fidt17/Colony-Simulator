@@ -11,28 +11,27 @@ public static class ItemFinder {
 
         int minDistance = Int32.MaxValue;
         IEdible result = null;
-
         foreach(IEdible edible in GameManager.Instance.natureManager.edibleList) {
-            
-            if (!canEat.Contains(edible.GetType()))
+            if (!canEat.Contains(edible.GetType())) {
                 continue;
+            }
 
             int sqrDistance = (edible.GetEdiblePosition() - sourcePosition).sqrMagnitude;
             if (sqrDistance < minDistance) {
-
                 PathNode characterPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition);
                 PathNode foodPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(edible.GetEdiblePosition());
-
-                if ( characterPosition.region != foodPosition.region )
+                if (characterPosition.region != foodPosition.region) {
                     continue;
+                }
 
                 minDistance = sqrDistance;
                 result = edible;
             }
         }
 
-        if (result == null)
+        if (result is null) {
             return null;
+        }
 
         targetNode = GameManager.Instance.pathfinder.FindNodeNear(
                                 GameManager.Instance.pathfinder.grid.GetNodeAt(result.GetEdiblePosition()), GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition));

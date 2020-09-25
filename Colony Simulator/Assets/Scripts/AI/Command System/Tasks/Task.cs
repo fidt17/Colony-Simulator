@@ -12,21 +12,18 @@ public class Task {
     protected Command _currentCommand;
 
     public void AddCommand(Command command) {
-
         command.CommandResultHandler += OnCommandFinish;
         _commandList.Enqueue(command);
     }
 
     public void ExecuteTask() {
-
-        if (_currentCommand == null)
+        if (_currentCommand is null) {
             NextCommand();
-        
+        }
         _currentCommand?.Execute();
     }
 
     public void NextCommand() {
-
         if (_commandList.Count == 0) {
             FinishTask(true);
         } else {
@@ -35,18 +32,20 @@ public class Task {
     }
 
     public void OnCommandFinish(bool succeed) {
-
-        if (succeed)
+        if (succeed) {
             NextCommand();
-        else
+        } else {
             FinishTask(false);
+        }
     }
 
     public void FinishTask(bool succeed) {
-
-        if (!succeed)
+        if(!succeed) {
+            foreach(Command command in _commandList) {
+                command.Abort();
+            }
             _currentCommand?.Abort();
-
+        }
         TaskResultHandler?.Invoke(succeed);
     }
 }

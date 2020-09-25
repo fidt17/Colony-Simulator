@@ -23,21 +23,19 @@ public class RotateToCommand : Command {
     private MotionComponent _motionComponent;
 
     public RotateToCommand(MotionComponent motionComponent, PathNode destinationNode) {
-        
         _motionComponent = motionComponent;
         _destinationNode = destinationNode;
     }
 
     public override void Execute() {
-
-        SetFacingDirection(_destinationNode.position - _motionComponent.GetGridPosition());
+        SetFacingDirection(_destinationNode.position - _motionComponent.GridPosition);
         _motionComponent.Stop();
-
         Finish(true);
     }
 
-    private void SetFacingDirection(Vector2Int destination) {
+    public override void Abort() => _motionComponent.Stop();
 
+    private void SetFacingDirection(Vector2Int destination) {
         if (destination == NORTH || destination == NORTH_EAST || destination == NORTH_WEST) {
             _motionComponent.facingDirection = FacingDirection.north;
         } else if (destination == EAST) {
@@ -48,6 +46,4 @@ public class RotateToCommand : Command {
             _motionComponent.facingDirection = FacingDirection.south;
         }
     }
-
-    public override void Abort() => _motionComponent.Stop();
 }

@@ -53,3 +53,6 @@ TagManager:
   - name: Vegetation Heigh
     uniqueID: 1705952461
     locked: 0
+  - name: JobIcons
+    uniqueID: 1098764955
+    locked: 0

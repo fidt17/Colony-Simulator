@@ -13,26 +13,19 @@ public class JobHandlerComponent : MonoBehaviour {
 
     public void Initialize(Human worker) => _worker = worker;
 
-    public void AssignJob(Job job) {
-
-        _currentJob = job;
-    }
-
-    public void WithdrawJob() {
-
-        _currentJob = null;
-    }
+    public void AssignJob(Job job) => _currentJob = job;
+    public void WithdrawJob() => _currentJob = null;
 
     public bool CanDoJob(Job job) {
-
-        if (_currentJob != null)
+        if (_currentJob != null) {
             return false;
+        }
 
         PathNode jobNode = GameManager.Instance.pathfinder.grid.GetNodeAt(job.Position);
-        PathNode workerNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_worker.motionComponent.GetGridPosition());
-
-        if (GameManager.Instance.pathfinder.FindNodeNear(jobNode, workerNode) == null)
+        PathNode workerNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_worker.motionComponent.GridPosition);
+        if (GameManager.Instance.pathfinder.FindNodeNear(jobNode, workerNode) is null) {
             return false;
+        }
 
         return true;
     }

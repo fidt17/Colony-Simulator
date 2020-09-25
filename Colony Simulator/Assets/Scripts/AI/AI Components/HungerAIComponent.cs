@@ -5,67 +5,56 @@ using UnityEngine;
 
 public class HungerAIComponent {
 
-    private AIController _AI;
     private Character _character;
+    private EatFoodTask _eatFoodTask;
 
-    private Task _eatFoodTask = null;
-    private bool _isSearchingForFood = false;
-
-    public HungerAIComponent(Character character, AIController AI) {
-
-        _AI = AI;
+    public HungerAIComponent(Character character) {
         _character = character;
         AssignListeners();
     }
 
-    public void AssignListeners() {
-
-        _character.hungerComponent.HungerLevelHandler += HandleHungerLevel;
-    }
+    public void AssignListeners() => _character.hungerComponent.HungerLevelHandler += HandleHungerLevel;
 
     public void UnassignListeners() {
-
         _character.hungerComponent.HungerLevelHandler -= HandleHungerLevel;
 
-        if (_eatFoodTask != null)
+        if (_eatFoodTask is EatFoodTask) {
             _eatFoodTask.TaskResultHandler -= HandleGetFoodTaskResult;
+        }
     }
 
     private void HandleHungerLevel(float hungerLevel) {
-
-        if (hungerLevel < _character.data.hungerSearchThreshold)
-            _AI.StartCoroutine(StartFoodSearch());
+        if (hungerLevel < _character.data.hungerSearchThreshold) {
+            _character.CommandProcessor.StartCoroutine(StartFoodSearch());
+        }
     }
 
+    private bool _isSearchingForFood = false;
     private IEnumerator StartFoodSearch() {
-
-        HungerComponent hungerComponent = _character.hungerComponent;
-        List<Type> edibles = _character.hungerComponent.edibles;
-
         if (_isSearchingForFood
-            || edibles.Count == 0
-            || _eatFoodTask != null)
+            || _character.hungerComponent.edibles.Count == 0)
             yield break;
-        
+
         _isSearchingForFood = true;
-        
+
         IEdible food = null;
         PathNode targetNode = null;
+
         while (food is null || targetNode is null) {
             yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 2f));
-            food = ItemFinder.FindClosestFood(edibles, _character.motionComponent.GetGridPosition(), ref targetNode);
+            food = ItemFinder.FindClosestFood(_character.hungerComponent.edibles, _character.motionComponent.GridPosition, ref targetNode);
         }
         
         _eatFoodTask = new EatFoodTask(_character, targetNode, food);
         _eatFoodTask.TaskResultHandler += HandleGetFoodTaskResult;
         _character.AI.commandProcessor.AddTask(_eatFoodTask);
 
-        while (_eatFoodTask != null)
+        while (_eatFoodTask != null) {
             yield return null;
+        }
     }
 
     private void HandleGetFoodTaskResult(bool result) {
-
         _eatFoodTask = null;
         _isSearchingForFood = false;
     }

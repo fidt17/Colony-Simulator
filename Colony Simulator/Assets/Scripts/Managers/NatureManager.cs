@@ -22,26 +22,24 @@ public class NatureManager : MonoBehaviour {
 
         int minDistance = 100 * 100;
         IEdible result = null;
-
         foreach(IEdible edible in edibleList) {
             
-            if (!canEat.Contains(edible.GetType()))
+            if (!canEat.Contains(edible.GetType())) {
                 continue;
+            }
 
             int sqrDistance = (edible.GetEdiblePosition() - sourcePosition).sqrMagnitude;
             if (sqrDistance < minDistance) {
 
                 PathNode characterPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition);
                 PathNode foodPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(edible.GetEdiblePosition());
-
-                if ( characterPosition.region != foodPosition.region )
+                if (characterPosition.region != foodPosition.region) {
                     continue;
-
+                }
                 minDistance = sqrDistance;
                 result = edible;
             }
         }
-
         return result;
     }
 }

@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class CommandWindow : WindowComponent {
     
-    public void ClickOnCutCommand() {
-
-        CommandInput.Instance.SwitchCommand(new CutCommandInputMode());
-    }
+    public void ClickOnCutCommand() => CommandInputStateMachine.SwitchCommandState(new CutCommandInputState());
 }

@@ -10,27 +10,26 @@ public abstract class Job {
     protected JobHandlerComponent _worker;
     protected Task _task;
 
-    public Job(Vector2Int jobPosition) {
+    protected GameObject _jobIcon;
 
+    public Job() {}
+
+    public Job(Vector2Int jobPosition) {
         _jobPosition = jobPosition;
+        AddJobIcon();
     }
 
     public void AssignWorker(JobHandlerComponent worker) {
-
         _worker = worker;
         _worker.AssignJob(this);
         PlanJob();
     }
 
-    protected abstract void PlanJob();
-
-    public void WithdrowWorker() {
-
+    public void WithdrawWorker() {
         if (_worker == null)
             return;
 
         if (_task != null) {
-
             _task.TaskResultHandler -= OnJobFinish;
             _worker.CommandProcessor.ResetTask(_task);
             _task = null;
@@ -38,24 +37,32 @@ public abstract class Job {
 
         _worker.WithdrawJob();
         _worker = null;
-        JobSystem.Instance.AddJob(this);
+        JobSystem.Instance.ReturnJob(this);
     }
 
-    public void DeleteJob() {
+    protected abstract void PlanJob();
+    protected abstract void AddJobIcon();
 
-        if (_worker != null)
-            WithdrowWorker();
-
-        JobSystem.Instance.DeleteJob(this);
+    protected void DeleteJobIcon() {
+        if (_jobIcon != null) {
+            GameObject.Destroy(_jobIcon);
+        }
     }
 
-    protected abstract void OnJobFinish(bool result);
-
-    protected virtual PathNode GetDestinationNode() {
-
+    protected PathNode GetDestinationNode() {
         PathNode jobNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_jobPosition);
-        PathNode workerNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_worker.MotionComponent.GetGridPosition());
-
+        PathNode workerNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_worker.MotionComponent.GridPosition);
         return GameManager.Instance.pathfinder.FindNodeNear(jobNode, workerNode);
+    }
+
+    protected void OnJobFinish(bool result) {
+        if (result == true) {
+            _worker.WithdrawJob();
+            JobSystem.Instance.DeleteJob(this);
+            DeleteJobIcon();
+        } else {
+            _worker.WithdrawJob();
+            JobSystem.Instance.ReturnJob(this);
+        }
     }
 }

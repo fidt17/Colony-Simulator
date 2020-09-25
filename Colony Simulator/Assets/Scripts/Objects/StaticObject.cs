@@ -25,14 +25,12 @@ public abstract class StaticObject : IGameObject {
     public virtual void SetData(StaticScriptableObject data) => this.data = data;
 
     public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
-
         _gameObject = gameObject;
         _gameObject.transform.position = new Vector3(position.x, position.y, 0);
         this.position = position;
     }
 
     public virtual void Destroy() {
-        
         GameObject.Destroy(_gameObject);
         OnDestroy?.Invoke(this);
     }

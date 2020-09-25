@@ -9,21 +9,18 @@ public class SelectableComponent : MonoBehaviour {
     private GameObject _selectionRim;
 
     public void Initialize(ISelectable selectable, GameObject selectionRim) {
-
         this.selectable = selectable;
         _selectionRim = selectionRim;
         Deselect();
     }
 
     public void Select() {
-
-        if(_selectionRim != null)
-            _selectionRim.SetActive(true);
+        _selectionRim?.SetActive(true);
+        selectable.OnSelect();
     }
 
     public void Deselect() {
-        
-        if(_selectionRim != null)
-            _selectionRim.SetActive(false);
+        _selectionRim?.SetActive(false);
+        selectable.OnDeselect();
     }
 }

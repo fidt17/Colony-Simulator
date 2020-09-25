@@ -18,7 +18,6 @@ public class HungerComponent : MonoBehaviour {
     private float _hungerDecreasePerSecond = 1;
 
     public void Initialize(Character character) {
-
         _character = character;
         _hungerDecreasePerSecond = _character.data.hungerDecreasePerSecond;
     }
@@ -26,13 +25,11 @@ public class HungerComponent : MonoBehaviour {
     private void Start() => StartCoroutine(DecreaseHunger());
 
     public void ChangeHunger(float value) {
-
         _hunger = Mathf.Clamp(_hunger + value, 0, 100);
         CheckHunger();
     }
 
     private IEnumerator DecreaseHunger() {
-
         while (true) {
             yield return new WaitForSeconds(1);
             ChangeHunger(-_hungerDecreasePerSecond);
@@ -41,10 +38,9 @@ public class HungerComponent : MonoBehaviour {
     }
 
     private void CheckHunger() {
-        
         HungerLevelHandler?.Invoke(_hunger);
-
-        if (_hunger == 0)
+        if (_hunger == 0) {
             _character.Die();
+        }
     }
 }

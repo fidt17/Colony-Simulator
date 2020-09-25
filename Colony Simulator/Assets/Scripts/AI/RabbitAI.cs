@@ -2,44 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RabbitAI : AIController
-{
+public class RabbitAI : AIController {
+
     public Rabbit character;
 
     #region AI Components
 
-    IdleAIComponent idleAIComponent;
-    HungerAIComponent hungerAIComponent;
+    private IdleAIComponent _idleAIComponent;
+    private HungerAIComponent _hungerAIComponent;
 
     #endregion
 
     public override void Initialize(Character character) {
-
         this.character = character as Rabbit;
         base.Initialize(character);
     }
 
     protected override void InitializeComponents() { 
-
         InitializeIdleAIComponent();
         InitializeHungerAIComponent();
     }
 
-    protected override void DisableComponents() { 
-
-        DisableHungerAIComponent();
-    }
+    protected override void DisableComponents() => DisableHungerAIComponent();
 
     #region Idle Component
 
-    protected void InitializeIdleAIComponent() => idleAIComponent = new IdleAIComponent(character, this);
+    protected void InitializeIdleAIComponent() => _idleAIComponent = new IdleAIComponent(character);
 
     #endregion
 
     #region Hunger Component
 
-    protected void InitializeHungerAIComponent() => hungerAIComponent = new HungerAIComponent(character, this);
-    protected void DisableHungerAIComponent() => hungerAIComponent.UnassignListeners();
+    protected void InitializeHungerAIComponent() => _hungerAIComponent = new HungerAIComponent(character);
+    protected void DisableHungerAIComponent() => _hungerAIComponent.UnassignListeners();
 
     #endregion
 }

@@ -17,13 +17,11 @@ public abstract class Item : IPlacable {
     protected GameObject _gameObject;
     protected abstract int StackCount { get; }
 
-    public Item() {
-    }
+    public Item() { }
 
     public virtual void SetData(ItemScriptableObject data) => this.data = data;
 
     public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
-
         _gameObject = gameObject;
         _gameObject.transform.position = new Vector3(position.x, position.y, 0);
         this.position = position;
@@ -31,7 +29,6 @@ public abstract class Item : IPlacable {
     }
 
     public virtual void Destroy() {
-        
         GameObject.Destroy(_gameObject);
         OnDestroy?.Invoke(this);
         RemoveFromTile();
@@ -39,17 +36,8 @@ public abstract class Item : IPlacable {
 
     #region IPlacable
 
-    public void PutOnTile() {
-
-        Tile tile = GameManager.Instance.world.GetTileAt(position);
-        tile.PutItemOnTile(this);
-    }
-
-    public void RemoveFromTile() {
-
-        Tile tile = GameManager.Instance.world.GetTileAt(position);
-        tile.RemoveItemFromTile();
-    }
+    public void PutOnTile() => GameManager.Instance.world.GetTileAt(position).PutItemOnTile(this);
+    public void RemoveFromTile() => GameManager.Instance.world.GetTileAt(position).RemoveItemFromTile();
     
     #endregion
 }

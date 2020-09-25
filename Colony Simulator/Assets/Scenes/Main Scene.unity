@@ -777,9 +777,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 296154241}
-  - component: {fileID: 296154242}
   - component: {fileID: 296154243}
-  - component: {fileID: 296154244}
   m_Layer: 0
   m_Name: Input Manager
   m_TagString: Untagged
@@ -801,18 +799,6 @@ Transform:
   m_Father: {fileID: 8273863}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &296154242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296154240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf8f4dc15ac81de458363896eddefa79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &296154243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,18 +809,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 477f469ade482c44bbc794dc43641f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &296154244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296154240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff94e00534732c46b62e53b0d979eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &332170672
@@ -1855,7 +1829,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195254eb061ab6543b978e86bdc65082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 2800000, guid: 29d483d146a82a641b7dfcd8ae8a74b1, type: 3}
+  defaultTexture: {fileID: 2800000, guid: 29d483d146a82a641b7dfcd8ae8a74b1, type: 3}
+  moveStateTexture: {fileID: 2800000, guid: 04c3e4a99b1651a4d9c5ef7644218f04, type: 3}
+  cutStateTexture: {fileID: 2800000, guid: 78403e579f6ae494bba63980ff3455c0, type: 3}
 --- !u!1 &946264770
 GameObject:
   m_ObjectHideFlags: 0
@@ -3481,8 +3457,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437401148}
   m_HandleRect: {fileID: 1437401147}
   m_Direction: 2
-  m_Value: 0.9999986
-  m_Size: 0.7151185
+  m_Value: 0.9999997
+  m_Size: 0.7151184
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

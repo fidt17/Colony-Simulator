@@ -13,8 +13,8 @@ public abstract class AIController : MonoBehaviour {
     }
 
     protected virtual void OnDestroy() => DisableComponents();
-
     protected virtual void InitializeCommandProcessor() => commandProcessor = gameObject.AddComponent<CommandProcessor>();
+
     protected abstract void InitializeComponents();
     protected abstract void DisableComponents();
 }

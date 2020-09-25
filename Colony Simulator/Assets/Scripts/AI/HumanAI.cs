@@ -2,34 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HumanAI : AIController
-{   
+public class HumanAI : AIController {
+
     public Human character;
 
     #region AI Components
 
-    IdleAIComponent idleAIComponent;
+    private IdleAIComponent _idleAIComponent;
 
     #endregion
 
     public override void Initialize(Character character) {
-
         this.character = character as Human;
         base.Initialize(character);
     }
 
-    protected override void InitializeComponents() { 
+    protected override void InitializeComponents() => InitializeIdleAIComponent();
 
-        InitializeIdleAIComponent();
-    }
-
-    protected override void DisableComponents() { 
-
-    }
+    protected override void DisableComponents() { }
 
     #region Idle Component
 
-    protected void InitializeIdleAIComponent() => idleAIComponent = new IdleAIComponent(character, this);
+    protected void InitializeIdleAIComponent() => _idleAIComponent = new IdleAIComponent(character);
 
     #endregion
 }

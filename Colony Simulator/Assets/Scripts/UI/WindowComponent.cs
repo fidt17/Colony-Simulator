@@ -17,7 +17,6 @@ public class WindowComponent : MonoBehaviour {
     public List<WindowComponent> subWindows = new List<WindowComponent>();
 
     public virtual void CloseWindow() {
-
         subWindows.ForEach(w => w.CloseWindow());
         subWindows = new List<WindowComponent>();
         gameObject.SetActive(false);

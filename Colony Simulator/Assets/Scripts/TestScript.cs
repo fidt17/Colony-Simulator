@@ -4,15 +4,8 @@ using UnityEngine;
 using System;
 
 public class TestScript : MonoBehaviour
-{
-    private void Start() {
-
-    }
-
+{   
     private void Update() {
-
-        if (Input.GetKeyDown(KeyCode.P))
-            BuildWall();
 
         if (Input.GetKeyDown(KeyCode.G))
             SpawnVegetation();
@@ -38,7 +31,7 @@ public class TestScript : MonoBehaviour
         Character human = GameManager.Instance.characterManager.colonists[0];
         
         PathNode targetNode = GameManager.Instance.pathfinder.FindNodeNear(GameManager.Instance.pathfinder.grid.GetNodeAt(tree.position),
-                                                                           GameManager.Instance.pathfinder.grid.GetNodeAt(human.motionComponent.GetGridPosition()));
+                                                                           GameManager.Instance.pathfinder.grid.GetNodeAt(human.motionComponent.GridPosition));
 
         CutTask cutTask = new CutTask(human, targetNode, tree);
         human.AI.commandProcessor.AddTask(cutTask);
@@ -93,20 +86,17 @@ public class TestScript : MonoBehaviour
 
         ItemSpawnFactory.GetNewItem(name, name, mousePos2D);
     }
-
-    private void BuildWall() {
-
-        Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
-
-        Tile t = GameManager.Instance.world.GetTileAt(mousePos2D);
-        t.TestFunc(!t.isTraversable);
-
-        if (t.isTraversable)
-            t.GameObject.GetComponent<SpriteRenderer>().color = Color.white;
-        else
-            t.GameObject.GetComponent<SpriteRenderer>().color = Color.red;
-
-        GameManager.Instance.pathfinder.UpdateSystem();
-    }
 }
+
+
+/*
+TODO
+
+1. CommandInputStateMachine has currentCommandState variable set a public(selection controller uses it). Fix Selection Controller and make currentCommandState private.
+
+
+*. Add controls over multiple characters
+
+
+
+*/

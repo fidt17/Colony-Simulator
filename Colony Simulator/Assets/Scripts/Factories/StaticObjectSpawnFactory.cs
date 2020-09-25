@@ -16,24 +16,17 @@ public static class StaticObjectSpawnFactory {
     public static bool isInitialized = false;
 
     public static void Initialize() {
-
-        //Loading classes
         List<Type> entityTypes = Assembly.GetAssembly( typeof(StaticObject)).GetTypes()
                                                 .Where(myType => myType.IsSubclassOf(typeof(StaticObject))).ToList();
-
         types = new Dictionary<string, Type>();
-
         foreach (Type type in entityTypes) {
             
             StaticObject tempStaticObject = Activator.CreateInstance(type) as StaticObject;
             types.Add(tempStaticObject.Name, type);
         }
         
-        //Loading scriptable objects
         string[] assetNames = AssetDatabase.FindAssets(searchFilter);
         scriptableObjects = new Dictionary<string, StaticScriptableObject>();
-
-
         foreach (string SOName in assetNames) {
 
             var SOpath    = AssetDatabase.GUIDToAssetPath(SOName);
@@ -45,7 +38,6 @@ public static class StaticObjectSpawnFactory {
     }
 
     public static StaticObject GetNewStaticObject(string typeName, string dataName, Vector2Int position) {
-
         if (!isInitialized)
             Initialize();
         

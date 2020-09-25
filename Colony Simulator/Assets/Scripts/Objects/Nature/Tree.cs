@@ -17,15 +17,12 @@ public class Tree : StaticObject, IPlacable, IHarvestable
     }
 
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
-
         base.SetGameObject(gameObject, position);
         InitializeVegetationComponent();
-
         PutOnTile();
     }
 
     public override void Destroy() {
-
         base.Destroy();
         RemoveFromTile();
     }
@@ -33,7 +30,6 @@ public class Tree : StaticObject, IPlacable, IHarvestable
     #region Vegetation Component
 
     protected void InitializeVegetationComponent() {
-
         vegetationComponent = _gameObject.AddComponent<VegetationComponent>();
         vegetationComponent.Initialize(this, VegetationType.tree);
     }
@@ -42,24 +38,14 @@ public class Tree : StaticObject, IPlacable, IHarvestable
 
     #region IPlacable
 
-    public void PutOnTile() {
-
-        Tile tile = GameManager.Instance.world.GetTileAt(position);
-        tile.PutStaticObjectOnTile(this, isTraversable);
-    }
-
-    public void RemoveFromTile() {
-
-        Tile tile = GameManager.Instance.world.GetTileAt(position);
-        tile.RemoveStaticObjectFromTile();
-    }
+    public void PutOnTile() => GameManager.Instance.world.GetTileAt(position).PutStaticObjectOnTile(this, isTraversable);
+    public void RemoveFromTile() => GameManager.Instance.world.GetTileAt(position).RemoveStaticObjectFromTile();
     
     #endregion  
 
     #region IHarvestable
 
     public void Harvest() {
-
         ItemSpawnFactory.GetNewItem("wood_log", "wood_log", position);
         Destroy();
     }

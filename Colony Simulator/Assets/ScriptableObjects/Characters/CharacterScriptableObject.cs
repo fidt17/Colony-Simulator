@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "Characters/CharacterScriptableObject", order = 1)]
-public class CharacterScriptableObject : ScriptableObject
-{
+public class CharacterScriptableObject : ScriptableObject {
     public new string name;
 
     [Range(0, 10)]

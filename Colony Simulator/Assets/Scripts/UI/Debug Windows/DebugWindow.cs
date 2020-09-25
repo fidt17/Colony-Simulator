@@ -10,12 +10,10 @@ public class DebugWindow : WindowComponent {
     private void Update() => SetTileCoordinates();
 
     private void SetTileCoordinates() {
-
         Vector2 currentCursorPosition = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int gridCoordinates = new Vector2Int( (int) (currentCursorPosition.x + 0.5f), (int) (currentCursorPosition.y + 0.5f) );
 
         Tile t = GameManager.Instance.world.GetTileAt(new Vector2Int(gridCoordinates.x, gridCoordinates.y));
-
         if (t != null) {
             _tileCoordinatesTMP.text = "Coordinates: (" + t.position.x + "; " + t.position.y + "), Object: " + t.objectOnTile + ", " + t.itemOnTile;
         } else {

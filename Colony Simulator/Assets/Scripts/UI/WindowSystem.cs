@@ -10,11 +10,10 @@ public class WindowSystem : MonoBehaviour {
     List<WindowComponent> windows;
 
     private void Awake() {
-
         if (Instance != null) {
-
             Debug.LogError("Only one WindowSystem can exist at a time!");
             Destroy(gameObject);
+            return;
         }
         Instance = this;
     
@@ -23,7 +22,6 @@ public class WindowSystem : MonoBehaviour {
     }
 
     private void FindWindows() {
-
         windows = GetComponentsInChildren<WindowComponent>().ToList();
         CloseWindows();
     }
@@ -31,44 +29,31 @@ public class WindowSystem : MonoBehaviour {
     public WindowComponent FindWindowOfType(WindowType type) => windows.Find(w => w.windowType == type);
 
     public WindowComponent SwitchWindow(WindowType type) {
-
         WindowComponent desiredWindow = FindWindowOfType(type);
-
         if (desiredWindow != null) {
-
             if (desiredWindow.gameObject.activeInHierarchy) {
-
                 desiredWindow.CloseWindow();
                 return null;
             } else {
-
                 CloseWindows();
                 desiredWindow.gameObject.SetActive(true);
                 return desiredWindow;
             }
         }
-
         return null;
     }
 
     public void SwitchSubWindow(WindowComponent parent, WindowType type) {
-
         WindowComponent desiredWindow = FindWindowOfType(type);
-
         if (desiredWindow != null) {
-            
             if (parent.subWindows.Contains(desiredWindow)) {
-
                 desiredWindow.CloseWindow();
                 parent.subWindows.Remove(desiredWindow);
             } else {
-
                 foreach(WindowComponent w in parent.subWindows) {
                     w.CloseWindow();
                 }
-                
                 parent.subWindows = new List<WindowComponent>();
-
                 desiredWindow.gameObject.SetActive(true);
                 parent.subWindows.Add(desiredWindow);
             }

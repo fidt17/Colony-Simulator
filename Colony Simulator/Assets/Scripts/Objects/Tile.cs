@@ -23,50 +23,43 @@ public class Tile : StaticObject {
     private TileType[,] borderMatrix = new TileType[3,3];
 
     public Tile() : base (Vector2Int.one) {
-
         isTraversable = true;
         type = TileType.empty;
     }
 
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
-
         base.SetGameObject(gameObject, position);
-
         mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
         defaultSpriteColor = mainSprite.color;
     }
 
     public override void Destroy() {
-
         Debug.LogWarning("Something went wrong. Tiles are not supposed to be destroyed.");
         base.Destroy();
     }
 
     public override void SetData(StaticScriptableObject data) {
-
         base.SetData(data);
-
         type = ((TileScriptableObject) data).tileType;
         isTraversable = ((TileScriptableObject) data).isTraversable;
     }
 
     public void PutStaticObjectOnTile(StaticObject staticObject, bool isTraversable) {
 
-        if (objectOnTile != null)
+        if (objectOnTile != null) {
             objectOnTile.Destroy();
+        }
 
         objectOnTile = staticObject;
-
-        if (this.isTraversable != isTraversable)
+        if (this.isTraversable != isTraversable) {
             GameManager.Instance.UpdatePathfinder();
+        }
 
         this.isTraversable = isTraversable;
     }
 
     public void RemoveStaticObjectFromTile() {
-
         if (!isTraversable) {
-
             GameManager.Instance.UpdatePathfinder();
             isTraversable = true;
         }
@@ -78,10 +71,8 @@ public class Tile : StaticObject {
 
         if (itemOnTile != null) {
             itemOnTile.Destroy();
-            Debug.LogError("Item was destroyed because another item was placed upon it. Fix this.");
-            ////////////////////////////////////////////////////////////////////////////////////////////////// FIX ME
+            Debug.LogWarning("Item was destroyed because another item was placed upon it. Fix this.");
         }
-
         itemOnTile = item;
     }
 
@@ -89,11 +80,4 @@ public class Tile : StaticObject {
 
         itemOnTile = null;
     }
-
-    //DELETE ME
-    public void TestFunc(bool b) {
-
-        isTraversable = b;
-    }
-    //
 }

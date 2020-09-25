@@ -9,7 +9,6 @@ public class PerlinNoise {
 
     public int CalculateMaxOctavesCount(int worldWidth) {
         int maxOctavesCount = 0;
-
         while (worldWidth != 0) {
             worldWidth /= 2;
             maxOctavesCount++;
@@ -19,30 +18,23 @@ public class PerlinNoise {
 	}
 	
 	public void Get2DPerlinNoise(int xSize, int ySize, int nOctaves, float fBias, ref float[,] perlinArray) {
-
 		Random.InitState(_seed);
 		float [,] seedArray = new float[xSize, ySize];
-
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				seedArray[x,y] = Random.Range(0.0f, 1.0f);
 			}
 		}
-
 		PerlinNoise2D(xSize, ySize, seedArray, nOctaves, fBias, ref perlinArray);
 	}
 
 	private void PerlinNoise2D(int nWidth, int nHeight, float[,] fSeed, int nOctaves, float fBias, ref float[,] perlinArray) {
-
 		for (int x = 0; x < nWidth; x++) {
-			for (int y = 0; y < nHeight; y++)
-			{				
+			for (int y = 0; y < nHeight; y++) {				
 				float fNoise = 0.0f;
 				float fScaleAcc = 0.0f;
 				float fScale = 1.0f;
-
-				for (int o = 0; o < nOctaves; o++)
-				{
+				for (int o = 0; o < nOctaves; o++) {
 					int nPitch = nWidth >> o;
 					int nSampleX1 = (x / nPitch) * nPitch;
 					int nSampleY1 = (y / nPitch) * nPitch;

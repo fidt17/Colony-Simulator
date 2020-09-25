@@ -11,16 +11,15 @@ public class CharacterWindow : WindowComponent {
     [SerializeField] private Transform characterHungerFillImage;
 
     private void Update() {
-
-        if (character == null)
+        if (character is null) {
             return;
+        }
 
         characterName.text = character.data.name;
         characterHungerFillImage.localScale = new Vector3(character.hungerComponent.HungerLevel / 100, 1, 1);
     }
 
     public override void CloseWindow() {
-
         base.CloseWindow();
         character = null;
     }

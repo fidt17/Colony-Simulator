@@ -11,13 +11,9 @@ public class ScrollViewScript : MonoBehaviour
     public List<GameObject> elements = new List<GameObject>();
 
     public GameObject AddElement() {
-
         GameObject newElement = Instantiate(elementPrefab, content.transform);
-
         float offset = heightOffset * elements.Count;
-
         content.sizeDelta = new Vector2(content.sizeDelta.x, -offset - heightOffset);
-
         newElement.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, offset);
         elements.Add(newElement);
         
@@ -25,11 +21,11 @@ public class ScrollViewScript : MonoBehaviour
     }
 
     public void ClearViewport() {
-
-        foreach(GameObject element in elements)
+        foreach(GameObject element in elements) {
             Destroy(element);
+        }
 
         content.sizeDelta = new Vector2(content.sizeDelta.x, 0);
-        elements = new List<GameObject>();
+        elements.Clear();
     }
 }

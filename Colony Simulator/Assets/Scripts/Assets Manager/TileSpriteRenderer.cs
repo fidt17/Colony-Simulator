@@ -7,14 +7,11 @@ public class TileSpriteRenderer : MonoBehaviour
     public static TileSpriteRenderer Instance;
 
     private void Awake() {
-
         if(Instance != null) {
-
             Debug.LogError("Only one TileSpriteRenderer can exist at a time!", this);
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
     }
 
@@ -39,7 +36,6 @@ public class TileSpriteRenderer : MonoBehaviour
     #region Tile Sprite Generation
 
     public void UpdateTileBorders(Tile tile) {
-
         TileType type = tile.type;
         
         SpriteRenderer mainSprite  = tile.GameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
@@ -49,8 +45,9 @@ public class TileSpriteRenderer : MonoBehaviour
         SpriteRenderer westBorder  = null;
         TileType[,] borderMatrix   = new TileType[3,3];
 
-        if (type != TileType.sand)
+        if (type != TileType.sand) {
             return;
+        }
 
         FindBorders(tile, ref northBorder, ref eastBorder, ref southBorder, ref westBorder, ref borderMatrix);
         WaterBorderCheck(borderMatrix, northBorder, eastBorder, southBorder, westBorder);
@@ -71,15 +68,12 @@ public class TileSpriteRenderer : MonoBehaviour
 
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
-
                 Vector2Int checkPosition = tile.position + new Vector2Int(x, y);
                 Tile t = GameManager.Instance.world.GetTileAt(checkPosition);
-
                 if (t == null) {
                     borderMatrix[x+1, y+1] = TileType.empty;
                     continue;
                 }
-
                 borderMatrix[x+1, y+1] = t.type;
             }
         }
@@ -92,20 +86,21 @@ public class TileSpriteRenderer : MonoBehaviour
                                   SpriteRenderer westBorder) {
 
         //north
-        if (borderMatrix[1,2] == TileType.water)
+        if (borderMatrix[1,2] == TileType.water) {
             northBorder.sprite = water_border_N;
-
+        }
         //east
-        if (borderMatrix[2,1] == TileType.water)
+        if (borderMatrix[2,1] == TileType.water) {
             eastBorder.sprite = water_border_E;
-
+        }
         //south
-        if (borderMatrix[1,0] == TileType.water)
+        if (borderMatrix[1,0] == TileType.water) {
             southBorder.sprite = water_border_S;
-
+        }
         //west
-        if (borderMatrix[0,1] == TileType.water)
+        if (borderMatrix[0,1] == TileType.water) {
             westBorder.sprite = water_border_W;
+        }
     }
 
 
