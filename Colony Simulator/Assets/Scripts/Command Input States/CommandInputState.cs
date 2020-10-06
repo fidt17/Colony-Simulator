@@ -6,13 +6,14 @@ public abstract class CommandInputState {
 
     public CommandInputState() => Initialize();
 
-    public virtual void Initialize() {
+    public abstract void UnsubscribeFromEvents();
+
+    protected abstract void SubscribeToEvents();
+
+    protected virtual void Initialize() {
         UpdateCursorTexture();
         SubscribeToEvents();
     }
 
-    public virtual void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.defaultTexture);
-
-    public abstract void SubscribeToEvents();
-    public abstract void UnsubscribeFromEvents();
+    protected virtual void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.defaultTexture);
 }

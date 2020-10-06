@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9891c7b71be5a4d8222e9beb33ecc8, type: 3}
   m_Name: Tall Tree
   m_EditorClassIdentifier: 
-  name: tall tree
+  dataName: tall tree
   prefab: {fileID: 5173927831834522179, guid: d97b82d612c38f14d9b58b3324491420, type: 3}

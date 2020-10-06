@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b357544e541db48a1b859610e8cb32, type: 3}
   m_Name: WoodLog
   m_EditorClassIdentifier: 
-  name: wood_log
+  dataName: wood log
   prefab: {fileID: 8234888425552447895, guid: 0e38557f64727c548bc1a4708071b7e0, type: 3}

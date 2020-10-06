@@ -5,12 +5,8 @@ using System.Linq;
 
 public class DefaultInputState : CommandInputState {
     
-    private List<SelectableComponent> _selected = new List<SelectableComponent>();
-
-    public override void SubscribeToEvents() => InputController.Instance.OnMouse0_Down += OnLeftMouseButtonDown;
-
     public override void UnsubscribeFromEvents() => InputController.Instance.OnMouse0_Down -= OnLeftMouseButtonDown;
-
+    
     public void OnLeftMouseButtonDown() {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
             return;
@@ -25,4 +21,6 @@ public class DefaultInputState : CommandInputState {
             SelectionTracker.DeselectEverything();
         }
     }
+
+    protected override void SubscribeToEvents() => InputController.Instance.OnMouse0_Down += OnLeftMouseButtonDown;
 }

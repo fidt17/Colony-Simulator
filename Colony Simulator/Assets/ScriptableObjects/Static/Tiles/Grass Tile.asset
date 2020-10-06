@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8e4a58ceb89004fb11d9d921939b30, type: 3}
   m_Name: Grass Tile
   m_EditorClassIdentifier: 
-  name: grass_tile
+  dataName: grass tile
   prefab: {fileID: 7857810238489946679, guid: 28f70729fb5e66e4bafbb5e2f94494f0, type: 3}
   tileType: 2
   isTraversable: 1

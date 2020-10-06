@@ -9,9 +9,9 @@ public static class CommandInputStateMachine {
     public static void Initialize() => SwitchCommandState(new DefaultInputState());
     
     public static void SwitchCommandState(CommandInputState newCommandState) {
-        if (currentCommandState == newCommandState)
+        if (currentCommandState == newCommandState) {
             return;
-
+        }
         currentCommandState?.UnsubscribeFromEvents();
         currentCommandState = newCommandState;
     }    

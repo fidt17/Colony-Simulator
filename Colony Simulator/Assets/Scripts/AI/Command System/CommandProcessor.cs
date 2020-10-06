@@ -5,23 +5,22 @@ using System.Linq;
 
 public class CommandProcessor : MonoBehaviour {
     
-    public bool IsFree => _currentTask is null;
+    public bool HasTask => _currentTask != null;
 
-    private Queue<Task> _taskList = new Queue<Task>();
+    private Queue<Task> _taskQueue = new Queue<Task>();
     private Task _currentTask;
 
     private void Update() => _currentTask?.ExecuteTask();
 
     private void OnDestroy() {
-        if (_currentTask != null)
+        if (_currentTask != null) {
             _currentTask.TaskResultHandler -= OnTaskFinish;
+        }
     }
 
     public void AddTask(Task task) {
-        _taskList.Enqueue(task);
-
-        if (_currentTask == null)
-            StartExecution();
+        _taskQueue.Enqueue(task);
+        StartExecution();
     }
 
     public void AddUrgentTask(Task task) {
@@ -31,29 +30,30 @@ public class CommandProcessor : MonoBehaviour {
     }
 
     public void ResetTask(Task task) {
-        task.FinishTask(false);
-        _taskList = new Queue<Task>(_taskList.Where(x => x != task));
+        task.AbortTask();
+        _taskQueue = new Queue<Task>(_taskQueue.Where(x => x != task));
     }
 
     public void ResetTasks() {
-        foreach(Task task in _taskList)
-            task.FinishTask(false);
-
-        _currentTask?.FinishTask(false);
+        foreach(Task task in _taskQueue) {
+            task.AbortTask();
+        }
+        _currentTask?.AbortTask();
         _currentTask = null;
-        _taskList.Clear();
+        _taskQueue.Clear();
     }
 
     public void StartExecution() {
-        if (_currentTask is null)
+        if (_currentTask is null) {
             NextTask();
+        }
     }
 
     public void NextTask() {
-        if (_taskList.Count == 0)
+        if (_taskQueue.Count == 0) {
             return;
-
-        _currentTask = _taskList.Dequeue();
+        }
+        _currentTask = _taskQueue.Dequeue();
         _currentTask.TaskResultHandler += OnTaskFinish;
     }
 

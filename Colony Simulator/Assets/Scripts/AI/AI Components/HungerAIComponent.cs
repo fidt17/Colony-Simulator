@@ -8,6 +8,8 @@ public class HungerAIComponent {
     private Character _character;
     private EatFoodTask _eatFoodTask;
 
+    private bool _isSearchingForFood = false;
+
     public HungerAIComponent(Character character) {
         _character = character;
         AssignListeners();
@@ -17,24 +19,21 @@ public class HungerAIComponent {
 
     public void UnassignListeners() {
         _character.hungerComponent.HungerLevelHandler -= HandleHungerLevel;
-
         if (_eatFoodTask is EatFoodTask) {
             _eatFoodTask.TaskResultHandler -= HandleGetFoodTaskResult;
         }
     }
 
     private void HandleHungerLevel(float hungerLevel) {
-        if (hungerLevel < _character.data.hungerSearchThreshold) {
+        if (hungerLevel < _character.Data.hungerSearchThreshold) {
             _character.CommandProcessor.StartCoroutine(StartFoodSearch());
         }
     }
 
-    private bool _isSearchingForFood = false;
     private IEnumerator StartFoodSearch() {
-        if (_isSearchingForFood
-            || _character.hungerComponent.edibles.Count == 0)
+        if (_isSearchingForFood || _character.hungerComponent.edibles.Count == 0) {
             yield break;
-
+        }
         _isSearchingForFood = true;
 
         IEdible food = null;
@@ -47,15 +46,13 @@ public class HungerAIComponent {
         
         _eatFoodTask = new EatFoodTask(_character, targetNode, food);
         _eatFoodTask.TaskResultHandler += HandleGetFoodTaskResult;
-        _character.AI.commandProcessor.AddTask(_eatFoodTask);
+        _character.AI.CommandProcessor.AddTask(_eatFoodTask);
 
         while (_eatFoodTask != null) {
             yield return null;
         }
-    }
-
-    private void HandleGetFoodTaskResult(bool result) {
-        _eatFoodTask = null;
         _isSearchingForFood = false;
     }
+
+    private void HandleGetFoodTaskResult(bool result) => _eatFoodTask = null;
 }
