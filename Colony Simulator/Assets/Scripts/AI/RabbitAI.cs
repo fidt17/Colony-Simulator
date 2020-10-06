@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class RabbitAI : AIController {
 
-    public Rabbit _rabbit;
+    public Rabbit character;
+
+    #region AI Components
 
     private IdleAIComponent _idleAIComponent;
     private HungerAIComponent _hungerAIComponent;
 
+    #endregion
+
     public override void Initialize(Character character) {
-        _rabbit = character as Rabbit;
+        this.character = character as Rabbit;
         base.Initialize(character);
     }
 
@@ -23,13 +27,13 @@ public class RabbitAI : AIController {
 
     #region Idle Component
 
-    protected void InitializeIdleAIComponent() => _idleAIComponent = new IdleAIComponent(_rabbit);
+    protected void InitializeIdleAIComponent() => _idleAIComponent = new IdleAIComponent(character);
 
     #endregion
 
     #region Hunger Component
 
-    protected void InitializeHungerAIComponent() => _hungerAIComponent = new HungerAIComponent(_rabbit);
+    protected void InitializeHungerAIComponent() => _hungerAIComponent = new HungerAIComponent(character);
     protected void DisableHungerAIComponent() => _hungerAIComponent.UnassignListeners();
 
     #endregion

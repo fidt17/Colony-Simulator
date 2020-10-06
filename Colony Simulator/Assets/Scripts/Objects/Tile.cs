@@ -12,6 +12,8 @@ public enum TileType {
 
 public class Tile : StaticObject {
 
+    public override string Name => "tile";
+
     public TileType type { get; set; }
     public StaticObject objectOnTile = null;
     public Item itemOnTile = null;
@@ -31,8 +33,13 @@ public class Tile : StaticObject {
         defaultSpriteColor = mainSprite.color;
     }
 
-    public override void SetData(PrefabScriptableObject data) {
-        base.SetData(data as TileScriptableObject);
+    public override void Destroy() {
+        Debug.LogWarning("Something went wrong. Tiles are not supposed to be destroyed.");
+        base.Destroy();
+    }
+
+    public override void SetData(StaticScriptableObject data) {
+        base.SetData(data);
         type = ((TileScriptableObject) data).tileType;
         isTraversable = ((TileScriptableObject) data).isTraversable;
     }

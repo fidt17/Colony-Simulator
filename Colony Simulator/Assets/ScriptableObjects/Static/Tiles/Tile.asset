@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8e4a58ceb89004fb11d9d921939b30, type: 3}
   m_Name: Tile
   m_EditorClassIdentifier: 
-  dataName: tile
+  name: tile
   prefab: {fileID: 7857810238489946679, guid: c514aa5896b963743a22546f11bf2402, type: 3}
   tileType: 0
   isTraversable: 1

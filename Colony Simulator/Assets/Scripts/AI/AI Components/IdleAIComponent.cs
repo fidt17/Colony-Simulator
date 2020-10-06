@@ -8,9 +8,10 @@ public class IdleAIComponent {
 
     private const float _coroutineCooldown = 5f;
     private const float _idleWaitTime = 2f;
-    private const float _searchOffset = 5;
+    private float _searchOffset = 5;
 
     public IdleAIComponent(Character character) {
+
         _character = character;
         _character.CommandProcessor.StartCoroutine(TryToWander());
     }
@@ -19,7 +20,7 @@ public class IdleAIComponent {
         while(true) {
             yield return new WaitForSeconds(_coroutineCooldown);
 
-            if (_character.CommandProcessor.HasTask == true) {
+            if (_character.CommandProcessor.IsFree == false) {
                 continue;
             }
             

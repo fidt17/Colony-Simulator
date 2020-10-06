@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,16 +10,21 @@ public class EatCommand : Command {
     public EatCommand(HungerComponent hungerComponent, IEdible food) {
         _hungerComponent = hungerComponent;
         _food = food;
-        (_food as IDestroyable).OnDestroyed += OnFoodDestroyed;
+        ((StaticObject) _food).OnDestroy += OnFoodDestroyed;
     }
 
     public override void Execute() {
-        (_food as IDestroyable).OnDestroyed -= OnFoodDestroyed;
-        _hungerComponent.Eat(_food);
+        if (_food == null) {
+            Finish(false);
+            return;
+        }
+
+        ((StaticObject) _food).OnDestroy -= OnFoodDestroyed;
+        _food.Eat(_hungerComponent);
         Finish(true);
     }
 
-    public override void Abort() => (_food as IDestroyable).OnDestroyed -= OnFoodDestroyed;
+    public override void Abort() => ((StaticObject) _food).OnDestroy -= OnFoodDestroyed;
     
-    private void OnFoodDestroyed(object sender, EventArgs e) => Finish(false);
+    private void OnFoodDestroyed(StaticObject food) => Finish(false);
 }

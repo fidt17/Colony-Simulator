@@ -2,7 +2,6 @@ fileFormatVersion: 2
 guid: 71bb712142d150c408b8d7488907be58
 labels:
 - Character
-- PrefabScriptableObject
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

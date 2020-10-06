@@ -6,18 +6,14 @@ public class JobHandlerComponent : MonoBehaviour {
 
     public bool IsAvailable => _currentJob == null;
     public MotionComponent MotionComponent => _worker.motionComponent;
-    public CommandProcessor CommandProcessor => _worker.AI.CommandProcessor;
+    public CommandProcessor CommandProcessor => _worker.AI.commandProcessor;
 
     private Human _worker;
     private Job _currentJob;
 
     public void Initialize(Human worker) => _worker = worker;
 
-    public void AssignJob(Job job) {
-        _currentJob = job;
-        _currentJob.AssignWorker(this);
-    }
-
+    public void AssignJob(Job job) => _currentJob = job;
     public void WithdrawJob() => _currentJob = null;
 
     public bool CanDoJob(Job job) {

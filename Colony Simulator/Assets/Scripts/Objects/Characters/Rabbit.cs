@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Rabbit : Character, IMovable, IMotionAnimator {
 
+    public override string Name => "rabbit";
+
     #region Components
 
     public MotionAnimatorComponent motionAnimator { get; protected set; }

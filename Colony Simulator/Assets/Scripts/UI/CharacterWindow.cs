@@ -15,7 +15,7 @@ public class CharacterWindow : WindowComponent {
             return;
         }
 
-        characterName.text = character.Data.name;
+        characterName.text = character.data.name;
         characterHungerFillImage.localScale = new Vector3(character.hungerComponent.HungerLevel / 100, 1, 1);
     }
 

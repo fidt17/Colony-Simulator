@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8e4a58ceb89004fb11d9d921939b30, type: 3}
   m_Name: Water Tile
   m_EditorClassIdentifier: 
-  dataName: water tile
+  name: water_tile
   prefab: {fileID: 7857810238489946679, guid: 1209cc4682a46974ab015c985a671c64, type: 3}
   tileType: 3
   isTraversable: 0

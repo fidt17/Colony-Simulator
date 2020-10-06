@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5cc0a6fd0f2e44a8f84ca7ec73dfe0, type: 3}
   m_Name: Human
   m_EditorClassIdentifier: 
-  dataName: human
-  prefab: {fileID: 5526020460281864154, guid: 6489bfb87908ef24886fc3cb50459d0a, type: 3}
+  name: human
   movementSpeed: 5
-  hungerDecreasePerSecond: 0
-  hungerSearchThreshold: 80
+  prefab: {fileID: 5526020460281864154, guid: 6489bfb87908ef24886fc3cb50459d0a, type: 3}

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Item : IPrefab, IPlacable {
+public abstract class Item : IPlacable {
     
     public delegate void OnObjectDestroyed(Item item);
     public event OnObjectDestroyed OnDestroy;
+
+    public abstract string Name { get; }
 
     public Vector2Int position { get; protected set; }
 
@@ -17,12 +19,10 @@ public abstract class Item : IPrefab, IPlacable {
 
     public Item() { }
 
-    #region IPrefab
+    public virtual void SetData(ItemScriptableObject data) => this.data = data;
 
-    public virtual void SetData(PrefabScriptableObject data) => this.data = data as ItemScriptableObject;
-
-    public virtual void SetGameObject(GameObject obj, Vector2Int position) {
-        _gameObject = obj;
+    public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
+        _gameObject = gameObject;
         _gameObject.transform.position = new Vector3(position.x, position.y, 0);
         this.position = position;
         PutOnTile();
@@ -33,8 +33,6 @@ public abstract class Item : IPrefab, IPlacable {
         OnDestroy?.Invoke(this);
         RemoveFromTile();
     }
-
-    #endregion
 
     #region IPlacable
 

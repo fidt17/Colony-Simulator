@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Human : Character, IMotionAnimator {
 
+    public override string Name => "human";
+
     #region Components
 
     public MotionAnimatorComponent motionAnimator  { get; private set; }

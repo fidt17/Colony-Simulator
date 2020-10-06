@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class HumanAI : AIController {
 
-    private Human _human;
+    public Human character;
+
+    #region AI Components
 
     private IdleAIComponent _idleAIComponent;
 
+    #endregion
+
     public override void Initialize(Character character) {
-        _human = character as Human;
+        this.character = character as Human;
         base.Initialize(character);
     }
 
     protected override void InitializeComponents() => InitializeIdleAIComponent();
+
     protected override void DisableComponents() { }
 
     #region Idle Component
 
-    protected void InitializeIdleAIComponent() => _idleAIComponent = new IdleAIComponent(_human);
+    protected void InitializeIdleAIComponent() => _idleAIComponent = new IdleAIComponent(character);
 
     #endregion
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Grass : StaticObject, IEdible, IPlacable {
 
+    public override string Name => "grass";
+
     #region Components
 
     public VegetationComponent vegetationComponent { get; protected set; }
@@ -45,6 +47,11 @@ public class Grass : StaticObject, IEdible, IPlacable {
     public Vector2Int GetEdiblePosition() => position;
 
     public void AddToGlobalEdiblesList() => GameManager.Instance.natureManager.edibleList.Add(this);
+
+    public void Eat(HungerComponent eater) {
+        eater.ChangeHunger(NutritionValue);
+        Destroy();        
+    }
 
     #endregion
 

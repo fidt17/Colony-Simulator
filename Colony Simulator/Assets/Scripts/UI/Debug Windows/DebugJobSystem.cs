@@ -9,12 +9,12 @@ public class DebugJobSystem : WindowComponent {
 
     private void Update() {
         jobsList.ClearViewport();
-        foreach(Job job in JobSystem.GetInstance().AllJobs) {
+        foreach(Job job in JobSystem.Instance.AllJobs) {
             GameObject element = jobsList.AddElement();
             element.GetComponent<TMPro.TextMeshProUGUI>().text = "" + job.GetType();
         }
 
-        if (JobSystem.GetInstance().AllJobs.Count == 0) {
+        if (JobSystem.Instance.AllJobs.Count == 0) {
             jobsList.AddElement().GetComponent<TMPro.TextMeshProUGUI>().text = "No jobs available.";
         }
     }

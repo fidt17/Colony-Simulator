@@ -31,6 +31,7 @@ public class MoveCommand : Command {
         if (HasPath() == false) {
             return;
         }
+
         MoveTowardsDestination();
     }
 
@@ -42,9 +43,9 @@ public class MoveCommand : Command {
     }
 
     private bool HasPath() {
-        if (_path is null) {
+        if (_path == null) {
             FindPath();
-            if (_path is null) {
+            if (_path == null) {
                 Finish(false);
                 return false;
             }
@@ -53,7 +54,7 @@ public class MoveCommand : Command {
     }
 
     private void FindPath() {
-        if(_destinationNode is null) {
+        if(_destinationNode == null) {
             Finish(false);
             return;
         }

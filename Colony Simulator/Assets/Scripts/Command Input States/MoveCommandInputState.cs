@@ -8,22 +8,21 @@ public class MoveCommandInputState : CommandInputState {
 
     public MoveCommandInputState() {
         _colonists = SelectionTracker.Colonists;
-        if (_colonists is null) {
+        if (_colonists is null)
             CommandInputStateMachine.SwitchCommandState(new DefaultInputState());
-        }
     }
+
+    public override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.moveStateTexture);
+
+    public override void SubscribeToEvents() {
+        InputController.Instance.OnMouse0_Down += OnLeftMouseButtonDown;
+        InputController.Instance.OnMouse1_Down += OnRightMouseButtonDown;
+    } 
 
     public override void UnsubscribeFromEvents() {
         InputController.Instance.OnMouse0_Down -= OnLeftMouseButtonDown;
         InputController.Instance.OnMouse1_Down -= OnRightMouseButtonDown;
     }
-
-    protected override void SubscribeToEvents() {
-        InputController.Instance.OnMouse0_Down += OnLeftMouseButtonDown;
-        InputController.Instance.OnMouse1_Down += OnRightMouseButtonDown;
-    }
-
-    protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.moveStateTexture);
 
     private void OnLeftMouseButtonDown() {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
@@ -49,7 +48,7 @@ public class MoveCommandInputState : CommandInputState {
             Task moveTask = new Task();
             moveTask.AddCommand(new MoveCommand(colonist.motionComponent, node));
 
-            colonist.AI.CommandProcessor.AddUrgentTask(moveTask);
+            colonist.AI.commandProcessor.AddUrgentTask(moveTask);
         }
     }
 

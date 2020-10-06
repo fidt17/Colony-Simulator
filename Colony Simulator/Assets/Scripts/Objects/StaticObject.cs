@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public abstract class StaticObject : IPrefab, IDestroyable {
+public abstract class StaticObject : IGameObject {
 
-    public event EventHandler OnDestroyed;
+    public delegate void OnObjectDestroyed(StaticObject staticObject);
+    public event OnObjectDestroyed OnDestroy;
+
+    public abstract string Name { get; }
 
     public StaticScriptableObject data;
     public GameObject GameObject => _gameObject;
@@ -20,20 +22,16 @@ public abstract class StaticObject : IPrefab, IDestroyable {
 
     public StaticObject(Vector2Int dimensions) => this.dimensions = dimensions;
 
-    #region IPrefab
+    public virtual void SetData(StaticScriptableObject data) => this.data = data;
 
-    public virtual void SetData(PrefabScriptableObject data) => this.data = data as StaticScriptableObject;
-
-    public virtual void SetGameObject(GameObject obj, Vector2Int position) {
-        _gameObject = obj;
+    public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
+        _gameObject = gameObject;
         _gameObject.transform.position = new Vector3(position.x, position.y, 0);
         this.position = position;
     }
 
     public virtual void Destroy() {
         GameObject.Destroy(_gameObject);
-        OnDestroyed?.Invoke(this, EventArgs.Empty);
+        OnDestroy?.Invoke(this);
     }
-
-    #endregion
 }

@@ -19,15 +19,10 @@ public class HungerComponent : MonoBehaviour {
 
     public void Initialize(Character character) {
         _character = character;
-        _hungerDecreasePerSecond = _character.Data.hungerDecreasePerSecond;
+        _hungerDecreasePerSecond = _character.data.hungerDecreasePerSecond;
     }
 
     private void Start() => StartCoroutine(DecreaseHunger());
-
-    public void Eat(IEdible food) {
-        ChangeHunger(food.NutritionValue);
-        (food as IPrefab).Destroy();
-    }
 
     public void ChangeHunger(float value) {
         _hunger = Mathf.Clamp(_hunger + value, 0, 100);
