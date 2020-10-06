@@ -12,8 +12,6 @@ public abstract class Job {
 
     protected GameObject _jobIcon;
 
-    public Job() {}
-
     public Job(Vector2Int jobPosition) {
         _jobPosition = jobPosition;
         AddJobIcon();
@@ -21,13 +19,13 @@ public abstract class Job {
 
     public void AssignWorker(JobHandlerComponent worker) {
         _worker = worker;
-        _worker.AssignJob(this);
         PlanJob();
     }
 
     public void WithdrawWorker() {
-        if (_worker == null)
+        if (_worker is null) {
             return;
+        }
 
         if (_task != null) {
             _task.TaskResultHandler -= OnJobFinish;
@@ -37,7 +35,7 @@ public abstract class Job {
 
         _worker.WithdrawJob();
         _worker = null;
-        JobSystem.Instance.ReturnJob(this);
+        JobSystem.GetInstance().ReturnJob(this);
     }
 
     protected abstract void PlanJob();
@@ -56,13 +54,12 @@ public abstract class Job {
     }
 
     protected void OnJobFinish(bool result) {
+        _worker.WithdrawJob();
         if (result == true) {
-            _worker.WithdrawJob();
-            JobSystem.Instance.DeleteJob(this);
+            JobSystem.GetInstance().DeleteJob(this);
             DeleteJobIcon();
         } else {
-            _worker.WithdrawJob();
-            JobSystem.Instance.ReturnJob(this);
+            JobSystem.GetInstance().ReturnJob(this);
         }
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5cc0a6fd0f2e44a8f84ca7ec73dfe0, type: 3}
   m_Name: Rabbit
   m_EditorClassIdentifier: 
-  name: rabbit
-  movementSpeed: 2.5
+  dataName: rabbit
   prefab: {fileID: 5526020460281864154, guid: 49b582753f64d85468462c3410559e49, type: 3}
+  movementSpeed: 2.5
   hungerDecreasePerSecond: 1
   hungerSearchThreshold: 80

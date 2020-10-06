@@ -8,12 +8,12 @@ public class Task {
     public delegate void OnTaskResult(bool result);
     public event OnTaskResult TaskResultHandler;
 
-    protected Queue<Command> _commandList = new Queue<Command>();
+    protected Queue<Command> _commandQueue = new Queue<Command>();
     protected Command _currentCommand;
 
     public void AddCommand(Command command) {
         command.CommandResultHandler += OnCommandFinish;
-        _commandList.Enqueue(command);
+        _commandQueue.Enqueue(command);
     }
 
     public void ExecuteTask() {
@@ -24,10 +24,10 @@ public class Task {
     }
 
     public void NextCommand() {
-        if (_commandList.Count == 0) {
-            FinishTask(true);
+        if (_commandQueue.Count == 0) {
+            FinishTask();
         } else {
-            _currentCommand = _commandList.Dequeue();
+            _currentCommand = _commandQueue.Dequeue();
         }
     }
 
@@ -35,17 +35,17 @@ public class Task {
         if (succeed) {
             NextCommand();
         } else {
-            FinishTask(false);
+            AbortTask();
         }
     }
 
-    public void FinishTask(bool succeed) {
-        if(!succeed) {
-            foreach(Command command in _commandList) {
-                command.Abort();
-            }
-            _currentCommand?.Abort();
+    public void FinishTask() => TaskResultHandler?.Invoke(true);
+
+    public void AbortTask() {
+        foreach(Command command in _commandQueue) {
+            command.Abort();
         }
-        TaskResultHandler?.Invoke(succeed);
+        _currentCommand?.Abort();
+        TaskResultHandler?.Invoke(false);
     }
 }

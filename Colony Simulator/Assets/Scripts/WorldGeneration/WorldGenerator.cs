@@ -60,14 +60,14 @@ public static class WorldGenerator {
                 string dataName = "tile";
 
                 if (height < sea) {
-                    dataName = "water_tile";
+                    dataName = "water tile";
 				} else if (height < sand) {
-                    dataName = "sand_tile";
+                    dataName = "sand tile";
 				} else {
-                    dataName = "grass_tile";
+                    dataName = "grass tile";
 				}
 
-                Tile tile = StaticObjectSpawnFactory.GetNewStaticObject("tile", dataName, new Vector2Int(x, y)) as Tile;
+                Tile tile = Factory.Create<Tile>(dataName, new Vector2Int(x, y));
                 tile.GameObject.transform.parent = _tileParent.transform;
                 grid[x, y] = tile;
 			}
@@ -92,9 +92,9 @@ public static class WorldGenerator {
                 float r = Random.Range(0f, 1f);
 
                 if (r > 0.95f) {
-                    StaticObjectSpawnFactory.GetNewStaticObject("tree", "tall tree", new Vector2Int(x, y));
+                    Factory.Create<Tree>("tall tree", new Vector2Int(x, y));
                 } else if (r > 0.6f) {
-                    StaticObjectSpawnFactory.GetNewStaticObject("grass", "grass", new Vector2Int(x, y));
+                    Factory.Create<Grass>("grass", new Vector2Int(x, y));
                 }
 			}
 		}
@@ -103,7 +103,7 @@ public static class WorldGenerator {
     private static void GenerateCharacters() {
         
         for (int i = 0; i < _gameSettings.humanCount; i++) {
-            Human human = CharacterSpawnFactory.GetNewCharacter("human", "human", new Vector2Int(45, 35)) as Human;
+            Human human = Factory.Create<Human>("human", new Vector2Int(45, 35));
             if (human != null)
                 GameManager.Instance.characterManager.colonists.Add(human);
         }
@@ -114,7 +114,7 @@ public static class WorldGenerator {
                 t = GameManager.Instance.world.GetTileAt(new Vector2Int((int) Random.Range(0, 50), (int) Random.Range(0, 50)));
             }
 
-            Rabbit rabbit = CharacterSpawnFactory.GetNewCharacter("rabbit", "rabbit", t.position) as Rabbit;
+            Rabbit rabbit = Factory.Create<Rabbit>("rabbit", t.position);
             if (rabbit != null) {
                 GameManager.Instance.characterManager.rabbits.Add(rabbit);
             }

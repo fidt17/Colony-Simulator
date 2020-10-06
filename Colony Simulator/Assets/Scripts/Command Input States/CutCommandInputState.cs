@@ -8,20 +8,10 @@ public class CutCommandInputState : CommandInputState {
     private List<Tree> _selectedTrees;
 
     public CutCommandInputState() {
-
         _selectedTrees = SelectionTracker.Trees;
-
         if (_selectedTrees is null) {
             SelectionTracker.DeselectEverything();
         }
-    }
-
-    public override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);
-
-    public override void SubscribeToEvents() {
-        InputController.Instance.OnMouse0_Down += OnLeftClickDown;
-        InputController.Instance.OnMouse1_Down += ExitState;
-        InputController.Instance.OnEscape_Down += ExitState;
     }
 
     public override void UnsubscribeFromEvents() {
@@ -29,6 +19,14 @@ public class CutCommandInputState : CommandInputState {
         InputController.Instance.OnMouse1_Down -= ExitState;
         InputController.Instance.OnEscape_Down -= ExitState;
     }
+
+    protected override void SubscribeToEvents() {
+        InputController.Instance.OnMouse0_Down += OnLeftClickDown;
+        InputController.Instance.OnMouse1_Down += ExitState;
+        InputController.Instance.OnEscape_Down += ExitState;
+    }
+
+    protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);
 
     private void OnLeftClickDown() {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
@@ -42,13 +40,13 @@ public class CutCommandInputState : CommandInputState {
             Tree tree = vegetation.Vegetation as Tree;
             if (JobExists(tree) == false) {
                 CutJob cutJob = new CutJob(tree, tree.position);
-                JobSystem.Instance.AddJob(cutJob);
+                JobSystem.GetInstance().AddJob(cutJob);
             }
         }
     }
 
     private bool JobExists(Tree tree) {
-        CutJob cutJob = JobSystem.Instance.AllJobs.Find(x => x.GetType() == typeof(CutJob) && (x as CutJob).Vegetation == tree) as CutJob;
+        CutJob cutJob = JobSystem.GetInstance().AllJobs.Find(x => x.GetType() == typeof(CutJob) && (x as CutJob).Vegetation == tree) as CutJob;
         return cutJob != null;
     }
 

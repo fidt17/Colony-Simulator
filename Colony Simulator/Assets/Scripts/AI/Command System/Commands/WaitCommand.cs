@@ -10,7 +10,8 @@ public class WaitCommand : Command {
 
     public override void Execute() {
         _waitTime -= Time.deltaTime;
-        if (_waitTime <= 0)
+        if (_waitTime <= 0) {
             Finish(true);
+        }
     }
 }

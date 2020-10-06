@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8e4a58ceb89004fb11d9d921939b30, type: 3}
   m_Name: Sand Tile
   m_EditorClassIdentifier: 
-  name: sand_tile
+  dataName: sand tile
   prefab: {fileID: 7857810238489946679, guid: 04a04b162aa5f234099fa347db7b742b, type: 3}
   tileType: 1
   isTraversable: 1

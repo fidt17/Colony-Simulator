@@ -1,6 +1,7 @@
 fileFormatVersion: 2
 guid: 258a9df2bb49eb74eb0e877c94481847
 labels:
+- PrefabScriptableObject
 - Static
 NativeFormatImporter:
   externalObjects: {}

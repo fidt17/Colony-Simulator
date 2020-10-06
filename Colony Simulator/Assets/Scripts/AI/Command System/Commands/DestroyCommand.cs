@@ -1,31 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destroy : Command {
+public class DestroyCommand : Command {
     
-    private StaticObject _objectToDestroy;
+    private IDestroyable _objectToDestroy;
 
-    public Destroy(StaticObject objectToDestroy) {
+    public DestroyCommand(IDestroyable objectToDestroy) {
         _objectToDestroy = objectToDestroy;
-        _objectToDestroy.OnDestroy += OnObjectDestroyedOutside;
+        _objectToDestroy.OnDestroyed += OnObjectDestroyedOutside;
     }
 
     public override void Execute() {
-        _objectToDestroy.OnDestroy -= OnObjectDestroyedOutside;
+        _objectToDestroy.OnDestroyed -= OnObjectDestroyedOutside;
         _objectToDestroy.Destroy();
         Finish(true);
     }
 
-    //if objects gets destroyed before this command can destroy the object itself.
-    protected void OnObjectDestroyedOutside(StaticObject s) {
-        _objectToDestroy = null;
-        Finish(false);
-    }
-
     public override void Abort() {
         if (_objectToDestroy != null) {
-            _objectToDestroy.OnDestroy -= OnObjectDestroyedOutside;
+            _objectToDestroy.OnDestroyed -= OnObjectDestroyedOutside;
         }
+    }
+
+    private void OnObjectDestroyedOutside(object sender, EventArgs e) {
+        _objectToDestroy = null;
+        Finish(false);
     }
 }

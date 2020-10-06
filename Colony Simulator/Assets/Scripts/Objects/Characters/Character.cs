@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
+public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
 
-    public abstract string Name { get; }
-
-    public CharacterScriptableObject data;
+    public CharacterScriptableObject Data => _data;
     public GameObject GameObject => _gameObject;
 
-    public CommandProcessor CommandProcessor => AI.commandProcessor;
+    public CommandProcessor CommandProcessor => AI.CommandProcessor;
 
     #region Components
 
@@ -20,30 +18,39 @@ public abstract class Character : IGameObject, ISelectable, IMovable, IHunger {
 
     #endregion
 
+    protected CharacterScriptableObject _data;
     protected GameObject _gameObject;
 
     public Character() { }
 
-    public virtual void SetData(CharacterScriptableObject data) => this.data = data;
+    public virtual void Die() {
+        _gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        Destroy();
+    }
 
-    public virtual void SetGameObject(GameObject gameObject, Vector2Int position) {
-        _gameObject = gameObject;
+    #region IPrefab
+
+    public virtual void SetData(PrefabScriptableObject data) => _data = data as CharacterScriptableObject;
+
+    public virtual void SetGameObject(GameObject obj, Vector2Int position) {
+        _gameObject = obj;
         InitializeSelectableComponent();
         InitializeMotionComponent(position);
         InitializeHungerComponent();
         InitializeAI();
     }
 
-    public virtual void Die() {
-        _gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+    public virtual void Destroy() {
         GameObject.Destroy(_gameObject, 1);
     }
+
+    #endregion
 
     #region Motion Component
 
     public virtual void InitializeMotionComponent(Vector2Int position) {
         motionComponent = _gameObject.AddComponent<MotionComponent>();
-        motionComponent.Initialize(data.movementSpeed, position);
+        motionComponent.Initialize(_data.movementSpeed, position);
     }
 
     #endregion

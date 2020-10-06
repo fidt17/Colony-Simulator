@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Tree : StaticObject, IPlacable, IHarvestable
 {   
-    public override string Name => "tree";
-
     #region Components
 
     public VegetationComponent vegetationComponent { get; protected set; }
@@ -46,7 +44,7 @@ public class Tree : StaticObject, IPlacable, IHarvestable
     #region IHarvestable
 
     public void Harvest() {
-        ItemSpawnFactory.GetNewItem("wood_log", "wood_log", position);
+        Factory.Create<WoodLog>("wood log", position);
         Destroy();
     }
 
