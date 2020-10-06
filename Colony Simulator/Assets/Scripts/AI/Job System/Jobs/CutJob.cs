@@ -15,7 +15,7 @@ public class CutJob : Job {
     protected override void PlanJob() {
         _task = new Task();
         _task.AddCommand(new MoveCommand(_worker.MotionComponent, GetDestinationNode()));
-        _task.AddCommand(new RotateToCommand(_worker.MotionComponent, GameManager.Instance.pathfinder.grid.GetNodeAt(_jobPosition)));
+        _task.AddCommand(new RotateToCommand(_worker.MotionComponent, Pathfinder.NodeAt(_jobPosition)));
         _task.AddCommand(new WaitCommand(1f));
         _task.AddCommand(new HarvestCommand(_harvestable));
 

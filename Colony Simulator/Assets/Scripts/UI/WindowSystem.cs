@@ -3,22 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WindowSystem : MonoBehaviour {
-
-    public static WindowSystem Instance;
+public class WindowSystem : Singleton<WindowSystem> {
 
     List<WindowComponent> windows;
 
-    private void Awake() {
-        if (Instance != null) {
-            Debug.LogError("Only one WindowSystem can exist at a time!");
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    
+    protected override void Awake() {
         FindWindows();
-        InputController.Instance.OnEscape_Down += CloseWindows;
+        InputController.GetInstance().OnEscape_Down += CloseWindows;
     }
 
     private void FindWindows() {
@@ -62,5 +53,5 @@ public class WindowSystem : MonoBehaviour {
 
     private void CloseWindows() => windows.ForEach(w => w.CloseWindow());
 
-    private void OnDestroy() => InputController.Instance.OnEscape_Down -= CloseWindows;
+    private void OnDestroy() => InputController.GetInstance().OnEscape_Down -= CloseWindows;
 }

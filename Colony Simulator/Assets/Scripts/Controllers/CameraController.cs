@@ -19,8 +19,8 @@ public class CameraController : MonoBehaviour {
 	private void Start() => mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 
     public void Init() {
-        mainCamera.transform.position = new Vector3(GameManager.Instance.world.dimensions.x / 2,
-                                                    GameManager.Instance.world.dimensions.y / 2, -100);
+        mainCamera.transform.position = new Vector3(GameManager.GetInstance().world.dimensions.x / 2,
+                                                    GameManager.GetInstance().world.dimensions.y / 2, -100);
 		mainCamera.orthographicSize = _maxZoom;
 		SubscribeToInput();
     }
@@ -53,13 +53,13 @@ public class CameraController : MonoBehaviour {
 
         if (leftDown.x + cameraVelocity.x < -_maxOffset && cameraVelocity.x < 0) {
             cameraVelocity.x = 0;
-		} else if (rightUp.x + cameraVelocity.x > GameManager.Instance.world.dimensions.x + _maxOffset && cameraVelocity.x > 0) {
+		} else if (rightUp.x + cameraVelocity.x > GameManager.GetInstance().world.dimensions.x + _maxOffset && cameraVelocity.x > 0) {
             cameraVelocity.x = 0;
 		}
 
         if (leftDown.y + cameraVelocity.y < -_maxOffset && cameraVelocity.y < 0) {
             cameraVelocity.y = 0;
-		} else if (rightUp.y + cameraVelocity.y > GameManager.Instance.world.dimensions.y + _maxOffset && cameraVelocity.y > 0) {
+		} else if (rightUp.y + cameraVelocity.y > GameManager.GetInstance().world.dimensions.y + _maxOffset && cameraVelocity.y > 0) {
             cameraVelocity.y = 0;
 		}
 	}
@@ -119,7 +119,7 @@ public class CameraController : MonoBehaviour {
 	private void OnDestroy() => UnsubscribeFromInput();
 
 	private void SubscribeToInput() {
-		InputController input = InputController.Instance;
+		InputController input = InputController.GetInstance();
 		input.OnW_Pressed += MoveUp;
 		input.OnA_Pressed += MoveLeft;
 		input.OnS_Pressed += MoveDown;
@@ -127,7 +127,7 @@ public class CameraController : MonoBehaviour {
 	}
 
 	private void UnsubscribeFromInput() {
-		InputController input = InputController.Instance;
+		InputController input = InputController.GetInstance();
 		input.OnW_Pressed -= MoveUp;
 		input.OnA_Pressed -= MoveLeft;
 		input.OnS_Pressed -= MoveDown;

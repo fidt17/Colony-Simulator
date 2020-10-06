@@ -57,7 +57,7 @@ public class MoveCommand : Command {
             Finish(false);
             return;
         }
-        _path = GameManager.Instance.pathfinder.GetPath(_motionComponent.GridPosition, _destinationNode.position);
+        _path = Pathfinder.GetPath(_motionComponent.PathNode, _destinationNode);
     }
 
     private void MoveTowardsDestination() {

@@ -19,7 +19,7 @@ public class HungerComponent : MonoBehaviour {
 
     public void Initialize(Character character) {
         _character = character;
-        _hungerDecreasePerSecond = _character.Data.hungerDecreasePerSecond;
+        _hungerDecreasePerSecond = _character.data.hungerDecreasePerSecond;
     }
 
     private void Start() => StartCoroutine(DecreaseHunger());

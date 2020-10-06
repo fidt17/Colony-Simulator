@@ -12,7 +12,7 @@ public class Grass : StaticObject, IEdible, IPlacable {
 
     public Grass() : base (Vector2Int.one) {
         isTraversable = true;
-        GameManager.Instance.natureManager.grassList.Add(this);
+        GameManager.GetInstance().natureManager.grassList.Add(this);
         AddToGlobalEdiblesList();
     }
 
@@ -25,14 +25,14 @@ public class Grass : StaticObject, IEdible, IPlacable {
     public override void Destroy() {
         base.Destroy();
         RemoveFromTile();
-        GameManager.Instance.natureManager.grassList.Remove(this);
-        GameManager.Instance.natureManager.edibleList.Remove(this);
+        GameManager.GetInstance().natureManager.grassList.Remove(this);
+        GameManager.GetInstance().natureManager.edibleList.Remove(this);
     }
 
     #region Vegetation Component
 
     protected void InitializeVegetationComponent() {
-        vegetationComponent = _gameObject.AddComponent<VegetationComponent>();
+        vegetationComponent = gameObject.AddComponent<VegetationComponent>();
         vegetationComponent.Initialize(this, VegetationType.grass);
     }
 
@@ -44,19 +44,19 @@ public class Grass : StaticObject, IEdible, IPlacable {
 
     public Vector2Int GetEdiblePosition() => position;
 
-    public void AddToGlobalEdiblesList() => GameManager.Instance.natureManager.edibleList.Add(this);
+    public void AddToGlobalEdiblesList() => GameManager.GetInstance().natureManager.edibleList.Add(this);
 
     #endregion
 
     #region IPlacable
 
     public void PutOnTile() {
-        Tile tile = GameManager.Instance.world.GetTileAt(position);
+        Tile tile = GameManager.GetInstance().world.GetTileAt(position);
         tile.PutStaticObjectOnTile(this, isTraversable);
     }
 
     public void RemoveFromTile() {
-        Tile tile = GameManager.Instance.world.GetTileAt(position);
+        Tile tile = GameManager.GetInstance().world.GetTileAt(position);
         tile.RemoveStaticObjectFromTile();
     }
     

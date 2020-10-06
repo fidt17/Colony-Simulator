@@ -53,7 +53,7 @@ public class JobSystem : Singleton<JobSystem> {
 
     private List<JobHandlerComponent> GetAvailableWorkers() {
         List<JobHandlerComponent> availableWorkers = new List<JobHandlerComponent>();
-        foreach(Human colonist in GameManager.Instance.characterManager.colonists) {
+        foreach(Human colonist in GameManager.GetInstance().characterManager.colonists) {
             JobHandlerComponent worker = colonist.jobHandlerComponent;
             if (worker.IsAvailable) {
                 availableWorkers.Add(worker);

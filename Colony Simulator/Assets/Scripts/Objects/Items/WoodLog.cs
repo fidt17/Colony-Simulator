@@ -5,6 +5,4 @@ using UnityEngine;
 public class WoodLog : Item {
 
     protected override int StackCount => 32;
-
-    public WoodLog() { }
 }

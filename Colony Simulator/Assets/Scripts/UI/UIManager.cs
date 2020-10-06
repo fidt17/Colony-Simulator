@@ -16,9 +16,9 @@ public class UIManager : MonoBehaviour {
     }
 
     public void OpenCharacterWindow(Character source) {
-        CharacterWindow window = WindowSystem.Instance.SwitchWindow(WindowType.CharacterWindow) as CharacterWindow;
+        CharacterWindow window = WindowSystem.GetInstance().SwitchWindow(WindowType.CharacterWindow) as CharacterWindow;
         window.character = source;
     }
 
-    public void CloseCharacterWindow() => WindowSystem.Instance.FindWindowOfType(WindowType.CharacterWindow)?.CloseWindow();
+    public void CloseCharacterWindow() => WindowSystem.GetInstance().FindWindowOfType(WindowType.CharacterWindow)?.CloseWindow();
 }

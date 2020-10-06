@@ -48,9 +48,9 @@ public abstract class Job {
     }
 
     protected PathNode GetDestinationNode() {
-        PathNode jobNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_jobPosition);
-        PathNode workerNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_worker.MotionComponent.GridPosition);
-        return GameManager.Instance.pathfinder.FindNodeNear(jobNode, workerNode);
+        PathNode jobNode = Pathfinder.NodeAt(_jobPosition);
+        PathNode workerNode = Pathfinder.NodeAt(_worker.MotionComponent.GridPosition);
+        return Pathfinder.FindNodeNear(jobNode, workerNode);
     }
 
     protected void OnJobFinish(bool result) {

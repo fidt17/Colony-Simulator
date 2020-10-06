@@ -16,7 +16,7 @@ public class GameSettingsScriptableObject : ScriptableObject
 
     [Header("Characters")]
 
-    [Range(0, 1)]
+    [Range(0, 40)]
     public int humanCount;
     [Range(0, 200)]
     public int rabbitCount;

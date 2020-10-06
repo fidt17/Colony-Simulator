@@ -10,9 +10,7 @@ public class Tree : StaticObject, IPlacable, IHarvestable
 
     #endregion
 
-    public Tree() : base (Vector2Int.one) {
-        isTraversable = false;
-    }
+    public Tree() : base (Vector2Int.one) => isTraversable = false;
 
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
         base.SetGameObject(gameObject, position);
@@ -28,7 +26,7 @@ public class Tree : StaticObject, IPlacable, IHarvestable
     #region Vegetation Component
 
     protected void InitializeVegetationComponent() {
-        vegetationComponent = _gameObject.AddComponent<VegetationComponent>();
+        vegetationComponent = gameObject.AddComponent<VegetationComponent>();
         vegetationComponent.Initialize(this, VegetationType.tree);
     }
 
@@ -36,8 +34,8 @@ public class Tree : StaticObject, IPlacable, IHarvestable
 
     #region IPlacable
 
-    public void PutOnTile() => GameManager.Instance.world.GetTileAt(position).PutStaticObjectOnTile(this, isTraversable);
-    public void RemoveFromTile() => GameManager.Instance.world.GetTileAt(position).RemoveStaticObjectFromTile();
+    public void PutOnTile()      => GameManager.GetInstance().world.GetTileAt(position).PutStaticObjectOnTile(this, isTraversable);
+    public void RemoveFromTile() => GameManager.GetInstance().world.GetTileAt(position).RemoveStaticObjectFromTile();
     
     #endregion  
 

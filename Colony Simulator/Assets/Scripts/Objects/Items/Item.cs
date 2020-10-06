@@ -9,27 +9,24 @@ public abstract class Item : IPrefab, IPlacable {
 
     public Vector2Int position { get; protected set; }
 
-    public ItemScriptableObject data;
-    public GameObject GameObject => _gameObject;
+    public ItemScriptableObject data { get; protected set; }
+    public GameObject gameObject     { get; protected set; }
 
-    protected GameObject _gameObject;
     protected abstract int StackCount { get; }
-
-    public Item() { }
 
     #region IPrefab
 
     public virtual void SetData(PrefabScriptableObject data) => this.data = data as ItemScriptableObject;
 
     public virtual void SetGameObject(GameObject obj, Vector2Int position) {
-        _gameObject = obj;
-        _gameObject.transform.position = new Vector3(position.x, position.y, 0);
+        gameObject = obj;
+        gameObject.transform.position = new Vector3(position.x, position.y, 0);
         this.position = position;
         PutOnTile();
     }
 
     public virtual void Destroy() {
-        GameObject.Destroy(_gameObject);
+        GameObject.Destroy(gameObject);
         OnDestroy?.Invoke(this);
         RemoveFromTile();
     }
@@ -38,8 +35,8 @@ public abstract class Item : IPrefab, IPlacable {
 
     #region IPlacable
 
-    public void PutOnTile() => GameManager.Instance.world.GetTileAt(position).PutItemOnTile(this);
-    public void RemoveFromTile() => GameManager.Instance.world.GetTileAt(position).RemoveItemFromTile();
+    public void PutOnTile() => GameManager.GetInstance().world.GetTileAt(position).PutItemOnTile(this);
+    public void RemoveFromTile() => GameManager.GetInstance().world.GetTileAt(position).RemoveItemFromTile();
     
     #endregion
 }

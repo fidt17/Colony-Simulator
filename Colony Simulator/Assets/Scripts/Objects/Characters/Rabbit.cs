@@ -10,8 +10,6 @@ public class Rabbit : Character, IMovable, IMotionAnimator {
 
     #endregion
 
-    public Rabbit() { }
-
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
         base.SetGameObject(gameObject, position);
         InitializeMotionAnimator();
@@ -19,13 +17,13 @@ public class Rabbit : Character, IMovable, IMotionAnimator {
 
     public override void Die() {
         base.Die();
-        GameManager.Instance.characterManager.rabbits.Remove(this);
+        GameManager.GetInstance().characterManager.rabbits.Remove(this);
     }
 
     #region Animation Component
 
     public void InitializeMotionAnimator() {
-        motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
+        motionAnimator = gameObject.AddComponent<MotionAnimatorComponent>();
         motionAnimator.Initialize(motionComponent);
     }
 
@@ -43,7 +41,7 @@ public class Rabbit : Character, IMovable, IMotionAnimator {
     #region AI
 
     protected override void InitializeAI() {
-        AI = _gameObject.AddComponent<RabbitAI>();
+        AI = gameObject.AddComponent<RabbitAI>();
         AI.Initialize(this);
     }
 

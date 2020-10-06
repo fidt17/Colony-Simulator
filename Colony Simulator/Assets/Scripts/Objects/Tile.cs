@@ -45,7 +45,7 @@ public class Tile : StaticObject {
 
         objectOnTile = staticObject;
         if (this.isTraversable != isTraversable) {
-            GameManager.Instance.UpdatePathfinder();
+            GameManager.GetInstance().UpdatePathfinder();
         }
 
         this.isTraversable = isTraversable;
@@ -53,7 +53,7 @@ public class Tile : StaticObject {
 
     public void RemoveStaticObjectFromTile() {
         if (!isTraversable) {
-            GameManager.Instance.UpdatePathfinder();
+            GameManager.GetInstance().UpdatePathfinder();
             isTraversable = true;
         }
 

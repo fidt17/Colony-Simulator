@@ -21,9 +21,9 @@ public class WindowSwitcher : MonoBehaviour {
 
     private void OnButtonClick() {
         if(!isSubWindow) {
-            WindowSystem.Instance.SwitchWindow(windowType);
+            WindowSystem.GetInstance().SwitchWindow(windowType);
         } else {
-            WindowSystem.Instance.SwitchSubWindow(parentWindow, windowType);
+            WindowSystem.GetInstance().SwitchSubWindow(parentWindow, windowType);
         }
     }
 }

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class JobHandlerComponent : MonoBehaviour {
 
-    public bool IsAvailable => _currentJob == null;
-    public MotionComponent MotionComponent => _worker.motionComponent;
+    public bool IsAvailable => _currentJob is null;
+
+    public MotionComponent  MotionComponent  => _worker.motionComponent;
     public CommandProcessor CommandProcessor => _worker.AI.CommandProcessor;
 
     private Human _worker;
@@ -25,9 +26,9 @@ public class JobHandlerComponent : MonoBehaviour {
             return false;
         }
 
-        PathNode jobNode = GameManager.Instance.pathfinder.grid.GetNodeAt(job.Position);
-        PathNode workerNode = GameManager.Instance.pathfinder.grid.GetNodeAt(_worker.motionComponent.GridPosition);
-        if (GameManager.Instance.pathfinder.FindNodeNear(jobNode, workerNode) is null) {
+        PathNode jobNode = Pathfinder.NodeAt(job.Position);
+        PathNode workerNode = Pathfinder.NodeAt(_worker.motionComponent.GridPosition);
+        if (Pathfinder.FindNodeNear(jobNode, workerNode) is null) {
             return false;
         }
 

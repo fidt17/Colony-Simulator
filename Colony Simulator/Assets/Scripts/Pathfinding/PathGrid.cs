@@ -18,19 +18,10 @@ public class PathGrid {
         for (int x = 0; x < _dimensions.x; x++) {
             for (int y = 0; y < _dimensions.y; y++) {
                 Vector2Int position = new Vector2Int(x, y);
-                bool isTraversable = GameManager.Instance.world.GetTileAt(position).isTraversable;
+                bool isTraversable = GameManager.GetInstance().world.GetTileAt(position).isTraversable;
                 PathNode node = new PathNode(position, isTraversable);
                 nodes[x, y] = node;
             }
         }
-    }
-
-    public PathNode GetNodeAt(Vector2Int position) {
-        if (GameManager.Instance.world.IsPositionViable(position)) {
-            PathNode n = nodes[position.x, position.y];
-            return n;
-        }
-
-        return null;
     }
 }

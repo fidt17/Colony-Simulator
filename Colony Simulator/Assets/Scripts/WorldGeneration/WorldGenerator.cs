@@ -17,6 +17,8 @@ public static class WorldGenerator {
         FindTileParent();
         GenerateTerrainWithPerlinNoise(ref grid);
         GenerateVegetation(ref grid);
+        Pathfinder.Initialize(new Vector2Int(_gameSettings.worldWidth, _gameSettings.worldHeight));
+
         GenerateCharacters();
     }
 
@@ -68,14 +70,14 @@ public static class WorldGenerator {
 				}
 
                 Tile tile = Factory.Create<Tile>(dataName, new Vector2Int(x, y));
-                tile.GameObject.transform.parent = _tileParent.transform;
+                tile.gameObject.transform.parent = _tileParent.transform;
                 grid[x, y] = tile;
 			}
 		}
 
         for (int x = 0; x < _gameSettings.worldWidth; x++) {
             for (int y = 0; y < _gameSettings.worldHeight; y++) {
-                TileSpriteRenderer.Instance.UpdateTileBorders(grid[x,y]);
+                TileSpriteRenderer.GetInstance().UpdateTileBorders(grid[x,y]);
             }
         }
     }
@@ -103,20 +105,25 @@ public static class WorldGenerator {
     private static void GenerateCharacters() {
         
         for (int i = 0; i < _gameSettings.humanCount; i++) {
-            Human human = Factory.Create<Human>("human", new Vector2Int(45, 35));
+            Tile t = null;
+            while (t == null || !t.isTraversable) {
+                t = Utils.RandomTile();
+            }
+
+            Human human = Factory.Create<Human>("human", t.position);
             if (human != null)
-                GameManager.Instance.characterManager.colonists.Add(human);
+                GameManager.GetInstance().characterManager.colonists.Add(human);
         }
 
         for (int i = 0; i < _gameSettings.rabbitCount; i++) {
             Tile t = null;
             while (t == null || !t.isTraversable) {
-                t = GameManager.Instance.world.GetTileAt(new Vector2Int((int) Random.Range(0, 50), (int) Random.Range(0, 50)));
+                t = Utils.RandomTile();
             }
 
             Rabbit rabbit = Factory.Create<Rabbit>("rabbit", t.position);
             if (rabbit != null) {
-                GameManager.Instance.characterManager.rabbits.Add(rabbit);
+                GameManager.GetInstance().characterManager.rabbits.Add(rabbit);
             }
         }
     }

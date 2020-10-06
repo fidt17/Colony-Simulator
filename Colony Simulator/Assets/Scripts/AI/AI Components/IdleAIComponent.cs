@@ -7,7 +7,7 @@ public class IdleAIComponent {
     private Character _character;
 
     private const float _coroutineCooldown = 5f;
-    private const float _idleWaitTime = 2f;
+    private const float _idleWaitTime = 5f;
     private const float _searchOffset = 5;
 
     public IdleAIComponent(Character character) {
@@ -29,7 +29,7 @@ public class IdleAIComponent {
             while (targetNode is null) {
                 Vector3 randomPosition = Random.insideUnitSphere * _searchOffset;
                 Vector2Int checkPosition = new Vector2Int((int) (startNode.X + randomPosition.x), (int) (startNode.Y + randomPosition.y));
-                PathNode checkNode = GameManager.Instance.pathfinder.grid.GetNodeAt(checkPosition);
+                PathNode checkNode = Pathfinder.NodeAt(checkPosition);
                 
                 if (checkNode?.region == startNode.region) {
                     targetNode = checkNode;

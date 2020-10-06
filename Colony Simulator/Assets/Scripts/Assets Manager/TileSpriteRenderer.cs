@@ -2,18 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileSpriteRenderer : MonoBehaviour
-{
-    public static TileSpriteRenderer Instance;
-
-    private void Awake() {
-        if(Instance != null) {
-            Debug.LogError("Only one TileSpriteRenderer can exist at a time!", this);
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+public class TileSpriteRenderer : Singleton<TileSpriteRenderer> {
 
     [Header("Central tiles")]
     public Sprite sand_central;
@@ -32,13 +21,12 @@ public class TileSpriteRenderer : MonoBehaviour
     public Sprite grass_border_tunnel;
     public Sprite grass_border_all;
 
-
     #region Tile Sprite Generation
 
     public void UpdateTileBorders(Tile tile) {
         TileType type = tile.type;
         
-        SpriteRenderer mainSprite  = tile.GameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        SpriteRenderer mainSprite  = tile.gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
         SpriteRenderer northBorder = null;
         SpriteRenderer eastBorder  = null;
         SpriteRenderer southBorder = null;
@@ -61,15 +49,15 @@ public class TileSpriteRenderer : MonoBehaviour
                              ref SpriteRenderer westBorder,
                              ref TileType[,] borderMatrix) {
 
-        northBorder = tile.GameObject.transform.Find("N Border").GetComponent<SpriteRenderer>();
-        eastBorder  = tile.GameObject.transform.Find("E Border").GetComponent<SpriteRenderer>();
-        southBorder = tile.GameObject.transform.Find("S Border").GetComponent<SpriteRenderer>();
-        westBorder  = tile.GameObject.transform.Find("W Border").GetComponent<SpriteRenderer>();
+        northBorder = tile.gameObject.transform.Find("N Border").GetComponent<SpriteRenderer>();
+        eastBorder  = tile.gameObject.transform.Find("E Border").GetComponent<SpriteRenderer>();
+        southBorder = tile.gameObject.transform.Find("S Border").GetComponent<SpriteRenderer>();
+        westBorder  = tile.gameObject.transform.Find("W Border").GetComponent<SpriteRenderer>();
 
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
                 Vector2Int checkPosition = tile.position + new Vector2Int(x, y);
-                Tile t = GameManager.Instance.world.GetTileAt(checkPosition);
+                Tile t = GameManager.GetInstance().world.GetTileAt(checkPosition);
                 if (t == null) {
                     borderMatrix[x+1, y+1] = TileType.empty;
                     continue;

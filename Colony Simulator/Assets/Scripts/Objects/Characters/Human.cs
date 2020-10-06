@@ -11,8 +11,6 @@ public class Human : Character, IMotionAnimator {
 
     #endregion
 
-    public Human() { }
-
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
         base.SetGameObject(gameObject, position);
         InitializeMotionAnimator();
@@ -21,13 +19,13 @@ public class Human : Character, IMotionAnimator {
 
     public override void Die() {
         base.Die();
-        GameManager.Instance.characterManager.colonists.Remove(this);
+        GameManager.GetInstance().characterManager.colonists.Remove(this);
     }
 
     #region Animation Component
 
     public void InitializeMotionAnimator() {
-        motionAnimator = _gameObject.AddComponent<MotionAnimatorComponent>();
+        motionAnimator = gameObject.AddComponent<MotionAnimatorComponent>();
         motionAnimator.Initialize(motionComponent);
     }
 
@@ -36,7 +34,7 @@ public class Human : Character, IMotionAnimator {
     #region Job Handler
     
     private void InitializeJobHandler() {
-        jobHandlerComponent = _gameObject.AddComponent<JobHandlerComponent>();
+        jobHandlerComponent = gameObject.AddComponent<JobHandlerComponent>();
         jobHandlerComponent.Initialize(this);
     }
 
@@ -49,14 +47,12 @@ public class Human : Character, IMotionAnimator {
         CommandInputStateMachine.SwitchCommandState(new MoveCommandInputState());
     }
 
-    public override void OnDeselect() => base.OnDeselect();
-
     #endregion
 
     #region AI
 
     protected override void InitializeAI() {
-        AI = _gameObject.AddComponent<HumanAI>();
+        AI = gameObject.AddComponent<HumanAI>();
         AI.Initialize(this);
     }
 

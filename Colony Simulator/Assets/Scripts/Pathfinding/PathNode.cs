@@ -6,7 +6,7 @@ public class PathNode {
 
     public int X => position.x;
     public int Y => position.y;
-    public Tile Tile => GameManager.Instance.world.GetTileAt(position);
+    public Tile Tile => GameManager.GetInstance().world.GetTileAt(position);
 
     public Vector2Int position;
 

@@ -5,7 +5,7 @@ using TMPro;
 
 public class DebugWindow : WindowComponent {
 
-    [SerializeField] private TextMeshProUGUI _tileCoordinatesTMP;
+    [SerializeField] private TextMeshProUGUI _tileCoordinatesTMP = null;
 
     private void Update() => SetTileCoordinates();
 
@@ -13,7 +13,7 @@ public class DebugWindow : WindowComponent {
         Vector2 currentCursorPosition = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int gridCoordinates = new Vector2Int( (int) (currentCursorPosition.x + 0.5f), (int) (currentCursorPosition.y + 0.5f) );
 
-        Tile t = GameManager.Instance.world.GetTileAt(new Vector2Int(gridCoordinates.x, gridCoordinates.y));
+        Tile t = GameManager.GetInstance().world.GetTileAt(new Vector2Int(gridCoordinates.x, gridCoordinates.y));
         if (t != null) {
             _tileCoordinatesTMP.text = "Coordinates: (" + t.position.x + "; " + t.position.y + "), Object: " + t.objectOnTile + ", " + t.itemOnTile;
         } else {

@@ -8,13 +8,13 @@ public class PathfinderRenderer : MonoBehaviour {
 
     private void Update() {
         if (drawRegions)
-            StartCoroutine(DrawRegions(GameManager.Instance.pathfinder.regionSystem.regions));
+            StartCoroutine(DrawRegions(Pathfinder.regionSystem.regions));
     }
 
     public void DrawPath(List<PathNode> closedList) {
         foreach (PathNode node in closedList) {
             Color pathColor = new Color(230f/255f, 100f/255f, 240f/255f, 1f);
-            Tile t = GameManager.Instance.world.GetTileAt(node.position);
+            Tile t = GameManager.GetInstance().world.GetTileAt(node.position);
             SpriteRenderer sr = t.mainSprite;
             StartCoroutine(ChangeTileColor(sr, pathColor, t.defaultSpriteColor, 2f));
         }
@@ -29,7 +29,7 @@ public class PathfinderRenderer : MonoBehaviour {
         foreach (Region region in regions) {
             Color regionColor = new Color(Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, 1f);
             foreach (PathNode node in region.nodes) {
-                Tile t = GameManager.Instance.world.GetTileAt(node.position);
+                Tile t = GameManager.GetInstance().world.GetTileAt(node.position);
                 SpriteRenderer sr = t.mainSprite;
                 StartCoroutine(ChangeTileColor(sr, regionColor, t.defaultSpriteColor, 2f));
             }

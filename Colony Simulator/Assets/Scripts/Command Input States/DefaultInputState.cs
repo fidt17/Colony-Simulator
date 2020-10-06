@@ -5,22 +5,14 @@ using System.Linq;
 
 public class DefaultInputState : CommandInputState {
     
-    public override void UnsubscribeFromEvents() => InputController.Instance.OnMouse0_Down -= OnLeftMouseButtonDown;
+    public override void UnsubscribeFromEvents() => InputController.GetInstance().OnMouse0_Down -= OnLeftMouseButtonDown;
     
-    public void OnLeftMouseButtonDown() {
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
-            return;
-        }
+    public void OnLeftMouseButtonDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
 
-        RaycastHit2D hit = Physics2D.Raycast((Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        SelectableComponent sc = hit.collider?.gameObject.GetComponent<SelectableComponent>();
+    protected override void SubscribeToEvents() {
+        InputController.GetInstance().OnMouse0_Down += OnLeftMouseButtonDown;
+        InputController.GetInstance().OnMouse0_Up   += OnLeftMouseButtonUp;
+    } 
 
-        if (sc != null) {
-            SelectionTracker.Select(sc);
-        } else {
-            SelectionTracker.DeselectEverything();
-        }
-    }
-
-    protected override void SubscribeToEvents() => InputController.Instance.OnMouse0_Down += OnLeftMouseButtonDown;
+    private void OnLeftMouseButtonUp() => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 }

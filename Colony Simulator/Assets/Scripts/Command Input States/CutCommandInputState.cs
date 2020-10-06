@@ -8,22 +8,22 @@ public class CutCommandInputState : CommandInputState {
     private List<Tree> _selectedTrees;
 
     public CutCommandInputState() {
-        _selectedTrees = SelectionTracker.Trees;
+        _selectedTrees = SelectionTracker.GetInstance().Trees;
         if (_selectedTrees is null) {
-            SelectionTracker.DeselectEverything();
+            SelectionTracker.GetInstance().DeselectEverything();
         }
     }
 
     public override void UnsubscribeFromEvents() {
-        InputController.Instance.OnMouse0_Down -= OnLeftClickDown;
-        InputController.Instance.OnMouse1_Down -= ExitState;
-        InputController.Instance.OnEscape_Down -= ExitState;
+        InputController.GetInstance().OnMouse0_Down -= OnLeftClickDown;
+        InputController.GetInstance().OnMouse1_Down -= ExitState;
+        InputController.GetInstance().OnEscape_Down -= ExitState;
     }
 
     protected override void SubscribeToEvents() {
-        InputController.Instance.OnMouse0_Down += OnLeftClickDown;
-        InputController.Instance.OnMouse1_Down += ExitState;
-        InputController.Instance.OnEscape_Down += ExitState;
+        InputController.GetInstance().OnMouse0_Down += OnLeftClickDown;
+        InputController.GetInstance().OnMouse1_Down += ExitState;
+        InputController.GetInstance().OnEscape_Down += ExitState;
     }
 
     protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);
@@ -36,8 +36,8 @@ public class CutCommandInputState : CommandInputState {
         RaycastHit2D hit = Physics2D.Raycast((Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         VegetationComponent vegetation = hit.collider?.gameObject.GetComponent<VegetationComponent>();
 
-        if (vegetation?.Type == VegetationType.tree) {
-            Tree tree = vegetation.Vegetation as Tree;
+        if (vegetation?.type == VegetationType.tree) {
+            Tree tree = vegetation.vegetation as Tree;
             if (JobExists(tree) == false) {
                 CutJob cutJob = new CutJob(tree, tree.position);
                 JobSystem.GetInstance().AddJob(cutJob);

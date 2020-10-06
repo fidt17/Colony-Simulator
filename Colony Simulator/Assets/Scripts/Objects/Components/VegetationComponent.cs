@@ -9,14 +9,11 @@ public enum VegetationType {
 
 public class VegetationComponent : MonoBehaviour {
 
-    public VegetationType Type => _type;
-    public StaticObject Vegetation => _vegetation;
-
-    private StaticObject _vegetation;
-    private VegetationType _type;
+    public StaticObject   vegetation { get; private set; }
+    public VegetationType type       { get; private set; }
     
     public void Initialize(StaticObject vegetation, VegetationType type) {
-        _vegetation = vegetation;
-        _type = type;
+        this.vegetation = vegetation;
+        this.type = type;
     }
 }

@@ -12,6 +12,9 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
             CutTree();
+
+        if (Input.GetKeyDown(KeyCode.P))
+            SpawnTree();
     }
 
     private void CutTree() {
@@ -19,19 +22,23 @@ public class TestScript : MonoBehaviour
         Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
 
-        Tile t = GameManager.Instance.world.GetTileAt(mousePos2D);
+        Tile t = GameManager.GetInstance().world.GetTileAt(mousePos2D);
 
         if (t == null || t.objectOnTile?.GetType() != typeof(Tree))
             return;
 
         Tree tree = (Tree) t.objectOnTile;
-        Character human = GameManager.Instance.characterManager.colonists[0];
+        Character human = GameManager.GetInstance().characterManager.colonists[0];
         
-        PathNode targetNode = GameManager.Instance.pathfinder.FindNodeNear(GameManager.Instance.pathfinder.grid.GetNodeAt(tree.position),
-                                                                           GameManager.Instance.pathfinder.grid.GetNodeAt(human.motionComponent.GridPosition));
+        PathNode targetNode = Pathfinder.FindNodeNear(Pathfinder.NodeAt(tree.position),
+                                                                           Pathfinder.NodeAt(human.motionComponent.GridPosition));
 
         CutTask cutTask = new CutTask(human, targetNode, tree);
         human.AI.CommandProcessor.AddTask(cutTask);
+    }
+
+    private void SpawnTree() {
+        Factory.Create<Tree>("tall tree", Utils.CursorToCoordinates());
     }
 
     private void DestroyObject() {
@@ -39,7 +46,7 @@ public class TestScript : MonoBehaviour
         Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
 
-        Tile t = GameManager.Instance.world.GetTileAt(mousePos2D);
+        Tile t = GameManager.GetInstance().world.GetTileAt(mousePos2D);
 
         if (t == null)
             return;

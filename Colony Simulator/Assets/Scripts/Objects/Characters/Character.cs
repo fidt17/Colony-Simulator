@@ -4,9 +4,6 @@ using UnityEngine;
 
 public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
 
-    public CharacterScriptableObject Data => _data;
-    public GameObject GameObject => _gameObject;
-
     public CommandProcessor CommandProcessor => AI.CommandProcessor;
 
     #region Components
@@ -18,39 +15,35 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
 
     #endregion
 
-    protected CharacterScriptableObject _data;
-    protected GameObject _gameObject;
-
-    public Character() { }
+    public CharacterScriptableObject data { get; protected set; }
+    public GameObject gameObject { get; protected set; }
 
     public virtual void Die() {
-        _gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         Destroy();
     }
 
     #region IPrefab
 
-    public virtual void SetData(PrefabScriptableObject data) => _data = data as CharacterScriptableObject;
+    public virtual void SetData(PrefabScriptableObject data) => this.data = data as CharacterScriptableObject;
 
     public virtual void SetGameObject(GameObject obj, Vector2Int position) {
-        _gameObject = obj;
+        gameObject = obj;
         InitializeSelectableComponent();
         InitializeMotionComponent(position);
         InitializeHungerComponent();
         InitializeAI();
     }
 
-    public virtual void Destroy() {
-        GameObject.Destroy(_gameObject, 1);
-    }
+    public virtual void Destroy() => GameObject.Destroy(gameObject, 1);
 
     #endregion
 
     #region Motion Component
 
     public virtual void InitializeMotionComponent(Vector2Int position) {
-        motionComponent = _gameObject.AddComponent<MotionComponent>();
-        motionComponent.Initialize(_data.movementSpeed, position);
+        motionComponent = gameObject.AddComponent<MotionComponent>();
+        motionComponent.Initialize(data.movementSpeed, position);
     }
 
     #endregion
@@ -58,7 +51,7 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
     #region Hunger Component
 
     public virtual void InitializeHungerComponent() {
-        hungerComponent = _gameObject.AddComponent<HungerComponent>();
+        hungerComponent = gameObject.AddComponent<HungerComponent>();
         hungerComponent.Initialize(this);
     }
 
@@ -67,13 +60,13 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
     #region Selectable Component
 
     public virtual void InitializeSelectableComponent() {
-        selectableComponent = _gameObject.AddComponent<SelectableComponent>();
-        selectableComponent.Initialize(this, _gameObject.transform.Find("SelectionRim").gameObject);
+        selectableComponent = gameObject.AddComponent<SelectableComponent>();
+        selectableComponent.Initialize(this, gameObject.transform.Find("SelectionRim").gameObject);
     }
 
-    public virtual void OnSelect() => UIManager.Instance.OpenCharacterWindow(this);
-    public virtual void OnDeselect() => UIManager.Instance.CloseCharacterWindow();
-    
+    public virtual void OnSelect() { }
+    public virtual void OnDeselect() { }
+        
     #endregion
 
     #region Command Processor

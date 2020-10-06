@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class InputController : MonoBehaviour {
-
-    public static InputController Instance;
+public class InputController : Singleton<InputController> {
 
     public delegate void OnButtonPressed();
     public event OnButtonPressed OnEscape_Down;
@@ -16,16 +14,8 @@ public class InputController : MonoBehaviour {
 
     public event OnButtonPressed OnMouse0_Pressed;
     public event OnButtonPressed OnMouse0_Down;
+    public event OnButtonPressed OnMouse0_Up;
     public event OnButtonPressed OnMouse1_Down;
-
-    private void Awake() {
-        if (Instance != null) {
-            Debug.LogError("Only one InputController can exist at a time.");
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
 
     private void Update() {
 
@@ -55,6 +45,10 @@ public class InputController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0)) {
             OnMouse0_Down?.Invoke();
+        }
+
+        if (Input.GetMouseButtonUp(0)) {
+            OnMouse0_Up?.Invoke();
         }
 
         if (Input.GetMouseButtonDown(1)) {

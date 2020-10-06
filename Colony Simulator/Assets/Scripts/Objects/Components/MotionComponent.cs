@@ -16,8 +16,10 @@ public class MotionComponent : MonoBehaviour {
 
     public Vector2 WorldPosition => (Vector2) gameObject.transform.position;
     public Vector2Int GridPosition => new Vector2Int( (int) (WorldPosition.x + 0.5f), (int) (WorldPosition.y + 0.5f) );
-    public PathNode PathNode => GameManager.Instance.pathfinder.grid.GetNodeAt(GridPosition);
+    public PathNode PathNode => Pathfinder.NodeAt(GridPosition);
     public float SpeedValue => _speed;
+
+    private PathNode _lastTraversableNode;
 
     public FacingDirection facingDirection = FacingDirection.south;
 
@@ -28,12 +30,23 @@ public class MotionComponent : MonoBehaviour {
         SetPosition(position);
     }
         
-    public void Stop() => VelocityHandler?.Invoke(Vector2.zero, facingDirection);
+    public void Stop() {
+        if (PathNode.isTraversable == false) {
+            SetPosition(_lastTraversableNode.position);
+        }
+        VelocityHandler?.Invoke(Vector2.zero, facingDirection);
+    }
 
-    public void SetPosition(Vector2 position) => gameObject.transform.position = position;
+    public void SetPosition(Vector2 position) {
+        gameObject.transform.position = position;
+        _lastTraversableNode = PathNode;
+    } 
 
     public void Translate(Vector2 normalizedDestination) {
         gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
         VelocityHandler?.Invoke(normalizedDestination, facingDirection);
+        if (PathNode.isTraversable) {
+            _lastTraversableNode = PathNode;
+        }
     }
 }

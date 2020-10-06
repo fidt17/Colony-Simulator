@@ -2,20 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugManager : MonoBehaviour {
-
-    public static DebugManager Instance;
+public class DebugManager : Singleton<DebugManager> {
     
     public PathfinderRenderer pathfinderRenderer;
 
-    private void Awake() {
-        if (Instance != null) {
-            Debug.LogError("Only one DebugManager can exist at a time.");
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
+    protected override void Awake() {
         pathfinderRenderer = GetComponent<PathfinderRenderer>();
     }
 
@@ -23,9 +14,9 @@ public class DebugManager : MonoBehaviour {
 
     public void OnDrawPathToggleChanged(bool toggleValue) {
         if (toggleValue) {
-            GameManager.Instance.pathfinder.PathHandler += pathfinderRenderer.DrawPath;
+            Pathfinder.PathHandler += pathfinderRenderer.DrawPath;
         } else {
-            GameManager.Instance.pathfinder.PathHandler -= pathfinderRenderer.DrawPath;
+            Pathfinder.PathHandler -= pathfinderRenderer.DrawPath;
         }
     }
 

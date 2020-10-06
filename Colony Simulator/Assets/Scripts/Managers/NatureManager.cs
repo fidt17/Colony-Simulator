@@ -31,8 +31,8 @@ public class NatureManager : MonoBehaviour {
             int sqrDistance = (edible.GetEdiblePosition() - sourcePosition).sqrMagnitude;
             if (sqrDistance < minDistance) {
 
-                PathNode characterPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(sourcePosition);
-                PathNode foodPosition = GameManager.Instance.pathfinder.grid.GetNodeAt(edible.GetEdiblePosition());
+                PathNode characterPosition = Pathfinder.NodeAt(sourcePosition);
+                PathNode foodPosition = Pathfinder.NodeAt(edible.GetEdiblePosition());
                 if (characterPosition.region != foodPosition.region) {
                     continue;
                 }

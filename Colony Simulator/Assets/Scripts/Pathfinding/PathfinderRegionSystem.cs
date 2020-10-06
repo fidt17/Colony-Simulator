@@ -28,7 +28,7 @@ public class PathfinderRegionSystem {
         regions = new List<Region>();
         for (int x = 0; x < _dimensions.x; x++) {
             for (int y = 0; y < _dimensions.y; y++) {
-                PathNode node = GameManager.Instance.pathfinder.grid.GetNodeAt(new Vector2Int(x, y));
+                PathNode node = Pathfinder.NodeAt(new Vector2Int(x, y));
                 if (node.region == null && node.isTraversable) {
                     Region newRegion = CreateRegionAt(node);
                     regions.Add(newRegion);
@@ -91,7 +91,7 @@ public class PathfinderRegionSystem {
         for (int x = initialCell.position.x - 1; x <= initialCell.position.x + 1; x++) {
             for(int y = initialCell.position.y - 1; y <= initialCell.position.y + 1; y++) {
                 Vector2Int checkPosition = new Vector2Int(x, y);
-                PathNode n = GameManager.Instance.pathfinder.grid.GetNodeAt(checkPosition);
+                PathNode n = Pathfinder.NodeAt(checkPosition);
                 if (n == null || !n.isTraversable || n.region != null || openSet.Contains(n)) {
                     continue;
                 }

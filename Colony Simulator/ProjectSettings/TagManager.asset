@@ -56,3 +56,6 @@ TagManager:
   - name: JobIcons
     uniqueID: 1098764955
     locked: 0
+  - name: SelectionArea
+    uniqueID: 3139346653
+    locked: 0

@@ -25,7 +25,7 @@ public class HungerAIComponent {
     }
 
     private void HandleHungerLevel(float hungerLevel) {
-        if (hungerLevel < _character.Data.hungerSearchThreshold) {
+        if (hungerLevel < _character.data.hungerSearchThreshold) {
             _character.CommandProcessor.StartCoroutine(StartFoodSearch());
         }
     }
