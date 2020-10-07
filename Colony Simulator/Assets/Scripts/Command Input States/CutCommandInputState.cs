@@ -1,46 +1,44 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
 public class CutCommandInputState : CommandInputState {
 
-    private List<Tree> _selectedTrees;
-
-    public CutCommandInputState() {
-        _selectedTrees = SelectionTracker.GetInstance().Trees;
-        if (_selectedTrees is null) {
-            SelectionTracker.GetInstance().DeselectEverything();
-        }
-    }
-
-    public override void UnsubscribeFromEvents() {
+    protected override void UnsubscribeFromEvents() {
         InputController.GetInstance().OnMouse0_Down -= OnLeftClickDown;
-        InputController.GetInstance().OnMouse1_Down -= ExitState;
-        InputController.GetInstance().OnEscape_Down -= ExitState;
+        InputController.GetInstance().OnMouse0_Up   -= OnLeftClickUp;
+        InputController.GetInstance().OnMouse1_Down -= SwitchToDefaultState;
+        InputController.GetInstance().OnEscape_Down -= SwitchToDefaultState;
+
+        SelectionTracker.GetInstance().OnSelect -= CreateJobsOnSelected;
     }
 
     protected override void SubscribeToEvents() {
         InputController.GetInstance().OnMouse0_Down += OnLeftClickDown;
-        InputController.GetInstance().OnMouse1_Down += ExitState;
-        InputController.GetInstance().OnEscape_Down += ExitState;
+        InputController.GetInstance().OnMouse0_Up   += OnLeftClickUp;
+        InputController.GetInstance().OnMouse1_Down += SwitchToDefaultState;
+        InputController.GetInstance().OnEscape_Down += SwitchToDefaultState;
+
+        SelectionTracker.GetInstance().OnSelect += CreateJobsOnSelected;
+    }
+
+    protected override void SetUpSelectionMask() {
+        List<Type> selectionMask = new List<Type>();
+        selectionMask.Add(typeof(Tree));
+        SelectionTracker.GetInstance().selectionMask = selectionMask;
     }
 
     protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);
 
-    private void OnLeftClickDown() {
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
-            return;
-        }
+    private void OnLeftClickDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
+    private void OnLeftClickUp() => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 
-        RaycastHit2D hit = Physics2D.Raycast((Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        VegetationComponent vegetation = hit.collider?.gameObject.GetComponent<VegetationComponent>();
-
-        if (vegetation?.type == VegetationType.tree) {
-            Tree tree = vegetation.vegetation as Tree;
+    private void CreateJobsOnSelected() {
+        foreach (Tree tree in SelectionTracker.GetInstance().GetSelected<Tree>()) {
             if (JobExists(tree) == false) {
-                CutJob cutJob = new CutJob(tree, tree.position);
-                JobSystem.GetInstance().AddJob(cutJob);
+                JobSystem.GetInstance().AddJob(new CutJob(tree, tree.position));
             }
         }
     }
@@ -49,6 +47,4 @@ public class CutCommandInputState : CommandInputState {
         CutJob cutJob = JobSystem.GetInstance().AllJobs.Find(x => x.GetType() == typeof(CutJob) && (x as CutJob).Vegetation == tree) as CutJob;
         return cutJob != null;
     }
-
-    private void ExitState() => CommandInputStateMachine.SwitchCommandState(new DefaultInputState());
 }

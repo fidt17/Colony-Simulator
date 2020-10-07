@@ -12,7 +12,7 @@ public static class CommandInputStateMachine {
         if (currentCommandState == newCommandState) {
             return;
         }
-        currentCommandState?.UnsubscribeFromEvents();
+        currentCommandState?.ExitState();
         currentCommandState = newCommandState;
     }    
 }

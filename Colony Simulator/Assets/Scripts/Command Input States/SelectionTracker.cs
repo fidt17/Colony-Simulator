@@ -6,22 +6,19 @@ using System.Linq;
 
 public class SelectionTracker : Singleton<SelectionTracker> {
     
-    public List<Human> Colonists {
-        get {
-            if (_selected.Count == 0 || _selected[0].selectable.GetType() != typeof(Human)) {
-                return null;
+    public delegate void SelectionHandler();
+    public event SelectionHandler OnSelect;
+
+    public List<Type> selectionMask = new List<Type>();
+
+    public List<T> GetSelected<T>() {
+        List<T> selected = new List<T>();
+        foreach (SelectableComponent sc in _selected) {
+            if (sc.selectable.GetType() == typeof(T)) {
+                selected.Add((T)sc.selectable);
             }
-
-            List<Human> colonists = new List<Human>();
-            _selected.ForEach(x => colonists.Add(x.selectable as Human));
-            return colonists;
         }
-    }
-
-    public List<Tree> Trees {
-        get {
-            return null;
-        }
+        return selected;
     }
 
     [SerializeField] private Transform _selectionArea = null;
@@ -36,25 +33,7 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     }
 
     public void OnLeftMouseButtonDown() => StartCoroutine(StartSelectionAreaDrag());
-
-    public void OnLeftMouseButtonUp() {
-        _lmbPressed = false;
-    }
-
-    public void SingleClickSelection() {
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
-            return;
-        }
-
-        RaycastHit2D hit = Physics2D.Raycast((Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        SelectableComponent sc = hit.collider?.gameObject.GetComponent<SelectableComponent>();
-
-        if (sc != null) {
-            Select(sc);
-        } else {
-            DeselectEverything();
-        }
-    }
+    public void OnLeftMouseButtonUp() => _lmbPressed = false;
 
     public void Select(SelectableComponent selectableComponent) {
         _selected.Add(selectableComponent);
@@ -69,6 +48,10 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     }
 
     private IEnumerator StartSelectionAreaDrag() {
+        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
+            yield break;
+        }
+
         _lmbPressed = true;
 
         Vector2 startMousePosition = Utils.CursorToWorldPosition();
@@ -93,25 +76,17 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     private void ResetSelectionArea() => _selectionArea.transform.localScale = Vector3.zero;
 
     private void ProcessSelectionArea(Vector2 start, Vector2 end) {
-        List<Type> selectionMask = new List<Type>();
-        selectionMask.Add(typeof(Human));
-
         Collider2D[] colliders = Physics2D.OverlapAreaAll(start, end);
-
         DeselectEverything();
         foreach (Collider2D collider in colliders) {
             SelectableComponent sc = collider.gameObject.GetComponent<SelectableComponent>();
-            if (sc is null) {
+            if (sc is null || !selectionMask.Contains(sc.selectable.GetType())) {
                 continue;
             }
-
-            if (!selectionMask.Contains(sc.selectable.GetType())) {
-                continue;
-            }
-
-            Select(sc);            
+            Select(sc);
         }
-        
         ResetSelectionArea();
+
+        OnSelect?.Invoke();
     }
 }
