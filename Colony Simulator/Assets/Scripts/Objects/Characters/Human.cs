@@ -8,6 +8,7 @@ public class Human : Character, IMotionAnimator {
 
     public MotionAnimatorComponent motionAnimator  { get; private set; }
     public JobHandlerComponent jobHandlerComponent { get; private set; }
+    public InventoryComponent inventoryComponent   { get; private set; }
 
     #endregion
 
@@ -15,6 +16,7 @@ public class Human : Character, IMotionAnimator {
         base.SetGameObject(gameObject, position);
         InitializeMotionAnimator();
         InitializeJobHandler();
+        InitializeInventory();
     }
 
     public override void Die() {
@@ -54,6 +56,15 @@ public class Human : Character, IMotionAnimator {
     protected override void InitializeAI() {
         AI = gameObject.AddComponent<HumanAI>();
         AI.Initialize(this);
+    }
+
+    #endregion
+
+    #region InventoryComponent
+
+    private void InitializeInventory() {
+        inventoryComponent = gameObject.AddComponent<InventoryComponent>();
+        inventoryComponent.Initialize(this);
     }
 
     #endregion

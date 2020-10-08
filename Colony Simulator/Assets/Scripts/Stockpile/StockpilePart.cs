@@ -11,6 +11,9 @@ public class StockpilePart {
     public GameObject gameObject;
     public SpriteRenderer spriteRenderer;
 
+    public bool isReserved = false;
+    public bool HasItem => Utils.TileAt(position).contents.item != null;
+
     public StockpilePart(Vector2Int position, Stockpile parent) {
         this.position = position;
         this.parent = parent;
@@ -24,5 +27,13 @@ public class StockpilePart {
         parent.RemovePart(this);
         newStockpile.AddPart(this);
         parent = newStockpile;
+    }
+
+    public void ChangeReservedState(bool isReserved) {
+        this.isReserved = isReserved;
+    }
+
+    public void HaulJobResultHandler(bool result) {
+        ChangeReservedState(!result);
     }
 }

@@ -6,15 +6,18 @@ using UnityEngine;
 
 public static class Pathfinder {
 
+    public delegate void OnSystemUpdated();
     public delegate void OnPathFound(List<PathNode> closedSet);
     public static event OnPathFound PathHandler;
+    public static event OnSystemUpdated UpdateHandler;
 
     public static PathGrid grid;
     public static PathfinderRegionSystem regionSystem;
+    public static float systemUpdateCooldown = 0.5f;
 
     public static PathNode NodeAt(Vector2Int position) {
         if (Utils.IsPositionViable(position)) {
-            PathNode n = grid.nodes[position.x, position.y];
+            PathNode n = grid?.nodes[position.x, position.y];
             return n;
         }
         return null;
@@ -25,8 +28,12 @@ public static class Pathfinder {
 
     public static void Initialize(Vector2Int dimensions) {
         _dimensions = dimensions;
+        float t1 = Time.realtimeSinceStartup;
         grid = new PathGrid(_dimensions);
+        float gt = Time.realtimeSinceStartup - t1;
         regionSystem = new PathfinderRegionSystem(_dimensions);
+        Debug.Log("Region Creation: " + (Time.realtimeSinceStartup - t1));
+        systemUpdateCooldown = (Time.realtimeSinceStartup - t1) * 1.25f;
     }
 
     public static IEnumerator UpdateSystem() {
@@ -35,11 +42,11 @@ public static class Pathfinder {
         }
         _isUpdatingSystem = true;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(systemUpdateCooldown);
 
-        grid = new PathGrid(_dimensions);
         regionSystem.UpdateSystem();
         _isUpdatingSystem = false;
+        UpdateHandler?.Invoke();
     }
 
     public static List<PathNode> GetPath(PathNode startNode, PathNode targetNode) {

@@ -20,5 +20,7 @@ public static class Utils {
     public static bool IsPositionViable(Vector2Int position) {
         Vector2Int dimensions = GameManager.GetInstance().world.dimensions;
         return !(position.x < 0 || position.x >= dimensions.x || position.y < 0 || position.y >= dimensions.y);
-    } 
+    }
+
+    public static Vector3 ToVector3(Vector2Int vec) => new Vector3(vec.x, vec.y, 0);
 }

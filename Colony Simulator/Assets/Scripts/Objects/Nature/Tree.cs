@@ -42,7 +42,7 @@ public class Tree : StaticObject, IPlacable, IHarvestable
     #region IHarvestable
 
     public void Harvest() {
-        Factory.Create<WoodLog>("wood log", position);
+        Item woodLog = Factory.Create<WoodLog>("wood log", position);
         Destroy();
     }
 

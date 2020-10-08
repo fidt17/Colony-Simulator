@@ -10,7 +10,6 @@ public class Stockpile {
     private Color _stockpileColor;
 
     public Stockpile() {
-        StockpileManager.AddStockpile(this);
         GenerateColor();
     }
 
@@ -26,7 +25,23 @@ public class Stockpile {
             GameObject.Destroy(gameObject, 1);
             StockpileManager.RemoveStockpile(this);
         }
-    } 
+    }
+
+    public StockpilePart FindPlaceForItem(Item item) {
+        foreach(StockpilePart part in _parts) {
+            PathNode node = Utils.NodeAt(part.position);
+            if (part.isReserved || part.HasItem) {
+                continue;
+            }
+
+            if (node.region != Utils.NodeAt(item.position).region) {
+                continue;
+            }
+
+            return part;            
+        }
+        return null;
+    }
 
     private void GenerateColor() => _stockpileColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f), 0.25f);    
 }

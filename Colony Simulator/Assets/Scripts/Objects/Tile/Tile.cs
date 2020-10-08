@@ -38,9 +38,15 @@ public class Tile : StaticObject {
 
     public void SetTraversability(bool isTraversable) {
         if (this.isTraversable != isTraversable) {
+            this.isTraversable = isTraversable;
+
+            PathNode node = Utils.NodeAt(position);
+            if (node != null) {
+                node.isTraversable = isTraversable;
+            }
+
             GameManager.GetInstance().UpdatePathfinder();
         }
-        this.isTraversable = isTraversable;
     }
 
     public void SetSprite(Sprite sprite) => _mainSprite.sprite = sprite;

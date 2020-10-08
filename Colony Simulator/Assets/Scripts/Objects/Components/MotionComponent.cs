@@ -13,6 +13,8 @@ public class MotionComponent : MonoBehaviour {
 
     public delegate void OnVelocityChange(Vector2 newVelocty, FacingDirection facingDirection);
     public event OnVelocityChange VelocityHandler;
+    public delegate void PositionHandler(Vector3 position);
+    public event PositionHandler OnPositionChange;
 
     public Vector2 WorldPosition => (Vector2) gameObject.transform.position;
     public Vector2Int GridPosition => new Vector2Int( (int) (WorldPosition.x + 0.5f), (int) (WorldPosition.y + 0.5f) );
@@ -48,5 +50,6 @@ public class MotionComponent : MonoBehaviour {
         if (PathNode.isTraversable) {
             _lastTraversableNode = PathNode;
         }
+        OnPositionChange?.Invoke(WorldPosition);
     }
 }

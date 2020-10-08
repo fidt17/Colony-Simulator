@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Job {
     
+    public delegate void ResultHandler(bool result);
+    public event ResultHandler JobResultHandler;
+
     public Vector2Int Position => _jobPosition;
 
     protected Vector2Int _jobPosition;
@@ -39,7 +42,8 @@ public abstract class Job {
     }
 
     protected abstract void PlanJob();
-    protected abstract void AddJobIcon();
+    
+    protected virtual void AddJobIcon() {}
 
     protected void DeleteJobIcon() {
         if (_jobIcon != null) {
@@ -61,5 +65,7 @@ public abstract class Job {
         } else {
             JobSystem.GetInstance().ReturnJob(this);
         }
+
+        JobResultHandler?.Invoke(result);
     }
 }

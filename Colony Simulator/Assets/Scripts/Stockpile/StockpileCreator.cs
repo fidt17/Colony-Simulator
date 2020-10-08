@@ -19,5 +19,6 @@ public static class StockpileCreator {
                 tile.contents.stockpilePart.ChangeStockpiles(stockpile);
             }
         }
+        StockpileManager.AddStockpile(stockpile);
     }
 }

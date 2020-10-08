@@ -29,11 +29,11 @@ public class PathfinderRenderer : MonoBehaviour {
             Color regionColor = new Color(Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, 1f);
             foreach (PathNode node in region.nodes) {
                 Tile t = Utils.TileAt(node.position);
-                StartCoroutine(ChangeTileColor(t, regionColor, 2f));
+                StartCoroutine(ChangeTileColor(t, regionColor, Pathfinder.systemUpdateCooldown));
             }
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(Pathfinder.systemUpdateCooldown);
         _isDrawingRegions = false;
     }
 

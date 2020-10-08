@@ -15,5 +15,5 @@ MonoBehaviour:
   worldWidth: 50
   worldHeight: 50
   seed: 0
-  humanCount: 5
+  humanCount: 25
   rabbitCount: 14

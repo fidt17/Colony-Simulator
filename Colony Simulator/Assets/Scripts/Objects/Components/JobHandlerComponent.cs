@@ -6,8 +6,9 @@ public class JobHandlerComponent : MonoBehaviour {
 
     public bool IsAvailable => _currentJob is null;
 
-    public MotionComponent  MotionComponent  => _worker.motionComponent;
-    public CommandProcessor CommandProcessor => _worker.AI.CommandProcessor;
+    public MotionComponent    MotionComponent  => _worker.motionComponent;
+    public CommandProcessor   CommandProcessor => _worker.AI.CommandProcessor;
+    public InventoryComponent Inventory        => _worker.inventoryComponent;
 
     private Human _worker;
     private Job _currentJob;
