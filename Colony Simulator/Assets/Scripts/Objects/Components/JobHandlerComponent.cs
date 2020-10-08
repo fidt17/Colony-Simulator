@@ -12,14 +12,20 @@ public class JobHandlerComponent : MonoBehaviour {
     private Human _worker;
     private Job _currentJob;
 
-    public void Initialize(Human worker) => _worker = worker;
-
+    public void Initialize(Human worker) {
+        _worker = worker;
+        JobSystem.GetInstance().AddWorker(this);
+    }
     public void AssignJob(Job job) {
         _currentJob = job;
         _currentJob.AssignWorker(this);
+        JobSystem.GetInstance().RemoveWorker(this);
     }
 
-    public void WithdrawJob() => _currentJob = null;
+    public void WithdrawJob() {
+        _currentJob = null;
+        JobSystem.GetInstance().AddWorker(this);
+    }
 
     public bool CanDoJob(Job job) {
         if (_currentJob != null) {

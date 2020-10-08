@@ -35,7 +35,7 @@ public static class Pathfinder {
         }
         _isUpdatingSystem = true;
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1f);
 
         grid = new PathGrid(_dimensions);
         regionSystem.UpdateSystem();

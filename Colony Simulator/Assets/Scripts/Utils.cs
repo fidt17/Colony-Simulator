@@ -11,8 +11,11 @@ public static class Utils {
         return new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
     }
 
-    public static PathNode RandomNode() => Pathfinder.NodeAt(new Vector2Int((int) Random.Range(0, GameManager.GetInstance().world.dimensions.x), (int) Random.Range(0, GameManager.GetInstance().world.dimensions.y)));
-    public static Tile RandomTile() => GameManager.GetInstance().world.GetTileAt(new Vector2Int((int) Random.Range(0, GameManager.GetInstance().world.dimensions.x), (int) Random.Range(0, GameManager.GetInstance().world.dimensions.y)));
+    public static PathNode RandomNode() => NodeAt(new Vector2Int((int) Random.Range(0, GameManager.GetInstance().world.dimensions.x), (int) Random.Range(0, GameManager.GetInstance().world.dimensions.y)));
+    public static Tile RandomTile() => TileAt(new Vector2Int((int) Random.Range(0, GameManager.GetInstance().world.dimensions.x), (int) Random.Range(0, GameManager.GetInstance().world.dimensions.y)));
+
+    public static PathNode NodeAt(Vector2Int position) => Pathfinder.NodeAt(position);
+    public static Tile TileAt(Vector2Int position) => GameManager.GetInstance().world.GetTileAt(position);
 
     public static bool IsPositionViable(Vector2Int position) {
         Vector2Int dimensions = GameManager.GetInstance().world.dimensions;

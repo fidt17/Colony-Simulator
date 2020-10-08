@@ -7,6 +7,7 @@ public class JobSystem : Singleton<JobSystem> {
     public List<Job> AllJobs => _allJobs;
     public List<Job> AvailableJobs => _availableJobs;
 
+    private List<JobHandlerComponent> _availableWorkers = new List<JobHandlerComponent>(); 
     private List<Job> _allJobs = new List<Job>();
     private List<Job> _availableJobs = new List<Job>();
     private const float jobUpdateCooldown = 0.1f;
@@ -27,20 +28,21 @@ public class JobSystem : Singleton<JobSystem> {
         _availableJobs.Remove(job);
     }
 
+    public void AddWorker(JobHandlerComponent worker) {
+        _availableWorkers.Add(worker);
+        ProcessJobs();
+    }
+
+    public void RemoveWorker(JobHandlerComponent worker) => _availableWorkers.Remove(worker);
+
     private IEnumerator ProcessJobs() {
         while (true) {
             yield return new WaitForSeconds(jobUpdateCooldown);
-
-            if (_availableJobs.Count == 0) {
+            if (_availableJobs.Count == 0 || _availableWorkers.Count == 0) {
                 continue;
             }
-            
-            List<JobHandlerComponent> availableWorkers = GetAvailableWorkers();
-            if (availableWorkers.Count == 0) {
-                continue;
-            }
-
-            foreach (JobHandlerComponent worker in availableWorkers) {
+            for (int j = _availableWorkers.Count - 1; j >= 0; j--) {
+                JobHandlerComponent worker = _availableWorkers[j];
                 for (int i = _availableJobs.Count - 1; i >= 0; i--) {
                     if (worker.CanDoJob(_availableJobs[i])) {
                         worker.AssignJob(_availableJobs[i]);
@@ -49,16 +51,5 @@ public class JobSystem : Singleton<JobSystem> {
                 }
             }
         }
-    }
-
-    private List<JobHandlerComponent> GetAvailableWorkers() {
-        List<JobHandlerComponent> availableWorkers = new List<JobHandlerComponent>();
-        foreach(Human colonist in GameManager.GetInstance().characterManager.colonists) {
-            JobHandlerComponent worker = colonist.jobHandlerComponent;
-            if (worker.IsAvailable) {
-                availableWorkers.Add(worker);
-            }
-        }
-        return availableWorkers;
     }
 }

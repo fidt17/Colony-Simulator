@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour {
+public class UIManager : Singleton<UIManager> {
 
-    public static UIManager Instance;
-
-    private void Awake() {
-        if (Instance != null) {
-            Debug.LogError("Only one UIManager can exist at a time.");
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+    private void Start() {
+        InputListener.GetInstance().OnTab_Up += SwitchCommandWindow;
     }
 
     public void OpenCharacterWindow(Character source) {
@@ -21,4 +14,6 @@ public class UIManager : MonoBehaviour {
     }
 
     public void CloseCharacterWindow() => WindowSystem.GetInstance().FindWindowOfType(WindowType.CharacterWindow)?.CloseWindow();
+
+    private void SwitchCommandWindow() => WindowSystem.GetInstance().SwitchWindow(WindowType.CommandWindow);
 }

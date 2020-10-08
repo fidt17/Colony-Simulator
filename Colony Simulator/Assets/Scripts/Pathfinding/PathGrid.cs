@@ -18,7 +18,7 @@ public class PathGrid {
         for (int x = 0; x < _dimensions.x; x++) {
             for (int y = 0; y < _dimensions.y; y++) {
                 Vector2Int position = new Vector2Int(x, y);
-                bool isTraversable = GameManager.GetInstance().world.GetTileAt(position).isTraversable;
+                bool isTraversable = Utils.TileAt(position).isTraversable;
                 PathNode node = new PathNode(position, isTraversable);
                 nodes[x, y] = node;
             }

@@ -41,6 +41,9 @@ TagManager:
   - name: Ground
     uniqueID: 3277279427
     locked: 0
+  - name: Zones
+    uniqueID: 1552713123
+    locked: 0
   - name: Items
     uniqueID: 3819691543
     locked: 0

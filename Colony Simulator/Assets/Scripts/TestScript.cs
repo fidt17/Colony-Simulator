@@ -9,36 +9,6 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
             SpawnItem("wood log");
-
-        if (Input.GetKeyDown(KeyCode.O))
-            CutTree();
-
-        if (Input.GetKeyDown(KeyCode.P))
-            SpawnTree();
-    }
-
-    private void CutTree() {
-
-        Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
-
-        Tile t = GameManager.GetInstance().world.GetTileAt(mousePos2D);
-
-        if (t == null || t.objectOnTile?.GetType() != typeof(Tree))
-            return;
-
-        Tree tree = (Tree) t.objectOnTile;
-        Character human = GameManager.GetInstance().characterManager.colonists[0];
-        
-        PathNode targetNode = Pathfinder.FindNodeNear(Pathfinder.NodeAt(tree.position),
-                                                                           Pathfinder.NodeAt(human.motionComponent.GridPosition));
-
-        CutTask cutTask = new CutTask(human, targetNode, tree);
-        human.AI.CommandProcessor.AddTask(cutTask);
-    }
-
-    private void SpawnTree() {
-        Factory.Create<Tree>("tall tree", Utils.CursorToCoordinates());
     }
 
     private void DestroyObject() {
@@ -46,19 +16,19 @@ public class TestScript : MonoBehaviour
         Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
 
-        Tile t = GameManager.GetInstance().world.GetTileAt(mousePos2D);
+        Tile t = Utils.TileAt(mousePos2D);
 
         if (t == null)
             return;
 
-        t.itemOnTile?.Destroy();
+        t.contents.item?.Destroy();
 
-        if (t.objectOnTile != null) {
+        if (t.contents.staticObject != null) {
 
-            if (t.objectOnTile.GetType() == typeof(Tree))
-                ( (IHarvestable) t.objectOnTile).Harvest();
+            if (t.contents.staticObject.GetType() == typeof(Tree))
+                ( (IHarvestable) t.contents.staticObject).Harvest();
             else {
-                t.objectOnTile.Destroy();
+                t.contents.staticObject.Destroy();
             }
         }
     }

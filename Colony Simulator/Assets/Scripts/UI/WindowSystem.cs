@@ -9,7 +9,7 @@ public class WindowSystem : Singleton<WindowSystem> {
 
     protected override void Awake() {
         FindWindows();
-        InputController.GetInstance().OnEscape_Down += CloseWindows;
+        InputListener.GetInstance().OnEscape_Down += CloseWindows;
     }
 
     private void FindWindows() {
@@ -53,5 +53,5 @@ public class WindowSystem : Singleton<WindowSystem> {
 
     private void CloseWindows() => windows.ForEach(w => w.CloseWindow());
 
-    private void OnDestroy() => InputController.GetInstance().OnEscape_Down -= CloseWindows;
+    private void OnDestroy() => InputListener.GetInstance().OnEscape_Down -= CloseWindows;
 }

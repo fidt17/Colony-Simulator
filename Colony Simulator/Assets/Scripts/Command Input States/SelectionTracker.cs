@@ -8,8 +8,12 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     
     public delegate void SelectionHandler();
     public event SelectionHandler OnSelect;
+    public delegate void DragHandler(List<SelectableComponent> s);
+    public event DragHandler OnDrag;
 
-    public List<Type> selectionMask = new List<Type>();
+    public void SetSettings(SelectionSettings newSettings) => _settings = newSettings;
+
+    private SelectionSettings _settings;
 
     public List<T> GetSelected<T>() {
         List<T> selected = new List<T>();
@@ -47,6 +51,19 @@ public class SelectionTracker : Singleton<SelectionTracker> {
         _selected.Clear();
     }
 
+    public List<SelectableComponent> GetSelectableInArea(Vector2 start, Vector2 end) {
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(start, end);
+        List<SelectableComponent> selectable = new List<SelectableComponent>();
+        foreach (Collider2D collider in colliders) {
+            SelectableComponent sc = collider.gameObject.GetComponent<SelectableComponent>();
+            if (sc is null || !_settings.selectionMask.Contains(sc.selectable.GetType())) {
+                continue;
+            }
+            selectable.Add(sc);
+        }
+        return selectable;
+    }
+
     private IEnumerator StartSelectionAreaDrag() {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
             yield break;
@@ -59,7 +76,13 @@ public class SelectionTracker : Singleton<SelectionTracker> {
 
         while (_lmbPressed) {
             currentMousePosition = Utils.CursorToWorldPosition();
-            DrawSelectionArea(startMousePosition, currentMousePosition);
+            if (_settings.shouldDrawArea) {
+                DrawSelectionArea(startMousePosition, currentMousePosition);
+            }
+            if (OnDrag != null) {
+                List<SelectableComponent> selectableInArea = GetSelectableInArea(startMousePosition, currentMousePosition);
+                OnDrag?.Invoke(selectableInArea);
+            }
             yield return null;
         }
 
@@ -76,17 +99,14 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     private void ResetSelectionArea() => _selectionArea.transform.localScale = Vector3.zero;
 
     private void ProcessSelectionArea(Vector2 start, Vector2 end) {
-        Collider2D[] colliders = Physics2D.OverlapAreaAll(start, end);
         DeselectEverything();
-        foreach (Collider2D collider in colliders) {
-            SelectableComponent sc = collider.gameObject.GetComponent<SelectableComponent>();
-            if (sc is null || !selectionMask.Contains(sc.selectable.GetType())) {
-                continue;
-            }
-            Select(sc);
-        }
+        GetSelectableInArea(start, end).ForEach(x => Select(x));
         ResetSelectionArea();
-
         OnSelect?.Invoke();
     }
+}
+
+public struct SelectionSettings {
+    public List<Type> selectionMask;
+    public bool shouldDrawArea;
 }

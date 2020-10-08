@@ -35,8 +35,8 @@ public abstract class Item : IPrefab, IPlacable {
 
     #region IPlacable
 
-    public void PutOnTile() => GameManager.GetInstance().world.GetTileAt(position).PutItemOnTile(this);
-    public void RemoveFromTile() => GameManager.GetInstance().world.GetTileAt(position).RemoveItemFromTile();
+    public void PutOnTile() => Utils.TileAt(position).contents.PutItemOnTile(this);
+    public void RemoveFromTile() => Utils.TileAt(position).contents.RemoveItemFromTile();
     
     #endregion
 }

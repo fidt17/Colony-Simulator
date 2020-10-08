@@ -6,19 +6,22 @@ using UnityEngine;
 public class MoveCommandInputState : CommandInputState {
 
     protected override void UnsubscribeFromEvents() {
-        InputController.GetInstance().OnMouse0_Down -= OnLeftMouseButtonDown;
-        InputController.GetInstance().OnMouse1_Down -= OnRightMouseButtonDown;
+        InputListener.GetInstance().OnMouse0_Down -= OnLeftMouseButtonDown;
+        InputListener.GetInstance().OnMouse1_Down -= OnRightMouseButtonDown;
     }
 
     protected override void SubscribeToEvents() {
-        InputController.GetInstance().OnMouse0_Down += OnLeftMouseButtonDown;
-        InputController.GetInstance().OnMouse1_Down += OnRightMouseButtonDown;
+        InputListener.GetInstance().OnMouse0_Down += OnLeftMouseButtonDown;
+        InputListener.GetInstance().OnMouse1_Down += OnRightMouseButtonDown;
     }
 
-    protected override void SetUpSelectionMask() {
-        List<Type> selectionMask = new List<Type>();
-        selectionMask.Add(typeof(Human));
-        SelectionTracker.GetInstance().selectionMask = selectionMask;
+    protected override void SetupSelectionTracker() {
+        SelectionSettings settings;
+        settings.selectionMask = new List<System.Type>() {
+            typeof(Human)
+        };
+        settings.shouldDrawArea = true;
+        SelectionTracker.GetInstance().SetSettings(settings);
     }
 
     protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.moveStateTexture);

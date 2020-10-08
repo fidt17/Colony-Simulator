@@ -34,8 +34,8 @@ public class Tree : StaticObject, IPlacable, IHarvestable
 
     #region IPlacable
 
-    public void PutOnTile()      => GameManager.GetInstance().world.GetTileAt(position).PutStaticObjectOnTile(this, isTraversable);
-    public void RemoveFromTile() => GameManager.GetInstance().world.GetTileAt(position).RemoveStaticObjectFromTile();
+    public void PutOnTile()      => Utils.TileAt(position).contents.PutStaticObjectOnTile(this, isTraversable);
+    public void RemoveFromTile() => Utils.TileAt(position).contents.RemoveStaticObjectFromTile();
     
     #endregion  
 

@@ -119,7 +119,7 @@ public class CameraController : MonoBehaviour {
 	private void OnDestroy() => UnsubscribeFromInput();
 
 	private void SubscribeToInput() {
-		InputController input = InputController.GetInstance();
+		InputListener input = InputListener.GetInstance();
 		input.OnW_Pressed += MoveUp;
 		input.OnA_Pressed += MoveLeft;
 		input.OnS_Pressed += MoveDown;
@@ -127,7 +127,7 @@ public class CameraController : MonoBehaviour {
 	}
 
 	private void UnsubscribeFromInput() {
-		InputController input = InputController.GetInstance();
+		InputListener input = InputListener.GetInstance();
 		input.OnW_Pressed -= MoveUp;
 		input.OnA_Pressed -= MoveLeft;
 		input.OnS_Pressed -= MoveDown;

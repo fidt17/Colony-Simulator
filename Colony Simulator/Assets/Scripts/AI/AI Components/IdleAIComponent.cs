@@ -17,7 +17,7 @@ public class IdleAIComponent {
 
     private IEnumerator TryToWander() {
         while(true) {
-            yield return new WaitForSeconds(_coroutineCooldown);
+            yield return new WaitForSeconds(Random.Range(0, _coroutineCooldown));
 
             if (_character.CommandProcessor.HasTask == true) {
                 continue;

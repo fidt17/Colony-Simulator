@@ -57,7 +57,7 @@ public class TileSpriteRenderer : Singleton<TileSpriteRenderer> {
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
                 Vector2Int checkPosition = tile.position + new Vector2Int(x, y);
-                Tile t = GameManager.GetInstance().world.GetTileAt(checkPosition);
+                Tile t = Utils.TileAt(checkPosition);
                 if (t == null) {
                     borderMatrix[x+1, y+1] = TileType.empty;
                     continue;

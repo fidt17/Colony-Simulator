@@ -7,27 +7,30 @@ using System.Linq;
 public class CutCommandInputState : CommandInputState {
 
     protected override void UnsubscribeFromEvents() {
-        InputController.GetInstance().OnMouse0_Down -= OnLeftClickDown;
-        InputController.GetInstance().OnMouse0_Up   -= OnLeftClickUp;
-        InputController.GetInstance().OnMouse1_Down -= SwitchToDefaultState;
-        InputController.GetInstance().OnEscape_Down -= SwitchToDefaultState;
+        InputListener.GetInstance().OnMouse0_Down -= OnLeftClickDown;
+        InputListener.GetInstance().OnMouse0_Up   -= OnLeftClickUp;
+        InputListener.GetInstance().OnMouse1_Down -= SwitchToDefaultState;
+        InputListener.GetInstance().OnEscape_Down -= SwitchToDefaultState;
 
         SelectionTracker.GetInstance().OnSelect -= CreateJobsOnSelected;
     }
 
     protected override void SubscribeToEvents() {
-        InputController.GetInstance().OnMouse0_Down += OnLeftClickDown;
-        InputController.GetInstance().OnMouse0_Up   += OnLeftClickUp;
-        InputController.GetInstance().OnMouse1_Down += SwitchToDefaultState;
-        InputController.GetInstance().OnEscape_Down += SwitchToDefaultState;
+        InputListener.GetInstance().OnMouse0_Down += OnLeftClickDown;
+        InputListener.GetInstance().OnMouse0_Up   += OnLeftClickUp;
+        InputListener.GetInstance().OnMouse1_Down += SwitchToDefaultState;
+        InputListener.GetInstance().OnEscape_Down += SwitchToDefaultState;
 
         SelectionTracker.GetInstance().OnSelect += CreateJobsOnSelected;
     }
 
-    protected override void SetUpSelectionMask() {
-        List<Type> selectionMask = new List<Type>();
-        selectionMask.Add(typeof(Tree));
-        SelectionTracker.GetInstance().selectionMask = selectionMask;
+    protected override void SetupSelectionTracker() {
+        SelectionSettings settings;
+        settings.selectionMask = new List<System.Type>() {
+            typeof(Tree)
+        };
+        settings.shouldDrawArea = true;
+        SelectionTracker.GetInstance().SetSettings(settings);
     }
 
     protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);

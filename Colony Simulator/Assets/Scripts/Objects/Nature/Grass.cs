@@ -50,15 +50,8 @@ public class Grass : StaticObject, IEdible, IPlacable {
 
     #region IPlacable
 
-    public void PutOnTile() {
-        Tile tile = GameManager.GetInstance().world.GetTileAt(position);
-        tile.PutStaticObjectOnTile(this, isTraversable);
-    }
-
-    public void RemoveFromTile() {
-        Tile tile = GameManager.GetInstance().world.GetTileAt(position);
-        tile.RemoveStaticObjectFromTile();
-    }
+    public void PutOnTile() => Utils.TileAt(position).contents.PutStaticObjectOnTile(this, isTraversable);
+    public void RemoveFromTile() => Utils.TileAt(position).contents.RemoveStaticObjectFromTile();
     
     #endregion  
 }
