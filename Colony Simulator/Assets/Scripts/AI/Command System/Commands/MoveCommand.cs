@@ -17,14 +17,15 @@ public class MoveCommand : Command {
 
     #endregion
 
-    private PathNode _destinationNode;
+    private Vector2Int _destination;
     private List<PathNode> _path;
+    private PathNode _destinationNode => Utils.NodeAt(_destination);
 
     private MotionComponent _motionComponent;
 
-    public MoveCommand(MotionComponent motionComponent, PathNode destinationNode) {
+    public MoveCommand(MotionComponent motionComponent, Vector2Int destination) {
         _motionComponent = motionComponent;
-        _destinationNode = destinationNode;
+        _destination = destination;
     }
 
     public override void Execute() {

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class StockpileState : CommandInputState {
 
-    private List<Tile> _tiles = new List<Tile>();
-    private Color _stockpileColor = Color.grey;
+    protected List<Tile> _tiles = new List<Tile>();
+    protected Color _stockpileColor = Color.grey;
 
     public override void ExitState() {
         base.ExitState();
@@ -40,10 +40,10 @@ public class StockpileState : CommandInputState {
         SelectionTracker.GetInstance().SetSettings(settings);
     }
 
-    private void OnLeftMouseDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
-    private void OnLeftMouseUp() => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
+    protected void OnLeftMouseDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
+    protected void OnLeftMouseUp() => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 
-    private void OnDragUpdate(List<SelectableComponent> selectable) {
+    protected virtual void OnDragUpdate(List<SelectableComponent> selectable) {
         ResetTilesColor();
 
         _tiles.Clear();
@@ -53,13 +53,13 @@ public class StockpileState : CommandInputState {
         ColorTiles();
     }
 
-    private void OnDragStop() {
+    protected virtual void OnDragStop() {
         StockpileCreator.CreateStockpileOnTiles(_tiles);
         ResetTilesColor();
         _tiles.Clear();
     }
 
-    private void FilterTiles() {
+    protected void FilterTiles() {
         for (int i = _tiles.Count - 1; i >= 0; i--) {
             if (!Pathfinder.NodeAt(_tiles[i].position).isTraversable) {
                 _tiles.RemoveAt(i);
@@ -67,6 +67,6 @@ public class StockpileState : CommandInputState {
         }
     }
 
-    private void ColorTiles() => _tiles.ForEach(x => x.SetColor(_stockpileColor));
-    private void ResetTilesColor() => _tiles.ForEach(x => x.ResetColor());
+    protected void ColorTiles() => _tiles.ForEach(x => x.SetColor(_stockpileColor));
+    protected void ResetTilesColor() => _tiles.ForEach(x => x.ResetColor());
 }

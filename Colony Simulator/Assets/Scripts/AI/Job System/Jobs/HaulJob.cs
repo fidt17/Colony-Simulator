@@ -6,20 +6,17 @@ public class HaulJob : Job {
     
     public Item Item => _item;
 
-    private PathNode _destinationNode;
+    private Vector2Int _destinationPosition;
+    private PathNode _destinationNode => Utils.NodeAt(_destinationPosition);
     private Item _item;
 
-    public HaulJob(Item item, PathNode destinationNode) : base(item.position) {
+    public HaulJob(Item item, Vector2Int destinationPosition) : base(item.position) {
         _item = item;
-        _destinationNode = destinationNode;
+        _destinationPosition = destinationPosition;
     }
 
     protected override void PlanJob() {
-        _task = new Task();
-        _task.AddCommand(new MoveCommand(_worker.MotionComponent, GetDestinationNode()));
-        _task.AddCommand(new PickCommand(_item, _worker.Inventory));
-        _task.AddCommand(new MoveCommand(_worker.MotionComponent, Pathfinder.FindNodeNear(_destinationNode, GetDestinationNode())));
-        _task.AddCommand(new DropCommand(_item, _worker.Inventory, _destinationNode.position));
+        _task = new HaulTask(_item, _destinationPosition, _worker.MotionComponent, _worker.Inventory) as ITask;
 
         _worker.CommandProcessor.AddTask(_task);
         _task.TaskResultHandler += OnJobFinish;
@@ -27,6 +24,18 @@ public class HaulJob : Job {
         StockpilePart part = Utils.TileAt(_destinationNode.position).contents.stockpilePart;
         if (part != null) {
             JobResultHandler += part.HaulJobResultHandler;
+        }
+    }
+
+    protected override void OnJobFinish(object source, System.EventArgs e) {
+        bool result = (e as Task.TaskResultEventArgs).result;
+        if (result == true) {
+            _worker.WithdrawJob();
+            JobSystem.GetInstance().DeleteJob(this);
+            DeleteJobIcon();
+            OnJobResultChanged(result);
+        } else {
+            DeleteJob();
         }
     }
 }

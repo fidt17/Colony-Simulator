@@ -11,16 +11,20 @@ public class StockpilePart {
     public GameObject gameObject;
     public SpriteRenderer spriteRenderer;
 
-    public bool isReserved = false;
-    public bool HasItem => Utils.TileAt(position).contents.item != null;
+    public HaulJob haulJob;
+    public bool HasItem => GetItem != null;
+    public Item GetItem => Utils.TileAt(position).contents.item;
 
     public StockpilePart(Vector2Int position, Stockpile parent) {
         this.position = position;
         this.parent = parent;
         gameObject = Factory.Create("stockpile part", this.position);
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
         parent.AddPart(this);
+
+        if (HasItem) {
+            StockpileManager.GetInstance().AddItemToStockpiles(GetItem);
+        }
     }
 
     public void ChangeStockpiles(Stockpile newStockpile) {
@@ -29,11 +33,31 @@ public class StockpilePart {
         parent = newStockpile;
     }
 
-    public void ChangeReservedState(bool isReserved) {
-        this.isReserved = isReserved;
+    public void SetHaulJob(HaulJob haulJob) => this.haulJob = haulJob;
+
+    public void DeleteStockpilePart() {
+        //destroy gameObject
+        GameObject.Destroy(gameObject);
+        //remove from stockpile
+        if (HasItem) {
+            StockpileManager.GetInstance().RemoveItemFromStockpiles(GetItem);
+        }
+        parent.RemovePart(this);
+        Utils.TileAt(position).contents.stockpilePart = null;
+        //reset existing hauling jobs to this stockpile part
+        TryDeletingHaulingJob();
+    }
+
+    public void TryDeletingHaulingJob() {
+        if (haulJob != null) {
+            haulJob.JobResultHandler -= HaulJobResultHandler;
+            haulJob.DeleteJob();
+            haulJob = null;
+        }
     }
 
     public void HaulJobResultHandler(bool result) {
-        ChangeReservedState(!result);
+        haulJob.JobResultHandler -= HaulJobResultHandler;
+        haulJob = null;
     }
 }

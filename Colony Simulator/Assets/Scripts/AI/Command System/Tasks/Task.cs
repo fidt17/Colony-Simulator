@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Task {
+public class Task : ITask {
 
-    public delegate void OnTaskResult(bool result);
-    public event OnTaskResult TaskResultHandler;
+    public event EventHandler TaskResultHandler;
+    public class TaskResultEventArgs : EventArgs {
+        public bool result { get; set; }
+    }
 
     protected Queue<Command> _commandQueue = new Queue<Command>();
     protected Command _currentCommand;
@@ -39,13 +41,21 @@ public class Task {
         }
     }
 
-    public void FinishTask() => TaskResultHandler?.Invoke(true);
+    public void FinishTask() {
+        OnResultChanged(true);
+    }
 
-    public void AbortTask() {
+    public virtual void AbortTask() {
         foreach(Command command in _commandQueue) {
             command.Abort();
         }
         _currentCommand?.Abort();
-        TaskResultHandler?.Invoke(false);
+        OnResultChanged(false);
+    }
+
+    protected void OnResultChanged(bool result) {
+        TaskResultEventArgs e = new TaskResultEventArgs();
+        e.result = result;
+        TaskResultHandler?.Invoke(this, e);
     }
 }

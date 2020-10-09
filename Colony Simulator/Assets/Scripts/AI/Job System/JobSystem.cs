@@ -47,6 +47,7 @@ public class JobSystem : Singleton<JobSystem> {
                     if (worker.CanDoJob(_availableJobs[i])) {
                         worker.AssignJob(_availableJobs[i]);
                         _availableJobs.RemoveAt(i);
+                        break;
                     }
                 }
             }

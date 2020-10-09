@@ -7,8 +7,36 @@ public class TestScript : MonoBehaviour
 {   
     private void Update() {
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKey(KeyCode.I))
             SpawnItem("wood log");
+
+        if (Input.GetKeyDown(KeyCode.P))
+            SpawnHuman();
+
+        if (Input.GetKeyDown(KeyCode.T))
+            TestDijkstraSearch();
+    }
+
+    private void TestDijkstraSearch() {
+
+        Func<Tile, bool> requirementsFunction = delegate(Tile tile) {
+            if (tile == null) {
+                return false;
+            } else {
+                if (tile.contents.staticObject != null) {
+                    return tile.contents.staticObject.GetType().Equals(typeof(Tree));
+                } else {
+                    return false;
+                }
+            }
+        };
+
+        Tile t = DijkstraSearch.FindClosestTileWhere(Utils.CursorToCoordinates(), requirementsFunction, false);
+        if (t == null) {
+            Debug.Log("Tile was not found");
+        } else {
+            Debug.Log("Tile found at: " + t.position);
+        }
     }
 
     private void DestroyObject() {
@@ -34,24 +62,11 @@ public class TestScript : MonoBehaviour
     }
 
     private void SpawnItem(string name) {
+        WoodLog w = Factory.Create<WoodLog>(name, Utils.CursorToCoordinates());
+    }
 
-        Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int mousePos2D = new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
-
-        WoodLog w = Factory.Create<WoodLog>(name, mousePos2D);
-        //ItemSpawnFactory.GetNewItem(name, name, mousePos2D);
+    private void SpawnHuman() {
+        Human human = Factory.Create<Human>("human", Utils.CursorToCoordinates());
+        GameManager.GetInstance().characterManager.colonists.Add(human);
     }
 }
-
-
-/*
-TODO
-
-1. CommandInputStateMachine has currentCommandState variable set a public(selection controller uses it). Fix Selection Controller and make currentCommandState private.
-
-
-*. Add controls over multiple characters
-
-
-
-*/

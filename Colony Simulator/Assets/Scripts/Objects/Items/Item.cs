@@ -12,6 +12,8 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
     public ItemScriptableObject data { get; protected set; }
     public GameObject gameObject     { get; protected set; }
 
+    public Tile Tile => Utils.TileAt(position);
+
     protected abstract int StackCount { get; }
 
     public void SetPosition(Vector2Int position) {
@@ -19,28 +21,6 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
         gameObject.transform.position = Utils.ToVector3(this.position);
     }
 
-    private void TryHaulingItemToAnyStockpile() {
-        Pathfinder.UpdateHandler -= TryHaulingItemToAnyStockpile;
-        if (Utils.TileAt(position).contents.stockpilePart != null) {
-            return;
-        }
-
-        foreach (Job job in JobSystem.GetInstance().AllJobs) {
-            if (job.GetType().Equals(typeof(HaulJob))) {
-                HaulJob haulJob = job as HaulJob;
-                if (haulJob.Item == this) {
-                    return;
-                }
-            }
-        }
-
-        StockpilePart part = StockpileManager.FindStockpilePartForItem(this);
-        if (part != null) {
-            part.ChangeReservedState(true);
-            JobSystem.GetInstance().AddJob(new HaulJob(this, Utils.NodeAt(part.position)));
-        }    
-    }
-    
     #region IPrefab
 
     public virtual void SetData(PrefabScriptableObject data) => this.data = data as ItemScriptableObject;
@@ -50,7 +30,6 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
         gameObject.transform.position = new Vector3(position.x, position.y, 0);
         this.position = position;
         PutOnTile();
-        StockpileManager.OnNewStockpileCreated += TryHaulingItemToAnyStockpile;
     }
 
     #endregion
@@ -68,11 +47,29 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
     #region IPlacable
 
     public void PutOnTile() {
-        Utils.TileAt(position).contents.PutItemOnTile(this);
-        Pathfinder.UpdateHandler += TryHaulingItemToAnyStockpile;
+
+        Func<Tile, bool> requirementsFunction = delegate(Tile t) {
+            if (t == null) {
+                return false;
+            } else {
+                return !t.contents.HasItem;
+            }
+        };
+        Tile tile = DijkstraSearch.FindClosestTileWhere(position, requirementsFunction);
+        
+        if (tile != null) {
+            SetPosition(tile.position);
+            tile.contents.PutItemOnTile(this);
+            StockpileManager.GetInstance().AddItem(this);
+        } else {
+            Destroy();
+        }
     }
 
-    public void RemoveFromTile() => Utils.TileAt(position).contents.RemoveItemFromTile();
+    public void RemoveFromTile() {
+        Tile.contents.RemoveItemFromTile();
+        StockpileManager.GetInstance().RemoveItem(this);
+    }
     
     #endregion
 }

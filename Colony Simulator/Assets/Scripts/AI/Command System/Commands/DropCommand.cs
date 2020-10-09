@@ -25,6 +25,7 @@ public class DropCommand : Command {
         if (_item != null) {  
             _item.OnDestroyed -= OnObjectDestroyedOutside;
         }
+        _picker.DropItem(_item);
     }
 
     private void OnObjectDestroyedOutside(object sender, EventArgs e) {

@@ -37,7 +37,7 @@ public class IdleAIComponent {
             }
 
             Task wanderTask = new Task();
-            wanderTask.AddCommand(new MoveCommand(_character.motionComponent, targetNode));
+            wanderTask.AddCommand(new MoveCommand(_character.motionComponent, targetNode.position));
             wanderTask.AddCommand(new WaitCommand(_idleWaitTime));
             
             _character.CommandProcessor.AddTask(wanderTask);

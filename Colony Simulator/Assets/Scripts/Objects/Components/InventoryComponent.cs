@@ -19,10 +19,14 @@ public class InventoryComponent : MonoBehaviour {
     }
 
     public void DropItemAt(Item item, Vector2Int position) {
-        _inventory.Remove(item);
-        item.SetPosition(position);
-        item.PutOnTile();
+        if (_inventory.Contains(item)) {
+            _inventory.Remove(item);
+            item.SetPosition(position);
+            item.PutOnTile();
+        }
     }
+
+    public void DropItem(Item item) => DropItemAt(item, _human.motionComponent.GridPosition);
 
     public void DropAll(){
         for (int i = _inventory.Count - 1; i >= 0; i--) {

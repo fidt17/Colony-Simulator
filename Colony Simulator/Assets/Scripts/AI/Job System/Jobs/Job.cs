@@ -11,7 +11,7 @@ public abstract class Job {
 
     protected Vector2Int _jobPosition;
     protected JobHandlerComponent _worker;
-    protected Task _task;
+    protected ITask _task;
 
     protected GameObject _jobIcon;
 
@@ -25,20 +25,15 @@ public abstract class Job {
         PlanJob();
     }
 
-    public void WithdrawWorker() {
-        if (_worker is null) {
-            return;
-        }
-
-        if (_task != null) {
+    public void DeleteJob() {
+        if (_worker != null) {
+            _worker.WithdrawJob();
             _task.TaskResultHandler -= OnJobFinish;
-            _worker.CommandProcessor.ResetTask(_task);
-            _task = null;
+            _task.AbortTask();
         }
-
-        _worker.WithdrawJob();
-        _worker = null;
-        JobSystem.GetInstance().ReturnJob(this);
+        DeleteJobIcon();
+        JobSystem.GetInstance().DeleteJob(this);
+        OnJobResultChanged(false);
     }
 
     protected abstract void PlanJob();
@@ -57,7 +52,9 @@ public abstract class Job {
         return Pathfinder.FindNodeNear(jobNode, workerNode);
     }
 
-    protected void OnJobFinish(bool result) {
+    protected virtual void OnJobFinish(object source, System.EventArgs e) {
+        _task.TaskResultHandler -= OnJobFinish;
+        bool result = (e as Task.TaskResultEventArgs).result;
         _worker.WithdrawJob();
         if (result == true) {
             JobSystem.GetInstance().DeleteJob(this);
@@ -65,7 +62,8 @@ public abstract class Job {
         } else {
             JobSystem.GetInstance().ReturnJob(this);
         }
-
-        JobResultHandler?.Invoke(result);
+        OnJobResultChanged(result);
     }
+
+    protected void OnJobResultChanged(bool result) => JobResultHandler?.Invoke(result);
 }

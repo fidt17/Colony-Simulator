@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\AI\Command System\Commands\WaitCommand.cs" />
      <Compile Include="Assets\Scripts\AI\Command System\Tasks\CutTask.cs" />
      <Compile Include="Assets\Scripts\AI\Command System\Tasks\EatFoodTask.cs" />
+     <Compile Include="Assets\Scripts\AI\Command System\Tasks\HaulTask.cs" />
      <Compile Include="Assets\Scripts\AI\Command System\Tasks\Task.cs" />
      <Compile Include="Assets\Scripts\AI\HumanAI.cs" />
      <Compile Include="Assets\Scripts\AI\Job System\JobSystem.cs" />
@@ -70,6 +71,7 @@
      <Compile Include="Assets\Scripts\Command Input States\CutCommandInputState.cs" />
      <Compile Include="Assets\Scripts\Command Input States\DefaultInputState.cs" />
      <Compile Include="Assets\Scripts\Command Input States\MoveCommandInputState.cs" />
+     <Compile Include="Assets\Scripts\Command Input States\RemoveStockpileState.cs" />
      <Compile Include="Assets\Scripts\Command Input States\SelectionTracker.cs" />
      <Compile Include="Assets\Scripts\Command Input States\StockpileState.cs" />
      <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
@@ -86,6 +88,7 @@
      <Compile Include="Assets\Scripts\Interfaces\IPlacable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IPrefab.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ISelectable.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\ITask.cs" />
      <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\NatureManager.cs" />

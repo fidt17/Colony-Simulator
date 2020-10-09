@@ -7,8 +7,8 @@ public class CommandProcessor : MonoBehaviour {
     
     public bool HasTask => _currentTask != null;
 
-    private Queue<Task> _taskQueue = new Queue<Task>();
-    private Task _currentTask;
+    private Queue<ITask> _taskQueue = new Queue<ITask>();
+    private ITask _currentTask;
 
     private void Update() => _currentTask?.ExecuteTask();
 
@@ -18,24 +18,24 @@ public class CommandProcessor : MonoBehaviour {
         }
     }
 
-    public void AddTask(Task task) {
+    public void AddTask(ITask task) {
         _taskQueue.Enqueue(task);
         StartExecution();
     }
 
-    public void AddUrgentTask(Task task) {
+    public void AddUrgentTask(ITask task) {
         ResetTasks();
         AddTask(task);
         StartExecution();
     }
 
-    public void ResetTask(Task task) {
+    public void ResetTask(ITask task) {
         task.AbortTask();
-        _taskQueue = new Queue<Task>(_taskQueue.Where(x => x != task));
+        _taskQueue = new Queue<ITask>(_taskQueue.Where(x => x != task));
     }
 
     public void ResetTasks() {
-        foreach(Task task in _taskQueue) {
+        foreach(ITask task in _taskQueue) {
             task.AbortTask();
         }
         _currentTask?.AbortTask();
@@ -57,8 +57,11 @@ public class CommandProcessor : MonoBehaviour {
         _currentTask.TaskResultHandler += OnTaskFinish;
     }
 
-    private void OnTaskFinish(bool succeed) {
-        _currentTask = null;
+    private void OnTaskFinish(object source, System.EventArgs e) {
+        if (_currentTask != null) {
+            _currentTask.TaskResultHandler -= OnTaskFinish;
+            _currentTask = null;
+        }
         NextTask();
     }
 }

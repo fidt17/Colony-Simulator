@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TileContents {
 
+    public bool HasItem => item != null;
+
     public StockpilePart stockpilePart;
     public StaticObject staticObject;
     public Item item;
@@ -28,8 +30,8 @@ public class TileContents {
 
     public void PutItemOnTile(Item item) {
         if (this.item != null) {
+            Debug.LogError("Item was destroyed because another item was placed upon it." + " pos: " + this.item.position);
             this.item.Destroy();
-            Debug.LogError("Item was destroyed because another item was placed upon it.");
         }
         this.item = item;
     }

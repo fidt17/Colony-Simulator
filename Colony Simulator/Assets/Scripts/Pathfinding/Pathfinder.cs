@@ -66,15 +66,17 @@ public static class Pathfinder {
         Vector2Int checkE = new Vector2Int(searchPosition.x + 1, searchPosition.y);
 
         List<PathNode> possiblePositions = new List<PathNode>();
-        possiblePositions.Add(Pathfinder.NodeAt(checkN));
-        possiblePositions.Add(Pathfinder.NodeAt(checkS));
-        possiblePositions.Add(Pathfinder.NodeAt(checkW));
-        possiblePositions.Add(Pathfinder.NodeAt(checkE));
+        possiblePositions.Add(NodeAt(checkN));
+        possiblePositions.Add(NodeAt(checkS));
+        possiblePositions.Add(NodeAt(checkW));
+        possiblePositions.Add(NodeAt(checkE));
 
-        possiblePositions.ToList().ForEach(x => {
-            if (x == null || x.region != sourceNode.region)
-                possiblePositions.Remove(x);
-        });
+        for (int i = possiblePositions.Count - 1; i >= 0; i--) {
+            PathNode node = possiblePositions[i];
+            if (node == null || node.region != sourceNode.region) {
+                possiblePositions.Remove(node);
+            }
+        }
 
         int minDistance = Int32.MaxValue;
         PathNode result = null;
@@ -86,11 +88,6 @@ public static class Pathfinder {
                 result = node;
             }
         }
-
-        if (result is null) {
-            return Pathfinder.NodeAt(searchPosition);
-        }
-
         return result;
     }
 }

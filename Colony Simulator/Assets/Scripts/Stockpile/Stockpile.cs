@@ -22,15 +22,15 @@ public class Stockpile {
     public void RemovePart(StockpilePart part) {
         _parts.Remove(part);
         if (_parts.Count == 0) {
-            GameObject.Destroy(gameObject, 1);
-            StockpileManager.RemoveStockpile(this);
+            GameObject.Destroy(gameObject);
+            StockpileManager.GetInstance().RemoveStockpile(this);
         }
     }
 
     public StockpilePart FindPlaceForItem(Item item) {
         foreach(StockpilePart part in _parts) {
             PathNode node = Utils.NodeAt(part.position);
-            if (part.isReserved || part.HasItem) {
+            if (part.haulJob != null || part.HasItem) {
                 continue;
             }
 

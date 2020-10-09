@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CutTask : Task {
 
-    public CutTask(Character character, PathNode targetNode, Tree tree) {
-        this.AddCommand(new MoveCommand(character.motionComponent, targetNode));
-        this.AddCommand(new RotateToCommand(character.motionComponent, Pathfinder.NodeAt(tree.position)));
+    public CutTask(MotionComponent motionComponent, Vector2Int targetPosition, IHarvestable tree) {
+        this.AddCommand(new MoveCommand(motionComponent, targetPosition));
+        this.AddCommand(new RotateToCommand(motionComponent, Pathfinder.NodeAt((tree as StaticObject).position)));
         this.AddCommand(new WaitCommand(1f));
         this.AddCommand(new HarvestCommand(tree));
     }

@@ -13,7 +13,7 @@ public static class DijkstraSearch {
         openSet.Add(startNode);
 
         while (closedSet.Count != steps) {
-            int result = NextDijkstraIteration(ref openSet, ref closedSet, startNode);
+            int result = NextDijkstraIteration(ref openSet, ref closedSet, startNode, true);
             if (result == 0) {
                 break;
             }
@@ -22,7 +22,26 @@ public static class DijkstraSearch {
         return closedSet;
     }
 
-    private static int NextDijkstraIteration(ref List<PathNode> openSet, ref List<PathNode> closedSet, PathNode startNode) {
+    public static Tile FindClosestTileWhere(Vector2Int startPosition, Func<Tile, bool> requirementsFunction, bool checkEqualityOfRegions = true) {
+        int checkIndex = 0;
+        List<PathNode> closedSet = new List<PathNode>();
+        List<PathNode> openSet = new List<PathNode>();
+        openSet.Add(Utils.NodeAt(startPosition));
+
+        Tile checkTile = null;
+        do {
+            NextDijkstraIteration(ref openSet, ref closedSet, Utils.NodeAt(startPosition), checkEqualityOfRegions);
+            if (checkIndex >= closedSet.Count) {
+                return null;
+            }
+            checkTile = Utils.TileAt(closedSet[checkIndex].position);
+            checkIndex++;
+        } while (requirementsFunction(checkTile) != true);
+
+        return checkTile;
+    }
+
+    private static int NextDijkstraIteration(ref List<PathNode> openSet, ref List<PathNode> closedSet, PathNode startNode, bool checkEqualityOfRegions) {
         if (openSet.Count == 0) {
             return 0;
         }
@@ -49,8 +68,10 @@ public static class DijkstraSearch {
                 if (checkNode is null
                     || checkNode == initialNode
                     || openSet.Contains(checkNode)
-                    || closedSet.Contains(checkNode)
-                    || checkNode.region != startNode.region) {
+                    || closedSet.Contains(checkNode)) {
+                    continue;
+                }
+                if (checkEqualityOfRegions && checkNode.region != startNode.region) {
                     continue;
                 }
                 openSet.Insert(0, checkNode);

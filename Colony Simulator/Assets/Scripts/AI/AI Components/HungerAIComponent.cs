@@ -54,5 +54,5 @@ public class HungerAIComponent {
         _isSearchingForFood = false;
     }
 
-    private void HandleGetFoodTaskResult(bool result) => _eatFoodTask = null;
+    private void HandleGetFoodTaskResult(object source, EventArgs e) => _eatFoodTask = null;
 }

@@ -13,12 +13,7 @@ public class CutJob : Job {
     protected override void AddJobIcon() => _jobIcon = Factory.Create("cut job", _jobPosition);
 
     protected override void PlanJob() {
-        _task = new Task();
-        _task.AddCommand(new MoveCommand(_worker.MotionComponent, GetDestinationNode()));
-        _task.AddCommand(new RotateToCommand(_worker.MotionComponent, Pathfinder.NodeAt(_jobPosition)));
-        _task.AddCommand(new WaitCommand(1f));
-        _task.AddCommand(new HarvestCommand(_harvestable));
-
+        _task = new CutTask(_worker.MotionComponent, GetDestinationNode().position, _harvestable) as ITask;
         _worker.CommandProcessor.AddTask(_task);
         _task.TaskResultHandler += OnJobFinish;
     }
