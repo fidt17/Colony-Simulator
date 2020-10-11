@@ -13,12 +13,25 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
     public GameObject gameObject     { get; protected set; }
 
     public Tile Tile => Utils.TileAt(position);
+    public bool HasHaulJob => _haulJob != null;
+
+    private HaulJob _haulJob;
 
     protected abstract int StackCount { get; }
 
     public void SetPosition(Vector2Int position) {
         this.position = position;
         gameObject.transform.position = Utils.ToVector3(this.position);
+    }
+
+    public void SetHaulJob(HaulJob job) {
+        _haulJob = job;
+        job.JobResultHandler += HaulJobResultHandler;
+    }
+
+    public void HaulJobResultHandler(object source, EventArgs e) {
+        (source as Job).JobResultHandler -= HaulJobResultHandler;
+        _haulJob = null;
     }
 
     #region IPrefab

@@ -56,7 +56,7 @@ public class StockpilePart {
         }
     }
 
-    public void HaulJobResultHandler(bool result) {
+    public void HaulJobResultHandler(object source, EventArgs e) {
         haulJob.JobResultHandler -= HaulJobResultHandler;
         haulJob = null;
     }

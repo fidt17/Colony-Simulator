@@ -16,11 +16,13 @@ public abstract class StaticObject : IPrefab, IDestroyable, ISelectable {
 
     public SelectableComponent selectableComponent { get; protected set; }
 
-    public StaticObject(Vector2Int dimensions) => this.dimensions = dimensions;
-
     #region IPrefab
 
-    public virtual void SetData(PrefabScriptableObject data) => this.data = data as StaticScriptableObject;
+    public virtual void SetData(PrefabScriptableObject data) {
+        this.data = data as StaticScriptableObject;
+        dimensions = this.data.dimensions;
+        isTraversable = this.data.isTraversable;
+    }
 
     public virtual void SetGameObject(GameObject obj, Vector2Int position) {
         gameObject = obj;

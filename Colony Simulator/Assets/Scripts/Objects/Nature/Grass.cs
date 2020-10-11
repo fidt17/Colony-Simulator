@@ -10,8 +10,7 @@ public class Grass : StaticObject, IEdible, IPlacable {
 
     #endregion
 
-    public Grass() : base (Vector2Int.one) {
-        isTraversable = true;
+    public Grass() {
         GameManager.GetInstance().natureManager.grassList.Add(this);
         AddToGlobalEdiblesList();
     }

@@ -44,7 +44,7 @@ public class JobSystem : Singleton<JobSystem> {
             for (int j = _availableWorkers.Count - 1; j >= 0; j--) {
                 JobHandlerComponent worker = _availableWorkers[j];
                 for (int i = _availableJobs.Count - 1; i >= 0; i--) {
-                    if (worker.CanDoJob(_availableJobs[i])) {
+                    if (_availableJobs[i].CanDoJob(worker)) {
                         worker.AssignJob(_availableJobs[i]);
                         _availableJobs.RemoveAt(i);
                         break;

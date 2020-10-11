@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Job {
     
-    public delegate void ResultHandler(bool result);
-    public event ResultHandler JobResultHandler;
+    public event EventHandler JobResultHandler;
+    public class JobResultEventArgs : EventArgs {
+        public bool result;
+    }
 
     public Vector2Int Position => _jobPosition;
 
@@ -18,6 +21,20 @@ public abstract class Job {
     public Job(Vector2Int jobPosition) {
         _jobPosition = jobPosition;
         AddJobIcon();
+    }
+
+    public virtual bool CanDoJob(JobHandlerComponent worker) {
+        if (worker.IsAvailable == false) {
+            return false;
+        }
+
+        PathNode jobNode = Pathfinder.NodeAt(Position);
+        PathNode workerNode = Pathfinder.NodeAt(worker.MotionComponent.GridPosition);
+        if (Pathfinder.FindNodeNear(jobNode, workerNode) is null) {
+            return false;
+        }
+
+        return true;
     }
 
     public void AssignWorker(JobHandlerComponent worker) {
@@ -65,5 +82,9 @@ public abstract class Job {
         OnJobResultChanged(result);
     }
 
-    protected void OnJobResultChanged(bool result) => JobResultHandler?.Invoke(result);
+    protected void OnJobResultChanged(bool result) {
+        JobResultEventArgs e = new JobResultEventArgs();
+        e.result = result;
+        JobResultHandler?.Invoke(this, e);
+    }
 }

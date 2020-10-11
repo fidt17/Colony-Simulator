@@ -28,8 +28,8 @@ public class DropCommand : Command {
         _picker.DropItem(_item);
     }
 
-    private void OnObjectDestroyedOutside(object sender, EventArgs e) {
-        _item.OnDestroyed -= OnObjectDestroyedOutside;
+    private void OnObjectDestroyedOutside(object source, EventArgs e) {
+        (source as Item).OnDestroyed -= OnObjectDestroyedOutside;
         _item = null;
         Finish(false);
     }

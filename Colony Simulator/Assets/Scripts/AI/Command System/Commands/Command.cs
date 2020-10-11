@@ -4,11 +4,18 @@ using UnityEngine;
 
 public abstract class Command {
        
-    public delegate void OnCommandResult(bool result);
-    public event OnCommandResult CommandResultHandler;
+    public event System.EventHandler CommandResultHandler;
+    public class CommandResultEventArgs : System.EventArgs {
+        public bool result;
+    }
 
     public abstract void Execute();
 
-    public virtual void Finish(bool result) => CommandResultHandler?.Invoke(result);
+    public virtual void Finish(bool result) {
+        CommandResultEventArgs e = new CommandResultEventArgs();
+        e.result = result;
+        CommandResultHandler?.Invoke(this, e);
+    } 
+
     public virtual void Abort() {}
 }

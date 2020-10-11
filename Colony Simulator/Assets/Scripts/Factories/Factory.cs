@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Reflection;
+using System.Linq;
 
 public static class Factory {
 
@@ -45,6 +47,18 @@ public static class Factory {
         obj.transform.SetParent(GetParent<T>());
         t.SetGameObject(obj, position);
         return t;
+    }
+
+    public static Type GetTypeDerivativeOf<T>(string targetTypeName) {
+        List<Type> types = Assembly.GetAssembly(typeof(T)).GetTypes().Where(myType => myType.IsSubclassOf(typeof(T))).ToList();
+        Type type = null;
+        foreach(Type checkType in types) {
+            string typeName = checkType.ToString();
+            if (typeName == targetTypeName) {
+                type = checkType;
+            }
+        }
+        return type;
     }
 
     public static GameObject Create(string dataName, Vector2Int position) {

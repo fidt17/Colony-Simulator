@@ -33,8 +33,8 @@ public class Task : ITask {
         }
     }
 
-    public void OnCommandFinish(bool succeed) {
-        if (succeed) {
+    public void OnCommandFinish(object source, EventArgs e) {
+        if ((e as Command.CommandResultEventArgs).result == true) {
             NextCommand();
         } else {
             AbortTask();

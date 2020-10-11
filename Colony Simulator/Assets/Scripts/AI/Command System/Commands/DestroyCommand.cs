@@ -25,6 +25,7 @@ public class DestroyCommand : Command {
     }
 
     private void OnObjectDestroyedOutside(object sender, EventArgs e) {
+        (sender as IDestroyable).OnDestroyed -= OnObjectDestroyedOutside;
         _objectToDestroy = null;
         Finish(false);
     }

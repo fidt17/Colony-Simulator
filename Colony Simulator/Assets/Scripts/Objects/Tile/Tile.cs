@@ -18,12 +18,6 @@ public class Tile : StaticObject {
     private SpriteRenderer _mainSprite;
     private Color _defaultSpriteColor;
 
-    public Tile() : base (Vector2Int.one) {
-        isTraversable = true;
-        type = TileType.empty;
-        contents = new TileContents(this);
-    }
-
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
         base.SetGameObject(gameObject, position);
         _mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
@@ -33,7 +27,7 @@ public class Tile : StaticObject {
     public override void SetData(PrefabScriptableObject data) {
         base.SetData(data as TileScriptableObject);
         type = ((TileScriptableObject) data).tileType;
-        isTraversable = ((TileScriptableObject) data).isTraversable;
+        contents = new TileContents(this);
     }
 
     public void SetTraversability(bool isTraversable) {

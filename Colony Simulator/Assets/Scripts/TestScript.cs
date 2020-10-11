@@ -14,7 +14,11 @@ public class TestScript : MonoBehaviour
             SpawnHuman();
 
         if (Input.GetKeyDown(KeyCode.T))
-            TestDijkstraSearch();
+            TestT();
+    }
+
+    private void TestT() {
+        Factory.Create<ConstructionPlan>("wall", Utils.CursorToCoordinates());
     }
 
     private void TestDijkstraSearch() {

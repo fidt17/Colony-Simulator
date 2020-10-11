@@ -10,8 +10,6 @@ public class Tree : StaticObject, IPlacable, IHarvestable
 
     #endregion
 
-    public Tree() : base (Vector2Int.one) => isTraversable = false;
-
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {
         base.SetGameObject(gameObject, position);
         InitializeVegetationComponent();
