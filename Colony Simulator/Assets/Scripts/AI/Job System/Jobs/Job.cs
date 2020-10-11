@@ -28,8 +28,8 @@ public abstract class Job {
             return false;
         }
 
-        PathNode jobNode = Pathfinder.NodeAt(Position);
-        PathNode workerNode = Pathfinder.NodeAt(worker.MotionComponent.GridPosition);
+        PathNode jobNode = Utils.NodeAt(Position);
+        PathNode workerNode = Utils.NodeAt(worker.MotionComponent.GridPosition);
         if (Pathfinder.FindNodeNear(jobNode, workerNode) is null) {
             return false;
         }
@@ -64,8 +64,8 @@ public abstract class Job {
     }
 
     protected PathNode GetDestinationNode() {
-        PathNode jobNode = Pathfinder.NodeAt(_jobPosition);
-        PathNode workerNode = Pathfinder.NodeAt(_worker.MotionComponent.GridPosition);
+        PathNode jobNode = Utils.NodeAt(_jobPosition);
+        PathNode workerNode = Utils.NodeAt(_worker.MotionComponent.GridPosition);
         return Pathfinder.FindNodeNear(jobNode, workerNode);
     }
 

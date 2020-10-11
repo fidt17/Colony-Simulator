@@ -28,10 +28,10 @@ public class IdleAIComponent {
 
             while (targetNode is null) {
                 Vector3 randomPosition = Random.insideUnitSphere * _searchOffset;
-                Vector2Int checkPosition = new Vector2Int((int) (startNode.X + randomPosition.x), (int) (startNode.Y + randomPosition.y));
-                PathNode checkNode = Pathfinder.NodeAt(checkPosition);
+                Vector2Int checkPosition = new Vector2Int((int) (startNode.x + randomPosition.x), (int) (startNode.y + randomPosition.y));
+                PathNode checkNode = Utils.NodeAt(checkPosition);
                 
-                if (checkNode?.region == startNode.region) {
+                if (checkNode?.Region == startNode.Region) {
                     targetNode = checkNode;
                 }
             }

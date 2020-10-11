@@ -4,23 +4,43 @@ using UnityEngine;
 
 public class PathNode {
 
-    public int X => position.x;
-    public int Y => position.y;
     public Tile Tile => Utils.TileAt(position);
 
     public Vector2Int position;
+    public int x;
+    public int y;
 
-    public Region region;
+    public Subregion subregion;
+    public Region Region => subregion?.region;
     public PathNode parent;
 
     public bool isTraversable;
     public int gCost, hCost;
     public int fCost => gCost + hCost;
 
-    public PathNode(Vector2Int position, bool isTraversable) {
-        this.position = position;
+    public PathNode(int x, int y, bool isTraversable) {
+        position = new Vector2Int(x, y);
+        this.x = position.x;
+        this.y = position.y;
         this.isTraversable = isTraversable;
         gCost = 0;
         hCost = 0;
+    }
+
+    public List<PathNode> GetNeighbours() {
+        List<PathNode> neighbours = new List<PathNode>() {
+            Utils.NodeAt(x, y + 1),
+            Utils.NodeAt(x + 1, y),
+            Utils.NodeAt(x, y - 1),
+            Utils.NodeAt(x - 1, y)
+        };
+
+        for (int i = neighbours.Count - 1; i >= 0; i--) {
+            if (neighbours[i] == null) {
+                neighbours.RemoveAt(i);
+            }
+        }
+
+        return neighbours;
     }
 }

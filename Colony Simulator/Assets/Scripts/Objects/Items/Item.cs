@@ -68,7 +68,7 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
                 return !t.contents.HasItem;
             }
         };
-        Tile tile = DijkstraSearch.FindClosestTileWhere(position, requirementsFunction);
+        Tile tile = SearchEngine.FindClosestTileWhere(position, requirementsFunction);
         
         if (tile != null) {
             SetPosition(tile.position);

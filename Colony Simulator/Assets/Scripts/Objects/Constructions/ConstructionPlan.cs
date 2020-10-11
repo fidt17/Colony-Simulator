@@ -23,7 +23,7 @@ public class ConstructionPlan : StaticObject, IPlacable {
     }
 
     private void CreateHaulingJobForIngredient(Ingredient ingredient) {
-        Type ingredientType = Factory.GetTypeDerivativeOf<Item>(ingredient.itemName);
+        Type ingredientType = SearchEngine.GetTypeDerivativeOf<Item>(ingredient.itemName);
         for (int i = ingredient.count; i > 0; i--) {
             SearchAndHaulJob job = new SearchAndHaulJob(ingredientType, position);
             JobSystem.GetInstance().AddJob(job);

@@ -40,13 +40,13 @@ public class MoveCommandInputState : CommandInputState {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
             return;
         }
-        PathNode cursorNode = Pathfinder.NodeAt(Utils.CursorToCoordinates());
+        PathNode cursorNode = Utils.NodeAt(Utils.CursorToCoordinates());
         if (cursorNode is null) {
             return;
         }
 
         List<Human> colonists = SelectionTracker.GetInstance().GetSelected<Human>();
-        List<PathNode> targetNodes = DijkstraSearch.DijkstraFor(colonists.Count, cursorNode);
+        List<PathNode> targetNodes = Dijkstra.DijkstraFor(colonists.Count, cursorNode);
         for (int i = 0; i < targetNodes.Count; i++) {
             Task moveTask = new Task();
             moveTask.AddCommand(new MoveCommand(colonists[i].motionComponent, targetNodes[i].position));

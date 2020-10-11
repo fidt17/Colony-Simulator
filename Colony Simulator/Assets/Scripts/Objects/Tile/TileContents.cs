@@ -34,7 +34,10 @@ public class TileContents {
             this.item.Destroy();
         }
         this.item = item;
+        PathNode node = Utils.NodeAt(_tile.position.x, _tile.position.y);
     }
 
-    public void RemoveItemFromTile() => item = null;
+    public void RemoveItemFromTile() {
+        item = null;
+    }
 }

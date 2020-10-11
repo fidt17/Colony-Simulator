@@ -6,7 +6,6 @@ public static class WorldGenerator {
 
     public static int perlinSeed = 12;
     
-    private static GameObject _tileParent;
     private static GameSettingsScriptableObject _gameSettings;
 
     public static void GenerateWorld(GameSettingsScriptableObject gameSettings, ref Tile[,] grid) {
@@ -14,20 +13,11 @@ public static class WorldGenerator {
         grid = new Tile[_gameSettings.worldWidth, _gameSettings.worldHeight];
 
         perlinSeed = gameSettings.seed;
-        FindTileParent();
         GenerateTerrainWithPerlinNoise(ref grid);
-        GenerateVegetation(ref grid);
-        Pathfinder.Initialize(new Vector2Int(_gameSettings.worldWidth, _gameSettings.worldHeight));
+        //GenerateVegetation(ref grid);
+        Pathfinder.Initialize();
 
         GenerateCharacters();
-    }
-
-    private static void FindTileParent() {
-        _tileParent = GameObject.Find("World_Tiles");
-        if (_tileParent is null) {
-            Debug.LogError("World_Tiles GameObject is missing!");
-            return;
-        }
     }
 
     private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {
@@ -70,7 +60,6 @@ public static class WorldGenerator {
 				}
 
                 Tile tile = Factory.Create<Tile>(dataName, new Vector2Int(x, y));
-                tile.gameObject.transform.parent = _tileParent.transform;
                 grid[x, y] = tile;
 			}
 		}

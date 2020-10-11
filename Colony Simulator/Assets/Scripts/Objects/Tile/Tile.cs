@@ -39,7 +39,7 @@ public class Tile : StaticObject {
                 node.isTraversable = isTraversable;
             }
 
-            GameManager.GetInstance().UpdatePathfinder();
+            Pathfinder.UpdateSystemAt(position.x, position.y);
         }
     }
 

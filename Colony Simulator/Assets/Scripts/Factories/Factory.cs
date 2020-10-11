@@ -49,18 +49,6 @@ public static class Factory {
         return t;
     }
 
-    public static Type GetTypeDerivativeOf<T>(string targetTypeName) {
-        List<Type> types = Assembly.GetAssembly(typeof(T)).GetTypes().Where(myType => myType.IsSubclassOf(typeof(T))).ToList();
-        Type type = null;
-        foreach(Type checkType in types) {
-            string typeName = checkType.ToString();
-            if (typeName == targetTypeName) {
-                type = checkType;
-            }
-        }
-        return type;
-    }
-
     public static GameObject Create(string dataName, Vector2Int position) {
         if (!_isInitialized) {
             Initialize();

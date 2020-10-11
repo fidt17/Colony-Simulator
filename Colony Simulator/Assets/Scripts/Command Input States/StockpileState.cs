@@ -61,7 +61,7 @@ public class StockpileState : CommandInputState {
 
     protected void FilterTiles() {
         for (int i = _tiles.Count - 1; i >= 0; i--) {
-            if (!Pathfinder.NodeAt(_tiles[i].position).isTraversable) {
+            if (!Utils.NodeAt(_tiles[i].position).isTraversable) {
                 _tiles.RemoveAt(i);
             }
         }

@@ -18,7 +18,7 @@ public class MotionComponent : MonoBehaviour {
 
     public Vector2 WorldPosition => (Vector2) gameObject.transform.position;
     public Vector2Int GridPosition => new Vector2Int( (int) (WorldPosition.x + 0.5f), (int) (WorldPosition.y + 0.5f) );
-    public PathNode PathNode => Pathfinder.NodeAt(GridPosition);
+    public PathNode PathNode => Utils.NodeAt(GridPosition);
     public float SpeedValue => _speed;
 
     private PathNode _lastTraversableNode;

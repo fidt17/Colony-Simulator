@@ -2933,6 +2933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawRegions: 0
+  drawSubregions: 0
 --- !u!114 &1103073305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3718,7 +3719,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437401148}
   m_HandleRect: {fileID: 1437401147}
   m_Direction: 2
-  m_Value: 1.0000002
+  m_Value: 0.99999946
   m_Size: 0.7151185
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -13,13 +13,6 @@ public class Construction : StaticObject, IPlacable {
 
     public override void SetData(PrefabScriptableObject data) {
         this.data = data as ConstructionScriptableObject;
-
-        //DELETE ME
-        List<Ingredient> ingredients = this.data.ingredients;
-        foreach (Ingredient i in ingredients) {
-            Debug.Log("Creating hauling job: " + Factory.GetTypeDerivativeOf<Item>(i.itemName) + " at " + position);
-        }
-        //
     } 
 
     public override void SetGameObject(GameObject gameObject, Vector2Int position) {

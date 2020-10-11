@@ -37,8 +37,7 @@ public class SearchAndHaulJob : HaulJob {
             }
         };
 
-        //FIX THIS. put items in region system? search cooldown? # of fail attempts?
-        Tile t = DijkstraSearch.FindClosestTileWhere(worker.MotionComponent.GridPosition, requirementsFunction, true);
+        Tile t = SearchEngine.FindClosestTileWhere(worker.MotionComponent.GridPosition, requirementsFunction, true);
         if (t == null) {
             Debug.Log("item was not found");
             return false;
