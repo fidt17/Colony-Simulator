@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Region {
 
-    public List<Subregion> subregions = new List<Subregion>();
+    public List<Subregion> subregions { get; protected set; } = new List<Subregion>();
 
     public void AddSubregion(Subregion subregion) {
         subregions.Add(subregion);

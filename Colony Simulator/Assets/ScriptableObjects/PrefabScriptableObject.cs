@@ -6,4 +6,5 @@ using UnityEngine;
 public class PrefabScriptableObject : ScriptableObject {
     public string dataName;
     public GameObject prefab;
+    public Sprite prefabSprite;
 }

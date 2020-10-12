@@ -18,6 +18,8 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
     public CharacterScriptableObject data { get; protected set; }
     public GameObject gameObject { get; protected set; }
 
+    private Vector2Int _tempPosition;
+
     public virtual void Die() {
         gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         Destroy();
@@ -25,12 +27,15 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
 
     #region IPrefab
 
-    public virtual void SetData(PrefabScriptableObject data) => this.data = data as CharacterScriptableObject;
+    public virtual void SetData(PrefabScriptableObject data, Vector2Int position) {
+        this.data = data as CharacterScriptableObject;
+        _tempPosition = position;
+    } 
 
-    public virtual void SetGameObject(GameObject obj, Vector2Int position) {
+    public virtual void SetGameObject(GameObject obj) {
         gameObject = obj;
         InitializeSelectableComponent();
-        InitializeMotionComponent(position);
+        InitializeMotionComponent(_tempPosition);
         InitializeHungerComponent();
         InitializeAI();
     }

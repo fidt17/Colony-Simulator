@@ -7,7 +7,6 @@ using UnityEngine;
 public static class Dijkstra {
 
     public static List<PathNode> DijkstraFor(int steps, PathNode startNode) {
-
         List<PathNode> closedSet = new List<PathNode>();
         List<PathNode> openSet = new List<PathNode>();
         openSet.Add(startNode);
@@ -62,5 +61,39 @@ public static class Dijkstra {
         closedSet.Add(initialNode);
         openSet.Remove(initialNode);
         return 1;
+    }
+
+    public static List<Subregion> DijkstraFor(int steps, Subregion startSubregion) {
+        List<Subregion> closedSet = new List<Subregion>();
+        List<Subregion> openSet = new List<Subregion>();
+        openSet.Add(startSubregion);
+
+        while (closedSet.Count != steps) {
+            if (NextDijkstraIteration(ref openSet, ref closedSet) == false) {
+                break;
+            }
+        }
+
+        return closedSet;
+    }
+
+    public static bool NextDijkstraIteration(ref List<Subregion> openSet, ref List<Subregion> closedSet) {
+        if (openSet.Count == 0) {
+            return false;
+        }
+
+        Subregion subregion = openSet[0];
+        openSet.Remove(subregion);
+        closedSet.Insert(0, subregion);
+        
+        //Adding surrounding nodes to available list
+        foreach (Subregion neighbour in subregion.neighbouringSubregions) {
+            if (openSet.Contains(neighbour) || closedSet.Contains(neighbour)) {
+                continue;
+            }
+            openSet.Add(neighbour);
+        }
+        
+        return true;
     }
 }

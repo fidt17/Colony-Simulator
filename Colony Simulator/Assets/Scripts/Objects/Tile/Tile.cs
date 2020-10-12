@@ -10,25 +10,46 @@ public enum TileType {
     water
 }
 
-public class Tile : StaticObject {
+public class Tile : IPrefab {
 
     public TileType type { get; set; }
-    public TileContents contents { get; private set; }
+    public TileContent content { get; private set; }
 
     private SpriteRenderer _mainSprite;
     private Color _defaultSpriteColor;
 
-    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
-        base.SetGameObject(gameObject, position);
+    public TileScriptableObject data { get; protected set; }
+    public GameObject gameObject       { get; protected set; }
+
+    public Vector2Int position   { get; protected set; }
+    public bool isTraversable    { get; protected set; }
+
+    public SelectableComponent selectableComponent { get; protected set; }
+
+    #region IPrefab
+
+    public void SetGameObject(GameObject gameObject) {
+        this.gameObject = gameObject;
+        this.gameObject.transform.position = new Vector3(position.x, position.y, 0);
         _mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
         _defaultSpriteColor = _mainSprite.color;
     }
 
-    public override void SetData(PrefabScriptableObject data) {
-        base.SetData(data as TileScriptableObject);
-        type = ((TileScriptableObject) data).tileType;
-        contents = new TileContents(this);
+    public void SetData(PrefabScriptableObject data, Vector2Int position) {
+        this.data = data as TileScriptableObject;
+        isTraversable = this.data.isTraversable;
+        type = this.data.tileType;
+        this.position = position;
+
+        content = new TileContent(this);
     }
+
+    public virtual void Destroy() {
+        GameObject.Destroy(gameObject);
+        Debug.Log("Something went wrong. Tiles are not supposed to be destroyed. " + position);
+    }
+
+    #endregion
 
     public void SetTraversability(bool isTraversable) {
         if (this.isTraversable != isTraversable) {

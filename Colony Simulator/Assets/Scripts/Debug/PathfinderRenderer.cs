@@ -68,6 +68,15 @@ public class PathfinderRenderer : Singleton<PathfinderRenderer> {
         _isDrawingSubregions = false;
     }
 
+    public void DrawSubregion(Subregion subregion) {
+        if (subregion != null) {
+            Color subregionColor = Color.blue;
+            foreach (PathNode node in subregion.nodes) {
+                StartCoroutine(ChangeTileColor(Utils.TileAt(node.position), subregionColor, 0.5f));
+            }
+        }
+    }
+
     private IEnumerator ChangeTileColor(Tile tile, Color color, float time) {
         tile.SetColor(color);
         yield return new WaitForSeconds(time);

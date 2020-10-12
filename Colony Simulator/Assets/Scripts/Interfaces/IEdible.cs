@@ -5,5 +5,4 @@ using UnityEngine;
 public interface IEdible {
     int NutritionValue { get; }
     Vector2Int GetEdiblePosition();
-    void AddToGlobalEdiblesList();
 }

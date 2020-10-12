@@ -29,8 +29,8 @@ public class SearchAndHaulJob : HaulJob {
             if (tile == null) {
                 return false;
             } else {
-                if (tile.contents.HasItem) {
-                    return tile.contents.item.GetType().Equals(ItemType) && tile.contents.item.HasHaulJob == false;
+                if (tile.content.HasItem) {
+                    return tile.content.item.GetType().Equals(ItemType) && tile.content.item.HasHaulJob == false;
                 } else {
                     return false;
                 }
@@ -43,7 +43,7 @@ public class SearchAndHaulJob : HaulJob {
             return false;
         } else {
             Debug.Log("item was found");
-            SetItem(t.contents.item);
+            SetItem(t.content.item);
             return true;
         }
         /////////////////

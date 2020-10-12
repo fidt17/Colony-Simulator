@@ -25,7 +25,7 @@ public class HaulJob : Job {
 
         _item.SetHaulJob(this);
 
-        StockpilePart part = Utils.TileAt(_destinationNode.position).contents.stockpilePart;
+        StockpilePart part = Utils.TileAt(_destinationNode.position).content.stockpilePart;
         if (part != null) {
             JobResultHandler += part.HaulJobResultHandler;
         }

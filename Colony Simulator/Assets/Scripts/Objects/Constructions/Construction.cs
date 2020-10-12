@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Construction : StaticObject, IPlacable {
+public class Construction : StaticObject {
 
     public new ConstructionScriptableObject data { get; protected set; }
     
@@ -11,26 +11,16 @@ public class Construction : StaticObject, IPlacable {
 
     #region IPrefab
 
-    public override void SetData(PrefabScriptableObject data) {
+    public override void SetData(PrefabScriptableObject data, Vector2Int position) {
         this.data = data as ConstructionScriptableObject;
-    } 
-
-    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
-        base.SetGameObject(gameObject, position);
+        this.position = position;
         PutOnTile();
-    }
+    } 
 
     public override void Destroy() {
         base.Destroy();
         RemoveFromTile();
     }
 
-    #endregion
-
-    #region IPlacable
-
-    public void PutOnTile()      => Utils.TileAt(position).contents.PutStaticObjectOnTile(this, isTraversable);
-    public void RemoveFromTile() => Utils.TileAt(position).contents.RemoveStaticObjectFromTile();
-    
     #endregion
 }

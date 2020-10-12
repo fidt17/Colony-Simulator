@@ -12,3 +12,5 @@
 
 -HungerComponent
     -use when looking for food
+
+-Implement object pooling for items.

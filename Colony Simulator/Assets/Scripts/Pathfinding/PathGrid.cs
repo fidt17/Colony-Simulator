@@ -31,10 +31,9 @@ public static class PathGrid {
 
     public static void CreateGrid() {
         _isInitialized = true;
-        Vector2Int dimensions = Utils.WorldDimensions();
-        nodes = new PathNode[dimensions.x, dimensions.y];
-        for (int x = 0; x < dimensions.x; x++) {
-            for (int y = 0; y < dimensions.y; y++) {
+        nodes = new PathNode[Utils.MapSize, Utils.MapSize];
+        for (int x = 0; x < Utils.MapSize; x++) {
+            for (int y = 0; y < Utils.MapSize; y++) {
                 nodes[x, y] = new PathNode(x, y, Utils.TileAt(x, y).isTraversable);
             }
         }

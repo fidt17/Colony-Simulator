@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class TestScript : MonoBehaviour
-{   
+public class TestScript : Singleton<TestScript> {
+
+    public GameObject itemPrefab;
+
     private void Update() {
 
         if (Input.GetKey(KeyCode.I))
             SpawnItem("wood log");
 
-        if (Input.GetKeyDown(KeyCode.P))
-            DrawSubregions();
+        if (Input.GetKeyDown(KeyCode.B))
+            TestB();
 
         if (Input.GetKeyDown(KeyCode.T))
             TestT();
@@ -25,6 +27,12 @@ public class TestScript : MonoBehaviour
 
     private void DrawSubregions() {
         PathfinderRenderer.GetInstance().drawSubregions = !PathfinderRenderer.GetInstance().drawSubregions;
+    }
+
+    private void TestB() {
+        float startTime = Time.realtimeSinceStartup;
+        GameObject obj = Factory.Test(Utils.CursorToCoordinates());
+        Debug.Log("TIME TEST: " + (Time.realtimeSinceStartup - startTime) + " seconds.", obj);
     }
 
     private void TestT() {
@@ -61,28 +69,6 @@ public class TestScript : MonoBehaviour
         return Time.realtimeSinceStartup - startTime;
     }
 
-    private void TestDijkstraSearch() {
-
-        Func<Tile, bool> requirementsFunction = delegate(Tile tile) {
-            if (tile == null) {
-                return false;
-            } else {
-                if (tile.contents.staticObject != null) {
-                    return tile.contents.staticObject.GetType().Equals(typeof(Tree));
-                } else {
-                    return false;
-                }
-            }
-        };
-
-        Tile t = SearchEngine.FindClosestTileWhere(Utils.CursorToCoordinates(), requirementsFunction, false);
-        if (t == null) {
-            Debug.Log("Tile was not found");
-        } else {
-            Debug.Log("Tile found at: " + t.position);
-        }
-    }
-
     private void DestroyObject() {
 
         Vector3 currMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -93,14 +79,14 @@ public class TestScript : MonoBehaviour
         if (t == null)
             return;
 
-        t.contents.item?.Destroy();
+        t.content.item?.Destroy();
 
-        if (t.contents.staticObject != null) {
+        if (t.content.staticObject != null) {
 
-            if (t.contents.staticObject.GetType() == typeof(Tree))
-                ( (IHarvestable) t.contents.staticObject).Harvest();
+            if (t.content.staticObject.GetType() == typeof(Tree))
+                ( (IHarvestable) t.content.staticObject).Harvest();
             else {
-                t.contents.staticObject.Destroy();
+                t.content.staticObject.Destroy();
             }
         }
     }

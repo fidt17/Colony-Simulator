@@ -27,6 +27,22 @@ public static class SearchEngine {
         return checkTile;
     }
 
+    public static Grass FindClosestGrass(Vector2Int sourcePosition) {
+        List<Subregion> closedSet = new List<Subregion>();
+        List<Subregion> openSet = new List<Subregion>();
+        openSet.Add(Utils.NodeAt(sourcePosition.x, sourcePosition.y).subregion);
+
+        Grass grass = null;
+        while (grass == null && Dijkstra.NextDijkstraIteration(ref openSet, ref closedSet)) {
+            List<Grass> grassList = closedSet[0].content.Get<Grass>();
+            if (grassList != null && grassList.Count > 0) {
+                grass = grassList[0];
+            }
+        }
+
+        return grass;
+    }
+
     public static Type GetTypeDerivativeOf<T>(string targetTypeName) {
         Type type = null;
         if (_cashedTypesByName.ContainsKey(targetTypeName)) {

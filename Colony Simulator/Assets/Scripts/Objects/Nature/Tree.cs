@@ -2,46 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : StaticObject, IPlacable, IHarvestable
+public class Tree : Vegetation
 {   
-    #region Components
-
-    public VegetationComponent vegetationComponent { get; protected set; }
-
-    #endregion
-
-    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
-        base.SetGameObject(gameObject, position);
-        InitializeVegetationComponent();
-        PutOnTile();
-    }
-
-    public override void Destroy() {
-        base.Destroy();
-        RemoveFromTile();
-    }
-
-    #region Vegetation Component
-
-    protected void InitializeVegetationComponent() {
-        vegetationComponent = gameObject.AddComponent<VegetationComponent>();
-        vegetationComponent.Initialize(this, VegetationType.tree);
-    }
-
-    #endregion
-
-    #region IPlacable
-
-    public void PutOnTile()      => Utils.TileAt(position).contents.PutStaticObjectOnTile(this, isTraversable);
-    public void RemoveFromTile() => Utils.TileAt(position).contents.RemoveStaticObjectFromTile();
-    
-    #endregion  
 
     #region IHarvestable
 
-    public void Harvest() {
-        Destroy();
-        Item woodLog = Factory.Create<WoodLog>("wood log", position);
+    public override void Harvest() {
+        base.Harvest();
+        Factory.Create<WoodLog>("wood log", position);
     }
 
     #endregion

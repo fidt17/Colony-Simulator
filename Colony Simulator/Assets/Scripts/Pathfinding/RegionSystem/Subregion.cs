@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Subregion {
 
-    public List<PathNode> nodes = new List<PathNode>();
-    public List<Subregion> neighbouringSubregions = new List<Subregion>();
+    public List<PathNode> nodes { get; protected set; } = new List<PathNode>();
+    public List<Subregion> neighbouringSubregions { get; protected set; } = new List<Subregion>();
+    public RegionContent content { get; protected set; } = new RegionContent();
 
     public Region region { get; protected set; }
 
@@ -35,6 +36,8 @@ public class Subregion {
     }
 
     public void Reset() {
+        content.Clear();
+
         for (int i = nodes.Count - 1; i >= 0; i--) {
             RemoveNode(nodes[i]);
         }
@@ -45,6 +48,16 @@ public class Subregion {
 
         region?.RemoveSubregion(this);
 
-        SubregionSystem.subregions.Remove(this);
+        SubregionSystem.RemoveSubregion(this);
+    }
+
+    public void FindNeighbours() {
+        foreach (PathNode node in nodes) {
+            foreach (PathNode neighbour in node.GetNeighbours()) {
+                if (neighbour.subregion != this && neighbour.subregion != null) {
+                    AddNeighbour(neighbour.subregion);
+                }
+            }
+        }
     }
 }

@@ -18,8 +18,7 @@ public class StockpileState : CommandInputState {
         InputListener.GetInstance().OnMouse0_Up   += OnLeftMouseUp;
         InputListener.GetInstance().OnMouse1_Down += SwitchToDefaultState;
 
-        SelectionTracker.GetInstance().OnSelect += OnDragStop;
-        SelectionTracker.GetInstance().OnDrag   += OnDragUpdate;
+        SelectionTracker.GetInstance().OnAreaChange += OnAreaChange;
     }
     
     protected override void UnsubscribeFromEvents() {
@@ -27,15 +26,12 @@ public class StockpileState : CommandInputState {
         InputListener.GetInstance().OnMouse0_Up   -= OnLeftMouseUp;
         InputListener.GetInstance().OnMouse1_Down -= SwitchToDefaultState;
 
-        SelectionTracker.GetInstance().OnSelect -= OnDragStop;
-        SelectionTracker.GetInstance().OnDrag   -= OnDragUpdate;
+        SelectionTracker.GetInstance().OnAreaChange -= OnAreaChange;
     }
 
     protected override void SetupSelectionTracker() {
         SelectionSettings settings;
-        settings.selectionMask = new List<System.Type>() {
-            typeof(Tile)
-        };
+        settings.selectionMask = new List<System.Type>();
         settings.shouldDrawArea = false;
         SelectionTracker.GetInstance().SetSettings(settings);
     }
@@ -43,20 +39,20 @@ public class StockpileState : CommandInputState {
     protected void OnLeftMouseDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
     protected void OnLeftMouseUp() => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 
-    protected virtual void OnDragUpdate(List<SelectableComponent> selectable) {
-        ResetTilesColor();
+    protected virtual void OnAreaChange(object source, EventArgs e) {
+        SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
 
-        _tiles.Clear();
-        selectable.ForEach(x => _tiles.Add(x.selectable as Tile));
+        ResetTilesColor();
+        _tiles = Utils.GetTilesInArea(args.start, args.end);
         FilterTiles();
-        
-        ColorTiles();
-    }
-
-    protected virtual void OnDragStop() {
-        StockpileCreator.CreateStockpileOnTiles(_tiles);
-        ResetTilesColor();
-        _tiles.Clear();
+        if (args.dragEnded) {
+            StockpileCreator.CreateStockpileOnTiles(_tiles);
+            ResetTilesColor();
+            _tiles.Clear();
+        } else {
+            ResetTilesColor();
+            ColorTiles();
+        }
     }
 
     protected void FilterTiles() {

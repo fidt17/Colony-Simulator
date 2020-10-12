@@ -13,13 +13,13 @@ public static class Pathfinder {
         float t1 = Time.realtimeSinceStartup;
         PathGrid.CreateGrid();
         RegionSystem.Initialize();
-        Debug.Log("Region System was created in: " + (Time.realtimeSinceStartup - t1) + " sec.");
+        //Debug.Log("Region System was created in: " + (Time.realtimeSinceStartup - t1) + " sec.");
     }
 
     public static void UpdateSystemAt(int x, int y) {
         float t1 = Time.realtimeSinceStartup;
         RegionSystem.UpdateSystemAt(x, y);
-        Debug.Log("Region System was updated in: " + (Time.realtimeSinceStartup - t1) + " sec.");
+        //Debug.Log("Region System was updated in: " + (Time.realtimeSinceStartup - t1) + " sec.");
     }
 
     public static List<PathNode> GetPath(PathNode startNode, PathNode targetNode) {

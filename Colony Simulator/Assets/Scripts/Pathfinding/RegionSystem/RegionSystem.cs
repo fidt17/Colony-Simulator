@@ -44,6 +44,7 @@ public static class RegionSystem {
         return region;
 	}
 
+
     private static bool NextWaveIteration(ref List<Subregion> openSet, ref Region region) {
         if (openSet.Count == 0) {
             return false;
@@ -58,19 +59,14 @@ public static class RegionSystem {
             }
         }
 
-        Subregion subregion = openSet[0];
-        openSet.RemoveAt(0);
-        foreach (Subregion neighbour in subregion.neighbouringSubregions) {
+        foreach (Subregion neighbour in openSet[0].neighbouringSubregions) {
             if (neighbour.region == region || openSet.Contains(neighbour)) {
                 continue;
             }
             openSet.Add(neighbour);
         }
+        openSet.RemoveAt(0);
 
         return true;
 	}
-
-    public static void CheckContentsAt(PathNode node, Region region) {
-        Tile tile = Utils.TileAt(node.x, node.y);
-    }
 }

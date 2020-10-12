@@ -16,7 +16,7 @@ public static class AStarSearch {
             return new List<PathNode>();
         }
 
-        List<PathNode> openSet   = new List<PathNode>();
+        List<PathNode> openSet = new List<PathNode>();
         openSet.Add(startNode);
         while (openSet.Count > 0) {
             PathNode currentNode = openSet[0];

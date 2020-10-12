@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549dd4f18c924bd49a4279988dfefa35, type: 3}
   m_Name: rabbit world
   m_EditorClassIdentifier: 
-  worldWidth: 50
-  worldHeight: 50
+  mapSize: 50
   seed: 0
   humanCount: 0
   rabbitCount: 200

@@ -58,16 +58,14 @@ public class HungerComponent : MonoBehaviour {
         }
         _isSearchingForFood = true;
 
-        IEdible food = null;
-        PathNode targetNode = null;
-
+        Grass grass = null;
         //FIX THIS. dijkstra search?
-        while (food is null || targetNode is null) {
+        while (grass is null) {
             yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 2f));
-            food = ItemFinder.FindClosestFood(_character.hungerComponent.edibles, _character.motionComponent.GridPosition, ref targetNode);
+            grass = SearchEngine.FindClosestGrass(_character.motionComponent.GridPosition);
         }
         
-        _eatFoodTask = new EatFoodTask(_character, targetNode, food);
+        _eatFoodTask = new EatFoodTask(_character, Pathfinder.FindNodeNear(Utils.NodeAt(grass.position), _character.motionComponent.PathNode), grass);
         _eatFoodTask.TaskResultHandler += HandleGetFoodTaskResult;
         _character.AI.CommandProcessor.AddTask(_eatFoodTask);
 
