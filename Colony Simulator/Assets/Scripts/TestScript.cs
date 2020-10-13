@@ -31,8 +31,9 @@ public class TestScript : Singleton<TestScript> {
 
     private void TestB() {
         float startTime = Time.realtimeSinceStartup;
-        GameObject obj = Factory.Test(Utils.CursorToCoordinates());
-        Debug.Log("TIME TEST: " + (Time.realtimeSinceStartup - startTime) + " seconds.", obj);
+        Vector2Int cursorCoordinates = Utils.CursorToCoordinates();
+        MeshGenerator.GetInstance().GenerateChunk(cursorCoordinates.x, cursorCoordinates.y);
+        Debug.Log("TIME TEST: " + (Time.realtimeSinceStartup - startTime) + " seconds.");
     }
 
     private void TestT() {

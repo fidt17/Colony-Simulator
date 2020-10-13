@@ -19,6 +19,7 @@ public static class Factory {
         for (int x = 0; x < Utils.MapSize; x++) {
             for (int y = 0; y < Utils.MapSize; y++) {
                 GameObject obj = GameObject.Instantiate(TestScript.GetInstance().itemPrefab);
+                obj.transform.position = new Vector3(-100, 0, 0);
                 obj.SetActive(false);
                 _itemPrefabPool.Enqueue(obj);
             }
@@ -55,6 +56,16 @@ public static class Factory {
         return obj;
     }
 
+    public static T CreateData<T>(string dataName, Vector2Int position) where T : IData, new() {
+        if (!_isInitialized) {
+            Initialize();
+        }
+
+        T t = new T();
+        t.SetData(_data[dataName], position);
+        return t;
+    }
+
     public static T Create<T>(string dataName, Vector2Int position) where T : IPrefab, new() {
         if (!_isInitialized) {
             Initialize();
@@ -65,7 +76,7 @@ public static class Factory {
         GameObject obj = null;
         if (typeof(T) == typeof(WoodLog)) {
             obj = _itemPrefabPool.Dequeue();
-            obj.SetActive(true);
+            //obj.SetActive(true);
             obj.GetComponent<SpriteRenderer>().sprite = _data[dataName].prefabSprite;
         } else {
             obj = GameObject.Instantiate(_data[dataName].prefab);

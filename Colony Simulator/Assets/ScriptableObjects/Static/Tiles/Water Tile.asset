@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataName: water tile
   prefab: {fileID: 7857810238489946679, guid: 1209cc4682a46974ab015c985a671c64, type: 3}
+  prefabSprite: {fileID: -1283168576950659043, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
   dimensions: {x: 1, y: 1}
   isTraversable: 0
   tileType: 3
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}

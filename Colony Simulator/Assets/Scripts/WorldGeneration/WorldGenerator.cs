@@ -14,6 +14,7 @@ public static class WorldGenerator {
 
         perlinSeed = gameSettings.seed;
         GenerateTerrainWithPerlinNoise(ref grid);
+        MeshGenerator.GetInstance().Initialize();
         Pathfinder.Initialize();
 
         GenerateVegetation(ref grid);
@@ -62,15 +63,9 @@ public static class WorldGenerator {
                     dataName = "grass tile";
 				}
 
-                grid[x, y] = Factory.Create<Tile>(dataName, new Vector2Int(x, y));;
+                grid[x, y] = Factory.CreateData<Tile>(dataName, new Vector2Int(x, y));
 			}
 		}
-
-        for (int x = 0; x < Utils.MapSize; x++) {
-            for (int y = 0; y < Utils.MapSize; y++) {
-                TileSpriteRenderer.GetInstance().UpdateTileBorders(grid[x,y]);
-            }
-        }
     }
 
     private static void GenerateVegetation(ref Tile[,] grid) {

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549dd4f18c924bd49a4279988dfefa35, type: 3}
   m_Name: normal
   m_EditorClassIdentifier: 
-  mapSize: 100
-  seed: 1210
+  targetFrameRate: 300
+  mapSize: 50
+  seed: 1
   humanCount: 15
   rabbitCount: 0

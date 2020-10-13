@@ -10,7 +10,9 @@ public enum MapSize {
 
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "Game Settings/Settings", order = 1)]
 public class GameSettingsScriptableObject : ScriptableObject
-{
+{   
+    public int targetFrameRate = 60;
+
     [Header("World Generation")]
 
     public MapSize mapSize;
