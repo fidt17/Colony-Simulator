@@ -13,7 +13,7 @@ public class StockpilePart {
 
     public HaulJob haulJob;
     public bool HasItem => GetItem != null;
-    public Item GetItem => Utils.TileAt(position).contents.item;
+    public Item GetItem => Utils.TileAt(position).content.item;
 
     public StockpilePart(Vector2Int position, Stockpile parent) {
         this.position = position;
@@ -43,7 +43,7 @@ public class StockpilePart {
             StockpileManager.GetInstance().RemoveItemFromStockpiles(GetItem);
         }
         parent.RemovePart(this);
-        Utils.TileAt(position).contents.stockpilePart = null;
+        Utils.TileAt(position).content.stockpilePart = null;
         //reset existing hauling jobs to this stockpile part
         TryDeletingHaulingJob();
     }
@@ -56,7 +56,7 @@ public class StockpilePart {
         }
     }
 
-    public void HaulJobResultHandler(bool result) {
+    public void HaulJobResultHandler(object source, EventArgs e) {
         haulJob.JobResultHandler -= HaulJobResultHandler;
         haulJob = null;
     }

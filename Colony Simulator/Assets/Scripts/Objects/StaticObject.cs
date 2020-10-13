@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class StaticObject : IPrefab, IDestroyable, ISelectable {
+public abstract class StaticObject : IPrefab, IPlacable, IDestroyable {
 
     public event EventHandler OnDestroyed;
 
@@ -14,38 +14,44 @@ public abstract class StaticObject : IPrefab, IDestroyable, ISelectable {
     public Vector2Int dimensions { get; protected set; }
     public bool isTraversable    { get; protected set; }
 
-    public SelectableComponent selectableComponent { get; protected set; }
-
-    public StaticObject(Vector2Int dimensions) => this.dimensions = dimensions;
-
     #region IPrefab
 
-    public virtual void SetData(PrefabScriptableObject data) => this.data = data as StaticScriptableObject;
+    public virtual void SetData(PrefabScriptableObject data, Vector2Int position) {
+        this.data = data as StaticScriptableObject;
+        dimensions = this.data.dimensions;
+        this.position = position;
+        isTraversable = this.data.isTraversable;
+        PutOnTile();
+    }
 
-    public virtual void SetGameObject(GameObject obj, Vector2Int position) {
+    public virtual void SetGameObject(GameObject obj) {
         gameObject = obj;
         gameObject.transform.position = new Vector3(position.x, position.y, 0);
-        this.position = position;
-
-        InitializeSelectableComponent();
     }
 
     public virtual void Destroy() {
         GameObject.Destroy(gameObject);
         OnDestroyed?.Invoke(this, EventArgs.Empty);
-    }
-
-    #endregion
-
-    #region Selectable Component
-
-    public virtual void InitializeSelectableComponent() {
-        selectableComponent = gameObject.AddComponent<SelectableComponent>();
-        selectableComponent.Initialize(this, gameObject.transform.Find("SelectionRim")?.gameObject);
-    }
-
-    public virtual void OnSelect() { }
-    public virtual void OnDeselect() { }
         
+        RemoveFromTile();
+    }
+
     #endregion
+
+    #region IPlacable
+
+    public void PutOnTile() {
+        Utils.TileAt(position).content.PutStaticObjectOnTile(this, isTraversable);
+        AddToRegionContent();
+    }
+
+    public void RemoveFromTile() {
+        Utils.TileAt(position).content.RemoveStaticObjectFromTile();
+        RemoveFromRegionContent();
+    }
+
+    public virtual void AddToRegionContent() { } 
+    public virtual void RemoveFromRegionContent() { }
+
+    #endregion 
 }

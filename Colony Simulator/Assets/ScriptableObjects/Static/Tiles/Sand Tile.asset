@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataName: sand tile
   prefab: {fileID: 7857810238489946679, guid: 04a04b162aa5f234099fa347db7b742b, type: 3}
-  tileType: 1
+  prefabSprite: {fileID: -4743005804774045339, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  dimensions: {x: 1, y: 1}
   isTraversable: 1
+  tileType: 1
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}

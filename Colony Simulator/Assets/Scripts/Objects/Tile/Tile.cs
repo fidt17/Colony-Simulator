@@ -10,30 +10,23 @@ public enum TileType {
     water
 }
 
-public class Tile : StaticObject {
+public class Tile : IData {
 
     public TileType type { get; set; }
-    public TileContents contents { get; private set; }
+    public TileContent content { get; private set; }
 
-    private SpriteRenderer _mainSprite;
-    private Color _defaultSpriteColor;
+    public TileScriptableObject data { get; protected set; }
 
-    public Tile() : base (Vector2Int.one) {
-        isTraversable = true;
-        type = TileType.empty;
-        contents = new TileContents(this);
-    }
+    public Vector2Int position   { get; protected set; }
+    public bool isTraversable    { get; protected set; }
 
-    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
-        base.SetGameObject(gameObject, position);
-        _mainSprite = gameObject.transform.Find("Sprite").GetComponent<SpriteRenderer>();
-        _defaultSpriteColor = _mainSprite.color;
-    }
+    public void SetData(PrefabScriptableObject data, Vector2Int position) {
+        this.data = data as TileScriptableObject;
+        isTraversable = this.data.isTraversable;
+        type = this.data.tileType;
+        this.position = position;
 
-    public override void SetData(PrefabScriptableObject data) {
-        base.SetData(data as TileScriptableObject);
-        type = ((TileScriptableObject) data).tileType;
-        isTraversable = ((TileScriptableObject) data).isTraversable;
+        content = new TileContent(this);
     }
 
     public void SetTraversability(bool isTraversable) {
@@ -45,11 +38,13 @@ public class Tile : StaticObject {
                 node.isTraversable = isTraversable;
             }
 
-            GameManager.GetInstance().UpdatePathfinder();
+            Pathfinder.UpdateSystemAt(position.x, position.y);
         }
     }
 
-    public void SetSprite(Sprite sprite) => _mainSprite.sprite = sprite;
-    public void SetColor(Color color) => _mainSprite.color = color;
-    public void ResetColor() => _mainSprite.color = _defaultSpriteColor;
+    public Sprite GetSprite() => data.prefabSprite;
+    public Color GetColor() => data.defaultColor;
+    public void SetSprite(Sprite sprite) { }
+    public void SetColor(Color color) { }
+    public void ResetColor() { }
 }

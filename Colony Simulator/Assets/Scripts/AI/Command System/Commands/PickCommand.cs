@@ -25,7 +25,7 @@ public class PickCommand : Command {
         }
     }
 
-    private void OnObjectDestroyedOutside(object sender, EventArgs e) {
+    private void OnObjectDestroyedOutside(object source, EventArgs e) {
         _item.OnDestroyed -= OnObjectDestroyedOutside;
         _item = null;
         Finish(false);

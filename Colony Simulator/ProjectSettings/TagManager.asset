@@ -50,6 +50,9 @@ TagManager:
   - name: Vegetation Low
     uniqueID: 2118965631
     locked: 0
+  - name: Constructions
+    uniqueID: 2143367377
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

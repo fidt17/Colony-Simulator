@@ -3,12 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Reflection;
+using System.Linq;
 
 public static class Factory {
 
     private static Dictionary<string, PrefabScriptableObject> _data;
     private static Dictionary<Type, Transform> _objectsParents = new Dictionary<Type, Transform>();
     private static bool _isInitialized = false;
+
+    private static Queue<GameObject> _itemPrefabPool = new Queue<GameObject>();
+
+    //DELETE ME
+    public static void CreateItemPool() {
+        for (int x = 0; x < Utils.MapSize; x++) {
+            for (int y = 0; y < Utils.MapSize; y++) {
+                GameObject obj = GameObject.Instantiate(TestScript.GetInstance().itemPrefab);
+                obj.transform.position = new Vector3(-100, 0, 0);
+                obj.SetActive(false);
+                _itemPrefabPool.Enqueue(obj);
+            }
+        }
+    }
 
     private static void Initialize() {
         string searchFilter = "l:PrefabScriptableObject";
@@ -33,17 +49,40 @@ public static class Factory {
         return _objectsParents[typeof(T)];
     }
 
+    public static GameObject Test(Vector2Int position) {
+        GameObject obj = _itemPrefabPool.Dequeue();
+        obj.SetActive(true);
+        obj.transform.position = Utils.ToVector3(position);
+        return obj;
+    }
+
+    public static T CreateData<T>(string dataName, Vector2Int position) where T : IData, new() {
+        if (!_isInitialized) {
+            Initialize();
+        }
+
+        T t = new T();
+        t.SetData(_data[dataName], position);
+        return t;
+    }
+
     public static T Create<T>(string dataName, Vector2Int position) where T : IPrefab, new() {
         if (!_isInitialized) {
             Initialize();
         }
 
         T t = new T();
-        t.SetData(_data[dataName]);
-        
-        GameObject obj = GameObject.Instantiate(_data[dataName].prefab);
+        t.SetData(_data[dataName], position);
+        GameObject obj = null;
+        if (typeof(T) == typeof(WoodLog)) {
+            obj = _itemPrefabPool.Dequeue();
+            //obj.SetActive(true);
+            obj.GetComponent<SpriteRenderer>().sprite = _data[dataName].prefabSprite;
+        } else {
+            obj = GameObject.Instantiate(_data[dataName].prefab);
+        }
         obj.transform.SetParent(GetParent<T>());
-        t.SetGameObject(obj, position);
+        t.SetGameObject(obj);
         return t;
     }
 

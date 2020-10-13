@@ -7,19 +7,19 @@ public class RemoveStockpileState : StockpileState {
 
     protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);
 
-    protected override void OnDragUpdate(List<SelectableComponent> selectable) {
-        ResetTilesColor();
+    protected override void OnAreaChange(object source, EventArgs e) {
+        SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
 
-        _tiles.Clear();
-        selectable.ForEach(x => _tiles.Add(x.selectable as Tile));
+        ResetTilesColor();
+        _tiles = Utils.GetTilesInArea(args.start, args.end);
         FilterTiles();
-        
-        ColorTiles();
-    }
-
-    protected override void OnDragStop() {
-        StockpileCreator.RemoveStockpileFromTiles(_tiles);
-        ResetTilesColor();
-        _tiles.Clear();
+        if (args.dragEnded) {
+            StockpileCreator.RemoveStockpileFromTiles(_tiles);
+            ResetTilesColor();
+            _tiles.Clear();
+        } else {
+            ResetTilesColor();
+            ColorTiles();
+        }
     }
 }

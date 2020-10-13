@@ -1,0 +1,16 @@
+ -SearchAndHaul job
+    -create job
+        -CanDoJob: -> {
+            -check that worker is in the same region as item
+            -check that there exists at least one item of desired type in region
+        }
+        -PlanJob -> {
+            -find closest item to job destination
+                -delete job if there are none
+        }
+    -delete job
+
+-HungerComponent
+    -use when looking for food
+
+-Implement object pooling for items.

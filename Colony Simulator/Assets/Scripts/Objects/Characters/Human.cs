@@ -12,8 +12,8 @@ public class Human : Character, IMotionAnimator {
 
     #endregion
 
-    public override void SetGameObject(GameObject gameObject, Vector2Int position) {
-        base.SetGameObject(gameObject, position);
+    public override void SetGameObject(GameObject gameObject) {
+        base.SetGameObject(gameObject);
         InitializeMotionAnimator();
         InitializeJobHandler();
         InitializeInventory();

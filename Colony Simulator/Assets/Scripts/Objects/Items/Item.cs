@@ -13,23 +13,40 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
     public GameObject gameObject     { get; protected set; }
 
     public Tile Tile => Utils.TileAt(position);
+    public bool HasHaulJob => _haulJob != null;
+
+    private HaulJob _haulJob;
 
     protected abstract int StackCount { get; }
 
     public void SetPosition(Vector2Int position) {
         this.position = position;
-        gameObject.transform.position = Utils.ToVector3(this.position);
+        if (gameObject != null) {
+            gameObject.transform.position = Utils.ToVector3(this.position);
+        }
+    }
+
+    public void SetHaulJob(HaulJob job) {
+        _haulJob = job;
+        job.JobResultHandler += HaulJobResultHandler;
+    }
+
+    public void HaulJobResultHandler(object source, EventArgs e) {
+        (source as Job).JobResultHandler -= HaulJobResultHandler;
+        _haulJob = null;
     }
 
     #region IPrefab
 
-    public virtual void SetData(PrefabScriptableObject data) => this.data = data as ItemScriptableObject;
-
-    public virtual void SetGameObject(GameObject obj, Vector2Int position) {
-        gameObject = obj;
-        gameObject.transform.position = new Vector3(position.x, position.y, 0);
+    public virtual void SetData(PrefabScriptableObject data, Vector2Int position) {
+        this.data = data as ItemScriptableObject;
         this.position = position;
         PutOnTile();
+    } 
+
+    public virtual void SetGameObject(GameObject obj) {
+        gameObject = obj;
+        gameObject.transform.position = new Vector3(position.x, position.y, 0);
     }
 
     #endregion
@@ -52,14 +69,15 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
             if (t == null) {
                 return false;
             } else {
-                return !t.contents.HasItem;
+                return !t.content.HasItem;
             }
         };
-        Tile tile = DijkstraSearch.FindClosestTileWhere(position, requirementsFunction);
+        Tile tile = SearchEngine.FindClosestTileWhere(position, requirementsFunction);
         
         if (tile != null) {
             SetPosition(tile.position);
-            tile.contents.PutItemOnTile(this);
+            tile.content.PutItemOnTile(this);
+            AddToRegionContent();
             StockpileManager.GetInstance().AddItem(this);
         } else {
             Destroy();
@@ -67,9 +85,13 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
     }
 
     public void RemoveFromTile() {
-        Tile.contents.RemoveItemFromTile();
+        Tile.content.RemoveItemFromTile();
+        RemoveFromRegionContent();
         StockpileManager.GetInstance().RemoveItem(this);
     }
+
+    public abstract void AddToRegionContent();
+    public abstract void RemoveFromRegionContent();
     
     #endregion
 }

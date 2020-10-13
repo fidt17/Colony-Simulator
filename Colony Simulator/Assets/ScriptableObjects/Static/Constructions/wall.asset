@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726c4f9635193bb4f9a9d6b11da77c30, type: 3}
+  m_Name: wall
+  m_EditorClassIdentifier: 
+  dataName: wall
+  prefab: {fileID: 2973704291348783822, guid: 5e8977b29de7a144a8543e1de1fbc5f7, type: 3}
+  dimensions: {x: 1, y: 1}
+  isTraversable: 0
+  ingredients:
+  - itemName: WoodLog
+    count: 2

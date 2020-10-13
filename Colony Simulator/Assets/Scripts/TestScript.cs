@@ -3,40 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class TestScript : MonoBehaviour
-{   
+public class TestScript : Singleton<TestScript> {
+
+    public GameObject itemPrefab;
+
     private void Update() {
 
         if (Input.GetKey(KeyCode.I))
             SpawnItem("wood log");
 
-        if (Input.GetKeyDown(KeyCode.P))
-            SpawnHuman();
+        if (Input.GetKeyDown(KeyCode.B))
+            TestB();
 
         if (Input.GetKeyDown(KeyCode.T))
-            TestDijkstraSearch();
+            TestT();
+
+        if (Input.GetKeyDown(KeyCode.Y))
+            Factory.Create<Construction>("wall", Utils.CursorToCoordinates());
+
+        if (Input.GetKeyDown(KeyCode.U))
+            SearchEngine.GetTypeDerivativeOf<Item>("WoodLog");
     }
 
-    private void TestDijkstraSearch() {
+    private void DrawSubregions() {
+        PathfinderRenderer.GetInstance().drawSubregions = !PathfinderRenderer.GetInstance().drawSubregions;
+    }
 
-        Func<Tile, bool> requirementsFunction = delegate(Tile tile) {
-            if (tile == null) {
-                return false;
-            } else {
-                if (tile.contents.staticObject != null) {
-                    return tile.contents.staticObject.GetType().Equals(typeof(Tree));
-                } else {
-                    return false;
-                }
-            }
-        };
+    private void TestB() {
+        float startTime = Time.realtimeSinceStartup;
+        Vector2Int cursorCoordinates = Utils.CursorToCoordinates();
+        MeshGenerator.GetInstance().GenerateChunk(cursorCoordinates.x, cursorCoordinates.y);
+        Debug.Log("TIME TEST: " + (Time.realtimeSinceStartup - startTime) + " seconds.");
+    }
 
-        Tile t = DijkstraSearch.FindClosestTileWhere(Utils.CursorToCoordinates(), requirementsFunction, false);
-        if (t == null) {
-            Debug.Log("Tile was not found");
-        } else {
-            Debug.Log("Tile found at: " + t.position);
+    private void TestT() {
+        Func<int> funcA = delegate() {
+            
+            return 1;
+		};
+
+        Func<int> funcB = delegate() {
+            
+            return 1;
+		};
+
+        CompareExecutionTime(funcA, funcB, 1000);
+    }
+
+    private void CompareExecutionTime(Func<int> funcA, Func<int> funcB, int iterationCount) {
+        float aTime = 0;
+        float bTime = 0;
+
+        for (int i = 0; i < iterationCount; i++) {
+            aTime += FunctionExecutionTime(funcA) / iterationCount;
+            bTime += FunctionExecutionTime(funcB) / iterationCount;
         }
+
+        string result = (aTime >= bTime) ? "BFunction is " + (1 - bTime/aTime)*100 + "% faster than AFunction."
+                                         : "AFunction is " + (1 - aTime/bTime)*100 + "% faster than BFunction."; 
+        Debug.Log("AFunction: " + aTime + "; BFunction: " + bTime + " => " + result);
+    }
+
+    private float FunctionExecutionTime(Func<int> func) {
+        float startTime = Time.realtimeSinceStartup;
+        func();
+        return Time.realtimeSinceStartup - startTime;
     }
 
     private void DestroyObject() {
@@ -49,14 +80,14 @@ public class TestScript : MonoBehaviour
         if (t == null)
             return;
 
-        t.contents.item?.Destroy();
+        t.content.item?.Destroy();
 
-        if (t.contents.staticObject != null) {
+        if (t.content.staticObject != null) {
 
-            if (t.contents.staticObject.GetType() == typeof(Tree))
-                ( (IHarvestable) t.contents.staticObject).Harvest();
+            if (t.content.staticObject.GetType() == typeof(Tree))
+                ( (IHarvestable) t.content.staticObject).Harvest();
             else {
-                t.contents.staticObject.Destroy();
+                t.content.staticObject.Destroy();
             }
         }
     }

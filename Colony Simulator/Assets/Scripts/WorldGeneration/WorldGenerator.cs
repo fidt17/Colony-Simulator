@@ -6,45 +6,39 @@ public static class WorldGenerator {
 
     public static int perlinSeed = 12;
     
-    private static GameObject _tileParent;
     private static GameSettingsScriptableObject _gameSettings;
 
     public static void GenerateWorld(GameSettingsScriptableObject gameSettings, ref Tile[,] grid) {
         _gameSettings = gameSettings;
-        grid = new Tile[_gameSettings.worldWidth, _gameSettings.worldHeight];
+        grid = new Tile[Utils.MapSize, Utils.MapSize];
 
         perlinSeed = gameSettings.seed;
-        FindTileParent();
         GenerateTerrainWithPerlinNoise(ref grid);
+        MeshGenerator.GetInstance().Initialize();
+        Pathfinder.Initialize();
+
         GenerateVegetation(ref grid);
-        Pathfinder.Initialize(new Vector2Int(_gameSettings.worldWidth, _gameSettings.worldHeight));
-
         GenerateCharacters();
-    }
 
-    private static void FindTileParent() {
-        _tileParent = GameObject.Find("World_Tiles");
-        if (_tileParent is null) {
-            Debug.LogError("World_Tiles GameObject is missing!");
-            return;
-        }
+        //DELETE ME
+        Factory.CreateItemPool();
     }
 
     private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {
         PerlinNoise pn = new PerlinNoise(perlinSeed);
-        int nOctaves = pn.CalculateMaxOctavesCount(_gameSettings.worldWidth);
+        int nOctaves = pn.CalculateMaxOctavesCount(Utils.MapSize);
         float fBias = 2f;
-        float[,] perlinArray = new float[_gameSettings.worldWidth, _gameSettings.worldHeight];
+        float[,] perlinArray = new float[Utils.MapSize, Utils.MapSize];
 
-        pn.Get2DPerlinNoise(_gameSettings.worldWidth, _gameSettings.worldHeight, nOctaves, fBias, ref perlinArray);
+        pn.Get2DPerlinNoise(Utils.MapSize, Utils.MapSize, nOctaves, fBias, ref perlinArray);
 
         //Min and max values that perlin array has
         float minP = 1;
         float maxP = 0;
 
         //calculating max and min values of perlin array
-        for(int x = 0; x < _gameSettings.worldWidth; x++) {
-            for(int y = 0; y < _gameSettings.worldHeight; y++) {
+        for(int x = 0; x < Utils.MapSize; x++) {
+            for(int y = 0; y < Utils.MapSize; y++) {
                 float v = perlinArray[x,y];
                 minP = Mathf.Min(v, minP);
                 maxP = Mathf.Max(v, maxP);
@@ -55,8 +49,8 @@ public static class WorldGenerator {
         float sea = minP + elevationRange * seaLevel;
         float sand = sea + (maxP - sea) * 0.2f;
 
-        for (int x = 0; x < _gameSettings.worldWidth; x++) {
-            for (int y = 0; y < _gameSettings.worldHeight; y++) {
+        for (int x = 0; x < Utils.MapSize; x++) {
+            for (int y = 0; y < Utils.MapSize; y++) {
 
                 float height = perlinArray[x,y];
                 string dataName = "tile";
@@ -69,22 +63,14 @@ public static class WorldGenerator {
                     dataName = "grass tile";
 				}
 
-                Tile tile = Factory.Create<Tile>(dataName, new Vector2Int(x, y));
-                tile.gameObject.transform.parent = _tileParent.transform;
-                grid[x, y] = tile;
+                grid[x, y] = Factory.CreateData<Tile>(dataName, new Vector2Int(x, y));
 			}
 		}
-
-        for (int x = 0; x < _gameSettings.worldWidth; x++) {
-            for (int y = 0; y < _gameSettings.worldHeight; y++) {
-                TileSpriteRenderer.GetInstance().UpdateTileBorders(grid[x,y]);
-            }
-        }
     }
 
     private static void GenerateVegetation(ref Tile[,] grid) {
-        for (int x = 0; x < _gameSettings.worldWidth; x++) {
-            for (int y = 0; y < _gameSettings.worldHeight; y++) {
+        for (int x = 0; x < Utils.MapSize; x++) {
+            for (int y = 0; y < Utils.MapSize; y++) {
                 
                 Tile tile = grid[x, y];
                 if (tile.type != TileType.grass) {

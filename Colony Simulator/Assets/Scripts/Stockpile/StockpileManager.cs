@@ -32,7 +32,7 @@ public class StockpileManager : Singleton<StockpileManager> {
     }
 
     public void AddItem(Item item) {
-        if (item.Tile.contents.stockpilePart != null) {
+        if (item.Tile.content.stockpilePart != null) {
             AddItemToStockpiles(item);
         } else {
             _otherItems.Add(item);
@@ -56,7 +56,7 @@ public class StockpileManager : Singleton<StockpileManager> {
 
     private void TryHaulingItemToAnyStockpile(Item item) {
         
-        if (Utils.TileAt(item.position).contents.stockpilePart != null || HaulJobExists(item)) {
+        if (Utils.TileAt(item.position).content.stockpilePart != null || HaulJobExists(item)) {
             return;
         }
 
@@ -72,6 +72,9 @@ public class StockpileManager : Singleton<StockpileManager> {
     private IEnumerator TryHaulingItems() {
         while (true) {
             yield return new WaitForSeconds(haulJobCooldown);
+            if (StockpilesCount == 0) {
+                continue;
+            }
             for (int i = _otherItems.Count - 1; i >= 0; i--) {
                 TryHaulingItemToAnyStockpile(_otherItems[i]);
             }

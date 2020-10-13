@@ -11,6 +11,13 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     public delegate void DragHandler(List<SelectableComponent> s);
     public event DragHandler OnDrag;
 
+    public event EventHandler OnAreaChange;
+    public class OnAreaChangeArgs : EventArgs {
+        public Vector2 start;
+        public Vector2 end;
+        public bool dragEnded;
+    }
+
     public void SetSettings(SelectionSettings newSettings) => _settings = newSettings;
 
     private SelectionSettings _settings;
@@ -81,7 +88,14 @@ public class SelectionTracker : Singleton<SelectionTracker> {
             }
             if (OnDrag != null) {
                 List<SelectableComponent> selectableInArea = GetSelectableInArea(startMousePosition, currentMousePosition);
-                OnDrag?.Invoke(selectableInArea);
+                OnDrag.Invoke(selectableInArea);
+            }
+            if (OnAreaChange != null) {
+                OnAreaChangeArgs e = new OnAreaChangeArgs();
+                e.start = startMousePosition;
+                e.end = currentMousePosition;
+                e.dragEnded = false;
+                OnAreaChange.Invoke(this, e);
             }
             yield return null;
         }
@@ -103,6 +117,14 @@ public class SelectionTracker : Singleton<SelectionTracker> {
         GetSelectableInArea(start, end).ForEach(x => Select(x));
         ResetSelectionArea();
         OnSelect?.Invoke();
+
+        if (OnAreaChange != null) {
+                OnAreaChangeArgs e = new OnAreaChangeArgs();
+                e.start = start;
+                e.end = end;
+                e.dragEnded = true;
+                OnAreaChange.Invoke(this, e);
+        }
     }
 }
 

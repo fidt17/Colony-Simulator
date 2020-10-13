@@ -24,7 +24,8 @@ public class HarvestCommand : Command {
         }
     }
 
-    protected void OnObjectDestroyedOutside(object sender, EventArgs e) {
+    protected void OnObjectDestroyedOutside(object source, EventArgs e) {
+        (source as IDestroyable).OnDestroyed -= OnObjectDestroyedOutside;
         _objectToHarvest = null;
         Finish(false);
     }

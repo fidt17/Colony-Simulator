@@ -13,10 +13,10 @@ public static class StockpileCreator {
         stockpile.gameObject = stockpileObject;
 
         foreach (Tile tile in tiles) {
-            if (tile.contents.stockpilePart is null) {
-                tile.contents.stockpilePart = new StockpilePart(tile.position, stockpile);
+            if (tile.content.stockpilePart is null) {
+                tile.content.stockpilePart = new StockpilePart(tile.position, stockpile);
             } else {
-                tile.contents.stockpilePart.ChangeStockpiles(stockpile);
+                tile.content.stockpilePart.ChangeStockpiles(stockpile);
             }
         }
         StockpileManager.GetInstance().AddStockpile(stockpile);
@@ -24,7 +24,7 @@ public static class StockpileCreator {
 
     public static void RemoveStockpileFromTiles(List<Tile> tiles) {
         foreach (Tile tile in tiles) {
-            tile.contents.stockpilePart?.DeleteStockpilePart();
+            tile.content.stockpilePart?.DeleteStockpilePart();
         }
     }
 }

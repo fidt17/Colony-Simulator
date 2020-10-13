@@ -2,25 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathGrid {
+public static class PathGrid {
 
-    public PathNode[,] nodes;
-    
-    private Vector2Int _dimensions;
+    public static PathNode[,] nodes;
+    private static bool _isInitialized = false;
 
-    public PathGrid(Vector2Int dimensions) {
-        _dimensions = dimensions;
-        CreateGrid();
+    public static PathNode NodeAt(Vector2Int position) {
+        if (_isInitialized == false) {
+            return null;
+        }
+
+        if (Utils.IsPositionViable(position)) {
+            return nodes[position.x, position.y];
+        }
+        return null;
     }
 
-    public void CreateGrid() {
-        nodes = new PathNode[_dimensions.x, _dimensions.y];
-        for (int x = 0; x < _dimensions.x; x++) {
-            for (int y = 0; y < _dimensions.y; y++) {
-                Vector2Int position = new Vector2Int(x, y);
-                bool isTraversable = Utils.TileAt(position).isTraversable;
-                PathNode node = new PathNode(position, isTraversable);
-                nodes[x, y] = node;
+    public static PathNode NodeAt(int x, int y) {
+        if (_isInitialized == false) {
+            return null;
+        }
+        
+        if (Utils.IsPositionViable(x, y)) {
+            return nodes[x, y];
+        }
+        return null;
+    }
+
+    public static void CreateGrid() {
+        _isInitialized = true;
+        nodes = new PathNode[Utils.MapSize, Utils.MapSize];
+        for (int x = 0; x < Utils.MapSize; x++) {
+            for (int y = 0; y < Utils.MapSize; y++) {
+                nodes[x, y] = new PathNode(x, y, Utils.TileAt(x, y).isTraversable);
             }
         }
     }

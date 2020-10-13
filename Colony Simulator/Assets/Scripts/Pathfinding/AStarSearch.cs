@@ -6,9 +6,9 @@ using UnityEngine;
 
 public static class AStarSearch {
 
-    public static List<PathNode> GetPath(PathNode startNode, PathNode targetNode, PathGrid grid, ref List<PathNode> closedSet) {
+    public static List<PathNode> GetPath(PathNode startNode, PathNode targetNode, ref List<PathNode> closedSet) {
         
-        if (startNode.region != targetNode.region || startNode.isTraversable == false || targetNode.isTraversable == false) {
+        if (startNode.Region != targetNode.Region) {
             return null;
         }
 
@@ -16,7 +16,7 @@ public static class AStarSearch {
             return new List<PathNode>();
         }
 
-        List<PathNode> openSet   = new List<PathNode>();
+        List<PathNode> openSet = new List<PathNode>();
         openSet.Add(startNode);
         while (openSet.Count > 0) {
             PathNode currentNode = openSet[0];
@@ -33,7 +33,7 @@ public static class AStarSearch {
                 return RetracePath(startNode, targetNode);
             }
 
-            foreach(PathNode neighbour in GetNeighbours(currentNode, grid)) {
+            foreach(PathNode neighbour in GetNeighbours(currentNode)) {
                 if(closedSet.Contains(neighbour)) {
                     continue;
                 }
@@ -54,7 +54,7 @@ public static class AStarSearch {
         return null;
     }
 
-    private static List<PathNode> GetNeighbours(PathNode node, PathGrid grid) {
+    private static List<PathNode> GetNeighbours(PathNode node) {
 		List<PathNode> neighbours = new List<PathNode>();
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
@@ -65,7 +65,7 @@ public static class AStarSearch {
 
 				int checkX = node.position.x + x;
 				int checkY = node.position.y + y;
-                PathNode n = Pathfinder.NodeAt(new Vector2Int(checkX, checkY));
+                PathNode n = Utils.NodeAt(new Vector2Int(checkX, checkY));
                 if (n != null && n.isTraversable) {
 					neighbours.Add(n);
                 }

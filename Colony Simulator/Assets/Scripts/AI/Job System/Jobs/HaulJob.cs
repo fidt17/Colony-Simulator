@@ -10,18 +10,22 @@ public class HaulJob : Job {
     private PathNode _destinationNode => Utils.NodeAt(_destinationPosition);
     private Item _item;
 
+    public HaulJob(Vector2Int destinationPosition) : base(destinationPosition) {}
+    
     public HaulJob(Item item, Vector2Int destinationPosition) : base(item.position) {
         _item = item;
         _destinationPosition = destinationPosition;
     }
 
     protected override void PlanJob() {
-        _task = new HaulTask(_item, _destinationPosition, _worker.MotionComponent, _worker.Inventory) as ITask;
+        _task = new HaulTask(_item, _destinationPosition, _worker.MotionComponent, _worker.Inventory);
 
         _worker.CommandProcessor.AddTask(_task);
         _task.TaskResultHandler += OnJobFinish;
 
-        StockpilePart part = Utils.TileAt(_destinationNode.position).contents.stockpilePart;
+        _item.SetHaulJob(this);
+
+        StockpilePart part = Utils.TileAt(_destinationNode.position).content.stockpilePart;
         if (part != null) {
             JobResultHandler += part.HaulJobResultHandler;
         }

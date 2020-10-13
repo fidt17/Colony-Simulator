@@ -340,7 +340,7 @@ TextureImporter:
     second: water_border_E
   - first:
       213: -1283168576950659043
-    second: Tileset_112
+    second: water_central
   - first:
       213: 2758772168323404995
     second: water_border_W
@@ -470,7 +470,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
@@ -2889,7 +2889,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset_112
+      name: water_central
       rect:
         serializedVersion: 2
         x: 80

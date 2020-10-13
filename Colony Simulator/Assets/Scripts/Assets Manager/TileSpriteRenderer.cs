@@ -23,6 +23,7 @@ public class TileSpriteRenderer : Singleton<TileSpriteRenderer> {
 
     #region Tile Sprite Generation
 
+    /*
     public void UpdateTileBorders(Tile tile) {
         TileType type = tile.type;
         
@@ -90,17 +91,11 @@ public class TileSpriteRenderer : Singleton<TileSpriteRenderer> {
             westBorder.sprite = water_border_W;
         }
     }
+    */
 
-
+    /*
     private void GrassBorderCheck(TileType[,] borderMatrix,
                                   SpriteRenderer mainSprite) {
-
-        /*
-            (0,2) (1,2) (2,2)
-            (0,1) (1,1) (2,1)
-            (0,0) (1,0) (2,0)
-
-        */
 
         #region Corner
 
@@ -299,6 +294,7 @@ public class TileSpriteRenderer : Singleton<TileSpriteRenderer> {
 
         #endregion
     }
+    */
 
     #endregion
 }
