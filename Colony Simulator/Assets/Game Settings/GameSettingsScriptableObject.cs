@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum MapSize {
-    small  = 50,
-    medium = 75,
-    large  = 100
+    small  = 100,
+    medium = 150,
+    large  = 200
 }
 
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "Game Settings/Settings", order = 1)]

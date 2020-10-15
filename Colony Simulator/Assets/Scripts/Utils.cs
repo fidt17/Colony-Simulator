@@ -47,6 +47,25 @@ public static class Utils {
         return tiles;
     }
 
+    public static bool IsInArea(Vector2 position, Vector2 start, Vector2 end) {
+        int startX = (int) (start.x + 0.5f);
+        int startY = (int) (start.y + 0.5f);
+        int endX = (int) (end.x + 0.5f);
+        int endY = (int) (end.y + 0.5f);
+
+        int temp = startX;
+        startX = (startX <= endX) ? startX : endX;
+        endX = (startX == endX) ? temp : endX;
+
+        temp = startY;
+        startY = (startY <= endY) ? startY : endY;
+        endY = (startY == endY) ? temp : endY;
+
+        return position.x >= startX && position.x <= endX && position.y >= startY && position.y <= endY;
+    }
+
+    public static Color GetRandomColor(float alpha) => new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), Mathf.Clamp(alpha, 0f, 1f));
+
     /* FUNCTION TIME TEST
         float startTime = Time.realtimeSinceStartup;
         //function

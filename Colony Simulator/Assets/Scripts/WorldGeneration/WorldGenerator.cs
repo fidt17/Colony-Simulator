@@ -19,9 +19,6 @@ public static class WorldGenerator {
 
         GenerateVegetation(ref grid);
         GenerateCharacters();
-
-        //DELETE ME
-        Factory.CreateItemPool();
     }
 
     private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {

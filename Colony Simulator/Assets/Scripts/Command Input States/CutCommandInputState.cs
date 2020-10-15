@@ -6,6 +6,8 @@ using System.Linq;
 
 public class CutCommandInputState : CommandInputState {
 
+    private List<Tree> _treesInArea = new List<Tree>();
+
     protected override void SubscribeToEvents() {
         InputListener.GetInstance().OnMouse0_Down += OnLeftClickDown;
         InputListener.GetInstance().OnMouse0_Up   += OnLeftClickUp;
@@ -38,16 +40,18 @@ public class CutCommandInputState : CommandInputState {
 
     protected virtual void OnAreaChange(object source, EventArgs e) {
         SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
+        _treesInArea = GetTreesOnTiles(Utils.GetTilesInArea(args.start, args.end));
         if (args.dragEnded) {
-            CreateJobs(GetTreesOnTiles(Utils.GetTilesInArea(args.start, args.end)));
+            CreateJobs(_treesInArea);
         }
     }
 
     private List<Tree> GetTreesOnTiles(List<Tile> tiles) {
         List<Tree> trees = new List<Tree>();
         for (int i = tiles.Count - 1; i >= 0; i--) {
-            if (tiles[i].content.staticObject?.GetType() == typeof(Tree)) {
-                trees.Add(tiles[i].content.staticObject as Tree);
+            StaticObject staticObject = tiles[i].content.staticObject;
+            if (staticObject != null && staticObject.GetType() == typeof(Tree) && JobExists(staticObject as Tree) == false) {
+                trees.Add(staticObject as Tree);
             }
         }
         return trees;

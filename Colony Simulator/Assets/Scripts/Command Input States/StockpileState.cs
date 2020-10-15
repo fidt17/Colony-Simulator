@@ -6,6 +6,7 @@ using UnityEngine;
 public class StockpileState : CommandInputState {
 
     protected List<Tile> _tiles = new List<Tile>();
+    protected GameObject _area;
     protected Color _stockpileColor = Color.grey;
 
     public override void ExitState() {
@@ -63,6 +64,16 @@ public class StockpileState : CommandInputState {
         }
     }
 
-    protected void ColorTiles() => _tiles.ForEach(x => x.SetColor(_stockpileColor));
-    protected void ResetTilesColor() => _tiles.ForEach(x => x.ResetColor());
+    protected void ColorTiles() {
+        List<PathNode> nodes = new List<PathNode>();
+        _tiles.ForEach(x => nodes.Add(Utils.NodeAt(x.position)));
+        List<GameObject> areas = MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(nodes, new Color(0, 0, 0, 0.1f));
+
+        _area = areas[0];
+        for (int i = 1; i < areas.Count; i++) {
+            areas[i].transform.parent = _area.transform;
+        }
+    }
+
+    protected void ResetTilesColor() => GameObject.Destroy(_area);        
 }

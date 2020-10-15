@@ -18,7 +18,7 @@ public class TestScript : Singleton<TestScript> {
         if (Input.GetKeyDown(KeyCode.T))
             TestT();
 
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKey(KeyCode.Y))
             Factory.Create<Construction>("wall", Utils.CursorToCoordinates());
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -30,10 +30,6 @@ public class TestScript : Singleton<TestScript> {
     }
 
     private void TestB() {
-        float startTime = Time.realtimeSinceStartup;
-        Vector2Int cursorCoordinates = Utils.CursorToCoordinates();
-        MeshGenerator.GetInstance().GenerateChunk(cursorCoordinates.x, cursorCoordinates.y);
-        Debug.Log("TIME TEST: " + (Time.realtimeSinceStartup - startTime) + " seconds.");
     }
 
     private void TestT() {

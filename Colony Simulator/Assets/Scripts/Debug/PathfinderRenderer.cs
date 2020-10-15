@@ -1,85 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PathfinderRenderer : Singleton<PathfinderRenderer> {
     
     public bool drawRegions = false;
     public bool drawSubregions = false;
 
-    private void Update() {
-        if (drawRegions)
-            StartCoroutine(DrawRegions(RegionSystem.regions));
-
-        if (drawSubregions)
-            StartCoroutine(DrawSubregions());
-    }
-
-    public void DrawPath(List<PathNode> closedList) {
-        foreach (PathNode node in closedList) {
-            Color pathColor = new Color(230f/255f, 100f/255f, 240f/255f, 1f);
-            Tile t = Utils.TileAt(node.position);
-            StartCoroutine(ChangeTileColor(t, pathColor, 2f));
-        }
-    }
-
+    #region Region drawing
+    
     private bool _isDrawingRegions = false;
+    Region _selectedRegion = null;
     public IEnumerator DrawRegions(List<Region> regions) {
         if (_isDrawingRegions)
             yield break;
-
         _isDrawingRegions = true;
-        foreach (Region region in regions) {
-            Color regionColor = new Color(Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, Random.Range(0, 255)/255f, 1f);
-            foreach (Subregion subregion in region.subregions) {
-                foreach (PathNode node in subregion.nodes) {
-                    Tile t = Utils.TileAt(node.position);
-                    StartCoroutine(ChangeTileColor(t, regionColor, 0.5f));
-                }
-            }
+
+        PathNode node = Utils.NodeAt(Utils.CursorToCoordinates());
+        Region region = node.Region;
+        if (region == null) {
+            yield break;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        _selectedRegion = region;
+        List<PathNode> list = region.GetNodes();
+        List<GameObject> areas = MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(list, Utils.GetRandomColor(0.25f));
+
+        while ((Utils.NodeAt(Utils.CursorToCoordinates()).Region == _selectedRegion || Utils.NodeAt(Utils.CursorToCoordinates()).Region == null) && drawRegions) {
+            yield return null;
+        }
+
+        areas.ForEach(x => Destroy(x));
         _isDrawingRegions = false;
     }
 
-    private bool _isDrawingSubregions = false;
-    public IEnumerator DrawSubregions() {
-        if (_isDrawingSubregions)
-            yield break;
-
-        _isDrawingSubregions = true;
-        Subregion subregion = Utils.NodeAt(Utils.CursorToCoordinates())?.subregion;
-        if (subregion != null) {
-            Color subregionColor = Color.blue;
-            Color neighbourColor = Color.cyan;
-            foreach (PathNode node in subregion.nodes) {
-                StartCoroutine(ChangeTileColor(Utils.TileAt(node.position), subregionColor, 0.5f));
-            }
-
-            foreach (Subregion neighbouringSubregion in subregion.neighbouringSubregions) {
-                foreach (PathNode node in neighbouringSubregion.nodes) {
-                StartCoroutine(ChangeTileColor(Utils.TileAt(node.position), neighbourColor, 0.5f));
-                }
-            }
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        _isDrawingSubregions = false;
+    private void DrawSubregionUnderCursor() {
+        PathNode node = Utils.NodeAt(Utils.CursorToCoordinates());
+        List<PathNode> list = node.subregion.nodes;
+        MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(list, Utils.GetRandomColor(0.1f)).ForEach(x => Destroy(x, 5));
     }
 
-    public void DrawSubregion(Subregion subregion) {
-        if (subregion != null) {
-            Color subregionColor = Color.blue;
-            foreach (PathNode node in subregion.nodes) {
-                StartCoroutine(ChangeTileColor(Utils.TileAt(node.position), subregionColor, 0.5f));
-            }
-        }
+    #endregion
+
+    private void Update() {
+        if (drawRegions)
+            StartCoroutine(DrawRegions(RegionSystem.regions));
     }
 
-    private IEnumerator ChangeTileColor(Tile tile, Color color, float time) {
-        tile.SetColor(color);
-        yield return new WaitForSeconds(time);
-        tile.ResetColor();
-    }
+    public void DrawPath(List<PathNode> closedList) => MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(closedList, Utils.GetRandomColor(0.5f)).ForEach(x => Destroy(x, 2.5f));
 }

@@ -740,6 +740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultSpriteMaterial: {fileID: 2100000, guid: 8d696d6bcdf86084da618904dd7bee83,
     type: 2}
+  _overlapAreaTexture: {fileID: 2800000, guid: a33b105710de82443a73eae54c45110b, type: 3}
 --- !u!1 &213260630
 GameObject:
   m_ObjectHideFlags: 0
@@ -3956,8 +3957,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437401148}
   m_HandleRect: {fileID: 1437401147}
   m_Direction: 2
-  m_Value: 0.99999833
-  m_Size: 0.71511847
+  m_Value: 0.99999946
+  m_Size: 0.7151184
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
