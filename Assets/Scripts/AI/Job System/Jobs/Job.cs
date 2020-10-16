@@ -18,8 +18,9 @@ public abstract class Job {
 
     protected GameObject _jobIcon;
 
-    public Job(Vector2Int jobPosition) {
+    public Job(Vector2Int jobPosition, GameObject jobIcon = null) {
         _jobPosition = jobPosition;
+        _jobIcon = jobIcon;
         AddJobIcon();
     }
 

@@ -9,8 +9,3 @@
                 -delete job if there are none
         }
     -delete job
-
--HungerComponent
-    -use when looking for food
-
--Implement object pooling for items.

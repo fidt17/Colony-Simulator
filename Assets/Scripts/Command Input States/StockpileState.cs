@@ -6,12 +6,14 @@ using UnityEngine;
 public class StockpileState : CommandInputState {
 
     protected List<Tile> _tiles = new List<Tile>();
+    protected fidt17.Utils.IntRectangle _selectionArea;
     protected GameObject _area;
     protected Color _stockpileColor = Color.grey;
 
     public override void ExitState() {
         base.ExitState();
         ResetTilesColor();
+        _tiles.Clear();
     }
 
     protected override void SubscribeToEvents() {
@@ -41,26 +43,40 @@ public class StockpileState : CommandInputState {
     protected void OnLeftMouseUp() => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 
     protected virtual void OnAreaChange(object source, EventArgs e) {
-        SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
+        if (source is SelectionTracker) {
+            SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
 
-        ResetTilesColor();
-        _tiles = Utils.GetTilesInArea(args.start, args.end);
-        FilterTiles();
-        if (args.dragEnded) {
-            StockpileCreator.CreateStockpileOnTiles(_tiles);
-            ResetTilesColor();
-            _tiles.Clear();
-        } else {
-            ResetTilesColor();
-            ColorTiles();
+            if (_selectionArea?.CompareTo(args.rectangle) == false || _selectionArea == null) {
+                _selectionArea = args.rectangle;
+                GetTilesInArea();
+                ResetTilesColor();
+                ColorTiles();
+            }
+
+            if (args.dragEnded) {
+                StockpileCreator.CreateStockpileOnTiles(_tiles);
+                ResetTilesColor();
+                _tiles.Clear();
+            }
         }
     }
 
-    protected void FilterTiles() {
+    protected void GetTilesInArea() {
+        //Removing tiles that are not in the area
         for (int i = _tiles.Count - 1; i >= 0; i--) {
-            if (!Utils.NodeAt(_tiles[i].position).isTraversable) {
+            Tile t = _tiles[i];
+            if (_selectionArea.Contains(t.position) == false) {
                 _tiles.RemoveAt(i);
             }
+        }
+
+        //Adding new tiles
+        foreach (Vector2Int position in _selectionArea.GetPositions()) {
+            Tile t = Utils.TileAt(position.x, position.y);
+            if (t == null || t.isTraversable == false || _tiles.Contains(t)) {
+                continue;
+            }
+            _tiles.Add(t);
         }
     }
 

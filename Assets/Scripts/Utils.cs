@@ -8,10 +8,9 @@ public static class Utils {
 
     public static Vector2 CursorToWorldPosition() => (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-    public static Vector2Int CursorToCoordinates() {
-        Vector2 currMousePosition = CursorToWorldPosition();
-        return new Vector2Int( (int) (currMousePosition.x + 0.5f), (int) (currMousePosition.y + 0.5f) );
-    }
+    public static Vector2Int WorldToGrid(Vector2 vec) => new Vector2Int( (int) (vec.x + 0.5f), (int) (vec.y + 0.5f));
+
+    public static Vector2Int CursorToCoordinates() => WorldToGrid(CursorToWorldPosition());
 
     public static bool IsPositionViable(Vector2Int position) => !(position.x < 0 || position.x >= MapSize || position.y < 0 || position.y >= MapSize);
     public static bool IsPositionViable(int x, int y) => !(x < 0 || x >= MapSize || y < 0 || y >= MapSize);

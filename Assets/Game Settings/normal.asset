@@ -16,4 +16,4 @@ MonoBehaviour:
   mapSize: 100
   seed: 1
   humanCount: 15
-  rabbitCount: 22
+  rabbitCount: 0

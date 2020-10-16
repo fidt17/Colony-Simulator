@@ -59,7 +59,6 @@ public class HungerComponent : MonoBehaviour {
         _isSearchingForFood = true;
 
         Grass grass = null;
-        //FIX THIS. dijkstra search?
         while (grass is null) {
             yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 2f));
             grass = SearchEngine.FindClosestGrass(_character.motionComponent.GridPosition);
