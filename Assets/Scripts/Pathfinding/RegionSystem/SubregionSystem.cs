@@ -13,14 +13,14 @@ public static class SubregionSystem {
                 CreateSubregionAt(x, y);
             }
         }
+
         foreach(Subregion subregion in subregions) {
             subregion.FindNeighbours();
         }
     }
 
     public static void UpdateSubregionAt(int X, int Y) {
-        List<Subregion> newSubregions = CreateSubregionAt(X, Y);
-        foreach (Subregion newSubregion in newSubregions) {
+        foreach (Subregion newSubregion in CreateSubregionAt(X, Y)) {
           newSubregion.FindNeighbours();
         }
     }
@@ -31,12 +31,14 @@ public static class SubregionSystem {
         int subregionStartX = ((int) (X / _subregionSize)) * _subregionSize;
         int subregionStartY = ((int) (Y / _subregionSize)) * _subregionSize;
 
+        //Deleting any subregions that existed on 10x10 chunk
         for (int x = subregionStartX; x < subregionStartX + _subregionSize; x++) {
             for (int y = subregionStartY; y < subregionStartY + _subregionSize; y++) {
                 Utils.NodeAt(x, y)?.subregion?.Reset();
             }
         }
 
+        //Creating new subregions on named chunk
         List<Subregion> createdSubregions = new List<Subregion>();
         for (int x = subregionStartX; x < subregionStartX + _subregionSize; x++) {
             for (int y = subregionStartY; y < subregionStartY + _subregionSize; y++) {
@@ -46,6 +48,8 @@ public static class SubregionSystem {
                 }
             }
         }
+
+        createdSubregions.ForEach(x => x.ScanForContent());
 
         return createdSubregions;
     }

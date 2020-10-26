@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct Ingredient {
+public class Ingredient {
     public string itemName;
     public int count;
 }

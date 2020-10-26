@@ -30,10 +30,16 @@ public class IdleAIComponent {
                 Vector3 randomPosition = Random.insideUnitSphere * _searchOffset;
                 Vector2Int checkPosition = new Vector2Int((int) (startNode.x + randomPosition.x), (int) (startNode.y + randomPosition.y));
                 PathNode checkNode = Utils.NodeAt(checkPosition);
-                
-                if (checkNode?.Region == startNode.Region) {
-                    targetNode = checkNode;
+                if (checkNode == null) {
+                    continue;
                 }
+                
+                if (Pathfinder.CompareCharacterRegionWith(_character, checkNode.Region)) {
+                    targetNode = checkNode;
+                    break;
+                }
+                //this waiting is needed for situations when character is surrounded by not traversable objects.
+                yield return new WaitForSeconds(10);
             }
 
             Task wanderTask = new Task();

@@ -21,8 +21,21 @@ public class InventoryComponent : MonoBehaviour {
     public void DropItemAt(Item item, Vector2Int position) {
         if (_inventory.Contains(item)) {
             _inventory.Remove(item);
+
+            Tile t = Utils.TileAt(position.x, position.y);
+            if (t.isTraversable == false) {
+                position = _human.motionComponent.GridPosition;
+            }
+            
             item.SetPosition(position);
             item.PutOnTile();
+        }
+    }
+
+    public void PlaceItemInto(Item item, IItemHolder itemHolder) {
+        if (_inventory.Contains(item)) {
+            _inventory.Remove(item);
+            itemHolder.ItemIn(item);
         }
     }
 

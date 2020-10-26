@@ -3,27 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SearchAndHaulJob : HaulJob {
+public class HaulToItemHolderJob : HaulJob {
     
     public Type ItemType => _itemType;
-    public void SetItem(Item item) => _item = item;
 
     private Vector2Int _dropPosition;
+    private IItemHolder _itemHolder;
     private PathNode _destinationNode => Utils.NodeAt(_dropPosition);
     private Item _item;
     private Type _itemType;
 
-    public SearchAndHaulJob(Type itemType, Vector2Int dropPosition) : base(dropPosition) {
+    public HaulToItemHolderJob(Type itemType, IItemHolder itemHolder) : base((itemHolder as StaticObject).position) {
         _itemType = itemType;
-        _dropPosition = dropPosition;
+        _dropPosition = (itemHolder as StaticObject).position;
+        _itemHolder = itemHolder;
     }
 
     public override bool CanDoJob(JobHandlerComponent worker) {
-        //accessibility
-        bool b = base.CanDoJob(worker);
-        if (b == false) {
+        //check that worker can actually get to the dropPosition
+        if (!base.CanDoJob(worker)) {
             return false;
         }
+
         //item search
         Func<Tile, bool> requirementsFunction = delegate(Tile tile) {
             if (tile == null) {
@@ -37,24 +38,21 @@ public class SearchAndHaulJob : HaulJob {
             }
         };
 
-        Tile t = SearchEngine.FindClosestTileWhere(worker.MotionComponent.GridPosition, requirementsFunction, true);
+        Tile t = SearchEngine.FindClosestBySubregionTileWhere(worker.MotionComponent.GridPosition, requirementsFunction, true);
         if (t == null) {
-            Debug.Log("item was not found");
             return false;
         } else {
-            Debug.Log("item was found");
-            SetItem(t.content.item);
+            _item = t.content.item;
             return true;
         }
         /////////////////
     }
 
     protected override void PlanJob() {
-        _task = new HaulTask(_item, _dropPosition, _worker.MotionComponent, _worker.Inventory);
+        _task = new HaulToItemHolderTask(_item, _itemHolder, _worker.MotionComponent, _worker.Inventory);
 
         _worker.CommandProcessor.AddTask(_task);
         _task.TaskResultHandler += OnJobFinish;
-
         _item.SetHaulJob(this);
     }
 }

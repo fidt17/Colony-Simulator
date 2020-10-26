@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "Characters/CharacterScriptableObject", order = 1)]
 public class CharacterScriptableObject : PrefabScriptableObject {
-    [Range(0, 10)]
+    [Range(0, 20)]
     public float movementSpeed;
     [Range(0, 10)]
     public float hungerDecreasePerSecond;

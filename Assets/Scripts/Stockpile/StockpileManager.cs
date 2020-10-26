@@ -56,7 +56,7 @@ public class StockpileManager : Singleton<StockpileManager> {
 
     private void TryHaulingItemToAnyStockpile(Item item) {
         
-        if (Utils.TileAt(item.position).content.stockpilePart != null || HaulJobExists(item)) {
+        if (Utils.TileAt(item.position).content.stockpilePart != null || item.HasHaulJob) {
             return;
         }
 
@@ -79,17 +79,5 @@ public class StockpileManager : Singleton<StockpileManager> {
                 TryHaulingItemToAnyStockpile(_otherItems[i]);
             }
         }
-    }
-
-    private bool HaulJobExists(Item item) {
-        foreach (Job job in JobSystem.GetInstance().AllJobs) {
-            if (job.GetType().Equals(typeof(HaulJob))) {
-                HaulJob haulJob = job as HaulJob;
-                if (haulJob.Item == item) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

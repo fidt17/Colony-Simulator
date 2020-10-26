@@ -27,42 +27,6 @@ public static class Utils {
 
     public static int SqrMaginute(int x1, int y1, int x2, int y2) => (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1);
 
-    public static List<Tile> GetTilesInArea(Vector2 start, Vector2 end) {
-        int startX = (int) (start.x + 0.5f);
-        int startY = (int) (start.y + 0.5f);
-        int endX = (int) (end.x + 0.5f);
-        int endY = (int) (end.y + 0.5f);
-
-        List<Tile> tiles = new List<Tile>();
-        for (int x = startX; x != endX + (int) Mathf.Sign(endX - startX); x += (int) Mathf.Sign(endX - startX)) {
-            for (int y = startY; y != endY + (int) Mathf.Sign(endY - startY); y += (int) Mathf.Sign(endY - startY)) {
-                Tile t = TileAt(x, y);
-                if (t != null) {
-                    tiles.Add(t);
-                }
-            }
-        }
-
-        return tiles;
-    }
-
-    public static bool IsInArea(Vector2 position, Vector2 start, Vector2 end) {
-        int startX = (int) (start.x + 0.5f);
-        int startY = (int) (start.y + 0.5f);
-        int endX = (int) (end.x + 0.5f);
-        int endY = (int) (end.y + 0.5f);
-
-        int temp = startX;
-        startX = (startX <= endX) ? startX : endX;
-        endX = (startX == endX) ? temp : endX;
-
-        temp = startY;
-        startY = (startY <= endY) ? startY : endY;
-        endY = (startY == endY) ? temp : endY;
-
-        return position.x >= startX && position.x <= endX && position.y >= startY && position.y <= endY;
-    }
-
     public static Color GetRandomColor(float alpha) => new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), Mathf.Clamp(alpha, 0f, 1f));
 
     /* FUNCTION TIME TEST

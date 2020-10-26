@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataName: human
   prefab: {fileID: 5526020460281864154, guid: 6489bfb87908ef24886fc3cb50459d0a, type: 3}
+  prefabSprite: {fileID: 0}
   movementSpeed: 5
   hungerDecreasePerSecond: 0
   hungerSearchThreshold: 80

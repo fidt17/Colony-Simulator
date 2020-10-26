@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 549dd4f18c924bd49a4279988dfefa35, type: 3}
-  m_Name: normal
+  m_Script: {fileID: 11500000, guid: 9c9891c7b71be5a4d8222e9beb33ecc8, type: 3}
+  m_Name: wall
   m_EditorClassIdentifier: 
-  targetFrameRate: 300
-  gameSpeed: 1
-  mapSize: 100
-  seed: 1
-  humanCount: 15
-  rabbitCount: 0
+  dataName: wall
+  prefab: {fileID: 2973704291348783822, guid: 5e8977b29de7a144a8543e1de1fbc5f7, type: 3}
+  prefabSprite: {fileID: 0}
+  dimensions: {x: 1, y: 1}
+  isTraversable: 0

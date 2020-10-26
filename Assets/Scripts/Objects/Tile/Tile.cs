@@ -41,6 +41,7 @@ public class Tile : IData {
             }
 
             Pathfinder.UpdateSystemAt(position.x, position.y);
+            StockpileCreator.RemoveStockpileFromTile(this);
         }
     }
 }

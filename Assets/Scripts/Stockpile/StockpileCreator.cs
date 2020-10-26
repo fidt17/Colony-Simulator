@@ -27,4 +27,6 @@ public static class StockpileCreator {
             tile.content.stockpilePart?.DeleteStockpilePart();
         }
     }
+
+    public static void RemoveStockpileFromTile(Tile t) => RemoveStockpileFromTiles(new List<Tile>{t});
 }

@@ -13,6 +13,9 @@ public class GameSettingsScriptableObject : ScriptableObject
 {   
     public int targetFrameRate = 60;
 
+    [Range(1, 2)]
+    public int gameSpeed = 1;
+
     [Header("World Generation")]
 
     public MapSize mapSize;

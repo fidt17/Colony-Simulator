@@ -17,7 +17,7 @@ public class MotionComponent : MonoBehaviour {
     public event PositionHandler OnPositionChange;
 
     public Vector2 WorldPosition => (Vector2) gameObject.transform.position;
-    public Vector2Int GridPosition => new Vector2Int( (int) (WorldPosition.x + 0.5f), (int) (WorldPosition.y + 0.5f) );
+    public Vector2Int GridPosition => _lastTraversableNode.position;
     public PathNode PathNode => Utils.NodeAt(GridPosition);
     public float SpeedValue => _speed;
 
@@ -41,7 +41,7 @@ public class MotionComponent : MonoBehaviour {
 
     public void SetPosition(Vector2 position) {
         gameObject.transform.position = position;
-        _lastTraversableNode = PathNode;
+        _lastTraversableNode = Utils.NodeAt((int) position.x, (int) position.y);
     } 
 
     public void Translate(Vector2 normalizedDestination) {
@@ -51,5 +51,22 @@ public class MotionComponent : MonoBehaviour {
             _lastTraversableNode = PathNode;
         }
         OnPositionChange?.Invoke(WorldPosition);
+    }
+
+    public void MoveCharacterToTraversableTile() {
+        System.Func<Tile, bool> requirementsFunction = delegate(Tile t) {
+            if (t == null) {
+                return false;
+            } else {
+                return t.isTraversable;
+            }
+        };
+        Tile tile = SearchEngine.FindClosestTileWhere(GridPosition, requirementsFunction, false);
+        
+        if (tile != null) {
+            SetPosition(tile.position);
+        } else {
+            Debug.LogError("Cannot find traversable tile for character at" + GridPosition);
+        }
     }
 }

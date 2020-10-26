@@ -68,6 +68,14 @@ public class MoveCommand : Command {
         }
 
         Vector2Int nextNode = _path[0].position;
+        if (_path[0].isTraversable == false) {
+            _path = null;
+            bool b = HasPath();
+            if (b == false) {
+                return;
+            }
+        }
+
         Vector2 destination = nextNode - _motionComponent.WorldPosition;
         SetFacingDirection(nextNode - _motionComponent.GridPosition);
 

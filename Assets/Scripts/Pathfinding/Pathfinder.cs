@@ -46,4 +46,14 @@ public static class Pathfinder {
         }
         return result;
     }
+
+    public static bool CompareCharacterRegionWith(Character character, Region r) {
+        PathNode characterNode = character.motionComponent.PathNode;
+
+        if (characterNode.isTraversable == false) {
+            character.motionComponent.MoveCharacterToTraversableTile();
+        }
+
+        return characterNode.Region == r;
+    }
 }

@@ -27,6 +27,24 @@ public static class SearchEngine {
         return checkTile;
     }
 
+    public static Tile FindClosestBySubregionTileWhere(Vector2Int sourcePosition, Func<Tile, bool> requirementsFunction, bool checkEqualityOfRegions = true) {
+        
+        List<Subregion> closedSet = new List<Subregion>();
+        List<Subregion> openSet = new List<Subregion>();
+        openSet.Add(Utils.NodeAt(sourcePosition.x, sourcePosition.y).subregion);
+
+        while (Dijkstra.NextDijkstraIteration(ref openSet, ref closedSet)) {
+            Subregion subregion = closedSet[0];
+            foreach (PathNode node in subregion.nodes) {
+                Tile checkTile = Utils.TileAt(node.x, node.y);
+                if (requirementsFunction(checkTile) == true) {
+                    return checkTile;
+                }
+            }
+        }
+        return null;
+    }
+
     public static Grass FindClosestGrass(Vector2Int sourcePosition) {
         List<Subregion> closedSet = new List<Subregion>();
         List<Subregion> openSet = new List<Subregion>();

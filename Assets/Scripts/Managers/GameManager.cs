@@ -11,7 +11,9 @@ public class GameManager : Singleton<GameManager> {
 
     protected override void Awake() {
         characterManager = GetComponent<CharacterManager>();
+
         Application.targetFrameRate = gameSettings.targetFrameRate;
+        Time.timeScale = gameSettings.gameSpeed;
     }
 
     private void Start() => Initialize();

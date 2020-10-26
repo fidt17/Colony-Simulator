@@ -30,6 +30,7 @@ public class TestScript : Singleton<TestScript> {
     }
 
     private void TestB() {
+        Factory.Create<ConstructionPlan>("wall plan", Utils.CursorToCoordinates());
     }
 
     private void TestT() {

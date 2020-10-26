@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class JobHandlerComponent : MonoBehaviour {
 
-    public bool IsAvailable => _currentJob is null;
+    public bool IsAvailable => _currentJob is null && CommandProcessor.HasTask == false;
 
     public MotionComponent    MotionComponent  => _worker.motionComponent;
     public CommandProcessor   CommandProcessor => _worker.AI.CommandProcessor;

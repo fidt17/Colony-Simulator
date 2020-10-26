@@ -8,6 +8,10 @@ public class RegionContent {
     private Dictionary<Type, object> content = new Dictionary<Type, object>();
 
     public void Add<T>(T value) {
+        if (value == null) {
+            return;
+        }
+
         if (content.ContainsKey(typeof(T)) == false) {
             NewEntry<T>();
         }
