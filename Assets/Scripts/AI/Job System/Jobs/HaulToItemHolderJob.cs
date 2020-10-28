@@ -7,11 +7,11 @@ public class HaulToItemHolderJob : HaulJob {
     
     public Type ItemType => _itemType;
 
-    private Vector2Int _dropPosition;
-    private IItemHolder _itemHolder;
-    private PathNode _destinationNode => Utils.NodeAt(_dropPosition);
-    private Item _item;
-    private Type _itemType;
+    protected Vector2Int _dropPosition;
+    protected IItemHolder _itemHolder;
+    protected PathNode _destinationNode => Utils.NodeAt(_dropPosition);
+    protected Item _item;
+    protected Type _itemType;
 
     public HaulToItemHolderJob(Type itemType, IItemHolder itemHolder) : base((itemHolder as StaticObject).position) {
         _itemType = itemType;

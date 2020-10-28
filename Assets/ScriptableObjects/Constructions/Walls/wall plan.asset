@@ -19,4 +19,4 @@ MonoBehaviour:
   isTraversable: 0
   ingredients:
   - itemName: WoodLog
-    count: 1
+    count: 3

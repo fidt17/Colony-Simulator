@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Stockpile {
 
-    public GameObject gameObject;
-
     private List<StockpilePart> _parts = new List<StockpilePart>();
     private Color _stockpileColor;
 
@@ -15,14 +13,12 @@ public class Stockpile {
 
     public void AddPart(StockpilePart part) {
         _parts.Add(part);
-        part.gameObject.transform.parent = gameObject.transform;
         part.spriteRenderer.color = _stockpileColor;
     }
     
     public void RemovePart(StockpilePart part) {
         _parts.Remove(part);
         if (_parts.Count == 0) {
-            GameObject.Destroy(gameObject);
             StockpileManager.GetInstance().RemoveStockpile(this);
         }
     }

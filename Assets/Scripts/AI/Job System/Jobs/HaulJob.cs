@@ -14,6 +14,7 @@ public class HaulJob : Job {
     
     public HaulJob(Item item, Vector2Int destinationPosition) : base(item.position) {
         _item = item;
+        _item.SetHaulJob(this);
         _destinationPosition = destinationPosition;
     }
 
@@ -22,8 +23,6 @@ public class HaulJob : Job {
 
         _worker.CommandProcessor.AddTask(_task);
         _task.TaskResultHandler += OnJobFinish;
-
-        _item.SetHaulJob(this);
 
         StockpilePart part = Utils.TileAt(_destinationNode.position).content.stockpilePart;
         if (part != null) {

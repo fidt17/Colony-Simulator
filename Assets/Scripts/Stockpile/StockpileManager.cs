@@ -15,10 +15,7 @@ public class StockpileManager : Singleton<StockpileManager> {
 
     private void Start() => StartCoroutine(TryHaulingItems());
 
-    public void AddStockpile(Stockpile stockpile) {
-        _stockpiles.Add(stockpile);
-    }
-
+    public void AddStockpile(Stockpile stockpile) => _stockpiles.Add(stockpile);
     public void RemoveStockpile(Stockpile stockpile) => _stockpiles.Remove(stockpile);
 
     public StockpilePart FindStockpilePartForItem(Item item) {
@@ -55,14 +52,13 @@ public class StockpileManager : Singleton<StockpileManager> {
     }
 
     private void TryHaulingItemToAnyStockpile(Item item) {
-        
         if (Utils.TileAt(item.position).content.stockpilePart != null || item.HasHaulJob) {
             return;
         }
 
         StockpilePart part = FindStockpilePartForItem(item);
         if (part != null) {
-            HaulJob job = new HaulJob(item, Utils.NodeAt(part.position).position);
+            HaulJob job = new HaulJob(item, part.position);
             part.SetHaulJob(job);
             JobSystem.GetInstance().AddJob(job);
         }    

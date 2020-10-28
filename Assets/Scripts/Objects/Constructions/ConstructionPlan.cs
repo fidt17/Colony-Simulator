@@ -50,7 +50,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
     public override void SetData(PrefabScriptableObject data, Vector2Int position) {
         this.data = data as ConstructionScriptableObject;
         this.position = position;
-        isTraversable = false;
+        isTraversable = true;
 
         ConfigureIngredients();
         PutOnTile();
@@ -58,7 +58,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
     public override void SetGameObject(GameObject gameObject) {
         base.SetGameObject(gameObject);
-        CreateHaulingJobs();
+        CheckCurrentTileContents();
     }
 
     public override void Destroy() {
@@ -79,6 +79,49 @@ public class ConstructionPlan : StaticObject, IItemHolder {
     }
 
     private void CreateConstructionJob() => JobSystem.GetInstance().AddJob(new BuildJob(this));
+
+    private void CheckCurrentTileContents() {
+        Tile currentTile = Utils.TileAt(position.x, position.y);
+        //Removing any existing stockpiles from the tile
+        StockpileCreator.RemoveStockpileFromTile(currentTile);
+
+        //detecting if there is an item on the tile at the moment
+        //if so - creating a haul job that need to be finished before anything else
+        //otherwise create haul jobs for ingredients.
+        if (currentTile.content.HasItem) {
+            Item item = currentTile.content.item;
+
+            //find closest free spot
+            Func<Tile, bool> requirementsFunction = delegate(Tile t) {
+            if (t == null) {
+                return false;
+            } else {
+                return !t.content.HasItem;
+            }
+            };
+            Tile tile = SearchEngine.FindClosestTileWhere(position, requirementsFunction);
+        
+            if (tile != null) {
+                HaulJob job = new HaulJob(item, tile.position);
+                JobSystem.GetInstance().AddJob(job);
+                job.JobResultHandler += HaulItemFromConstructionPlanJobHandler;
+                //FIX ME cancel haul job if construction job was canceled.
+            } else {
+                Debug.LogError("No empty tile to move item to was found. Implement waiting function to try again some time later. P: " + position);
+            }
+        } else {
+            CreateHaulingJobs();
+        }
+    }
+
+    private void HaulItemFromConstructionPlanJobHandler(object source, EventArgs e) {
+        if (source is HaulJob) {
+            if ((e as Job.JobResultEventArgs).result == true) {
+                (source as HaulJob).JobResultHandler -= HandleHaulJobResult;
+                CreateHaulingJobs();
+            }
+        }
+    }
 
     private void CreateHaulingJobs() {
         foreach (var ingredient in _ingredients) {
@@ -118,11 +161,20 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
             bool result = (e as Job.JobResultEventArgs).result;
             if (result == true) {
+                ChangePlanToActiveState();
                 CalculateNewIngredientsValues((source as HaulToItemHolderJob).Item);
             } else {
                 CreateHaulingJobForIngredient(job.ItemType);
             }
         }
+    }
+
+    //when plan is created the tile, that the plan was placed on stays traversable until at least 1 ingredient comes in
+    //afterwards tile's traversability changes to false and plan sprite changes.
+    private void ChangePlanToActiveState() {
+        Tile t = Utils.TileAt(position);
+        t.SetTraversability(false);
+        gameObject.GetComponent<SpriteRenderer>().color = Color.black;
     }
 
     private void DeleteJob() {
