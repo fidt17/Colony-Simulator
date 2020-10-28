@@ -40,6 +40,7 @@ public class HaulToItemHolderJob : HaulJob {
 
         Tile t = SearchEngine.FindClosestBySubregionTileWhere(worker.MotionComponent.GridPosition, requirementsFunction, true);
         if (t == null) {
+            JobSystem.GetInstance().StartCoroutine(JobSystem.GetInstance().HideJobForSeconds(this, 5f));
             return false;
         } else {
             _item = t.content.item;

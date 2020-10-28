@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace fidt17.Utils {
     public class IntRectangle {
+        
+        public int Width => _end.x - _start.x;
+        public int Height => _end.y - _start.y;
 
         public Vector2Int Start => _start;
         public Vector2Int End   => _end;

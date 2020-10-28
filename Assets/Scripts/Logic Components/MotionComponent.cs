@@ -13,8 +13,12 @@ public class MotionComponent : MonoBehaviour {
 
     public delegate void OnVelocityChange(Vector2 newVelocty, FacingDirection facingDirection);
     public event OnVelocityChange VelocityHandler;
+
     public delegate void PositionHandler(Vector3 position);
     public event PositionHandler OnPositionChange;
+
+    public delegate void GridPositionHandler(Vector2Int previousPosition, Vector2Int currentPosition);
+    public event GridPositionHandler OnGridPositionChange;
 
     public Vector2 WorldPosition => (Vector2) gameObject.transform.position;
     public Vector2Int GridPosition => _lastTraversableNode.position;
@@ -41,14 +45,18 @@ public class MotionComponent : MonoBehaviour {
 
     public void SetPosition(Vector2 position) {
         gameObject.transform.position = position;
-        _lastTraversableNode = Utils.NodeAt((int) position.x, (int) position.y);
+        OnGridPositionChange?.Invoke(_lastTraversableNode.position, Utils.ToVector2Int(position));
+        _lastTraversableNode = Utils.NodeAt(Utils.ToVector2Int(position));
     } 
 
     public void Translate(Vector2 normalizedDestination) {
         gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
         VelocityHandler?.Invoke(normalizedDestination, facingDirection);
-        if (PathNode.isTraversable) {
-            _lastTraversableNode = PathNode;
+
+        PathNode currentNode = Utils.NodeAt(Utils.ToVector2Int(WorldPosition));
+        if (currentNode.isTraversable) {
+            OnGridPositionChange?.Invoke(_lastTraversableNode.position, currentNode.position);
+            _lastTraversableNode = currentNode;
         }
         OnPositionChange?.Invoke(WorldPosition);
     }

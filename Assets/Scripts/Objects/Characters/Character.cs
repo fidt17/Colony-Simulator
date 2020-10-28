@@ -22,8 +22,17 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
 
     public virtual void Die() {
         gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        RemoveFromTile();
         Destroy();
     }
+
+    private void HandleGridPosition(Vector2Int previousPosition, Vector2Int currentPosition) {
+        Utils.TileAt(previousPosition).content.RemoveCharacter(this);
+        Utils.TileAt(currentPosition).content.AddCharacter(this);
+    }
+
+    private void AddToTile() => Utils.TileAt(motionComponent.GridPosition).content.AddCharacter(this);
+    private void RemoveFromTile() => Utils.TileAt(motionComponent.GridPosition).content.RemoveCharacter(this);
 
     #region IPrefab
 
@@ -38,6 +47,8 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
         InitializeMotionComponent(_tempPosition);
         InitializeHungerComponent();
         InitializeAI();
+
+        AddToTile();
     }
 
     public virtual void Destroy() => GameObject.Destroy(gameObject, 1);
@@ -49,6 +60,7 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
     public virtual void InitializeMotionComponent(Vector2Int position) {
         motionComponent = gameObject.AddComponent<MotionComponent>();
         motionComponent.Initialize(data.movementSpeed, position);
+        motionComponent.OnGridPositionChange += HandleGridPosition;
     }
 
     #endregion

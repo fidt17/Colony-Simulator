@@ -11,7 +11,7 @@ public class Construction : StaticObject {
 
     #region IPrefab
 
-    public override void SetData(PrefabScriptableObject data, Vector2Int position) {
+    public new void SetData(ConstructionScriptableObject data, Vector2Int position) {
         this.data = data as ConstructionScriptableObject;
         this.position = position;
         PutOnTile();

@@ -10,6 +10,7 @@ public class TileContent {
     public StockpilePart stockpilePart;
     public StaticObject staticObject;
     public Item item;
+    public List<Character> characters = new List<Character>();
 
     private Tile _tile;
 
@@ -38,5 +39,13 @@ public class TileContent {
 
     public void RemoveItemFromTile() {
         item = null;
+    }
+
+    public void AddCharacter(Character character) {
+        characters.Add(character);
+    }
+
+    public void RemoveCharacter(Character character) {
+        characters.Remove(character);
     }
 }

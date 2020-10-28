@@ -35,6 +35,12 @@ public class JobSystem : Singleton<JobSystem> {
 
     public void RemoveWorker(JobHandlerComponent worker) => _availableWorkers.Remove(worker);
 
+    public IEnumerator HideJobForSeconds(Job job, float seconds) {
+        DeleteJob(job);
+        yield return new WaitForSeconds(seconds);
+        AddJob(job);
+    }
+
     private IEnumerator ProcessJobs() {
         while (true) {
             yield return new WaitForSeconds(jobUpdateCooldown);

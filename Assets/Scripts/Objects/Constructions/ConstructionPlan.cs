@@ -25,12 +25,8 @@ public class ConstructionPlan : StaticObject, IItemHolder {
     #region IItemHolder
 
     public void ItemIn(Item item) {
-        if (items.Contains(item)) {
-            Debug.LogError("Trying to put item into construction plan, although the item is already present in stockedIngredient.");
-        }
         items.Add(item);
-
-        item.gameObject.transform.position = Utils.ToVector3(position);
+        item.SetPosition(position);
         item.gameObject.SetActive(false);
     }
 
@@ -47,7 +43,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
     #region IPrefab
 
-    public override void SetData(PrefabScriptableObject data, Vector2Int position) {
+    public new void SetData(ConstructionScriptableObject data, Vector2Int position) {
         this.data = data as ConstructionScriptableObject;
         this.position = position;
         isTraversable = true;
@@ -103,9 +99,9 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         
             if (tile != null) {
                 HaulJob job = new HaulJob(item, tile.position);
+                _haulingJobs.Add(job);
                 JobSystem.GetInstance().AddJob(job);
                 job.JobResultHandler += HaulItemFromConstructionPlanJobHandler;
-                //FIX ME cancel haul job if construction job was canceled.
             } else {
                 Debug.LogError("No empty tile to move item to was found. Implement waiting function to try again some time later. P: " + position);
             }
@@ -116,6 +112,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
     private void HaulItemFromConstructionPlanJobHandler(object source, EventArgs e) {
         if (source is HaulJob) {
+            _haulingJobs.Remove(source as HaulJob);
             if ((e as Job.JobResultEventArgs).result == true) {
                 (source as HaulJob).JobResultHandler -= HandleHaulJobResult;
                 CreateHaulingJobs();
@@ -146,10 +143,6 @@ public class ConstructionPlan : StaticObject, IItemHolder {
                 _ingredients.RemoveAt(i);
             }
         }
-
-        if (_ingredients.Count == 0) {
-            CreateConstructionJob();
-        }
     }
 
     private void HandleHaulJobResult(object source, EventArgs e) {
@@ -161,8 +154,9 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
             bool result = (e as Job.JobResultEventArgs).result;
             if (result == true) {
-                ChangePlanToActiveState();
                 CalculateNewIngredientsValues((source as HaulToItemHolderJob).Item);
+                //think of a better solution, also don't forget to stop coroutine incase the job get canceled
+                GameManager.GetInstance().StartCoroutine(ChangePlanToActiveState());
             } else {
                 CreateHaulingJobForIngredient(job.ItemType);
             }
@@ -171,10 +165,30 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
     //when plan is created the tile, that the plan was placed on stays traversable until at least 1 ingredient comes in
     //afterwards tile's traversability changes to false and plan sprite changes.
-    private void ChangePlanToActiveState() {
-        Tile t = Utils.TileAt(position);
-        t.SetTraversability(false);
-        gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+    private bool _isChangePlanToActiveStateRunning = false;
+    private IEnumerator ChangePlanToActiveState() {
+        if (_isChangePlanToActiveStateRunning) {
+            yield break;
+        }
+        _isChangePlanToActiveStateRunning = true;
+
+        if (isTraversable == true) {
+            Tile t = Utils.TileAt(position);
+
+            while (t.content.characters.Count > 0) {
+                yield return null;
+            }
+
+            isTraversable = false;
+            t.SetTraversability(false);
+            gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+        }
+
+        if (_ingredients.Count == 0) {
+            CreateConstructionJob();
+        }
+
+        _isChangePlanToActiveStateRunning = false;
     }
 
     private void DeleteJob() {

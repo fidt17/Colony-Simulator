@@ -73,6 +73,19 @@ public class SelectionTracker : Singleton<SelectionTracker> {
         return selectable;
     }
 
+    private void Update() {
+
+        if (_lmbPressed == false && OnAreaChange != null) {
+            OnAreaChangeArgs e = new OnAreaChangeArgs();
+            Vector2Int cursorCoords = Utils.CursorToCoordinates();
+            e.rectangle = new fidt17.Utils.IntRectangle(cursorCoords, cursorCoords);
+            e.startMousePosition = cursorCoords;
+            e.currentMousePosition = cursorCoords;
+            e.dragEnded = false;
+            OnAreaChange.Invoke(this, e);
+        }
+    }
+
     private IEnumerator StartSelectionAreaDrag() {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
             yield break;

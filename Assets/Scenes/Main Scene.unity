@@ -942,11 +942,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1418336755}
-        m_MethodName: ClickOnCutCommand
-        m_Mode: 1
+        m_MethodName: ClickOnBuildCommand
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 5b51354b834eb34419b98113d1b8b205,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: ConstructionScriptableObject, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
