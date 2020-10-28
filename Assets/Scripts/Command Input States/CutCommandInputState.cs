@@ -44,13 +44,6 @@ public class CutCommandInputState : CommandInputState {
         SelectionTracker.GetInstance().OnAreaChange -= OnAreaChange;
     }
 
-    protected override void SetupSelectionTracker() {
-        SelectionSettings settings;
-        settings.selectionMask = new List<System.Type>();
-        settings.shouldDrawArea = true;
-        SelectionTracker.GetInstance().SetSettings(settings);
-    }
-
     protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);
 
     private void OnLeftClickDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();

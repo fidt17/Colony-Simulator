@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class StockpileState : CommandInputState {
 
-    protected List<Tile> _tiles = new List<Tile>();
+    protected virtual string ColorHex => "#26FF56";
     protected fidt17.Utils.IntRectangle _selectionArea;
-    protected GameObject _area;
-    protected Color _stockpileColor = Color.grey;
+    protected Transform _area;
 
     public override void ExitState() {
         base.ExitState();
-        ResetTilesColor();
-        _tiles.Clear();
+        if (_area != null) {
+            GameObject.Destroy(_area.gameObject);
+        }
     }
 
     protected override void SubscribeToEvents() {
@@ -33,8 +33,7 @@ public class StockpileState : CommandInputState {
     }
 
     protected override void SetupSelectionTracker() {
-        SelectionSettings settings;
-        settings.selectionMask = new List<System.Type>();
+        SelectionSettings settings = new SelectionSettings();
         settings.shouldDrawArea = false;
         SelectionTracker.GetInstance().SetSettings(settings);
     }
@@ -45,51 +44,45 @@ public class StockpileState : CommandInputState {
     protected virtual void OnAreaChange(object source, EventArgs e) {
         if (source is SelectionTracker) {
             SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
-
             if (_selectionArea?.CompareTo(args.rectangle) == false || _selectionArea == null) {
                 _selectionArea = args.rectangle;
-                GetTilesInArea();
-                ResetTilesColor();
-                ColorTiles();
+                DrawSelectionArea(args.startMousePosition, args.currentMousePosition);
             }
 
             if (args.dragEnded) {
-                StockpileCreator.CreateStockpileOnTiles(_tiles);
-                ResetTilesColor();
-                _tiles.Clear();
+                StockpileCreator.CreateStockpileOnTiles(GetTilesInArea());
+                GameObject.Destroy(_area?.gameObject);
             }
         }
     }
 
-    protected void GetTilesInArea() {
-        //Removing tiles that are not in the area
-        for (int i = _tiles.Count - 1; i >= 0; i--) {
-            Tile t = _tiles[i];
-            if (_selectionArea.Contains(t.position) == false) {
-                _tiles.RemoveAt(i);
-            }
-        }
-
-        //Adding new tiles
+    protected List<Tile> GetTilesInArea() {
+        List<Tile> tiles = new List<Tile>();
         foreach (Vector2Int position in _selectionArea.GetPositions()) {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t == null || t.isTraversable == false || _tiles.Contains(t)) {
+            if (t is null || !t.isTraversable) {
                 continue;
             }
-            _tiles.Add(t);
+            tiles.Add(t);
         }
+        return tiles;
     }
 
-    protected void ColorTiles() {
-        List<PathNode> nodes = new List<PathNode>();
-        _tiles.ForEach(x => nodes.Add(Utils.NodeAt(x.position)));
-        List<GameObject> areas = MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(nodes, new Color(0, 0, 0, 0.1f));
-
-        _area = areas[0];
-        for (int i = 1; i < areas.Count; i++) {
-            areas[i].transform.parent = _area.transform;
+    protected void DrawSelectionArea(Vector2 start, Vector2 end) {
+        if (_area == null) {
+            _area = Factory.Create("SelectionArea", new Vector2Int((int) start.x, (int) start.y)).GetComponent<Transform>();
+            Color color = Color.white;
+            ColorUtility.TryParseHtmlString(ColorHex, out color);
+            color.a = 60.0f/255.0f;
+            _area.GetChild(0).GetComponent<SpriteRenderer>().color = color;
         }
-    }
+        start = Utils.WorldToGrid(start);
+        end = Utils.WorldToGrid(end);
+        var rect = new fidt17.Utils.IntRectangle(Utils.ToVector2Int(start), Utils.ToVector2Int(end));
 
-    protected void ResetTilesColor() => GameObject.Destroy(_area);        
+        _area.position = new Vector3(rect.Start.x - 0.5f, rect.Start.y - 0.5f, 0);
+        float width = rect.End.x - rect.Start.x + 1;
+        float height = rect.End.y - rect.Start.y + 1;
+        _area.localScale = new Vector3(width, height, 1); 
+    }
 }

@@ -12,12 +12,7 @@ public abstract class CommandInputState {
 
     protected abstract void SubscribeToEvents();
 
-    protected virtual void SetupSelectionTracker() {
-        SelectionSettings settings;
-        settings.selectionMask = new List<System.Type>();
-        settings.shouldDrawArea = true;
-        SelectionTracker.GetInstance().SetSettings(settings);
-    }
+    protected virtual void SetupSelectionTracker() => SelectionTracker.GetInstance().SetSettings(new SelectionSettings());
 
     protected virtual void Initialize() {
         UpdateCursorTexture();

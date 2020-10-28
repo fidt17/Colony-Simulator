@@ -32,7 +32,6 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
         item.gameObject.transform.position = Utils.ToVector3(position);
         item.gameObject.SetActive(false);
-        Debug.Log("Item in");
     }
 
     public Item ItemOut(Item item) {

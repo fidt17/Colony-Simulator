@@ -19,7 +19,7 @@ public class DefaultInputState : CommandInputState {
     } 
 
     protected override  void SetupSelectionTracker() {
-        SelectionSettings settings;
+        SelectionSettings settings = new SelectionSettings();
         settings.selectionMask = new List<System.Type>() {
             typeof(Human)
         };

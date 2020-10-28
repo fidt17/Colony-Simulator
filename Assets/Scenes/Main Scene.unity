@@ -4433,8 +4433,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437401148}
   m_HandleRect: {fileID: 1437401147}
   m_Direction: 2
-  m_Value: 0.99999917
-  m_Size: 0.7151184
+  m_Value: 0.99999887
+  m_Size: 0.7151185
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5528,30 +5528,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5355051055112823729, guid: a7c6f63278dd8de419a96a2062ce8eca,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1155620643
-      objectReference: {fileID: 0}
-    - target: {fileID: 5355051055112823729, guid: a7c6f63278dd8de419a96a2062ce8eca,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5361743274580825297, guid: a7c6f63278dd8de419a96a2062ce8eca,
         type: 3}
       propertyPath: m_Name
       value: SelectionArea
-      objectReference: {fileID: 0}
-    - target: {fileID: 9178424703643837141, guid: a7c6f63278dd8de419a96a2062ce8eca,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9178424703643837141, guid: a7c6f63278dd8de419a96a2062ce8eca,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7c6f63278dd8de419a96a2062ce8eca, type: 3}

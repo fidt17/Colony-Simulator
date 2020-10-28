@@ -25,7 +25,7 @@ public class BuildCommandInputState : CommandInputState {
     }
 
     protected override void SetupSelectionTracker() {
-        SelectionSettings settings;
+        SelectionSettings settings = new SelectionSettings();
         settings.selectionMask = new List<System.Type>();
         settings.shouldDrawArea = false;
         SelectionTracker.GetInstance().SetSettings(settings);

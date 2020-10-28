@@ -24,6 +24,7 @@ public static class Utils {
     public static Tile RandomTile() => TileAt(new Vector2Int((int) Random.Range(0, MapSize), (int) Random.Range(0, MapSize)));
 
     public static Vector3 ToVector3(Vector2Int vec) => new Vector3(vec.x, vec.y, 0);
+    public static Vector2Int ToVector2Int(Vector2 vec) => new Vector2Int((int) vec.x, (int) vec.y);
 
     public static int SqrMaginute(int x1, int y1, int x2, int y2) => (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1);
 

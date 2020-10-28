@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a5cc0a6fd0f2e44a8f84ca7ec73dfe0, type: 3}
-  m_Name: Human
+  m_Script: {fileID: 11500000, guid: 3eaa14d40105a01408e5207eb7a0de4e, type: 3}
+  m_Name: SelectionArea
   m_EditorClassIdentifier: 
-  dataName: human
-  prefab: {fileID: 5526020460281864154, guid: 6489bfb87908ef24886fc3cb50459d0a, type: 3}
+  dataName: SelectionArea
+  prefab: {fileID: 5361743274580825297, guid: a7c6f63278dd8de419a96a2062ce8eca, type: 3}
   prefabSprite: {fileID: 0}
-  movementSpeed: 20
-  hungerDecreasePerSecond: 0
-  hungerSearchThreshold: 80

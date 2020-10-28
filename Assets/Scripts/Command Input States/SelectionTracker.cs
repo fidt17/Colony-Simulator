@@ -15,6 +15,8 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     public event EventHandler OnAreaChange;
     public class OnAreaChangeArgs : EventArgs {
         public fidt17.Utils.IntRectangle rectangle;
+        public Vector2 startMousePosition;
+        public Vector2 currentMousePosition;
         public bool dragEnded;
     }
 
@@ -96,6 +98,8 @@ public class SelectionTracker : Singleton<SelectionTracker> {
             if (OnAreaChange != null) {
                 OnAreaChangeArgs e = new OnAreaChangeArgs();
                 e.rectangle = new fidt17.Utils.IntRectangle(Utils.WorldToGrid(startMousePosition), Utils.WorldToGrid(currentMousePosition));
+                e.startMousePosition = startMousePosition;
+                e.currentMousePosition = currentMousePosition;
                 e.dragEnded = false;
                 OnAreaChange.Invoke(this, e);
             }
@@ -129,7 +133,7 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     }
 }
 
-public struct SelectionSettings {
-    public List<Type> selectionMask;
-    public bool shouldDrawArea;
+public class SelectionSettings {
+    public List<Type> selectionMask = new List<Type>();
+    public bool shouldDrawArea = true;
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RemoveStockpileState : StockpileState {
 
+    protected override string ColorHex => "#A64141";
+
     protected override void UpdateCursorTexture() => CursorManager.Instance.SwitchTexture(CursorManager.Instance.cutStateTexture);
 
     protected override void OnAreaChange(object source, EventArgs e) {
@@ -13,15 +15,12 @@ public class RemoveStockpileState : StockpileState {
 
             if (_selectionArea?.CompareTo(args.rectangle) == false || _selectionArea == null) {
                 _selectionArea = args.rectangle;
-                GetTilesInArea();
-                ResetTilesColor();
-                ColorTiles();
+                DrawSelectionArea(args.startMousePosition, args.currentMousePosition);
             }
 
             if (args.dragEnded) {
-                StockpileCreator.RemoveStockpileFromTiles(_tiles);
-                ResetTilesColor();
-                _tiles.Clear();
+                StockpileCreator.RemoveStockpileFromTiles(GetTilesInArea());
+                GameObject.Destroy(_area?.gameObject);
             }
         }
     }
