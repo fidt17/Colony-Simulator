@@ -56,6 +56,11 @@ public class Task : ITask {
     protected void OnResultChanged(bool result) {
         TaskResultEventArgs e = new TaskResultEventArgs();
         e.result = result;
+
+        if (result == false) {
+            int a;
+        }
+
         TaskResultHandler?.Invoke(this, e);
     }
 }

@@ -8,8 +8,8 @@ public class WoodLog : Item {
 
     #region IPlacable
 
-    public override void AddToRegionContent() => Utils.NodeAt(position.x, position.y).subregion.content.Add<WoodLog>(this);
-    public override void RemoveFromRegionContent() => Utils.NodeAt(position.x, position.y).subregion.content.Remove<WoodLog>(this);
+    public override void AddToRegionContent() => Utils.NodeAt(position.x, position.y).subregion?.content.Add<WoodLog>(this);
+    public override void RemoveFromRegionContent() => Utils.NodeAt(position.x, position.y).subregion?.content.Remove<WoodLog>(this);
     
     #endregion
 }

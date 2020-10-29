@@ -105,13 +105,15 @@ public class BuildCommandInputState : CommandInputState {
         //Detecting new tiles where we can create a plan.
         foreach (Vector2Int position in _selectionArea.GetPositions()) {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t is null || t.content is null || t.content.staticObject != null || t.isTraversable == false) {
+            if ((t is null)
+            || _tiles.ContainsKey(t)
+            || (t.content?.staticObject is null && t.isTraversable == false)){
                 continue;
             }
 
-            if (_tiles.ContainsKey(t) == false) {
-                _tiles.Add(t, CreateJobIcon(t));
-            }
+            //(t.content?.staticObject != null && t.content.staticObject.GetType() != typeof(Vegetation))
+
+            _tiles.Add(t, CreateJobIcon(t));
         }
     }
 

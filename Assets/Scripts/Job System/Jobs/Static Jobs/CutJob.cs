@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CutJob : Job {
+public class CutJob : StaticJob {
     
     public IHarvestable Vegetation => _harvestable;
 
     protected IHarvestable _harvestable;
     
-    public CutJob(IHarvestable harvestable, Vector2Int jobPosition, GameObject jobIcon) : base(jobPosition, jobIcon) {
+    public CutJob(IHarvestable harvestable, Vector2Int jobPosition, GameObject jobIcon = null) : base(jobPosition, jobIcon) {
         _harvestable = harvestable;
     }
 

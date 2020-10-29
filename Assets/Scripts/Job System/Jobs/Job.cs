@@ -11,6 +11,7 @@ public abstract class Job {
     }
 
     public Vector2Int Position => _jobPosition;
+    public bool _wasJobCanceled = false;
 
     protected Vector2Int _jobPosition;
     protected JobHandlerComponent _worker;
@@ -44,6 +45,7 @@ public abstract class Job {
     }
 
     public void DeleteJob() {
+        _wasJobCanceled = true;
         if (_worker != null) {
             _worker.WithdrawJob();
             _task.TaskResultHandler -= OnJobFinish;

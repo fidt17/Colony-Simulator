@@ -10,7 +10,15 @@ public class TileContent {
     public StockpilePart stockpilePart;
     public StaticObject staticObject;
     public Item item;
+
     public List<Character> characters = new List<Character>();
+    
+    public ConstructionPlan constructionPlan;
+
+    private List<StaticJob> _staticJobs = new List<StaticJob>();
+    public List<StaticJob> StaticJobs => _staticJobs;
+    public void AddStaticJob(StaticJob job) => _staticJobs.Add(job);
+    public void RemoveStaticJob(StaticJob job) => _staticJobs.Remove(job);
 
     private Tile _tile;
 

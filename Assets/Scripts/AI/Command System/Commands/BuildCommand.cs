@@ -9,18 +9,10 @@ public class BuildCommand : Command {
 
     public BuildCommand(ConstructionPlan plan) {
         _plan = plan;
-        //FIX ME : CREATE JOB CANCLE EVENT OR SMTH
     }
 
     public override void Execute() {
-        //FIX ME : UNSUBSCRIBE FROM EVENT
         _plan.Build();
         Finish(true);
-    }
-
-    public override void Abort() {
-        if (_plan != null) {
-            //FIX ME : UNSUBSCRIBE FROM EVENT
-        }
     }
 }

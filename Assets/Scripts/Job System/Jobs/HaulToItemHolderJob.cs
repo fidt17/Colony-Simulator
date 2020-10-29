@@ -20,6 +20,11 @@ public class HaulToItemHolderJob : HaulJob {
     }
 
     public override bool CanDoJob(JobHandlerComponent worker) {
+        if (_wasJobCanceled) {
+            JobSystem.GetInstance().DeleteJob(this);
+            return false;
+        }
+
         //check that worker can actually get to the dropPosition
         if (!base.CanDoJob(worker)) {
             return false;

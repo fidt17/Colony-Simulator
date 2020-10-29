@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class JobSystem : Singleton<JobSystem> {
 
+    //List of every single job on the map
+    //the ones which have been already assigned to a worker
+    //and those that are not yet assigned to anyone
     public List<Job> AllJobs => _allJobs;
+    
     public List<Job> AvailableJobs => _availableJobs;
 
     private List<JobHandlerComponent> _availableWorkers = new List<JobHandlerComponent>(); 
     private List<Job> _allJobs = new List<Job>();
+    //List of jobs to which workers might be assigned.
     private List<Job> _availableJobs = new List<Job>();
+
+    //Job system refreshes and checks if there are any worker that can be assigned to a job
     private const float jobUpdateCooldown = 0.1f;
 
-    private void Start() => StartCoroutine(ProcessJobs());
+    private void Start() {
+        StartCoroutine(ProcessJobs());
+    }
 
     public void AddJob(Job job) {
         _allJobs.Insert(0, job);

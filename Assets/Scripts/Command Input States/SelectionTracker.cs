@@ -73,7 +73,7 @@ public class SelectionTracker : Singleton<SelectionTracker> {
         return selectable;
     }
 
-    private void Update() {
+    private void LateUpdate() {
 
         if (_lmbPressed == false && OnAreaChange != null) {
             OnAreaChangeArgs e = new OnAreaChangeArgs();

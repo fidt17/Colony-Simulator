@@ -59,7 +59,7 @@ public class CommandProcessor : MonoBehaviour {
 
     private void OnTaskFinish(object source, System.EventArgs e) {
         if (_currentTask != null) {
-            _currentTask.TaskResultHandler -= OnTaskFinish;
+            (source as ITask).TaskResultHandler -= OnTaskFinish;
             _currentTask = null;
         }
         NextTask();

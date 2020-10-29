@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildJob : Job {
+public class BuildJob : StaticJob {
     
     private ConstructionPlan _plan;
 
@@ -12,7 +12,7 @@ public class BuildJob : Job {
 
     protected override void PlanJob() {
         _task = new BuildTask(_plan, _worker.MotionComponent, GetDestinationNode().position) as ITask;
-        _worker.CommandProcessor.AddTask(_task);
         _task.TaskResultHandler += OnJobFinish;
+        _worker.CommandProcessor.AddTask(_task);
     }
 }

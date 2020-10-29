@@ -7,7 +7,7 @@ public class IdleAIComponent {
     private Character _character;
 
     private const float _coroutineCooldown = 5f;
-    private const float _idleWaitTime = 10f;
+    private const float _idleWaitTime = 1f;
     private const float _searchOffset = 5;
 
     public IdleAIComponent(Character character) {
