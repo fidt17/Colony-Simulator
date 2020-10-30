@@ -1,44 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Rabbit : Character {
 
-    #region Components
+    public MotionAnimatorComponent MotionAnimator { get; private set; }
 
-    public MotionAnimatorComponent motionAnimator { get; protected set; }
-
-    #endregion
-
-    public override void SetGameObject(GameObject gameObject) {
-        base.SetGameObject(gameObject);
+    public override void SetGameObject(GameObject obj) {
+        base.SetGameObject(obj);
         InitializeMotionAnimator();
     }
 
-    #region Animation Component
-
-    protected void InitializeMotionAnimator() {
-        motionAnimator = new MotionAnimatorComponent(this);
-        _components.Add(motionAnimator);
+    private void InitializeMotionAnimator() {
+        MotionAnimator = new MotionAnimatorComponent(this);
+        Components.Add(MotionAnimator);
     }
-
-    #endregion
-
-    #region Hunger Component
 
     protected override void InitializeHungerComponent() {
         base.InitializeHungerComponent();
-        hungerComponent.edibles.Add(typeof(Grass));
+        HungerComponent.Edibles.Add(typeof(Grass));
     }
-
-    #endregion
-
-    #region AI
 
     protected override void InitializeAI() {
-        AI = gameObject.AddComponent<RabbitAI>();
-        AI.Initialize(this);
+        AI = new RabbitAI(this);
     }
-
-    #endregion
 }

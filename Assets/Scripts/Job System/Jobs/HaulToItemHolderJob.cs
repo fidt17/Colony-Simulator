@@ -13,9 +13,9 @@ public class HaulToItemHolderJob : HaulJob {
     protected Item _item;
     protected Type _itemType;
 
-    public HaulToItemHolderJob(Type itemType, IItemHolder itemHolder) : base((itemHolder as StaticObject).position) {
+    public HaulToItemHolderJob(Type itemType, IItemHolder itemHolder) : base((itemHolder as StaticObject).Position) {
         _itemType = itemType;
-        _dropPosition = (itemHolder as StaticObject).position;
+        _dropPosition = (itemHolder as StaticObject).Position;
         _itemHolder = itemHolder;
     }
 
@@ -36,7 +36,7 @@ public class HaulToItemHolderJob : HaulJob {
                 return false;
             } else {
                 if (tile.content.HasItem) {
-                    return tile.content.item.GetType().Equals(ItemType) && tile.content.item.HasHaulJob == false;
+                    return tile.content.Item.GetType().Equals(ItemType) && tile.content.Item.HasHaulJob == false;
                 } else {
                     return false;
                 }
@@ -48,7 +48,7 @@ public class HaulToItemHolderJob : HaulJob {
             JobSystem.GetInstance().StartCoroutine(JobSystem.GetInstance().HideJobForSeconds(this, 5f));
             return false;
         } else {
-            _item = t.content.item;
+            _item = t.content.Item;
             return true;
         }
         /////////////////

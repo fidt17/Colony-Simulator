@@ -30,7 +30,7 @@ public class Stockpile {
                 continue;
             }
 
-            if (node.Region != Utils.NodeAt(item.position).Region) {
+            if (node.Region != Utils.NodeAt(item.Position).Region) {
                 continue;
             }
 

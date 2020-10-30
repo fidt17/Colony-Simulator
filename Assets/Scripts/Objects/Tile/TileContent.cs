@@ -5,55 +5,52 @@ using UnityEngine;
 
 public class TileContent {
 
-    public bool HasItem => item != null;
+    public bool HasItem => Item != null;
 
-    public StockpilePart stockpilePart;
-    public StaticObject staticObject;
-    public Item item;
+    public StockpilePart    StockpilePart     { get; private set; }
+    public ConstructionPlan ConstructionPlan  { get; private set; }
+    public StaticObject     StaticObject      { get; private set; }
+    public Item             Item              { get; private set; }
 
-    public List<Character> characters = new List<Character>();
+    public List<Character> Characters { get; } = new List<Character>();
+    public List<StaticJob> StaticJobs { get; } = new List<StaticJob>();
     
-    public ConstructionPlan constructionPlan;
+    private readonly Tile _tile;
 
-    private List<StaticJob> _staticJobs = new List<StaticJob>();
-    public List<StaticJob> StaticJobs => _staticJobs;
-    public void AddStaticJob(StaticJob job) => _staticJobs.Add(job);
-    public void RemoveStaticJob(StaticJob job) => _staticJobs.Remove(job);
+    public TileContent(Tile tile) {
+        _tile = tile;
+    }
 
-    private Tile _tile;
+    public void SetStockpilePart(StockpilePart value) => StockpilePart = value;
+    public void RemoveStockpilePart()                 => StockpilePart = null;
 
-    public TileContent(Tile tile) => _tile = tile;
-
+    public void SetConstructionPlan(ConstructionPlan value) => ConstructionPlan = value;
+    public void RemoveConstructionPlan()                    => ConstructionPlan = null;
+    
+    public void AddStaticJob(StaticJob job)    => StaticJobs.Add(job);
+    public void RemoveStaticJob(StaticJob job) => StaticJobs.Remove(job);
+    
     public void PutStaticObjectOnTile(StaticObject staticObject, bool isTraversable) {
-        if (this.staticObject != null) {
-            RemoveStaticObjectFromTile();
-        }
-        this.staticObject = staticObject;
+        StaticObject?.Destroy();
+        StaticObject = staticObject;
         _tile.SetTraversability(isTraversable);
     }
 
     public void RemoveStaticObjectFromTile() {
-        staticObject = null;
+        StaticObject = null;
         _tile.SetTraversability(true);
     }
 
     public void PutItemOnTile(Item item) {
-        if (this.item != null) {
-            Debug.LogError("Item was destroyed because another item was placed upon it." + " pos: " + this.item.position);
-            this.item.Destroy();
+        if (Item != null) {
+            Debug.LogError("Item was destroyed because another item was placed upon it." + " pos: " + this.Item.Position);
+            Item.Destroy();
         }
-        this.item = item;
+        Item = item;
     }
 
-    public void RemoveItemFromTile() {
-        item = null;
-    }
+    public void RemoveItemFromTile() => Item = null;
 
-    public void AddCharacter(Character character) {
-        characters.Add(character);
-    }
-
-    public void RemoveCharacter(Character character) {
-        characters.Remove(character);
-    }
+    public void AddCharacter(Character character)    => Characters.Add(character);
+    public void RemoveCharacter(Character character) => Characters.Remove(character);
 }

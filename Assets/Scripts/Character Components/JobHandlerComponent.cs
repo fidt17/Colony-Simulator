@@ -7,9 +7,9 @@ public class JobHandlerComponent : CharacterComponent {
 
     public bool IsAvailable => _currentJob is null && CommandProcessor.HasTask == false;
 
-    public MotionComponent    MotionComponent  => _worker.motionComponent;
+    public MotionComponent    MotionComponent  => _worker.MotionComponent;
     public CommandProcessor   CommandProcessor => _worker.AI.CommandProcessor;
-    public InventoryComponent Inventory        => _worker.inventoryComponent;
+    public InventoryComponent Inventory        => _worker.InventoryComponent;
 
     private Human _worker;
     private Job _currentJob;

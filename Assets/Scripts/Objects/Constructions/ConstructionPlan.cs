@@ -20,14 +20,14 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
     public void Build() {
         this.Destroy();
-        Factory.Create<Construction>("wall", position);
+        Factory.Create<Construction>("wall", Position);
     }
 
     #region IItemHolder
 
     public void ItemIn(Item item) {
         items.Add(item);
-        item.SetPosition(position);
+        item.SetPosition(Position);
         item.gameObject.SetActive(false);
     }
 
@@ -46,20 +46,20 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
     public new void SetData(ConstructionScriptableObject data, Vector2Int position) {
         this.data = data as ConstructionScriptableObject;
-        this.position = position;
-        isTraversable = true;
+        this.Position = position;
+        IsTraversable = true;
         ConfigureIngredients();
     } 
 
     public override void SetGameObject(GameObject gameObject) {
         base.SetGameObject(gameObject);
-        Utils.TileAt(position).content.constructionPlan = this;
+        Utils.TileAt(Position).content.SetConstructionPlan(this);
         CheckCurrentTileContents();
     }
 
     public override void Destroy() {
         GameObject.Destroy(gameObject);
-        Utils.TileAt(position).content.constructionPlan = null;
+        Utils.TileAt(Position).content.RemoveConstructionPlan();
     }
 
     #endregion
@@ -77,7 +77,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
     private void CreateConstructionJob() => JobSystem.GetInstance().AddJob(new BuildJob(this));
 
     private void CheckCurrentTileContents() {
-        Tile currentTile = Utils.TileAt(position.x, position.y);
+        Tile currentTile = Utils.TileAt(Position.x, Position.y);
         //Removing any existing stockpiles from the tile
         StockpileCreator.RemoveStockpileFromTile(currentTile);
         bool createHaulJobs = true;
@@ -88,10 +88,10 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         if (currentTile.content.HasItem) {
             createHaulJobs = false;
             RemoveItemFromTileUnderConstructionPlan();
-        } else if (currentTile.content.staticObject != null && currentTile.content.staticObject.GetType().IsSubclassOf(typeof(Vegetation))) {
+        } else if (currentTile.content.StaticObject != null && currentTile.content.StaticObject.GetType().IsSubclassOf(typeof(Vegetation))) {
             createHaulJobs = false;
-            ICuttable vegetation = currentTile.content.staticObject as Vegetation;
-            CutJob job = new CutJob(vegetation, position);
+            ICuttable vegetation = currentTile.content.StaticObject as Vegetation;
+            CutJob job = new CutJob(vegetation, Position);
             job.JobResultHandler += CutVegetationUnderConstructionPlanJobHandler;
             JobSystem.GetInstance().AddJob(job);
         }
@@ -102,8 +102,8 @@ public class ConstructionPlan : StaticObject, IItemHolder {
     }
     
     private void RemoveItemFromTileUnderConstructionPlan() {
-        Tile currentTile = Utils.TileAt(position.x, position.y);
-        Item item = currentTile.content.item;
+        Tile currentTile = Utils.TileAt(Position.x, Position.y);
+        Item item = currentTile.content.Item;
 
         //find closest free spot
         Func<Tile, bool> requirementsFunction = delegate(Tile t) {
@@ -113,7 +113,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
             return !t.content.HasItem;
         }
         };
-        Tile tile = SearchEngine.FindClosestTileWhere(position, requirementsFunction);
+        Tile tile = SearchEngine.FindClosestTileWhere(Position, requirementsFunction);
         
         if (tile != null) {
             HaulJob job = new HaulJob(item, tile.position);
@@ -121,7 +121,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
             JobSystem.GetInstance().AddJob(job);
             job.JobResultHandler += HaulItemFromConstructionPlanJobHandler;
         } else {
-            Debug.LogError("No empty tile to move item to was found. Implement wait function to try again some time later. P: " + position);
+            Debug.LogError("No empty tile to move item to was found. Implement wait function to try again some time later. P: " + Position);
         }
     }
 
@@ -131,7 +131,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
             (source as HaulJob).JobResultHandler -= HandleHaulJobResult;
             if ((e as Job.JobResultEventArgs).result == true) {
                 CreateHaulingJobs();
-            } else if (Utils.TileAt(position.x, position.y).content.HasItem) {
+            } else if (Utils.TileAt(Position.x, Position.y).content.HasItem) {
                 RemoveItemFromTileUnderConstructionPlan();
             }
         }
@@ -141,7 +141,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         if (source is CutJob) {
             if ((e as Job.JobResultEventArgs).result == true) {
                 (source as Job).JobResultHandler -= CutVegetationUnderConstructionPlanJobHandler;
-                Tile currentTile = Utils.TileAt(position.x, position.y);
+                Tile currentTile = Utils.TileAt(Position.x, Position.y);
                 if (currentTile.content.HasItem) {
                     RemoveItemFromTileUnderConstructionPlan();
                 } else {
@@ -205,14 +205,14 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         }
         _isChangePlanToActiveStateRunning = true;
 
-        if (isTraversable == true) {
-            Tile t = Utils.TileAt(position);
+        if (IsTraversable == true) {
+            Tile t = Utils.TileAt(Position);
 
-            while (t.content.characters.Count > 0) {
+            while (t.content.Characters.Count > 0) {
                 yield return null;
             }
 
-            isTraversable = false;
+            IsTraversable = false;
             PutOnTile();
             gameObject.GetComponent<SpriteRenderer>().color = Color.black;
         }

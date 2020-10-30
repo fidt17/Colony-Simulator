@@ -54,7 +54,7 @@ public class CancelJobInputState : CommandInputState {
     
         foreach (Vector2Int position in _selectionArea.GetPositions()) {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t is null || t.content is null || (t.content.StaticJobs.Count == 0 && t.content.constructionPlan is null)) {
+            if (t is null || t.content is null || (t.content.StaticJobs.Count == 0 && t.content.ConstructionPlan is null)) {
                 continue;
             }
 
@@ -66,8 +66,8 @@ public class CancelJobInputState : CommandInputState {
                 }
             }
 
-            if (t.content.constructionPlan != null && _constructionPlans.ContainsKey(t) == false) {
-                _constructionPlans.Add(t, t.content.constructionPlan);
+            if (t.content.ConstructionPlan != null && _constructionPlans.ContainsKey(t) == false) {
+                _constructionPlans.Add(t, t.content.ConstructionPlan);
             }
         }
     }

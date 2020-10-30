@@ -1,48 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Human : Character {
 
-    #region Components
+    public MotionAnimatorComponent MotionAnimator      { get; private set; }
+    public JobHandlerComponent     JobHandlerComponent { get; private set; }
+    public InventoryComponent      InventoryComponent  { get; private set; }
 
-    public MotionAnimatorComponent motionAnimator  { get; private set; }
-    public JobHandlerComponent jobHandlerComponent { get; private set; }
-    public InventoryComponent inventoryComponent   { get; private set; }
-
-    #endregion
-
-    public override void SetGameObject(GameObject gameObject) {
-        base.SetGameObject(gameObject);
+    public override void SetGameObject(GameObject obj)  {
+        base.SetGameObject(obj);
         InitializeMotionAnimator();
         InitializeJobHandler();
         InitializeInventory();
     }
+    
+    public override void Select() {
+        base.Select();
+        CommandInputStateMachine.SwitchCommandState(new MoveCommandInputState());
+    }
 
     protected override void InitializeAI() {
-        AI = gameObject.AddComponent<HumanAI>();
-        AI.Initialize(this);
+        AI = new HumanAI(this);
     }
 
-    protected void InitializeMotionAnimator() {
-        motionAnimator = new MotionAnimatorComponent(this);
-        _components.Add(motionAnimator);
+    private void InitializeMotionAnimator() {
+        MotionAnimator = new MotionAnimatorComponent(this);
+        Components.Add(MotionAnimator);
     }
 
-    protected void InitializeJobHandler() {
-        jobHandlerComponent = new JobHandlerComponent(this);
-        _components.Add(jobHandlerComponent);
+    private void InitializeJobHandler() {
+        JobHandlerComponent = new JobHandlerComponent(this);
+        Components.Add(JobHandlerComponent);
     }
 
-    protected void InitializeInventory() {
-        inventoryComponent = new InventoryComponent(this);
-        _components.Add(inventoryComponent);
-    }
-
-    //Interface:
-    //ISelectable
-    public override void OnSelect() {
-        base.OnSelect();
-        CommandInputStateMachine.SwitchCommandState(new MoveCommandInputState());
+    private void InitializeInventory() {
+        InventoryComponent = new InventoryComponent(this);
+        Components.Add(InventoryComponent);
     }
 }

@@ -5,20 +5,19 @@ using System;
 
 public class HungerComponent : CharacterComponent {   
     
-    public float HungerLevel => _hunger;
+    public float HungerLevel { get; private set; } = 100;
 
-    public List<Type> edibles = new List<Type>();// List of things character can eat.
-    
-    private float _hunger = 100;
-    private float _hungerDecreasePerSecond = -1;
+    public readonly List<Type> Edibles = new List<Type>(); // List of things character can eat.
 
-    private Character _character;
+    private readonly float _hungerDecreasePerSecond;
+
+    private Character   _character;
     private EatFoodTask _eatFoodTask;
 
     public HungerComponent(Character character) {
         _character = character;
-        _hungerDecreasePerSecond = _character.data.hungerDecreasePerSecond;
-        _coroutines.Add(GameManager.GetInstance().StartCoroutine(DecreaseHunger()));
+        _hungerDecreasePerSecond = _character.Data.hungerDecreasePerSecond;
+        RunCoroutine(DecreaseHunger());
     }
 
     public void Eat(IEdible food) {
@@ -26,8 +25,8 @@ public class HungerComponent : CharacterComponent {
         (food as IPrefab).Destroy();
     }
 
-    public void ChangeHunger(float value) {
-        _hunger = Mathf.Clamp(_hunger + value, 0, 100);
+    private void ChangeHunger(float value) {
+        HungerLevel = Mathf.Clamp(HungerLevel + value, 0, 100);
         CheckHunger();
     }
 
@@ -40,18 +39,18 @@ public class HungerComponent : CharacterComponent {
     }
 
     private void CheckHunger() {
-        if (_hunger < _character.data.hungerSearchThreshold) {
-            _coroutines.Add(GameManager.GetInstance().StartCoroutine(StartFoodSearch()));
+        if (HungerLevel < _character.Data.hungerSearchThreshold) {
+            RunCoroutine(StartFoodSearch());
         }
 
-        if (_hunger == 0) {
+        if (HungerLevel == 0) {
             _character.Die();
         }
     }
 
     private bool _isSearchingForFood = false;
     private IEnumerator StartFoodSearch() {
-        if (_isSearchingForFood || edibles.Count == 0) {
+        if (_isSearchingForFood || Edibles.Count == 0) {
             yield break;
         }
         _isSearchingForFood = true;
@@ -59,10 +58,10 @@ public class HungerComponent : CharacterComponent {
         Grass grass = null;
         while (grass is null) {
             yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 2f));
-            grass = SearchEngine.FindClosestGrass(_character.motionComponent.GridPosition);
+            grass = SearchEngine.FindClosestGrass(_character.MotionComponent.GridPosition);
         }
         
-        _eatFoodTask = new EatFoodTask(_character, Pathfinder.FindNodeNear(Utils.NodeAt(grass.position), _character.motionComponent.PathNode), grass);
+        _eatFoodTask = new EatFoodTask(_character, Pathfinder.FindNodeNear(Utils.NodeAt(grass.Position), _character.MotionComponent.PathNode), grass);
         _eatFoodTask.TaskResultHandler += HandleGetFoodTaskResult;
         _character.AI.CommandProcessor.AddTask(_eatFoodTask);
 

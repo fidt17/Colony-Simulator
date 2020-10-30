@@ -6,7 +6,7 @@ public class BuildJob : StaticJob {
     
     private ConstructionPlan _plan;
 
-    public BuildJob(ConstructionPlan plan) : base(plan.position) {
+    public BuildJob(ConstructionPlan plan) : base(plan.Position) {
         _plan = plan;
     }
 

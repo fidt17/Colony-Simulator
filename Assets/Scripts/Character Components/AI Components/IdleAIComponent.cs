@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleAIComponent {
+public class IdleAIComponent : CharacterComponent {
     
     private Character _character;
 
@@ -10,9 +10,9 @@ public class IdleAIComponent {
     private const float _idleWaitTime = 1f;
     private const float _searchOffset = 5;
 
-    public IdleAIComponent(Character character) {
+    public IdleAIComponent(Character character, CommandProcessor cp) {
         _character = character;
-        _character.CommandProcessor.StartCoroutine(TryToWander());
+        cp.StartCoroutine(TryToWander());
     }
 
     private IEnumerator TryToWander() {
@@ -24,7 +24,7 @@ public class IdleAIComponent {
             }
             
             PathNode targetNode = null;
-            PathNode startNode = _character.motionComponent.PathNode;
+            PathNode startNode = _character.MotionComponent.PathNode;
 
             while (targetNode is null) {
                 Vector3 randomPosition = Random.insideUnitSphere * _searchOffset;
@@ -43,10 +43,14 @@ public class IdleAIComponent {
             }
 
             Task wanderTask = new Task();
-            wanderTask.AddCommand(new MoveCommand(_character.motionComponent, targetNode.position));
+            wanderTask.AddCommand(new MoveCommand(_character.MotionComponent, targetNode.position));
             wanderTask.AddCommand(new WaitCommand(_idleWaitTime));
             
             _character.CommandProcessor.AddTask(wanderTask);
         }
+    }
+
+    public override bool CheckInitialization() {
+        throw new System.NotImplementedException();
     }
 }

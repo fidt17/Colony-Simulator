@@ -107,7 +107,7 @@ public class BuildCommandInputState : CommandInputState {
             Tile t = Utils.TileAt(position.x, position.y);
             if ((t is null)
             || _tiles.ContainsKey(t)
-            || (t.content?.staticObject is null && t.isTraversable == false)){
+            || (t.content?.StaticObject is null && t.isTraversable == false)){
                 continue;
             }
 

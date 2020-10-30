@@ -48,10 +48,10 @@ public static class Pathfinder {
     }
 
     public static bool CompareCharacterRegionWith(Character character, Region r) {
-        PathNode characterNode = character.motionComponent.PathNode;
+        PathNode characterNode = character.MotionComponent.PathNode;
 
         if (characterNode.isTraversable == false) {
-            character.motionComponent.MoveCharacterToTraversableTile();
+            character.MotionComponent.MoveCharacterToTraversableTile();
         }
 
         return characterNode.Region == r;

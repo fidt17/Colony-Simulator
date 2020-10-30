@@ -1,78 +1,50 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public abstract class Item : IPrefab, IDestroyable, IPlacable {
+public abstract class Item : IPrefab, IDestroyable {
     
     public event EventHandler OnDestroyed;
 
-    public Vector2Int position { get; protected set; }
-
-    public ItemScriptableObject data { get; protected set; }
-    public GameObject gameObject     { get; protected set; }
-
-    public Tile Tile => Utils.TileAt(position);
-    public bool HasHaulJob => _haulJob != null;
-
-    private HaulJob _haulJob;
+    public bool                 HasHaulJob { get; private set; }
+    public ItemScriptableObject Data       { get; private set; }
+    public GameObject           gameObject { get; private set; }
+    public Vector2Int           Position   { get; private set; }
 
     protected abstract int StackCount { get; }
-
-    public void SetPosition(Vector2Int position) {
-        this.position = position;
-        if (gameObject != null) {
-            gameObject.transform.position = Utils.ToVector3(this.position);
-        }
-    }
-
-    public void SetHaulJob(HaulJob job) {
-        _haulJob = job;
-        job.JobResultHandler += HaulJobResultHandler;
-    }
-
-    public void HaulJobResultHandler(object source, EventArgs e) {
-        (source as Job).JobResultHandler -= HaulJobResultHandler;
-        _haulJob = null;
-    }
-
-    #region IPrefab
-
+    
     public virtual void SetData(PrefabScriptableObject data, Vector2Int position) {
-        this.data = data as ItemScriptableObject;
-        this.position = position;
-        PutOnTile();
+        this.Data = data as ItemScriptableObject;
+        this.Position = position;
     } 
 
     public virtual void SetGameObject(GameObject obj) {
         gameObject = obj;
-        gameObject.transform.position = Utils.ToVector3(position);
+        gameObject.transform.position = Utils.ToVector3(Position);
+        PutOnTile();
     }
-
-    #endregion
-
-    #region IDestroyable
+    
+    public void SetPosition(Vector2Int position) {
+        Position = position;
+        gameObject.transform.position = Utils.ToVector3(this.Position);
+    }
     
     public virtual void Destroy() {
-        GameObject.Destroy(gameObject);
+        Object.Destroy(gameObject);
         OnDestroyed?.Invoke(this, EventArgs.Empty);
         RemoveFromTile();
     }
 
-    #endregion
+    public void SetHaulJob(HaulJob job) {
+        HasHaulJob = true;
+        job.JobResultHandler += HaulJobResultHandler;
+    }
 
-    #region IPlacable
 
     public void PutOnTile() {
-
-        Func<Tile, bool> requirementsFunction = delegate(Tile t) {
-            if (t == null) {
-                return false;
-            } else {
-                return !t.content.HasItem && t.isTraversable == true;
-            }
-        };
-        Tile tile = SearchEngine.FindClosestTileWhere(position, requirementsFunction, Tile.isTraversable);
+        
+        bool RequirementsFunction(Tile t) => t != null && !t.content.HasItem && t.isTraversable;
+        var tile = SearchEngine.FindClosestTileWhere(Position, RequirementsFunction, Utils.TileAt(Position).isTraversable);
         
         if (tile != null) {
             SetPosition(tile.position);
@@ -85,13 +57,17 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
     }
 
     public void RemoveFromTile() {
-        Tile.content.RemoveItemFromTile();
+        Utils.TileAt(Position).content.RemoveItemFromTile();
         RemoveFromRegionContent();
         StockpileManager.GetInstance().RemoveItem(this);
     }
 
     public abstract void AddToRegionContent();
-    public abstract void RemoveFromRegionContent();
+
+    protected abstract void RemoveFromRegionContent();
     
-    #endregion
+    private void HaulJobResultHandler(object source, EventArgs e) {
+        ((Job) source).JobResultHandler -= HaulJobResultHandler;
+        HasHaulJob = false;
+    }
 }

@@ -9,7 +9,7 @@ public class MotionAnimatorComponent : CharacterComponent {
 
     public MotionAnimatorComponent(Character character) {
         _character = character;
-        _character.motionComponent.VelocityHandler += HandleVelocity;
+        _character.MotionComponent.VelocityHandler += HandleVelocity;
         _animator = _character.gameObject.GetComponent<Animator>();
     }
 
@@ -21,7 +21,7 @@ public class MotionAnimatorComponent : CharacterComponent {
 
     public override void DisableComponent() {
         base.DisableComponent();
-        _character.motionComponent.VelocityHandler -= HandleVelocity;
+        _character.MotionComponent.VelocityHandler -= HandleVelocity;
         _character = null;
     }
 

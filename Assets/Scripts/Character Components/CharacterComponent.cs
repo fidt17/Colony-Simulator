@@ -4,15 +4,21 @@ using UnityEngine;
 
 public abstract class CharacterComponent {
 
-    public bool IsDisabled { get; protected set; } = false;
-    protected List<Coroutine> _coroutines = new List<Coroutine>();
-
+    public bool IsDisabled { get; private set; }
+    
+    private readonly List<Coroutine> _coroutines = new List<Coroutine>();
+    
     public virtual void DisableComponent() {
         IsDisabled = true;
-        foreach (Coroutine coroutine in _coroutines) {
-            GameManager.GetInstance().StopCoroutine(coroutine);
+        var gameManager = GameManager.GetInstance();
+        foreach (var coroutine in _coroutines) {
+            gameManager.StopCoroutine(coroutine);
         }
     }
     
     public abstract bool CheckInitialization();
+
+    protected void RunCoroutine(IEnumerator coroutine) {
+        _coroutines.Add(GameManager.GetInstance().StartCoroutine(coroutine));
+    }
 }

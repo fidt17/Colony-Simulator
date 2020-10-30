@@ -10,7 +10,7 @@ public class InventoryComponent : CharacterComponent {
 
     public InventoryComponent(Human human) {
         _human = human;
-        _human.motionComponent.OnPositionChange += UpdateInventoryPositions;
+        _human.MotionComponent.OnPositionChange += UpdateInventoryPositions;
     }
 
     public void PickItem(Item item) {
@@ -24,7 +24,7 @@ public class InventoryComponent : CharacterComponent {
 
             Tile t = Utils.TileAt(position.x, position.y);
             if (t.isTraversable == false) {
-                position = _human.motionComponent.GridPosition;
+                position = _human.MotionComponent.GridPosition;
             }
             
             item.SetPosition(position);
@@ -39,12 +39,12 @@ public class InventoryComponent : CharacterComponent {
         }
     }
 
-    public void DropItem(Item item) => DropItemAt(item, _human.motionComponent.GridPosition);
+    public void DropItem(Item item) => DropItemAt(item, _human.MotionComponent.GridPosition);
 
     public void DropAll(){
         for (int i = _inventory.Count - 1; i >= 0; i--) {
             Item item = _inventory[i];
-            DropItemAt(item, _human.motionComponent.GridPosition);
+            DropItemAt(item, _human.MotionComponent.GridPosition);
         }
     }
 

@@ -13,7 +13,7 @@ public class DropIntoCommand : Command {
     public DropIntoCommand(Item item, InventoryComponent picker, IItemHolder itemHolder) {
         _item = item;
         _picker = picker;
-        _destination = (itemHolder as StaticObject).position;
+        _destination = (itemHolder as StaticObject).Position;
         _itemHolder = itemHolder;
         _item.OnDestroyed += OnObjectDestroyedOutside;
     }

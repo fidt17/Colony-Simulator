@@ -65,8 +65,8 @@ public class Subregion {
         content.Clear();
         foreach (PathNode n in nodes) {
             Tile t = Utils.TileAt(n.x, n.y);
-            t.content?.staticObject?.AddToRegionContent();
-            t.content?.item?.AddToRegionContent();
+            t.content?.StaticObject?.AddToRegionContent();
+            t.content?.Item?.AddToRegionContent();
         }
     }
 }

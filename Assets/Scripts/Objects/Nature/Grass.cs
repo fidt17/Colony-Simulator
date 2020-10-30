@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class Grass : Vegetation, IEdible {
 
-    #region IEdible
-
     public int NutritionValue => 20;
-    public Vector2Int GetEdiblePosition() => position;
+    public Vector2Int GetEdiblePosition() => Position;
 
-    #endregion
-
-    #region IPlacable
-
-    public override void AddToRegionContent() => Utils.NodeAt(position.x, position.y).subregion.content.Add<Grass>(this);
-    public override void RemoveFromRegionContent() => Utils.NodeAt(position.x, position.y).subregion.content.Remove<Grass>(this);
-    
-    #endregion  
+    public    override void AddToRegionContent()      => Utils.NodeAt(Position.x, Position.y).subregion.content.Add<Grass>(this);
+    protected override void RemoveFromRegionContent() => Utils.NodeAt(Position.x, Position.y).subregion.content.Remove<Grass>(this);
 }

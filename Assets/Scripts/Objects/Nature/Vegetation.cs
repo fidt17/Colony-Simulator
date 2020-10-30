@@ -2,15 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vegetation : StaticObject, IHarvestable, ICuttable {
-       
-    #region IHarvestable
-
-    public virtual void Harvest() => Destroy();
-
-    #endregion
-
-    #region ICuttable
+public abstract class Vegetation : StaticObject, IHarvestable, ICuttable {
 
     public bool HasCutJob { get; set; }
 
@@ -18,14 +10,14 @@ public class Vegetation : StaticObject, IHarvestable, ICuttable {
         Destroy();
         return null;
     }
+    
+    public virtual void Harvest() => Destroy();
 
     public void HandleCutJobResult(object job, System.EventArgs e) {
-        if ((e as Job.JobResultEventArgs).result == true
-        || ((e as Job.JobResultEventArgs).wasJobCanceled == true)) {
-            (job as Job).JobResultHandler -= HandleCutJobResult;
+        if (((Job.JobResultEventArgs) e).result == true
+        || (((Job.JobResultEventArgs) e).wasJobCanceled == true)) {
+            ((Job) job).JobResultHandler -= HandleCutJobResult;
             HasCutJob = false;
         }
     }
-
-    #endregion
 }

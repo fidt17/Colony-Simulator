@@ -16,7 +16,7 @@ public class DebugWindow : WindowComponent {
         Tile t = Utils.TileAt(new Vector2Int(gridCoordinates.x, gridCoordinates.y));
         if (t != null) {
             //_tileCoordinatesTMP.text = "Coordinates: (" + t.position.x + "; " + t.position.y + "), Object: " + t.content.staticObject + ", " + t.content.item;
-            _tileCoordinatesTMP.text = "Coordinates: (" + t.position.x + "; " + t.position.y + "), Character: " + t.content.characters.Count;
+            _tileCoordinatesTMP.text = "Coordinates: (" + t.position.x + "; " + t.position.y + "), Character: " + t.content.Characters.Count;
         } else {
             _tileCoordinatesTMP.text = "Coordinates: (" + gridCoordinates.x + "; " + gridCoordinates.y + ")";
         }

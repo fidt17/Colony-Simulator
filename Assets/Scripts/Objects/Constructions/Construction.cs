@@ -13,7 +13,7 @@ public class Construction : StaticObject {
 
     public new void SetData(ConstructionScriptableObject data, Vector2Int position) {
         this.data = data as ConstructionScriptableObject;
-        this.position = position;
+        this.Position = position;
         PutOnTile();
     } 
 

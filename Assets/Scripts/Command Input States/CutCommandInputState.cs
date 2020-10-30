@@ -68,7 +68,7 @@ public class CutCommandInputState : CommandInputState {
         //Removing non-valid trees from existing dictionary
         Dictionary<Tree, GameObject> temp = new Dictionary<Tree, GameObject>(_trees);
         foreach (KeyValuePair<Tree, GameObject> pair in temp) {
-            if (_selectionArea.Contains(pair.Key.position) == false) {
+            if (_selectionArea.Contains(pair.Key.Position) == false) {
                 pair.Value.SetActive(false);
                 _jobIconsPool.Push(pair.Value);
                 _trees.Remove(pair.Key);
@@ -79,11 +79,11 @@ public class CutCommandInputState : CommandInputState {
         //Detecting new trees.
         foreach (Vector2Int position in _selectionArea.GetPositions()) {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t is null || t.content is null || t.content.staticObject is null) {
+            if (t is null || t.content is null || t.content.StaticObject is null) {
                 continue;
             }
 
-            StaticObject staticObject = t.content.staticObject;
+            StaticObject staticObject = t.content.StaticObject;
 
             if (staticObject.GetType() != typeof(Tree) || (staticObject as Tree).HasCutJob) {
                 continue;
@@ -98,18 +98,18 @@ public class CutCommandInputState : CommandInputState {
     private GameObject CreateJobIcon(Tree tree) {
        if (_jobIconsPool.Count != 0) {
            GameObject jobIcon = _jobIconsPool.Pop();
-           jobIcon.transform.position = Utils.ToVector3(tree.position);
+           jobIcon.transform.position = Utils.ToVector3(tree.Position);
            jobIcon.SetActive(true);
            return jobIcon;
        }
-       return Factory.Create("cut job", tree.position);
+       return Factory.Create("cut job", tree.Position);
     }
 
     private void CreateJobs() {
         Dictionary<Tree, GameObject> temp = new Dictionary<Tree, GameObject>(_trees);
         foreach(KeyValuePair<Tree, GameObject> pair in temp) {
             if (pair.Key.HasCutJob == false) {
-                JobSystem.GetInstance().AddJob(new CutJob(pair.Key, pair.Key.position, pair.Value));
+                JobSystem.GetInstance().AddJob(new CutJob(pair.Key, pair.Key.Position, pair.Value));
                 _trees.Remove(pair.Key);
             }
         }

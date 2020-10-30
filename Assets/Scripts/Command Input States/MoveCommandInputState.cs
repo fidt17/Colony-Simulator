@@ -49,7 +49,7 @@ public class MoveCommandInputState : CommandInputState {
         List<PathNode> targetNodes = Dijkstra.DijkstraFor(colonists.Count, cursorNode);
         for (int i = 0; i < targetNodes.Count; i++) {
             Task moveTask = new Task();
-            moveTask.AddCommand(new MoveCommand(colonists[i].motionComponent, targetNodes[i].position));
+            moveTask.AddCommand(new MoveCommand(colonists[i].MotionComponent, targetNodes[i].position));
             colonists[i].AI.CommandProcessor.AddUrgentTask(moveTask);
         }
     }

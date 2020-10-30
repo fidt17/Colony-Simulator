@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\ppkmv\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\ppkmv\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Colony-Simulator.-463711134.00" t="ExcludeRecursive" />
+    <e p="D:\Repositories\Colony-Simulator" t="IncludeRecursive">
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="Assets Manager" t="Include">
+            <e p="TileSpriteRenderer.cs" t="Include" />
+          </e>
+          <e p="Character Components" t="Include">
+            <e p="AI Components" t="Include">
+              <e p="IdleAIComponent.cs" t="Include" />
+            </e>
+            <e p="AI Controllers" t="Include">
+              <e p="AIController.cs" t="Include" />
+              <e p="HumanAI.cs" t="Include" />
+              <e p="RabbitAI.cs" t="Include" />
+            </e>
+            <e p="CharacterComponent.cs" t="Include" />
+            <e p="HungerComponent.cs" t="Include" />
+            <e p="InventoryComponent.cs" t="Include" />
+            <e p="JobHandlerComponent.cs" t="Include" />
+            <e p="MotionAnimatorComponent.cs" t="Include" />
+            <e p="MotionComponent.cs" t="Include" />
+            <e p="SelectableComponent.cs" t="Include" />
+          </e>
+          <e p="Command Input States" t="Include">
+            <e p="BuildCommandInputState.cs" t="Include" />
+            <e p="CancelJobInputState.cs" t="Include" />
+            <e p="CommandInputState.cs" t="Include" />
+            <e p="CommandInputStateMachine.cs" t="Include" />
+            <e p="CutCommandInputState.cs" t="Include" />
+            <e p="DefaultInputState.cs" t="Include" />
+            <e p="MoveCommandInputState.cs" t="Include" />
+            <e p="RemoveStockpileState.cs" t="Include" />
+            <e p="SelectionTracker.cs" t="Include" />
+            <e p="StockpileState.cs" t="Include" />
+          </e>
+          <e p="Command System" t="Include">
+            <e p="CommandProcessor.cs" t="Include" />
+            <e p="Commands" t="Include">
+              <e p="BuildCommand.cs" t="Include" />
+              <e p="Command.cs" t="Include" />
+              <e p="CutCommand.cs" t="Include" />
+              <e p="DestroyCommand.cs" t="Include" />
+              <e p="DropCommand.cs" t="Include" />
+              <e p="DropIntoCommand.cs" t="Include" />
+              <e p="EatCommand.cs" t="Include" />
+              <e p="HarvestCommand.cs" t="Include" />
+              <e p="MoveCommand.cs" t="Include" />
+              <e p="PickCommand.cs" t="Include" />
+              <e p="RotateToCommand.cs" t="Include" />
+              <e p="WaitCommand.cs" t="Include" />
+            </e>
+            <e p="Tasks" t="Include">
+              <e p="BuildTask.cs" t="Include" />
+              <e p="CutTask.cs" t="Include" />
+              <e p="EatFoodTask.cs" t="Include" />
+              <e p="HaulTask.cs" t="Include" />
+              <e p="HaulToItemHolderTask.cs" t="Include" />
+              <e p="Task.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Controllers" t="Include">
+            <e p="CameraController.cs" t="Include" />
+            <e p="InputListener.cs" t="Include" />
+          </e>
+          <e p="Debug" t="Include">
+            <e p="DebugManager.cs" t="Include" />
+            <e p="PathfinderRenderer.cs" t="Include" />
+          </e>
+          <e p="Factories" t="Include">
+            <e p="Factory.cs" t="Include" />
+          </e>
+          <e p="fidt17 Utils" t="Include">
+            <e p="Mathematics" t="Include">
+              <e p="IntRectangle.cs" t="Include" />
+            </e>
+            <e p="Utils.cs" t="Include" />
+          </e>
+          <e p="Game Settings" t="Include">
+            <e p="GameSettingsScriptableObject.cs" t="Include" />
+          </e>
+          <e p="GameScripts.asmdef" t="Include" />
+          <e p="Interfaces" t="Include">
+            <e p="ICuttable.cs" t="Include" />
+            <e p="IData.cs" t="Include" />
+            <e p="IDestroyable.cs" t="Include" />
+            <e p="IEdible.cs" t="Include" />
+            <e p="IHarvestable.cs" t="Include" />
+            <e p="IItemHolder.cs" t="Include" />
+            <e p="IPrefab.cs" t="Include" />
+            <e p="ISelectable.cs" t="Include" />
+            <e p="ITask.cs" t="Include" />
+          </e>
+          <e p="Job System" t="Include">
+            <e p="Jobs" t="Include">
+              <e p="HaulJob.cs" t="Include" />
+              <e p="HaulToItemHolderJob.cs" t="Include" />
+              <e p="Job.cs" t="Include" />
+              <e p="Static Jobs" t="Include">
+                <e p="BuildJob.cs" t="Include" />
+                <e p="CutJob.cs" t="Include" />
+                <e p="StaticJob.cs" t="Include" />
+              </e>
+            </e>
+            <e p="JobSystem.cs" t="Include" />
+          </e>
+          <e p="Managers" t="Include">
+            <e p="GameManager.cs" t="Include" />
+          </e>
+          <e p="Objects" t="Include">
+            <e p="Characters" t="Include">
+              <e p="Character.cs" t="Include" />
+              <e p="Human.cs" t="Include" />
+              <e p="Rabbit.cs" t="Include" />
+            </e>
+            <e p="Constructions" t="Include">
+              <e p="Construction.cs" t="Include" />
+              <e p="ConstructionPlan.cs" t="Include" />
+            </e>
+            <e p="Items" t="Include">
+              <e p="Item.cs" t="Include" />
+              <e p="WoodLog.cs" t="Include" />
+            </e>
+            <e p="Nature" t="Include">
+              <e p="Grass.cs" t="Include" />
+              <e p="Tree.cs" t="Include" />
+              <e p="Vegetation.cs" t="Include" />
+            </e>
+            <e p="StaticObject.cs" t="Include" />
+            <e p="Tile" t="Include">
+              <e p="Tile.cs" t="Include" />
+              <e p="TileContent.cs" t="Include" />
+            </e>
+            <e p="World.cs" t="Include" />
+          </e>
+          <e p="Pathfinding" t="Include">
+            <e p="AStarSearch.cs" t="Include" />
+            <e p="Pathfinder.cs" t="Include" />
+            <e p="PathGrid.cs" t="Include" />
+            <e p="PathNode.cs" t="Include" />
+            <e p="RegionSystem" t="Include">
+              <e p="Region.cs" t="Include" />
+              <e p="RegionContent.cs" t="Include" />
+              <e p="RegionSystem.cs" t="Include" />
+              <e p="Subregion.cs" t="Include" />
+              <e p="SubregionSystem.cs" t="Include" />
+            </e>
+          </e>
+          <e p="ScriptableObjects" t="Include">
+            <e p="Characters" t="Include">
+              <e p="CharacterScriptableObject.cs" t="Include" />
+            </e>
+            <e p="Constructions" t="Include">
+              <e p="ConstructionScriptableObject.cs" t="Include" />
+            </e>
+            <e p="Items" t="Include">
+              <e p="ItemScriptableObject.cs" t="Include" />
+            </e>
+            <e p="PrefabScriptableObject.cs" t="Include" />
+            <e p="Static" t="Include">
+              <e p="StaticScriptableObject.cs" t="Include" />
+              <e p="Tiles" t="Include">
+                <e p="TileScriptableObject.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="SearchEngine" t="Include">
+            <e p="Dijkstra.cs" t="Include" />
+            <e p="SearchEngine.cs" t="Include" />
+          </e>
+          <e p="Singleton.cs" t="Include" />
+          <e p="Stockpile" t="Include">
+            <e p="Stockpile.cs" t="Include" />
+            <e p="StockpileCreator.cs" t="Include" />
+            <e p="StockpileManager.cs" t="Include" />
+            <e p="StockpilePart.cs" t="Include" />
+          </e>
+          <e p="Tests" t="Include">
+            <e p="CharacterTests.cs" t="Include" />
+            <e p="ItemTests.cs" t="Include" />
+            <e p="SceneLoaderForUnitTests.cs" t="Include" />
+            <e p="Tests.asmdef" t="Include" />
+            <e p="VegetationTests.cs" t="Include" />
+          </e>
+          <e p="TestScript.cs" t="Include" />
+          <e p="Tile Map Generation" t="Include">
+            <e p="MeshGenerator.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="CharacterWindow.cs" t="Include" />
+            <e p="CommandWindow.cs" t="Include" />
+            <e p="CursorManager.cs" t="Include" />
+            <e p="Debug Windows" t="Include">
+              <e p="DebugJobSystem.cs" t="Include" />
+              <e p="DebugPathfindingWindow.cs" t="Include" />
+              <e p="DebugWindow.cs" t="Include" />
+            </e>
+            <e p="FpsCounter.cs" t="Include" />
+            <e p="ScrollViewScript.cs" t="Include" />
+            <e p="UIManager.cs" t="Include" />
+            <e p="WindowComponent.cs" t="Include" />
+            <e p="WindowSwitcher.cs" t="Include" />
+            <e p="WindowSystem.cs" t="Include" />
+          </e>
+          <e p="WorldGeneration" t="Include">
+            <e p="PerlinNoise.cs" t="Include" />
+            <e p="WorldGenerator.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Colony-Simulator.sln" t="IncludeFlat" />
+      <e p="GameScripts.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="Tests.csproj" t="IncludeRecursive" />
+    </e>
+  </component>
+</project>

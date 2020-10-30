@@ -15,12 +15,12 @@ public class SelectableComponent : CharacterComponent {
 
     public void Select() {
         _selectionRim?.SetActive(true);
-        selectable.OnSelect();
+        selectable.Select();
     }
 
     public void Deselect() {
         _selectionRim?.SetActive(false);
-        selectable.OnDeselect();
+        selectable.Deselect();
     }
 
     public override void DisableComponent() {
