@@ -8,8 +8,8 @@ public class StockpileManager : Singleton<StockpileManager> {
     public int StockpilesCount => _stockpiles.Count;
 
     private List<Stockpile> _stockpiles = new List<Stockpile>();
-    private List<Item> _stockpileItems = new List<Item>();
-    private List<Item> _otherItems = new List<Item>();
+    public List<Item> stockpileItems { get; private set; } = new List<Item>();
+    public List<Item> otherItems { get; private set; } = new List<Item>();
 
     private const float haulJobCooldown = 1f;
 
@@ -32,23 +32,23 @@ public class StockpileManager : Singleton<StockpileManager> {
         if (item.Tile.content.stockpilePart != null) {
             AddItemToStockpiles(item);
         } else {
-            _otherItems.Add(item);
+            otherItems.Add(item);
         }
     }
 
     public void AddItemToStockpiles(Item item) {
-        _stockpileItems.Add(item);
-        _otherItems.Remove(item);
+        stockpileItems.Add(item);
+        otherItems.Remove(item);
     } 
 
     public void RemoveItem(Item item) {
-        _stockpileItems.Remove(item);
-        _otherItems.Remove(item);
+        stockpileItems.Remove(item);
+        otherItems.Remove(item);
     }
 
     public void RemoveItemFromStockpiles(Item item) {
-        _stockpileItems.Remove(item);
-        _otherItems.Add(item);
+        stockpileItems.Remove(item);
+        otherItems.Add(item);
     }
 
     private void TryHaulingItemToAnyStockpile(Item item) {
@@ -71,8 +71,8 @@ public class StockpileManager : Singleton<StockpileManager> {
             if (StockpilesCount == 0) {
                 continue;
             }
-            for (int i = _otherItems.Count - 1; i >= 0; i--) {
-                TryHaulingItemToAnyStockpile(_otherItems[i]);
+            for (int i = otherItems.Count - 1; i >= 0; i--) {
+                TryHaulingItemToAnyStockpile(otherItems[i]);
             }
         }
     }

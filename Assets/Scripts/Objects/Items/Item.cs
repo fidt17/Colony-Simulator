@@ -46,7 +46,7 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
 
     public virtual void SetGameObject(GameObject obj) {
         gameObject = obj;
-        gameObject.transform.position = new Vector3(position.x, position.y, 0);
+        gameObject.transform.position = Utils.ToVector3(position);
     }
 
     #endregion
@@ -69,10 +69,10 @@ public abstract class Item : IPrefab, IDestroyable, IPlacable {
             if (t == null) {
                 return false;
             } else {
-                return !t.content.HasItem;
+                return !t.content.HasItem && t.isTraversable == true;
             }
         };
-        Tile tile = SearchEngine.FindClosestTileWhere(position, requirementsFunction);
+        Tile tile = SearchEngine.FindClosestTileWhere(position, requirementsFunction, Tile.isTraversable);
         
         if (tile != null) {
             SetPosition(tile.position);
