@@ -52,10 +52,7 @@ public static class Factory {
 
         T t = new T();
         t.SetData(_data[dataName], position);
-        GameObject obj = null;
-        obj = GameObject.Instantiate(_data[dataName].prefab);
-        obj.transform.SetParent(GetParent<T>());
-        t.SetGameObject(obj);
+        t.SetGameObject(GameObject.Instantiate(_data[dataName].prefab, GetParent<T>()));
         return t;
     }
 

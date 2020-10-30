@@ -21,4 +21,25 @@ public class HumanAI : AIController {
     protected void InitializeIdleAIComponent() => _idleAIComponent = new IdleAIComponent(_human);
 
     #endregion
+
+    #region Testing
+
+    public override bool CheckInitialization() {
+
+        if (_human is null) {
+            return false;
+        }
+
+        if (_commandProcessor is null) {
+            return false;
+        }
+
+        if (_idleAIComponent is null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    #endregion
 }

@@ -9,7 +9,7 @@ public enum FacingDirection {
     south = 3
 }
 
-public class MotionComponent : MonoBehaviour {
+public class MotionComponent : CharacterComponent {
 
     public delegate void OnVelocityChange(Vector2 newVelocty, FacingDirection facingDirection);
     public event OnVelocityChange VelocityHandler;
@@ -20,20 +20,22 @@ public class MotionComponent : MonoBehaviour {
     public delegate void GridPositionHandler(Vector2Int previousPosition, Vector2Int currentPosition);
     public event GridPositionHandler OnGridPositionChange;
 
-    public Vector2 WorldPosition => (Vector2) gameObject.transform.position;
+    public Vector2 WorldPosition => (Vector2) _gameObject.transform.position;
     public Vector2Int GridPosition => _lastTraversableNode.position;
     public PathNode PathNode => Utils.NodeAt(GridPosition);
     public float SpeedValue => _speed;
 
-    private PathNode _lastTraversableNode;
-
     public FacingDirection facingDirection = FacingDirection.south;
 
     private float _speed;
+    private PathNode _lastTraversableNode;
+    private GameObject _gameObject;
 
-    public void Initialize(float speed, Vector2Int position) {
+    public MotionComponent(float speed, Vector2Int position, GameObject gameObject) {
         _speed = speed;
-        SetPosition(position);
+        _gameObject = gameObject;
+        _gameObject.transform.position = Utils.ToVector3(position);
+        _lastTraversableNode = Utils.NodeAt(Utils.ToVector2Int(position));
     }
         
     public void Stop() {
@@ -44,13 +46,13 @@ public class MotionComponent : MonoBehaviour {
     }
 
     public void SetPosition(Vector2 position) {
-        gameObject.transform.position = position;
+        _gameObject.transform.position = position;
         OnGridPositionChange?.Invoke(_lastTraversableNode.position, Utils.ToVector2Int(position));
         _lastTraversableNode = Utils.NodeAt(Utils.ToVector2Int(position));
     } 
 
     public void Translate(Vector2 normalizedDestination) {
-        gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
+        _gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
         VelocityHandler?.Invoke(normalizedDestination, facingDirection);
 
         PathNode currentNode = Utils.NodeAt(Utils.ToVector2Int(WorldPosition));
@@ -77,4 +79,48 @@ public class MotionComponent : MonoBehaviour {
             Debug.LogError("Cannot find traversable tile for character at" + GridPosition);
         }
     }
+
+    public override void DisableComponent() {
+        base.DisableComponent();
+
+        VelocityHandler      = null;
+        OnPositionChange     = null;
+        OnGridPositionChange = null;
+
+        _lastTraversableNode = null;
+    }
+
+    #region Testing
+
+    public override bool CheckInitialization() {
+        if (SpeedValue < 0) {
+            return false;
+        }
+
+        if (_lastTraversableNode is null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool CheckInitialization(Vector2Int supposedPosition) {
+
+        if (CheckInitialization() == false) {
+            return false;
+        }
+
+        //Position test
+        if (_gameObject.transform.position != Utils.ToVector3(supposedPosition)) {
+            return false;
+        }
+
+        if (_lastTraversableNode.position != supposedPosition) {
+            return false;
+        }
+
+        return true;
+    }
+
+    #endregion
 }

@@ -7,3 +7,10 @@ public class TileScriptableObject : StaticScriptableObject {
     public TileType tileType;
     public Color defaultColor = Color.white;
 }
+
+public enum TileType {
+    empty,
+    sand,
+    grass,
+    water
+}

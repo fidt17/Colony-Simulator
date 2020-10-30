@@ -3,26 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class HungerComponent : MonoBehaviour {   
+public class HungerComponent : CharacterComponent {   
     
     public float HungerLevel => _hunger;
 
     public List<Type> edibles = new List<Type>();// List of things character can eat.
+    
+    private float _hunger = 100;
+    private float _hungerDecreasePerSecond = -1;
 
     private Character _character;
     private EatFoodTask _eatFoodTask;
 
-    private float _hunger = 100;
-    private float _hungerDecreasePerSecond = 1;
-
-    private bool _isSearchingForFood = false;
-
-    public void Initialize(Character character) {
+    public HungerComponent(Character character) {
         _character = character;
         _hungerDecreasePerSecond = _character.data.hungerDecreasePerSecond;
+        _coroutines.Add(GameManager.GetInstance().StartCoroutine(DecreaseHunger()));
     }
-
-    private void Start() => StartCoroutine(DecreaseHunger());
 
     public void Eat(IEdible food) {
         ChangeHunger(food.NutritionValue);
@@ -44,7 +41,7 @@ public class HungerComponent : MonoBehaviour {
 
     private void CheckHunger() {
         if (_hunger < _character.data.hungerSearchThreshold) {
-            _character.CommandProcessor.StartCoroutine(StartFoodSearch());
+            _coroutines.Add(GameManager.GetInstance().StartCoroutine(StartFoodSearch()));
         }
 
         if (_hunger == 0) {
@@ -52,8 +49,9 @@ public class HungerComponent : MonoBehaviour {
         }
     }
 
+    private bool _isSearchingForFood = false;
     private IEnumerator StartFoodSearch() {
-        if (_isSearchingForFood || _character.hungerComponent.edibles.Count == 0) {
+        if (_isSearchingForFood || edibles.Count == 0) {
             yield break;
         }
         _isSearchingForFood = true;
@@ -77,5 +75,28 @@ public class HungerComponent : MonoBehaviour {
     private void HandleGetFoodTaskResult(object source, EventArgs e) {
         _eatFoodTask.TaskResultHandler -= HandleGetFoodTaskResult;
         _eatFoodTask = null;
-    } 
+    }
+
+    public override void DisableComponent() {
+        base.DisableComponent();
+
+        _character = null;
+        _eatFoodTask = null;
+    }
+
+    #region Testing
+
+    public override bool CheckInitialization() {
+        if (_character is null) {
+           return false;
+        }
+
+        if (_hungerDecreasePerSecond == -1) {
+            return false;
+        }
+
+        return true;
+    }
+
+    #endregion
 }

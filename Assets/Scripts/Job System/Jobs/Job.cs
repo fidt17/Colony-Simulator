@@ -8,6 +8,7 @@ public abstract class Job {
     public event EventHandler JobResultHandler;
     public class JobResultEventArgs : EventArgs {
         public bool result;
+        public bool wasJobCanceled;
     }
 
     public Vector2Int Position => _jobPosition;
@@ -88,6 +89,7 @@ public abstract class Job {
     protected void OnJobResultChanged(bool result) {
         JobResultEventArgs e = new JobResultEventArgs();
         e.result = result;
+        e.wasJobCanceled = _wasJobCanceled;
         JobResultHandler?.Invoke(this, e);
     }
 }

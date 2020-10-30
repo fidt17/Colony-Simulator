@@ -17,6 +17,10 @@ public static class WorldGenerator {
         MeshGenerator.GetInstance().Initialize();
         Pathfinder.Initialize();
 
+        if (gameSettings.testWorld) {
+            return;
+        }
+
         GenerateVegetation(ref grid);
         GenerateCharacters();
     }
@@ -92,10 +96,7 @@ public static class WorldGenerator {
             while (t == null || !t.isTraversable) {
                 t = Utils.RandomTile();
             }
-
             Human human = Factory.Create<Human>("human", t.position);
-            if (human != null)
-                GameManager.GetInstance().characterManager.colonists.Add(human);
         }
 
         for (int i = 0; i < _gameSettings.rabbitCount; i++) {
@@ -103,11 +104,7 @@ public static class WorldGenerator {
             while (t == null || !t.isTraversable) {
                 t = Utils.RandomTile();
             }
-
             Rabbit rabbit = Factory.Create<Rabbit>("rabbit", t.position);
-            if (rabbit != null) {
-                GameManager.GetInstance().characterManager.rabbits.Add(rabbit);
-            }
         }
     }
 }

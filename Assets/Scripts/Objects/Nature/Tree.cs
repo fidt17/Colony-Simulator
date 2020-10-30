@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Tree : Vegetation
 {   
+    #region ICuttable
 
-    #region IHarvestable
-
-    public override void Harvest() {
-        base.Harvest();
-        Factory.Create<WoodLog>("wood log", position);
+    public override Item Cut() {
+        base.Cut();
+        return Factory.Create<WoodLog>("wood log", position);
     }
 
     #endregion

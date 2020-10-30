@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JobHandlerComponent : MonoBehaviour {
+public class JobHandlerComponent : CharacterComponent {
 
     public bool IsAvailable => _currentJob is null && CommandProcessor.HasTask == false;
 
@@ -14,10 +14,11 @@ public class JobHandlerComponent : MonoBehaviour {
     private Human _worker;
     private Job _currentJob;
 
-    public void Initialize(Human worker) {
+    public JobHandlerComponent(Human worker) {
         _worker = worker;
         JobSystem.GetInstance().AddWorker(this);
     }
+
     public void AssignJob(Job job) {
         _currentJob = job;
         _currentJob.AssignWorker(this);
@@ -28,4 +29,29 @@ public class JobHandlerComponent : MonoBehaviour {
         _currentJob = null;
         JobSystem.GetInstance().AddWorker(this);
     }
+
+    public override void DisableComponent() {
+        base.DisableComponent();
+        _currentJob?.DeleteJob();
+
+        _currentJob = null;
+        _worker = null;
+    }
+
+    #region Testing
+
+    public override bool CheckInitialization() {
+
+        if (_worker is null) {
+            return false;
+        }
+
+        if (JobSystem.GetInstance().HasWorker(this) == false) {
+            return false;
+        }
+
+        return true;
+    }
+
+    #endregion
 }

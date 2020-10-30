@@ -85,7 +85,7 @@ public class CutCommandInputState : CommandInputState {
 
             StaticObject staticObject = t.content.staticObject;
 
-            if (staticObject.GetType() != typeof(Tree) || JobExists(staticObject as Tree)) {
+            if (staticObject.GetType() != typeof(Tree) || (staticObject as Tree).HasCutJob) {
                 continue;
             }
 
@@ -108,15 +108,10 @@ public class CutCommandInputState : CommandInputState {
     private void CreateJobs() {
         Dictionary<Tree, GameObject> temp = new Dictionary<Tree, GameObject>(_trees);
         foreach(KeyValuePair<Tree, GameObject> pair in temp) {
-            if (JobExists(pair.Key) == false) {
+            if (pair.Key.HasCutJob == false) {
                 JobSystem.GetInstance().AddJob(new CutJob(pair.Key, pair.Key.position, pair.Value));
                 _trees.Remove(pair.Key);
             }
         }
-    }
-
-    private bool JobExists(Tree tree) {
-        CutJob cutJob = JobSystem.GetInstance().AllJobs.Find(x => x.GetType() == typeof(CutJob) && (x as CutJob).Vegetation == tree) as CutJob;
-        return cutJob != null;
     }
 }

@@ -5,13 +5,9 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager> {
 
     public World world { get; private set; }
-    public CharacterManager characterManager { get; private set; }
-
     public GameSettingsScriptableObject gameSettings;
 
     protected override void Awake() {
-        characterManager = GetComponent<CharacterManager>();
-
         Application.targetFrameRate = gameSettings.targetFrameRate;
         Time.timeScale = gameSettings.gameSpeed;
     }

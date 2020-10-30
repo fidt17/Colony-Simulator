@@ -68,4 +68,12 @@ public class JobSystem : Singleton<JobSystem> {
             }
         }
     }
+
+    #region Testing
+
+    public bool HasWorker(JobHandlerComponent worker) {
+        return _availableWorkers.Contains(worker);
+    }
+
+    #endregion
 }

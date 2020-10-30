@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class InventoryComponent : MonoBehaviour {
+public class InventoryComponent : CharacterComponent {
     
     private List<Item> _inventory = new List<Item>();
     private Human _human;
 
-    public void Initialize(Human human) {
+    public InventoryComponent(Human human) {
         _human = human;
         _human.motionComponent.OnPositionChange += UpdateInventoryPositions;
     }
@@ -53,4 +53,24 @@ public class InventoryComponent : MonoBehaviour {
             item.gameObject.transform.position = position;
         }
     }
+
+    public override void DisableComponent() {
+        base.DisableComponent();
+
+        DropAll();
+        _human = null;
+    }
+
+    #region Testing
+
+    public override bool CheckInitialization() {
+
+        if (_human is null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    #endregion
 }   

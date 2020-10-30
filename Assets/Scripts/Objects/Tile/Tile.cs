@@ -2,14 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TileType {
-
-    empty,
-    sand,
-    grass,
-    water
-}
-
 public class Tile : IData {
 
     public TileType type { get; set; }

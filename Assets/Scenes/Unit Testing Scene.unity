@@ -3487,7 +3487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970aa2018620fa6448896a3ecd370e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathfinderRenderer: {fileID: 1103073304}
+  pathfinderRenderer: {fileID: 0}
 --- !u!1 &1133376861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3568,7 +3568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e037c3cb7eda674fb86d6fbb250b686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSettings: {fileID: 11400000, guid: ed0a7106207279c4faa12158baab0008, type: 2}
+  gameSettings: {fileID: 11400000, guid: 76ea36fd8a550e740bd8122ec3c0d2c8, type: 2}
 --- !u!114 &1134704351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4565,8 +4565,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437401148}
   m_HandleRect: {fileID: 1437401147}
   m_Direction: 2
-  m_Value: 0.99999917
-  m_Size: 0.7151185
+  m_Value: 0.99999946
+  m_Size: 0.71511847
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

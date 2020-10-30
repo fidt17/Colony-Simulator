@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
+public abstract class Character : IPrefab, ISelectable {
 
     public CommandProcessor CommandProcessor => AI.CommandProcessor;
+    public AIController AI { get; protected set; }
 
     #region Components
 
+    protected List<CharacterComponent> _components = new List<CharacterComponent>();
     public SelectableComponent selectableComponent { get; protected set; }
     public MotionComponent     motionComponent     { get; protected set; }
     public HungerComponent     hungerComponent     { get; protected set; }
-    public AIController        AI                  { get; protected set; }
 
     #endregion
 
@@ -21,18 +22,14 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
     private Vector2Int _tempPosition;
 
     public virtual void Die() {
-        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         RemoveFromTile();
+
+        foreach (CharacterComponent component in _components) {
+            component.DisableComponent();
+        }
+        
         Destroy();
     }
-
-    private void HandleGridPosition(Vector2Int previousPosition, Vector2Int currentPosition) {
-        Utils.TileAt(previousPosition).content.RemoveCharacter(this);
-        Utils.TileAt(currentPosition).content.AddCharacter(this);
-    }
-
-    private void AddToTile() => Utils.TileAt(motionComponent.GridPosition).content.AddCharacter(this);
-    private void RemoveFromTile() => Utils.TileAt(motionComponent.GridPosition).content.RemoveCharacter(this);
 
     #region IPrefab
 
@@ -43,6 +40,7 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
 
     public virtual void SetGameObject(GameObject obj) {
         gameObject = obj;
+
         InitializeSelectableComponent();
         InitializeMotionComponent(_tempPosition);
         InitializeHungerComponent();
@@ -51,44 +49,50 @@ public abstract class Character : IPrefab, ISelectable, IMovable, IHunger {
         AddToTile();
     }
 
-    public virtual void Destroy() => GameObject.Destroy(gameObject, 1);
+    public virtual void Destroy() {
+        GameObject.Destroy(gameObject);
+    } 
 
     #endregion
 
-    #region Motion Component
+    protected virtual void InitializeMotionComponent(Vector2Int position) {
+        motionComponent = new MotionComponent(data.movementSpeed, position, gameObject);
+        _components.Add(motionComponent);
 
-    public virtual void InitializeMotionComponent(Vector2Int position) {
-        motionComponent = gameObject.AddComponent<MotionComponent>();
-        motionComponent.Initialize(data.movementSpeed, position);
         motionComponent.OnGridPositionChange += HandleGridPosition;
     }
 
-    #endregion
-
-    #region Hunger Component
-
-    public virtual void InitializeHungerComponent() {
-        hungerComponent = gameObject.AddComponent<HungerComponent>();
-        hungerComponent.Initialize(this);
+    protected virtual void InitializeHungerComponent() {
+        hungerComponent = new HungerComponent(this);
+        _components.Add(hungerComponent);
     }
 
-    #endregion
-
-    #region Selectable Component
-
-    public virtual void InitializeSelectableComponent() {
-        selectableComponent = gameObject.AddComponent<SelectableComponent>();
-        selectableComponent.Initialize(this, gameObject.transform.Find("SelectionRim").gameObject);
+    protected virtual void InitializeSelectableComponent() {
+        selectableComponent = new SelectableComponent(this, gameObject.transform.Find("SelectionRim").gameObject);
+        _components.Add(selectableComponent);
     }
+
+    protected abstract void InitializeAI();
+
+    private void HandleGridPosition(Vector2Int previousPosition, Vector2Int currentPosition) {
+        Utils.TileAt(previousPosition).content.RemoveCharacter(this);
+        Utils.TileAt(currentPosition).content.AddCharacter(this);
+    }
+
+    private void AddToTile() {
+        Utils.TileAt(motionComponent.GridPosition).content.AddCharacter(this);
+    } 
+
+    private void RemoveFromTile() {
+        Utils.TileAt(motionComponent.GridPosition).content.RemoveCharacter(this);
+    }
+
+    #region ISelectable
 
     public virtual void OnSelect() { }
     public virtual void OnDeselect() { }
         
     #endregion
 
-    #region Command Processor
-
-    protected abstract void InitializeAI();
-
-    #endregion
+    
 }

@@ -28,4 +28,7 @@ public class GameSettingsScriptableObject : ScriptableObject
     public int humanCount;
     [Range(0, 200)]
     public int rabbitCount;
+
+    [Header("Testing")]
+    public bool testWorld = false;
 }

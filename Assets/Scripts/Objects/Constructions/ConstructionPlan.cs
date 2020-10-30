@@ -90,7 +90,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
             RemoveItemFromTileUnderConstructionPlan();
         } else if (currentTile.content.staticObject != null && currentTile.content.staticObject.GetType().IsSubclassOf(typeof(Vegetation))) {
             createHaulJobs = false;
-            IHarvestable vegetation = currentTile.content.staticObject as Vegetation;
+            ICuttable vegetation = currentTile.content.staticObject as Vegetation;
             CutJob job = new CutJob(vegetation, position);
             job.JobResultHandler += CutVegetationUnderConstructionPlanJobHandler;
             JobSystem.GetInstance().AddJob(job);

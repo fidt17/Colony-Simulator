@@ -95,6 +95,5 @@ public class TestScript : Singleton<TestScript> {
 
     private void SpawnHuman() {
         Human human = Factory.Create<Human>("human", Utils.CursorToCoordinates());
-        GameManager.GetInstance().characterManager.colonists.Add(human);
     }
 }

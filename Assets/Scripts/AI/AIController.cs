@@ -6,7 +6,7 @@ public abstract class AIController : MonoBehaviour {
 
     public CommandProcessor CommandProcessor => _commandProcessor;
 
-    private CommandProcessor _commandProcessor;
+    protected CommandProcessor _commandProcessor;
 
     public virtual void Initialize(Character character) {
         InitializeCommandProcessor();
@@ -18,4 +18,6 @@ public abstract class AIController : MonoBehaviour {
 
     protected abstract void InitializeComponents();
     protected abstract void DisableComponents();
+
+    public abstract bool CheckInitialization();
 }

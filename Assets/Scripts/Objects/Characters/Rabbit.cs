@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rabbit : Character, IMovable, IMotionAnimator {
+public class Rabbit : Character {
 
     #region Components
 
@@ -15,23 +15,18 @@ public class Rabbit : Character, IMovable, IMotionAnimator {
         InitializeMotionAnimator();
     }
 
-    public override void Die() {
-        base.Die();
-        GameManager.GetInstance().characterManager.rabbits.Remove(this);
-    }
-
     #region Animation Component
 
-    public void InitializeMotionAnimator() {
-        motionAnimator = gameObject.AddComponent<MotionAnimatorComponent>();
-        motionAnimator.Initialize(motionComponent);
+    protected void InitializeMotionAnimator() {
+        motionAnimator = new MotionAnimatorComponent(this);
+        _components.Add(motionAnimator);
     }
 
     #endregion
 
     #region Hunger Component
 
-    public override void InitializeHungerComponent() {
+    protected override void InitializeHungerComponent() {
         base.InitializeHungerComponent();
         hungerComponent.edibles.Add(typeof(Grass));
     }
