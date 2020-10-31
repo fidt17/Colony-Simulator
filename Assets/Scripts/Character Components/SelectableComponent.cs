@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectableComponent : CharacterComponent {
+public class SelectableComponent : MonoBehaviour {
 
     public ISelectable selectable;
     private GameObject _selectionRim;
 
     public SelectableComponent(ISelectable selectable, GameObject selectionRim) {
+        this.selectable = selectable;
+        _selectionRim = selectionRim;
+        Deselect();
+    }
+    
+    public void Initialize(ISelectable selectable, GameObject selectionRim) {
         this.selectable = selectable;
         _selectionRim = selectionRim;
         Deselect();
@@ -23,14 +29,14 @@ public class SelectableComponent : CharacterComponent {
         selectable.Deselect();
     }
 
-    public override void DisableComponent() {
-        base.DisableComponent();
+    public void DisableComponent() {
+        //base.DisableComponent();
         Deselect();
     }
 
     #region Testing
 
-    public override bool CheckInitialization() {
+    public bool CheckInitialization() {
         if (selectable is null) {
            return false;
         }

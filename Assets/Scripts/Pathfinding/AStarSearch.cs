@@ -6,6 +6,62 @@ using UnityEngine;
 
 public static class AStarSearch {
 
+    public static List<PathNode> GetPath2(PathNode startNode, PathNode targetNode, ref List<PathNode> closedSet) {
+
+        if (startNode.Region != targetNode.Region) {
+            return null;
+        }
+
+        if (startNode == targetNode) {
+            return new List<PathNode>();
+        }
+
+        List<Subregion> subregions = AStarSubregionSearch.GetPath(startNode.subregion, targetNode.subregion);
+        PathNode[] possibleNodes = new PathNode[Utils.MapSize  * Utils.MapSize];
+        foreach (Subregion s in subregions) {
+            foreach (PathNode n in s.nodes) {
+                possibleNodes[n.x + n.y * Utils.MapSize] = n;
+            }
+        }
+        
+        List<PathNode> openSet = new List<PathNode>();
+        openSet.Add(startNode);
+        while (openSet.Count > 0) {
+            PathNode currentNode = openSet[0];
+            for (int i = 1; i < openSet.Count; i++) {
+                if ((openSet[i].fCost <= currentNode.fCost)
+                    && (openSet[i].hCost < currentNode.hCost)) {
+                    currentNode = openSet[i];
+                }
+            }
+
+            openSet.Remove(currentNode);
+            closedSet.Add(currentNode);
+            if (currentNode == targetNode) {
+                return RetracePath(startNode, targetNode);
+            }
+
+            foreach(PathNode neighbour in GetNeighbours(currentNode)) {
+                if(closedSet.Contains(neighbour) || possibleNodes[neighbour.x + neighbour.y * Utils.MapSize] == null) {
+                    continue;
+                }
+
+                int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                if(newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour)) {
+                    neighbour.gCost = newMovementCostToNeighbour;
+                    neighbour.hCost = GetDistance(neighbour, targetNode);
+                    neighbour.parent = currentNode;
+
+                    if (!openSet.Contains(neighbour)) {
+                        openSet.Add(neighbour);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+    
     public static List<PathNode> GetPath(PathNode startNode, PathNode targetNode, ref List<PathNode> closedSet) {
         
         if (startNode.Region != targetNode.Region) {

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -947,7 +947,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 5b51354b834eb34419b98113d1b8b205,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: ConstructionScriptableObject, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ConstructionScriptableObject, GameScripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3533,7 +3533,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1134704349}
   - component: {fileID: 1134704350}
-  - component: {fileID: 1134704351}
   - component: {fileID: 1134704353}
   m_Layer: 0
   m_Name: Game Managers
@@ -3569,18 +3568,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSettings: {fileID: 11400000, guid: ed0a7106207279c4faa12158baab0008, type: 2}
---- !u!114 &1134704351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1134704348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d20e26bee604a844bb4b68a20a6f5f8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1134704353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4565,8 +4552,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437401148}
   m_HandleRect: {fileID: 1437401147}
   m_Direction: 2
-  m_Value: 0.9999986
-  m_Size: 0.7151186
+  m_Value: 0.99999887
+  m_Size: 0.7151185
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

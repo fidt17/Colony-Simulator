@@ -21,7 +21,9 @@ public static class WorldGenerator {
             return;
         }
 
-        GenerateVegetation(ref grid);
+        if (gameSettings.vegetation == true) {
+            GenerateVegetation(ref grid);
+        }
         GenerateCharacters();
     }
 

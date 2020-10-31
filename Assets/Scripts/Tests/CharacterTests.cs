@@ -120,7 +120,7 @@ namespace Tests {
 
 			//Verify that all character components are disabled
 			List<CharacterComponent> components = new List<CharacterComponent>() {
-				character.SelectableComponent,
+				//character.SelectableComponent,
 				character.MotionComponent,
 				character.HungerComponent
 			};

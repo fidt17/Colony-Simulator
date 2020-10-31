@@ -35,6 +35,33 @@ public class PathfinderRenderer : Singleton<PathfinderRenderer> {
         _isDrawingRegions = false;
     }
 
+    public void DrawSubregionsPath(List<Subregion> subregions) {
+        StartCoroutine(DrawSubregions(subregions));
+    }
+    
+    private bool _isDrawingSubregions = false;
+    private IEnumerator DrawSubregions(List<Subregion> subregions) {
+        if (_isDrawingSubregions) {
+            yield break;
+        }
+
+        _isDrawingSubregions = true;
+
+        List<PathNode> list = new List<PathNode>();
+        foreach (Subregion s in subregions) {
+            foreach (PathNode n in s.nodes) {
+                list.Add(n);
+            }
+        }
+
+        List<GameObject> areas = MeshGenerator.GetInstance()
+                                              .GenerateOverlapAreaOverNodes(list, Utils.GetRandomColor(0.25f));
+
+        yield return new WaitForSeconds(1f);
+        areas.ForEach(x => Destroy(x));
+        _isDrawingSubregions = false;
+    }
+
     private void DrawSubregionUnderCursor() {
         PathNode node = Utils.NodeAt(Utils.CursorToCoordinates());
         List<PathNode> list = node.subregion.nodes;
@@ -48,5 +75,5 @@ public class PathfinderRenderer : Singleton<PathfinderRenderer> {
             StartCoroutine(DrawRegions(RegionSystem.regions));
     }
 
-    public void DrawPath(List<PathNode> closedList) => MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(closedList, Utils.GetRandomColor(0.5f)).ForEach(x => Destroy(x, 2.5f));
+    public void DrawPath(List<PathNode> closedList) => MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(closedList, Utils.GetRandomColor(0.25f)).ForEach(x => Destroy(x, 2.5f));
 }

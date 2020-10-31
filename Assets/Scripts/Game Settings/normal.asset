@@ -16,5 +16,7 @@ MonoBehaviour:
   gameSpeed: 1
   mapSize: 100
   seed: 1
-  humanCount: 15
+  vegetation: 1
+  humanCount: 40
   rabbitCount: 0
+  testWorld: 0

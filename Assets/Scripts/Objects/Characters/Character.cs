@@ -59,8 +59,8 @@ public abstract class Character : IPrefab, ISelectable {
     }
 
     protected virtual void InitializeSelectableComponent() {
-        SelectableComponent = new SelectableComponent(this, gameObject.transform.Find("SelectionRim").gameObject);
-        Components.Add(SelectableComponent);
+        SelectableComponent = gameObject.AddComponent<SelectableComponent>();
+        SelectableComponent.Initialize(this, gameObject.transform.Find("SelectionRim").gameObject);
     }
 
     private void HandleGridPosition(Vector2Int previousPosition, Vector2Int currentPosition) {

@@ -12,6 +12,12 @@ public class Subregion {
 
     public void SetRegion(Region region) => this.region = region;
 
+    //Pathfinding
+    public Subregion parent;
+    public int       gCost, hCost;
+    public int       fCost => gCost + hCost;
+    //
+    
     public void AddNode(PathNode node) {
         nodes.Add(node);
         node.subregion = this;

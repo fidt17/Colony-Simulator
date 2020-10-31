@@ -139,6 +139,7 @@
           </e>
           <e p="Pathfinding" t="Include">
             <e p="AStarSearch.cs" t="Include" />
+            <e p="AStartSubregionSearch.cs" t="Include" />
             <e p="Pathfinder.cs" t="Include" />
             <e p="PathGrid.cs" t="Include" />
             <e p="PathNode.cs" t="Include" />

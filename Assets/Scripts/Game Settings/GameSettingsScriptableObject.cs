@@ -22,6 +22,8 @@ public class GameSettingsScriptableObject : ScriptableObject
 
     public int seed = 12;
 
+    public bool vegetation = true;
+    
     [Header("Characters")]
 
     [Range(0, 40)]

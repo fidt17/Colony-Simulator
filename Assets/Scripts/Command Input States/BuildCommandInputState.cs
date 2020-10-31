@@ -12,10 +12,12 @@ public class BuildCommandInputState : CommandInputState {
     private ConstructionScriptableObject _constructionData;
 
     public BuildCommandInputState(ConstructionScriptableObject constructionData) : base() {
+        Debug.Log("Entered build command input state");
         _constructionData = constructionData;
     }
 
     public override void ExitState() {
+        Debug.Log("Exited build command input state");
         base.ExitState();
 
         Dictionary<Tile, GameObject> temp = new Dictionary<Tile, GameObject>(_tiles);
