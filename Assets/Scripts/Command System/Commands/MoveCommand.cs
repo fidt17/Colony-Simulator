@@ -37,7 +37,7 @@ public class MoveCommand : Command {
 
     public override void Abort() => _motionComponent.Stop();
 
-    public override void Finish(bool succeed) {
+    protected override void Finish(bool succeed) {
         base.Finish(succeed);
         _motionComponent.Stop();
     }

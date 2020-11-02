@@ -20,6 +20,7 @@ public class Human : Character {
 
     protected override void InitializeAI() {
         AI = new HumanAI(this);
+        Components.Add(AI);
     }
 
     private void InitializeMotionAnimator() {

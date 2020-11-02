@@ -14,6 +14,7 @@ public class HumanAI : AIController {
     }
 
     public override void DisableComponent() {
+        base.DisableComponent();
         _human = null;
         _idleAIComponent.DisableComponent();
     }

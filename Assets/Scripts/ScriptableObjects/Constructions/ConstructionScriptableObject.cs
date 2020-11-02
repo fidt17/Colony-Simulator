@@ -10,7 +10,8 @@ public class Ingredient {
 
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "Static/Constructions/StaticScriptableObject", order = 1)]
 public class ConstructionScriptableObject : ScriptableObject {
-    public GameObject constructionPrefab; 
+    public string dataName;
+    public StaticScriptableObject construction; 
     public GameObject planPrefab;
     public List<Ingredient> ingredients;
 }

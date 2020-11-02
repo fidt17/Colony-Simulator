@@ -26,12 +26,10 @@ public static class Pathfinder {
         float startTime;
         
         /*
-        startTime = Time.realtimeSinceStartup;
-        List<PathNode> closedSet = new List<PathNode>();
-        List<PathNode> path = AStarSearch.GetPath(startNode, targetNode, ref closedSet);
-        PathfinderRenderer.GetInstance().pathColor = Color.blue;
-        PathHandler?.Invoke(closedSet);
-        Debug.Log($"Normal Path search: {Time.realtimeSinceStartup - startTime}");
+        //startTime = Time.realtimeSinceStartup;
+        List<PathNode> path = AStarSearch.GetPath(startNode, targetNode);
+        //Debug.Log($"Normal Path search: {Time.realtimeSinceStartup - startTime}");
+        return path;
         */
         
         //startTime = Time.realtimeSinceStartup;
@@ -39,7 +37,6 @@ public static class Pathfinder {
         List<PathNode> path2 = AStarSearch.GetPath2(startNode, targetNode, ref closedSet2);
         PathHandler?.Invoke(closedSet2);
         //Debug.Log($"Subregion Path search: {Time.realtimeSinceStartup - startTime}");
-        
         return path2;
     } 
 

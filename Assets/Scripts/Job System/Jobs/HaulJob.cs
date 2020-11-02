@@ -22,16 +22,16 @@ public class HaulJob : Job {
         _task = new HaulTask(_item, _destinationPosition, _worker.MotionComponent, _worker.Inventory);
 
         _worker.CommandProcessor.AddTask(_task);
-        _task.TaskResultHandler += OnJobFinish;
+        _task.ResultHandler += OnJobFinish;
 
-        StockpilePart part = Utils.TileAt(_destinationNode.position).content.StockpilePart;
+        StockpilePart part = Utils.TileAt(_destinationNode.position).Contents.StockpilePart;
         if (part != null) {
             JobResultHandler += part.HaulJobResultHandler;
         }
     }
 
     protected override void OnJobFinish(object source, System.EventArgs e) {
-        bool result = (e as Task.TaskResultEventArgs).result;
+        bool result = (e as Task.TaskResultEventArgs).Result;
         if (result == true) {
             _worker.WithdrawJob();
             JobSystem.GetInstance().DeleteJob(this);

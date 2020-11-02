@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tile : IData {
 
     public TileType type { get; set; }
-    public TileContent content { get; private set; }
+    public TileContent Contents { get; private set; }
 
     public TileScriptableObject data { get; protected set; }
     public Sprite GetSprite() => data.prefabSprite;
@@ -20,7 +20,7 @@ public class Tile : IData {
         type = this.data.tileType;
         this.position = position;
 
-        content = new TileContent(this);
+        Contents = new TileContent(this);
     }
 
     public void SetTraversability(bool isTraversable) {

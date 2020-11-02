@@ -79,11 +79,11 @@ public class CutCommandInputState : CommandInputState {
         //Detecting new trees.
         foreach (Vector2Int position in _selectionArea.GetPositions()) {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t is null || t.content is null || t.content.StaticObject is null) {
+            if (t is null || t.Contents is null || t.Contents.StaticObject is null) {
                 continue;
             }
 
-            StaticObject staticObject = t.content.StaticObject;
+            StaticObject staticObject = t.Contents.StaticObject;
 
             if (staticObject.GetType() != typeof(Tree) || (staticObject as Tree).HasCutJob) {
                 continue;

@@ -14,6 +14,7 @@ public class RabbitAI : AIController {
     }
     
     public override void DisableComponent() {
+        base.DisableComponent();
         _idleAIComponent.DisableComponent();
     }
     

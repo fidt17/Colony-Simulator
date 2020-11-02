@@ -6,7 +6,7 @@ public class IdleAIComponent : CharacterComponent {
     
     private Character _character;
 
-    private const float _coroutineCooldown = 5f;
+    private const float _coroutineCooldown = 10f;
     private const float _idleWaitTime = 5f;
     private const float _searchOffset = 5;
 
@@ -17,7 +17,7 @@ public class IdleAIComponent : CharacterComponent {
 
     private IEnumerator TryToWander() {
         while(true) {
-            yield return new WaitForSeconds(Random.Range(0, _coroutineCooldown));
+            yield return new WaitForSeconds(Random.Range(5, _coroutineCooldown));
 
             if (_character.CommandProcessor.HasTask == true) {
                 continue;

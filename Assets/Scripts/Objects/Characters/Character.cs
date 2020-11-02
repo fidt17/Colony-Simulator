@@ -64,16 +64,16 @@ public abstract class Character : IPrefab, ISelectable {
     }
 
     private void HandleGridPosition(Vector2Int previousPosition, Vector2Int currentPosition) {
-        Utils.TileAt(previousPosition).content.RemoveCharacter(this);
-        Utils.TileAt(currentPosition).content.AddCharacter(this);
+        Utils.TileAt(previousPosition).Contents.RemoveCharacter(this);
+        Utils.TileAt(currentPosition).Contents.AddCharacter(this);
     }
 
     private void AddToTile() {
-        Utils.TileAt(MotionComponent.GridPosition).content.AddCharacter(this);
+        Utils.TileAt(MotionComponent.GridPosition).Contents.AddCharacter(this);
     } 
 
     private void RemoveFromTile() {
-        Utils.TileAt(MotionComponent.GridPosition).content.RemoveCharacter(this);
+        Utils.TileAt(MotionComponent.GridPosition).Contents.RemoveCharacter(this);
     }
 
     public virtual void Select()   { }

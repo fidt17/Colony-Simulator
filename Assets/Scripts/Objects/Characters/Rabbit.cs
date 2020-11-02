@@ -21,5 +21,6 @@ public class Rabbit : Character {
 
     protected override void InitializeAI() {
         AI = new RabbitAI(this);
+        Components.Add(AI);
     }
 }

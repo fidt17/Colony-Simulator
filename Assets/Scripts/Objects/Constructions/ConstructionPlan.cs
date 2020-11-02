@@ -6,71 +6,60 @@ using System.Linq;
 
 public class ConstructionPlan : StaticObject, IItemHolder {
 
-    public new ConstructionScriptableObject data { get; protected set; }
+    public new ConstructionScriptableObject Data { get; protected set; }
     
-    public ConstructionPlan() : base() {}
+    public List<Item>       Items       { get; private set; } = new List<Item>();
+    public List<Ingredient> Ingredients { get; private set; } = new List<Ingredient>();
 
     private List<Job> _jobs = new List<Job>();
-    private List<Ingredient> _ingredients;
-    private List<Item> _hauingIngredients = new List<Item>();
+    
     private Coroutine _waitUntilCharacterMovesFromTheTile;
     private bool _wasConstructionCanceled = false;
 
-    public List<Item> items { get; private set; } = new List<Item>();
-
     public void Build() {
-        this.Destroy();
+        Destroy();
         Factory.Create<Construction>("wall", Position);
     }
-
-    #region IItemHolder
-
-    public void ItemIn(Item item) {
-        items.Add(item);
-        item.SetPosition(Position);
-        item.gameObject.SetActive(false);
-    }
-
-    public Item ItemOut(Item item) {
-        if (items.Contains(item)) {
-            items.Remove(item);
-            item.gameObject.SetActive(true);
-            return item;
-        }
-        return null;
-    }
-
-    #endregion
-
-    #region IPrefab
-
+    
     public new void SetData(ConstructionScriptableObject data, Vector2Int position) {
-        this.data = data as ConstructionScriptableObject;
-        this.Position = position;
+        Data = data;
+        Position = position;
         IsTraversable = true;
         ConfigureIngredients();
     } 
 
     public override void SetGameObject(GameObject gameObject) {
         base.SetGameObject(gameObject);
-        Utils.TileAt(Position).content.SetConstructionPlan(this);
+        Utils.TileAt(Position).Contents.SetConstructionPlan(this);
         CheckCurrentTileContents();
     }
 
     public override void Destroy() {
         GameObject.Destroy(gameObject);
-        Utils.TileAt(Position).content.RemoveConstructionPlan();
+        Utils.TileAt(Position).Contents.RemoveConstructionPlan();
     }
 
-    #endregion
+    public void ItemIn(Item item) {
+        Items.Add(item);
+        item.SetPosition(Position);
+        item.gameObject.SetActive(false);
+    }
+
+    public Item ItemOut(Item item) {
+        if (Items.Contains(item)) {
+            Items.Remove(item);
+            item.gameObject.SetActive(true);
+            return item;
+        }
+        return null;
+    }
 
     private void ConfigureIngredients() {
-        _ingredients = new List<Ingredient>();
-        foreach(var dataIngredient in data.ingredients) {
+        foreach(var dataIngredient in Data.ingredients) {
             Ingredient newIngredient = new Ingredient();
             newIngredient.itemName = dataIngredient.itemName;
             newIngredient.count = dataIngredient.count;
-            _ingredients.Add(newIngredient);
+            Ingredients.Add(newIngredient);
         }
     }
 
@@ -80,82 +69,48 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         Tile currentTile = Utils.TileAt(Position.x, Position.y);
         //Removing any existing stockpiles from the tile
         StockpileCreator.RemoveStockpileFromTile(currentTile);
-        bool createHaulJobs = true;
 
-        //detecting if there is an item on the tile at the moment
-        //if so - creating a haul job that need to be finished before anything else
-        //otherwise create haul jobs for ingredients.
-        if (currentTile.content.HasItem) {
-            createHaulJobs = false;
+        //there must be no other items or vegetation on the tile
+        if (currentTile.Contents.HasItem) {
             RemoveItemFromTileUnderConstructionPlan();
-        } else if (currentTile.content.StaticObject != null && currentTile.content.StaticObject.GetType().IsSubclassOf(typeof(Vegetation))) {
-            createHaulJobs = false;
-            ICuttable vegetation = currentTile.content.StaticObject as Vegetation;
-            CutJob job = new CutJob(vegetation, Position);
-            job.JobResultHandler += CutVegetationUnderConstructionPlanJobHandler;
+            return;
+        } 
+        
+        if (currentTile.Contents.StaticObject is ICuttable vegetation) {
+            Job job = new CutJob(vegetation, Position);
+            job.JobResultHandler += OnTileClearJobFinish;
+            _jobs.Add(job);
             JobSystem.GetInstance().AddJob(job);
+            return;
         }
           
-        if (createHaulJobs) {
-            CreateHaulingJobs();
+        foreach (var ingredient in Ingredients) {
+            for (int i = ingredient.count; i > 0; i--) {
+                CreateHaulingJobForIngredient(SearchEngine.GetTypeDerivativeOf<Item>(ingredient.itemName));
+            }
         }
     }
     
     private void RemoveItemFromTileUnderConstructionPlan() {
-        Tile currentTile = Utils.TileAt(Position.x, Position.y);
-        Item item = currentTile.content.Item;
-
         //find closest free spot
-        Func<Tile, bool> requirementsFunction = delegate(Tile t) {
-        if (t == null) {
-            return false;
-        } else {
-            return !t.content.HasItem;
-        }
-        };
-        Tile tile = SearchEngine.FindClosestTileWhere(Position, requirementsFunction);
+        bool RequirementsFunction(Tile t) => (t is null) ? false : !t.Contents.HasItem;
+        Tile haulToTile = SearchEngine.FindClosestTileWhere(Position, RequirementsFunction);
         
-        if (tile != null) {
-            HaulJob job = new HaulJob(item, tile.position);
+        if (haulToTile != null) {
+            Job job = new HaulJob(Utils.TileAt(Position).Contents.Item, haulToTile.position);
             _jobs.Add(job);
             JobSystem.GetInstance().AddJob(job);
-            job.JobResultHandler += HaulItemFromConstructionPlanJobHandler;
+            job.JobResultHandler += OnTileClearJobFinish;
         } else {
             Debug.LogError("No empty tile to move item to was found. Implement wait function to try again some time later. P: " + Position);
         }
     }
 
-    private void HaulItemFromConstructionPlanJobHandler(object source, EventArgs e) {
-        if (source is HaulJob) {
-            _jobs.Remove(source as HaulJob);
-            (source as HaulJob).JobResultHandler -= HandleHaulJobResult;
-            if ((e as Job.JobResultEventArgs).result == true) {
-                CreateHaulingJobs();
-            } else if (Utils.TileAt(Position.x, Position.y).content.HasItem) {
-                RemoveItemFromTileUnderConstructionPlan();
-            }
-        }
-    }
-
-    private void CutVegetationUnderConstructionPlanJobHandler(object source, EventArgs e) {
-        if (source is CutJob) {
-            if ((e as Job.JobResultEventArgs).result == true) {
-                (source as Job).JobResultHandler -= CutVegetationUnderConstructionPlanJobHandler;
-                Tile currentTile = Utils.TileAt(Position.x, Position.y);
-                if (currentTile.content.HasItem) {
-                    RemoveItemFromTileUnderConstructionPlan();
-                } else {
-                    CreateHaulingJobs();
-                }
-            }
-        }
-    }
-
-    private void CreateHaulingJobs() {
-        foreach (var ingredient in _ingredients) {
-            for (int i = ingredient.count; i > 0; i--) {
-                CreateHaulingJobForIngredient(SearchEngine.GetTypeDerivativeOf<Item>(ingredient.itemName));
-            }
+    private void OnTileClearJobFinish(object source, EventArgs e) {
+        ((Job) source).JobResultHandler -= HandleHaulJobResult;
+        _jobs.Remove((Job) source);
+        if (_wasConstructionCanceled == false) {
+            CheckCurrentTileContents();
         }
     }
 
@@ -164,16 +119,6 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         JobSystem.GetInstance().AddJob(job);
         _jobs.Add(job);
         job.JobResultHandler += HandleHaulJobResult;
-    }
-
-    //FIX THIS// item count
-    private void CalculateNewIngredientsValues(Item newItem) {
-        for (int i = _ingredients.Count - 1; i >= 0; i--) {
-            _ingredients[i].count--;
-            if (_ingredients[i].count <= 0) {
-                _ingredients.RemoveAt(i);
-            }
-        }
     }
 
     private void HandleHaulJobResult(object source, EventArgs e) {
@@ -195,6 +140,16 @@ public class ConstructionPlan : StaticObject, IItemHolder {
             }
         }
     }
+    
+    //FIX THIS// item count
+    private void CalculateNewIngredientsValues(Item newItem) {
+        for (int i = Ingredients.Count - 1; i >= 0; i--) {
+            Ingredients[i].count--;
+            if (Ingredients[i].count <= 0) {
+                Ingredients.RemoveAt(i);
+            }
+        }
+    }
 
     //when plan is created the tile, that the plan was placed on stays traversable until at least 1 ingredient comes in
     //afterwards tile's traversability changes to false and plan sprite changes.
@@ -208,7 +163,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         if (IsTraversable == true) {
             Tile t = Utils.TileAt(Position);
 
-            while (t.content.Characters.Count > 0) {
+            while (t.Contents.Characters.Count > 0) {
                 yield return null;
             }
 
@@ -217,17 +172,17 @@ public class ConstructionPlan : StaticObject, IItemHolder {
             gameObject.GetComponent<SpriteRenderer>().color = Color.black;
         }
 
-        if (_ingredients.Count == 0) {
+        if (Ingredients.Count == 0) {
             CreateConstructionJob();
         }
 
         _isChangePlanToActiveStateRunning = false;
     }
 
-    public void CancelConstruction() {
+    public void CancelPlan() {
         _wasConstructionCanceled = true;
-        foreach (Job job in _jobs) {
-            job?.DeleteJob();
+        for (int i = _jobs.Count - 1; i >= 0; i--) {
+            _jobs[i].DeleteJob();
         }
         _jobs.Clear();
 
@@ -236,4 +191,24 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         }
         Destroy();
     }
+    
+    #region For Testing
+
+    public bool WasPlanCanceledCorrectly() {
+        if (_wasConstructionCanceled == false) {
+            return false;
+        }
+
+        if (_jobs.Count != 0) {
+            return false;
+        }
+
+        if (gameObject != null) {
+            return false;
+        }
+
+        return true;
+    }
+    
+    #endregion
 }

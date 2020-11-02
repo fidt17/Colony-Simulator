@@ -10,7 +10,7 @@ namespace Tests {
 
 		#region Spawn Tests
 
-		public bool check_item_initialization<T>(T item, bool positionMustDiffer) where T : Item {
+		private bool check_item_initialization<T>(T item, bool positionMustDiffer) where T : Item {
 			//check data
 			if (item.Data is null) {
 				return false;
@@ -20,39 +20,39 @@ namespace Tests {
 			//if item was spawned in available position
 			if (positionMustDiffer == false) {
 				if (item.Position != _spawnPosition) {
-					Assert.IsTrue(false);
+					Assert.Fail();
 				}
 
 				if (item.gameObject.transform.position != Utils.ToVector3(_spawnPosition)) {
-					Assert.IsTrue(false);
+					Assert.Fail();
 				}
 			}
 			else {
 				if (item.Position == _spawnPosition) {
-					Assert.IsTrue(false);
+					Assert.Fail();
 				}
 			}
 
 			//check tile content
-			if (Utils.TileAt(item.Position).content.Item != item) {
-				Assert.IsTrue(false);
+			if (Utils.TileAt(item.Position).Contents.Item != item) {
+				Assert.Fail();
 			}
 
 			//check region content
 			RegionContent rc = Utils.NodeAt(item.Position).subregion.content;
 			if (rc.Get<T>().Contains(item) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			//check stockpile manager lists
-			if (Utils.TileAt(item.Position).content.StockpilePart is null) {
+			if (Utils.TileAt(item.Position).Contents.StockpilePart is null) {
 				if (StockpileManager.GetInstance().otherItems.Contains(item) == false) {
-					Assert.IsTrue(false);
+					Assert.Fail();
 				}
 			}
 			else {
 				if (StockpileManager.GetInstance().stockpileItems.Contains(item) == false) {
-					Assert.IsTrue(false);
+					Assert.Fail();
 				}
 			}
 
@@ -64,11 +64,11 @@ namespace Tests {
 			WoodLog item = Factory.Create<WoodLog>("wood log", _spawnPosition);
 
 			if (check_item_initialization<WoodLog>(item, false) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			item.Destroy();
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		[Test]
@@ -78,12 +78,12 @@ namespace Tests {
 			WoodLog item = Factory.Create<WoodLog>("wood log", _spawnPosition);
 
 			if (check_item_initialization<WoodLog>(item, true) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			item.Destroy();
 			t.SetTraversability(true);
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		[Test]
@@ -92,12 +92,12 @@ namespace Tests {
 			WoodLog item2 = Factory.Create<WoodLog>("wood log", _spawnPosition);
 
 			if (check_item_initialization<WoodLog>(item2, true) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			item1.Destroy();
 			item2.Destroy();
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		#endregion
@@ -107,7 +107,7 @@ namespace Tests {
 		private bool _OnDestroyedWasCalled;
 
 		private bool check_item_destroy<T>(T item) where T : Item {
-			//gameobject must be destroyed
+			//gameObject must be destroyed
 			if (item.gameObject != null) {
 				return false;
 			}
@@ -118,7 +118,7 @@ namespace Tests {
 			}
 
 			//check tile contents
-			if (Utils.TileAt(item.Position).content.Item == item) {
+			if (Utils.TileAt(item.Position).Contents.Item == item) {
 				return false;
 			}
 
@@ -147,10 +147,10 @@ namespace Tests {
 
 
 			if (check_item_destroy<WoodLog>(item) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		private void OnItemDestroy(object source, System.EventArgs e) {

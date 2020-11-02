@@ -34,12 +34,12 @@ public abstract class StaticObject : IPrefab, IDestroyable {
     }
 
     protected void PutOnTile() {
-        Utils.TileAt(Position).content.PutStaticObjectOnTile(this, IsTraversable);
+        Utils.TileAt(Position).Contents.PutStaticObjectOnTile(this, IsTraversable);
         AddToRegionContent();
     }
 
     protected void RemoveFromTile() {
-        Utils.TileAt(Position).content.RemoveStaticObjectFromTile();
+        Utils.TileAt(Position).Contents.RemoveStaticObjectFromTile();
         RemoveFromRegionContent();
     }
 

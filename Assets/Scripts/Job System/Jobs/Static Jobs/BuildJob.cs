@@ -12,7 +12,7 @@ public class BuildJob : StaticJob {
 
     protected override void PlanJob() {
         _task = new BuildTask(_plan, _worker.MotionComponent, GetDestinationNode().position) as ITask;
-        _task.TaskResultHandler += OnJobFinish;
+        _task.ResultHandler += OnJobFinish;
         _worker.CommandProcessor.AddTask(_task);
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 public class HungerComponent : CharacterComponent {   
     
-    public float HungerLevel { get; private set; } = 100;
+    public float HungerLevel { get; private set; } = 80;
 
     public readonly List<Type> Edibles = new List<Type>(); // List of things character can eat.
 
@@ -62,7 +62,7 @@ public class HungerComponent : CharacterComponent {
         }
         
         _eatFoodTask = new EatFoodTask(_character, Pathfinder.FindNodeNear(Utils.NodeAt(grass.Position), _character.MotionComponent.PathNode), grass);
-        _eatFoodTask.TaskResultHandler += HandleGetFoodTaskResult;
+        _eatFoodTask.ResultHandler += HandleGetFoodResult;
         _character.AI.CommandProcessor.AddTask(_eatFoodTask);
 
         while (_eatFoodTask != null) {
@@ -71,8 +71,8 @@ public class HungerComponent : CharacterComponent {
         _isSearchingForFood = false;
     }
 
-    private void HandleGetFoodTaskResult(object source, EventArgs e) {
-        _eatFoodTask.TaskResultHandler -= HandleGetFoodTaskResult;
+    private void HandleGetFoodResult(object source, EventArgs e) {
+        _eatFoodTask.ResultHandler -= HandleGetFoodResult;
         _eatFoodTask = null;
     }
 

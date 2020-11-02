@@ -12,22 +12,32 @@ public static class WorldGenerator {
         _gameSettings = gameSettings;
         grid = new Tile[Utils.MapSize, Utils.MapSize];
 
-        perlinSeed = gameSettings.seed;
-        GenerateTerrainWithPerlinNoise(ref grid);
-        MeshGenerator.GetInstance().Initialize();
-        Pathfinder.Initialize();
-
         if (gameSettings.testWorld) {
-            return;
+            GenerateTestTerrain(grid);
+            MeshGenerator.GetInstance().Initialize();
+            Pathfinder.Initialize();
         }
-
-        if (gameSettings.vegetation == true) {
-            GenerateVegetation(ref grid);
+        else {
+            perlinSeed = gameSettings.seed;
+            GenerateTerrainWithPerlinNoise(grid);
+            MeshGenerator.GetInstance().Initialize();
+            Pathfinder.Initialize();
+            if (gameSettings.vegetation == true) {
+                GenerateVegetation(ref grid);
+            }
+            GenerateCharacters();
         }
-        GenerateCharacters();
     }
 
-    private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {
+    private static void GenerateTestTerrain(Tile[,] grid) {
+        for (int x = 0; x < Utils.MapSize; x++) {
+            for (int y = 0; y < Utils.MapSize; y++) {
+                grid[x, y] = Factory.CreateData<Tile>("grass tile", new Vector2Int(x, y));
+            }
+        }
+    }
+    
+    private static void GenerateTerrainWithPerlinNoise(Tile[,] grid, float seaLevel = 0.33f) {
         PerlinNoise pn = new PerlinNoise(perlinSeed);
         int nOctaves = pn.CalculateMaxOctavesCount(Utils.MapSize);
         float fBias = 2f;

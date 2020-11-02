@@ -8,7 +8,6 @@ public class JobSystem : Singleton<JobSystem> {
     //the ones which have been already assigned to a worker
     //and those that are not yet assigned to anyone
     public List<Job> AllJobs => _allJobs;
-    
     public List<Job> AvailableJobs => _availableJobs;
 
     private List<JobHandlerComponent> _availableWorkers = new List<JobHandlerComponent>(); 

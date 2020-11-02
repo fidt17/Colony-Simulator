@@ -46,10 +46,14 @@ public abstract class Job {
     }
 
     public void DeleteJob() {
+        if (_wasJobCanceled) {
+            return;
+        }
+        
         _wasJobCanceled = true;
         if (_worker != null) {
             _worker.WithdrawJob();
-            _task.TaskResultHandler -= OnJobFinish;
+            _task.ResultHandler -= OnJobFinish;
             _task.AbortTask();
         }
         DeleteJobIcon();
@@ -74,8 +78,8 @@ public abstract class Job {
     }
 
     protected virtual void OnJobFinish(object source, System.EventArgs e) {
-        _task.TaskResultHandler -= OnJobFinish;
-        bool result = (e as Task.TaskResultEventArgs).result;
+        _task.ResultHandler -= OnJobFinish;
+        bool result = (e as Task.TaskResultEventArgs).Result;
         _worker.WithdrawJob();
         if (result == true) {
             JobSystem.GetInstance().DeleteJob(this);

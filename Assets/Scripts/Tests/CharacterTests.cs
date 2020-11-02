@@ -51,7 +51,7 @@ namespace Tests {
 			#endregion
 
 			//Tile test
-			if (Utils.TileAt(_spawnPosition).content.Characters.Contains(character) == false) {
+			if (Utils.TileAt(_spawnPosition).Contents.Characters.Contains(character) == false) {
 				return false;
 			}
 
@@ -64,30 +64,30 @@ namespace Tests {
 
 			//Base character test
 			if (check_character_initialization(human) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			#region Unique components
 
 			//Motion animator
 			if (human.MotionAnimator.CheckInitialization() == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			//Job handler component
 			if (human.JobHandlerComponent.CheckInitialization() == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			//Inventory component
 			if (human.InventoryComponent.CheckInitialization() == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			#endregion
 
 			human.Die();
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		[Test]
@@ -96,16 +96,16 @@ namespace Tests {
 
 			//Base character test
 			if (check_character_initialization(rabbit) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			//Motion animator
 			if (rabbit.MotionAnimator.CheckInitialization() == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			rabbit.Die();
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		#endregion
@@ -114,7 +114,7 @@ namespace Tests {
 
 		public bool check_character_death(Character character) {
 			//Verify that all tile doesn't have information about the character anymore
-			if (Utils.TileAt(_spawnPosition).content.Characters.Contains(character)) {
+			if (Utils.TileAt(_spawnPosition).Contents.Characters.Contains(character)) {
 				return false;
 			}
 
@@ -149,7 +149,7 @@ namespace Tests {
 
 			//Common character checks
 			if (check_character_death(human) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			//Verify that all components are disabled.
@@ -161,11 +161,11 @@ namespace Tests {
 
 			foreach (CharacterComponent component in components) {
 				if (component.IsDisabled == false) {
-					Assert.IsTrue(false);
+					Assert.Fail();
 				}
 			}
 
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		[UnityTest]
@@ -176,7 +176,7 @@ namespace Tests {
 
 			//Common character checks
 			if (check_character_death(rabbit) == false) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
 			//Verify that all components are disabled.
@@ -186,11 +186,11 @@ namespace Tests {
 
 			foreach (CharacterComponent component in components) {
 				if (component.IsDisabled == false) {
-					Assert.IsTrue(false);
+					Assert.Fail();
 				}
 			}
 
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		#endregion
@@ -203,10 +203,11 @@ namespace Tests {
 			human.Select();
 
 			if (CommandInputStateMachine.currentCommandState.GetType() != typeof(MoveCommandInputState)) {
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
-
-			Assert.IsTrue(true);
+			
+			human.Die();
+			Assert.Pass();
 		}
 
 		#endregion

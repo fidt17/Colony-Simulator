@@ -60,7 +60,9 @@
               <e p="EatFoodTask.cs" t="Include" />
               <e p="HaulTask.cs" t="Include" />
               <e p="HaulToItemHolderTask.cs" t="Include" />
+              <e p="MoveTask.cs" t="Include" />
               <e p="Task.cs" t="Include" />
+              <e p="WaitTask.cs" t="Include" />
             </e>
           </e>
           <e p="Controllers" t="Include">
@@ -182,10 +184,17 @@
           </e>
           <e p="Tests" t="Include">
             <e p="CharacterTests.cs" t="Include" />
+            <e p="CommandProcessorTests.cs" t="Include" />
+            <e p="ConstructionTests.cs" t="Include" />
             <e p="ItemTests.cs" t="Include" />
+            <e p="JobTests.cs" t="Include" />
             <e p="SceneLoaderForUnitTests.cs" t="Include" />
+            <e p="StaticObjectTests.cs" t="Include" />
             <e p="Tests.asmdef" t="Include" />
-            <e p="VegetationTests.cs" t="Include" />
+          </e>
+          <e p="Tests Pathfinding" t="Include">
+            <e p="PathfindingTests.cs" t="Include" />
+            <e p="Tests Pathfinding.asmdef" t="Include" />
           </e>
           <e p="TestScript.cs" t="Include" />
           <e p="Tile Map Generation" t="Include">
@@ -219,6 +228,7 @@
       <e p="Packages" t="ExcludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
       <e p="Tests.csproj" t="IncludeRecursive" />
+      <e p="TestsPathfinding.csproj" t="IncludeRecursive" />
     </e>
   </component>
 </project>

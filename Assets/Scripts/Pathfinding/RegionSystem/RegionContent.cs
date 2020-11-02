@@ -20,7 +20,9 @@ public class RegionContent {
     }
 
     public void Remove<T>(T value) {
-        (content[typeof(T)] as List<T>).Remove(value);
+        if (content.ContainsKey(typeof(T))) {
+            ((List<T>) content[typeof(T)]).Remove(value);
+        }
     }
 
     public List<T> Get<T>() => (content.ContainsKey(typeof(T))) ? (content[typeof(T)] as List<T>) : null;

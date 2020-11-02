@@ -14,6 +14,6 @@ public abstract class StaticJob : Job {
         base.DeleteJob();
     }
 
-    protected void AddToTile() => Utils.TileAt(Position).content.AddStaticJob(this);
-    protected void RemoveFromTile() => Utils.TileAt(Position).content.RemoveStaticJob(this);
+    protected void AddToTile() => Utils.TileAt(Position).Contents.AddStaticJob(this);
+    protected void RemoveFromTile() => Utils.TileAt(Position).Contents.RemoveStaticJob(this);
 }

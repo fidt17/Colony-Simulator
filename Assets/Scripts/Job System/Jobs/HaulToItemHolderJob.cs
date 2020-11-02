@@ -35,8 +35,8 @@ public class HaulToItemHolderJob : HaulJob {
             if (tile == null) {
                 return false;
             } else {
-                if (tile.content.HasItem) {
-                    return tile.content.Item.GetType().Equals(ItemType) && tile.content.Item.HasHaulJob == false;
+                if (tile.Contents.HasItem) {
+                    return tile.Contents.Item.GetType().Equals(ItemType) && tile.Contents.Item.HasHaulJob == false;
                 } else {
                     return false;
                 }
@@ -48,7 +48,7 @@ public class HaulToItemHolderJob : HaulJob {
             JobSystem.GetInstance().StartCoroutine(JobSystem.GetInstance().HideJobForSeconds(this, 5f));
             return false;
         } else {
-            _item = t.content.Item;
+            _item = t.Contents.Item;
             return true;
         }
         /////////////////
@@ -58,7 +58,7 @@ public class HaulToItemHolderJob : HaulJob {
         _task = new HaulToItemHolderTask(_item, _itemHolder, _worker.MotionComponent, _worker.Inventory);
 
         _worker.CommandProcessor.AddTask(_task);
-        _task.TaskResultHandler += OnJobFinish;
+        _task.ResultHandler += OnJobFinish;
         _item.SetHaulJob(this);
     }
 }

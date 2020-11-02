@@ -77,14 +77,14 @@ public class TestScript : Singleton<TestScript> {
         if (t == null)
             return;
 
-        t.content.Item?.Destroy();
+        t.Contents.Item?.Destroy();
 
-        if (t.content.StaticObject != null) {
+        if (t.Contents.StaticObject != null) {
 
-            if (t.content.StaticObject.GetType() == typeof(Tree))
-                ( (IHarvestable) t.content.StaticObject).Harvest();
+            if (t.Contents.StaticObject.GetType() == typeof(Tree))
+                ( (IHarvestable) t.Contents.StaticObject).Harvest();
             else {
-                t.content.StaticObject.Destroy();
+                t.Contents.StaticObject.Destroy();
             }
         }
     }

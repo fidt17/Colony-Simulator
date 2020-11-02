@@ -43,12 +43,12 @@ public abstract class Item : IPrefab, IDestroyable {
 
     public void PutOnTile() {
         
-        bool RequirementsFunction(Tile t) => t != null && !t.content.HasItem && t.isTraversable;
+        bool RequirementsFunction(Tile t) => t != null && !t.Contents.HasItem && t.isTraversable;
         var tile = SearchEngine.FindClosestTileWhere(Position, RequirementsFunction, Utils.TileAt(Position).isTraversable);
         
         if (tile != null) {
             SetPosition(tile.position);
-            tile.content.PutItemOnTile(this);
+            tile.Contents.PutItemOnTile(this);
             AddToRegionContent();
             StockpileManager.GetInstance().AddItem(this);
         } else {
@@ -57,7 +57,7 @@ public abstract class Item : IPrefab, IDestroyable {
     }
 
     public void RemoveFromTile() {
-        Utils.TileAt(Position).content.RemoveItemFromTile();
+        Utils.TileAt(Position).Contents.RemoveItemFromTile();
         RemoveFromRegionContent();
         StockpileManager.GetInstance().RemoveItem(this);
     }

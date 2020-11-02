@@ -5,63 +5,58 @@ using System.Linq;
 
 public class CommandProcessor : MonoBehaviour {
     
-    public bool HasTask => _currentTask != null;
+    public bool HasTask   => _currentTask != null;
+    public int  TaskCount => _taskQueue.Count;
+    
+    private readonly Queue<ITask> _taskQueue = new Queue<ITask>();
+    private          ITask        _currentTask;
 
-    private Queue<ITask> _taskQueue = new Queue<ITask>();
-    private ITask _currentTask;
-
-    private void Update() => _currentTask?.ExecuteTask();
-
-    private void OnDestroy() {
-        if (_currentTask != null) {
-            _currentTask.TaskResultHandler -= OnTaskFinish;
-        }
+    private void Update() {
+        _currentTask?.ExecuteTask();   
     }
 
     public void AddTask(ITask task) {
         _taskQueue.Enqueue(task);
-        StartExecution();
-    }
-
-    public void AddUrgentTask(ITask task) {
-        ResetTasks();
-        AddTask(task);
-        StartExecution();
-    }
-
-    public void ResetTask(ITask task) {
-        task.AbortTask();
-        _taskQueue = new Queue<ITask>(_taskQueue.Where(x => x != task));
-    }
-
-    public void ResetTasks() {
-        foreach(ITask task in _taskQueue) {
-            task.AbortTask();
-        }
-        _currentTask?.AbortTask();
-        _currentTask = null;
-        _taskQueue.Clear();
-    }
-
-    public void StartExecution() {
         if (_currentTask is null) {
             NextTask();
         }
     }
 
-    public void NextTask() {
+    public void AddUrgentTask(ITask task) {
+        AbortTasks();
+        AddTask(task);
+        NextTask();
+    }
+
+    private void NextTask() {
         if (_taskQueue.Count == 0) {
             return;
         }
         _currentTask = _taskQueue.Dequeue();
-        _currentTask.TaskResultHandler += OnTaskFinish;
+        _currentTask.ResultHandler += OnTaskFinish;
+    }
+
+    private void AbortTasks() {
+        foreach(var task in _taskQueue) {
+            task.AbortTask();
+        }
+
+        if (_currentTask != null) {
+            _currentTask.ResultHandler -= OnTaskFinish;
+            _currentTask.AbortTask();
+            _currentTask = null;
+        }
+        
+        _taskQueue.Clear();
     }
 
     private void OnTaskFinish(object source, System.EventArgs e) {
-        if (_currentTask != null) {
-            (source as ITask).TaskResultHandler -= OnTaskFinish;
-            _currentTask = null;
-        }
+        ((ITask) source).ResultHandler -= OnTaskFinish;
+        _currentTask = null;
         NextTask();
+    }
+    
+    private void OnDestroy() {
+        AbortTasks();
     }
 }

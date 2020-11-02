@@ -8,20 +8,24 @@ using System.Linq;
 
 public static class Factory {
 
-    private static Dictionary<string, PrefabScriptableObject> _data;
-    private static Dictionary<Type, Transform> _objectsParents = new Dictionary<Type, Transform>();
-    private static bool _isInitialized = false;
+    private static Dictionary<string, PrefabScriptableObject>       _data                 = new Dictionary<string, PrefabScriptableObject>();
+    private static Dictionary<string, ConstructionScriptableObject> _constructionPlanData = new Dictionary<string, ConstructionScriptableObject>();
+    private static Dictionary<Type, Transform>                      _objectsParents       = new Dictionary<Type, Transform>();
+    private static bool                                             _isInitialized        = false;
 
     private static void Initialize() {
-        string searchFilter = "l:PrefabScriptableObject";
-        string[] assetNames = AssetDatabase.FindAssets(searchFilter);
-        _data = new Dictionary<string, PrefabScriptableObject>();
-
-        foreach (string name in assetNames) {
+        foreach (string name in AssetDatabase.FindAssets("l:PrefabScriptableObject")) {
             var path = AssetDatabase.GUIDToAssetPath(name);
             var instance = AssetDatabase.LoadAssetAtPath<PrefabScriptableObject>(path);
             _data.Add(instance.dataName, instance);
         }
+        
+        foreach (string name in AssetDatabase.FindAssets("l:ConstructionPlan")) {
+            var path = AssetDatabase.GUIDToAssetPath(name);
+            var instance = AssetDatabase.LoadAssetAtPath<ConstructionScriptableObject>(path);
+            _constructionPlanData.Add(instance.dataName, instance);
+        }
+        
         _isInitialized = true;
     }
 
@@ -54,6 +58,17 @@ public static class Factory {
         t.SetData(_data[dataName], position);
         t.SetGameObject(GameObject.Instantiate(_data[dataName].prefab, GetParent<T>()));
         return t;
+    }
+
+    public static ConstructionPlan CreateConstructionPlan(string constructionName, Vector2Int position) {
+        if (!_isInitialized) {
+            Initialize();
+        }
+        
+        ConstructionPlan plan = new ConstructionPlan();
+        plan.SetData(_constructionPlanData[constructionName], position);
+        plan.SetGameObject(GameObject.Instantiate(_constructionPlanData[constructionName].planPrefab, GetParent<ConstructionPlan>()));
+        return plan;
     }
 
     public static GameObject Create(string dataName, Vector2Int position) {

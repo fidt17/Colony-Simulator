@@ -54,20 +54,20 @@ public class CancelJobInputState : CommandInputState {
     
         foreach (Vector2Int position in _selectionArea.GetPositions()) {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t is null || t.content is null || (t.content.StaticJobs.Count == 0 && t.content.ConstructionPlan is null)) {
+            if (t is null || t.Contents is null || (t.Contents.StaticJobs.Count == 0 && t.Contents.ConstructionPlan is null)) {
                 continue;
             }
 
-            if (t.content.StaticJobs.Count > 0) {
+            if (t.Contents.StaticJobs.Count > 0) {
                 if (_staticJobs.ContainsKey(t) == false) {
-                    foreach (StaticJob sj in t.content.StaticJobs) {
+                    foreach (StaticJob sj in t.Contents.StaticJobs) {
                         _staticJobs.Add(t, sj);
                     }
                 }
             }
 
-            if (t.content.ConstructionPlan != null && _constructionPlans.ContainsKey(t) == false) {
-                _constructionPlans.Add(t, t.content.ConstructionPlan);
+            if (t.Contents.ConstructionPlan != null && _constructionPlans.ContainsKey(t) == false) {
+                _constructionPlans.Add(t, t.Contents.ConstructionPlan);
             }
         }
     }
@@ -90,7 +90,7 @@ public class CancelJobInputState : CommandInputState {
 
         Dictionary<Tile, ConstructionPlan> tempPlan = new Dictionary<Tile, ConstructionPlan>(_constructionPlans);
         foreach (KeyValuePair<Tile, ConstructionPlan> pair in tempPlan) {
-            pair.Value.CancelConstruction();
+            pair.Value.CancelPlan();
             _constructionPlans.Remove(pair.Key);
         }
     }

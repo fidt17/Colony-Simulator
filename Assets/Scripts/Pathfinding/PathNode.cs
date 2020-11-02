@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathNode {
+public class PathNode : IHeapItem<PathNode> {
 
     public Tile Tile => Utils.TileAt(position);
 
@@ -15,8 +15,9 @@ public class PathNode {
     public PathNode parent;
 
     public bool isTraversable;
-    public int gCost, hCost;
-    public int fCost => gCost + hCost;
+    public int  gCost, hCost;
+    public int  heapIndex;
+    public int  fCost => gCost + hCost;
 
     public PathNode(int x, int y, bool isTraversable) {
         position = new Vector2Int(x, y);
@@ -42,5 +43,22 @@ public class PathNode {
         }
 
         return neighbours;
+    }
+
+    public int CompareTo(PathNode nodeToCompare) {
+        int compare = hCost.CompareTo(nodeToCompare.hCost);
+        if (compare == 0) {
+            compare = fCost.CompareTo(nodeToCompare.fCost);
+        }
+        return -compare;
+    }
+
+    public int HeapIndex {
+        get {
+            return heapIndex;
+        }
+        set {
+            heapIndex = value;
+        }
     }
 }

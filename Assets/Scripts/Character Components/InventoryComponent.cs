@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Linq;
 
 public class InventoryComponent : CharacterComponent {
+
+    public bool HasItem(Item item) => _inventory.Contains(item);
     
     private List<Item> _inventory = new List<Item>();
     private Human _human;

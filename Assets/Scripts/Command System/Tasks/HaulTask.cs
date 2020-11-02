@@ -17,10 +17,10 @@ public class HaulTask : Task {
     }
 
     public override void AbortTask() {
-        foreach(Command command in _commandQueue) {
+        foreach(Command command in CommandQueue) {
             command.Abort();
         }
-        _currentCommand?.Abort();
-        OnResultChanged(false);
+        CurrentCommand?.Abort();
+        Finish(false);
     }
 }

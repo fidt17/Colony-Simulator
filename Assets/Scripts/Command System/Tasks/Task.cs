@@ -1,66 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System;
 
 public class Task : ITask {
 
-    public event EventHandler TaskResultHandler;
+    public event EventHandler ResultHandler;
     public class TaskResultEventArgs : EventArgs {
-        public bool result { get; set; }
+        public bool Result;
     }
 
-    protected Queue<Command> _commandQueue = new Queue<Command>();
-    protected Command _currentCommand;
+    public int  CommandsCount => CommandQueue.Count;
+    public Type CurrentCommandType   => CurrentCommand.GetType();
+    
+    protected readonly Queue<Command> CommandQueue = new Queue<Command>();
+    protected Command CurrentCommand;
 
     public void AddCommand(Command command) {
-        command.CommandResultHandler += OnCommandFinish;
-        _commandQueue.Enqueue(command);
+        CommandQueue.Enqueue(command);
+        command.ResultHandler += OnCommandFinish;
     }
 
     public void ExecuteTask() {
-        if (_currentCommand is null) {
+        if (CurrentCommand is null) {
             NextCommand();
         }
-        _currentCommand?.Execute();
+        CurrentCommand?.Execute();
     }
 
-    public void NextCommand() {
-        if (_commandQueue.Count == 0) {
-            FinishTask();
+    public virtual void AbortTask() {
+        foreach(Command command in CommandQueue) {
+            command.Abort();
+        }
+
+        if (CurrentCommand != null) {
+            CurrentCommand.ResultHandler -= OnCommandFinish;
+            CurrentCommand.Abort();
+        }
+        
+        Finish(false);
+    }
+    
+    public System.Delegate[] GetResultHandlerSubscribers() {
+        return ResultHandler?.GetInvocationList();
+    }
+
+    private void NextCommand() {
+        if (CommandQueue.Count == 0) {
+            Finish(true);
         } else {
-            _currentCommand = _commandQueue.Dequeue();
+            CurrentCommand = CommandQueue.Dequeue();
         }
     }
 
-    public void OnCommandFinish(object source, EventArgs e) {
-        if ((e as Command.CommandResultEventArgs).result == true) {
+    private void OnCommandFinish(object source, EventArgs e) {
+        if (((Command.CommandResultEventArgs) e).Result == true) {
+            ((Command) source).ResultHandler -= OnCommandFinish;
             NextCommand();
         } else {
             AbortTask();
         }
     }
 
-    public void FinishTask() {
-        OnResultChanged(true);
-    }
-
-    public virtual void AbortTask() {
-        foreach(Command command in _commandQueue) {
-            command.Abort();
-        }
-        _currentCommand?.Abort();
-        OnResultChanged(false);
-    }
-
-    protected void OnResultChanged(bool result) {
-        TaskResultEventArgs e = new TaskResultEventArgs();
-        e.result = result;
-
-        if (result == false) {
-            int a;
-        }
-
-        TaskResultHandler?.Invoke(this, e);
+    protected void Finish(bool result) {
+        var e = new TaskResultEventArgs {
+            Result = result
+        };
+        ResultHandler?.Invoke(this, e);
     }
 }

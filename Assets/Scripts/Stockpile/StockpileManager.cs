@@ -29,7 +29,7 @@ public class StockpileManager : Singleton<StockpileManager> {
     }
 
     public void AddItem(Item item) {
-        if (Utils.TileAt(item.Position).content.StockpilePart != null) {
+        if (Utils.TileAt(item.Position).Contents.StockpilePart != null) {
             AddItemToStockpiles(item);
         } else {
             otherItems.Add(item);
@@ -52,7 +52,7 @@ public class StockpileManager : Singleton<StockpileManager> {
     }
 
     private void TryHaulingItemToAnyStockpile(Item item) {
-        if (Utils.TileAt(item.Position).content.StockpilePart != null || item.HasHaulJob) {
+        if (Utils.TileAt(item.Position).Contents.StockpilePart != null || item.HasHaulJob) {
             return;
         }
 

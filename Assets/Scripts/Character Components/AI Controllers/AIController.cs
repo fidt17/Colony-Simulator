@@ -10,6 +10,5 @@ public abstract class AIController : CharacterComponent {
         CommandProcessor = character.gameObject.AddComponent<CommandProcessor>();
     }
 
-    public abstract override void DisableComponent();
     public abstract override bool CheckInitialization();
 }

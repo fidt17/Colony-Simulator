@@ -19,6 +19,6 @@ public class CutJob : StaticJob {
     protected override void PlanJob() {
         _task = new CutTask(_worker.MotionComponent, GetDestinationNode().position, _cuttable) as ITask;
         _worker.CommandProcessor.AddTask(_task);
-        _task.TaskResultHandler += OnJobFinish;
+        _task.ResultHandler += OnJobFinish;
     }
 }
