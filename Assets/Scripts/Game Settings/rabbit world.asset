@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549dd4f18c924bd49a4279988dfefa35, type: 3}
   m_Name: rabbit world
   m_EditorClassIdentifier: 
-  mapSize: 50
+  targetFrameRate: 60
+  gameSpeed: 1
+  mapSize: 100
   seed: 0
+  vegetation: 1
   humanCount: 0
   rabbitCount: 200
+  testWorld: 0

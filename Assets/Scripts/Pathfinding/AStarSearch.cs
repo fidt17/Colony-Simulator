@@ -2,13 +2,14 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public static class AStarSearch {
 
     public delegate void OnAddToOpenSet(PathNode node);
     public static event OnAddToOpenSet HandleAddToOpenSet;
-    
+
     public delegate void OnAddToClosedSet(PathNode node);
     public static event OnAddToClosedSet HandleAddToClosedSet;
     
@@ -87,10 +88,18 @@ public static class AStarSearch {
             return null;
         }
 
+        List<Subregion> subregions = AStarSubregionSearch.GetPath(startNode.subregion, targetNode.subregion);
+        PathNode[] possibleNodes = new PathNode[Utils.MapSize * Utils.MapSize];
+        foreach (Subregion s in subregions) {
+            foreach (PathNode n in s.nodes) {
+                possibleNodes[n.x + n.y * Utils.MapSize] = n;
+            }
+        }
+        
         Heap<PathNode> openSet = new Heap<PathNode>(Utils.MapSize * Utils.MapSize);
+        HashSet<PathNode> closedSet = new HashSet<PathNode>();
         openSet.Add(startNode);
         HandleAddToOpenSet?.Invoke(startNode);
-        HashSet<PathNode> closedSet = new HashSet<PathNode>();
 
         while (openSet.Count > 0) {
             PathNode currentNode = openSet.RemoveFirst();
@@ -103,7 +112,7 @@ public static class AStarSearch {
             }
 
             foreach(var neighbour in GetNeighbours(currentNode)) {
-                if (closedSet.Contains(neighbour)) {
+                if (closedSet.Contains(neighbour) || possibleNodes[neighbour.x + neighbour.y * Utils.MapSize] == null) {
                     continue;
                 }
                 
@@ -128,6 +137,128 @@ public static class AStarSearch {
 
         return null;
     }
+    
+    //DELETE ME
+    public static List<PathNode> GetPathT1(PathNode startNode, PathNode targetNode, ref List<PathNode> closedSet) {
+        if (startNode == targetNode) {
+            return new List<PathNode>();
+        }
+        
+        if (startNode.Region != targetNode.Region) {
+            return null;
+        }
+
+        List<Subregion> subregions = AStarSubregionSearch.GetPath(startNode.subregion, targetNode.subregion);
+        PathNode[] possibleNodes = new PathNode[Utils.MapSize * Utils.MapSize];
+        foreach (Subregion s in subregions) {
+            foreach (PathNode n in s.nodes) {
+                possibleNodes[n.x + n.y * Utils.MapSize] = n;
+            }
+        }
+        
+        Heap<PathNode> openSet = new Heap<PathNode>(Utils.MapSize * Utils.MapSize);
+        openSet.Add(startNode);
+        HandleAddToOpenSet?.Invoke(startNode);
+
+        while (openSet.Count > 0) {
+            PathNode currentNode = openSet.RemoveFirst();
+            closedSet.Add(currentNode);
+            HandleAddToClosedSet?.Invoke(currentNode);
+            
+            if (currentNode == targetNode) {
+                var path = RetracePath(startNode, targetNode);
+                return path;
+            }
+
+            foreach(var neighbour in GetNeighbours(currentNode)) {
+                if (closedSet.Contains(neighbour) || possibleNodes[neighbour.x + neighbour.y * Utils.MapSize] == null) {
+                    continue;
+                }
+                
+                int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                if (openSet.Contains(neighbour)) {
+                    if (newCostToNeighbour < neighbour.gCost) {
+                        neighbour.gCost = newCostToNeighbour;
+                        neighbour.hCost = Heuristic(neighbour, targetNode);
+                        neighbour.parent = currentNode;
+                        openSet.UpdateItem(neighbour);
+                    }
+                } else {
+                    neighbour.gCost = newCostToNeighbour;
+                    neighbour.hCost = Heuristic(neighbour, targetNode);
+                    neighbour.parent = currentNode;
+                    
+                    openSet.Add(neighbour);
+                    HandleAddToOpenSet?.Invoke(neighbour);
+                }
+            }
+        }
+
+        return null;
+    }
+    //
+    
+    //DELETE ME
+    public static List<PathNode> GetPathT2(PathNode startNode, PathNode targetNode, ref List<PathNode> closedSet) {
+        if (startNode == targetNode) {
+            return new List<PathNode>();
+        }
+        
+        if (startNode.Region != targetNode.Region) {
+            return null;
+        }
+        
+        /*
+        List<Subregion> subregions = AStarSubregionSearch.GetPath(startNode.subregion, targetNode.subregion);
+        PathNode[] possibleNodes = new PathNode[Utils.MapSize * Utils.MapSize];
+        foreach (Subregion s in subregions) {
+            foreach (PathNode n in s.nodes) {
+                possibleNodes[n.x + n.y * Utils.MapSize] = n;
+            }
+        }
+        */
+        
+        Heap<PathNode> openSet = new Heap<PathNode>(Utils.MapSize * Utils.MapSize);
+        openSet.Add(startNode);
+        HandleAddToOpenSet?.Invoke(startNode);
+
+        while (openSet.Count > 0) {
+            PathNode currentNode = openSet.RemoveFirst();
+            closedSet.Add(currentNode);
+            HandleAddToClosedSet?.Invoke(currentNode);
+            
+            if (currentNode == targetNode) {
+                var path = RetracePath(startNode, targetNode);
+                return path;
+            }
+
+            foreach(var neighbour in GetNeighbours(currentNode)) {
+                if (closedSet.Contains(neighbour) /*|| possibleNodes[neighbour.x + neighbour.y * Utils.MapSize] == null*/) {
+                    continue;
+                }
+                
+                int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                if (openSet.Contains(neighbour)) {
+                    if (newCostToNeighbour < neighbour.gCost) {
+                        neighbour.gCost = newCostToNeighbour;
+                        neighbour.hCost = Heuristic(neighbour, targetNode);
+                        neighbour.parent = currentNode;
+                        openSet.UpdateItem(neighbour);
+                    }
+                } else {
+                    neighbour.gCost = newCostToNeighbour;
+                    neighbour.hCost = Heuristic(neighbour, targetNode);
+                    neighbour.parent = currentNode;
+                    
+                    openSet.Add(neighbour);
+                    HandleAddToOpenSet?.Invoke(neighbour);
+                }
+            }
+        }
+
+        return null;
+    }
+    //
 
     private static List<PathNode> GetNeighbours(PathNode node) {
 		List<PathNode> neighbours = new List<PathNode>();

@@ -26,11 +26,34 @@ public static class Pathfinder {
         float startTime;
         
         /*
-        //startTime = Time.realtimeSinceStartup;
         List<PathNode> path = AStarSearch.GetPath(startNode, targetNode);
-        //Debug.Log($"Normal Path search: {Time.realtimeSinceStartup - startTime}");
         return path;
         */
+        
+        /*
+        int testCount = 100;
+
+        float T1 = 0;
+        for (int i = 0; i < testCount; i++) {
+            startTime = Time.realtimeSinceStartup;
+            List<PathNode> closedSetT1 = new List<PathNode>();
+            AStarSearch.GetPathT1(startNode, targetNode, ref closedSetT1);
+            T1 += (Time.realtimeSinceStartup - startTime) * 1000 / testCount;
+        }
+        
+        float T2 = 0;
+        for (int i = 0; i < testCount; i++) {
+            startTime = Time.realtimeSinceStartup;
+            List<PathNode> closedSetT2 = new List<PathNode>();
+            AStarSearch.GetPathT2(startNode, targetNode, ref closedSetT2);
+            T2 += (Time.realtimeSinceStartup - startTime) * 1000 / testCount;
+        }
+        
+        Debug.Log($"With Regions: {T1}, Without regions: {T2} ");
+        */
+        
+        var path = AStarSearch.GetPath(startNode, targetNode);
+        return path;
         
         //startTime = Time.realtimeSinceStartup;
         List<PathNode> closedSet2 = new List<PathNode>();

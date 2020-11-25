@@ -19,4 +19,4 @@ MonoBehaviour:
   vegetation: 0
   humanCount: 1
   rabbitCount: 0
-  testWorld: 0
+  testWorld: 1

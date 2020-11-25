@@ -163,11 +163,11 @@ namespace Tests
             #region Speed Test
             
                 //Normal
-                int testCount = 1;
+                int testCount = 100;
                 float avgTime = 0;
                 for (int i = 0; i < testCount; i++) {
                     float startTime = Time.realtimeSinceStartup;
-                    //Pathfinder.GetPath(startNode, targetNode);
+                    Pathfinder.GetPath(startNode, targetNode);
                     avgTime += (Time.realtimeSinceStartup - startTime) / testCount;
                 }
                 Debug.Log($"{testCount} NORMAL iterations finished in: {avgTime * 1000} ms");
@@ -176,7 +176,7 @@ namespace Tests
                 avgTime = 0;
                 for (int i = 0; i < testCount; i++) {
                     float startTime = Time.realtimeSinceStartup;
-                    //AStarSearch.GetPath(startNode, targetNode);
+                    AStarSearch.GetPath(startNode, targetNode);
                     avgTime += (Time.realtimeSinceStartup - startTime) / testCount;
                 }
                 Debug.Log($"{testCount} TEST iterations finished in: {avgTime * 1000} ms");

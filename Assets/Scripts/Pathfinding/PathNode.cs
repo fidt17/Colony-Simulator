@@ -46,11 +46,19 @@ public class PathNode : IHeapItem<PathNode> {
     }
 
     public int CompareTo(PathNode nodeToCompare) {
+        int compare = fCost.CompareTo(nodeToCompare.fCost);
+        if (compare == 0) {
+            compare = hCost.CompareTo(nodeToCompare.hCost);
+        }
+        return -compare;
+        /*
         int compare = hCost.CompareTo(nodeToCompare.hCost);
         if (compare == 0) {
             compare = fCost.CompareTo(nodeToCompare.fCost);
         }
         return -compare;
+        */
+        
     }
 
     public int HeapIndex {
