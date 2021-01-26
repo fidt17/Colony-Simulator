@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class TestScript : Singleton<TestScript> {
-
+public class TestScript : Singleton<TestScript>
+{
     public GameObject itemPrefab;
 
     private void Update() {
@@ -30,7 +30,7 @@ public class TestScript : Singleton<TestScript> {
     }
 
     private void TestB() {
-        Factory.Create<ConstructionPlan>("wall plan", Utils.CursorToCoordinates());
+        
     }
 
     private void TestT() {

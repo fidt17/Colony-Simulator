@@ -39,33 +39,10 @@ public class TileSpriteRenderer : Singleton<TileSpriteRenderer> {
         }
 
         FindBorders(tile, ref northBorder, ref eastBorder, ref southBorder, ref westBorder, ref borderMatrix);
+        
         WaterBorderCheck(borderMatrix, northBorder, eastBorder, southBorder, westBorder);
+        
         GrassBorderCheck(borderMatrix, mainSprite);
-    }
-
-    private void FindBorders(Tile tile,
-                             ref SpriteRenderer northBorder,
-                             ref SpriteRenderer eastBorder,
-                             ref SpriteRenderer southBorder,
-                             ref SpriteRenderer westBorder,
-                             ref TileType[,] borderMatrix) {
-
-        northBorder = tile.gameObject.transform.Find("N Border").GetComponent<SpriteRenderer>();
-        eastBorder  = tile.gameObject.transform.Find("E Border").GetComponent<SpriteRenderer>();
-        southBorder = tile.gameObject.transform.Find("S Border").GetComponent<SpriteRenderer>();
-        westBorder  = tile.gameObject.transform.Find("W Border").GetComponent<SpriteRenderer>();
-
-        for (int x = -1; x < 2; x++) {
-            for (int y = -1; y < 2; y++) {
-                Vector2Int checkPosition = tile.position + new Vector2Int(x, y);
-                Tile t = Utils.TileAt(checkPosition);
-                if (t == null) {
-                    borderMatrix[x+1, y+1] = TileType.empty;
-                    continue;
-                }
-                borderMatrix[x+1, y+1] = t.type;
-            }
-        }
     }
 
     private void WaterBorderCheck(TileType[,] borderMatrix,

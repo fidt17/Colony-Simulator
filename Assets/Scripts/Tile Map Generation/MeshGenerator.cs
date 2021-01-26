@@ -208,7 +208,19 @@ public class MeshGenerator : Singleton<MeshGenerator> {
         for (int y = yOffset; y < yOffset + _chunkSizeY; y++) {
             for (int x = xOffset; x < xOffset + _chunkSizeX; x++) {
                 Tile t = Utils.TileAt(x, y);
-                Sprite sprite = t.GetSprite();
+                
+                Color[,] colorMatrix = t.data.GetColorsForTile(t);
+                
+                int pixelStartX = (x % _chunkSizeX) * _tileResolution;
+                int pixelStartY = (y % _chunkSizeY) * _tileResolution;
+                for (int pixelX = pixelStartX; pixelX < pixelStartX + _tileResolution; pixelX++) {
+                    for (int pixelY = pixelStartY; pixelY < pixelStartY + _tileResolution; pixelY++) {
+                        texture.SetPixel(pixelX, pixelY, colorMatrix[pixelX % _tileResolution, pixelY % _tileResolution]);
+                    }
+                }
+                
+                /*
+                 Sprite sprite = t.GetSprite();
                 Color color = t.GetColor();
 
                 int pixelStartX = (x % _chunkSizeX) * _tileResolution;
@@ -219,6 +231,7 @@ public class MeshGenerator : Singleton<MeshGenerator> {
                         texture.SetPixel(pixelX, pixelY, pixelColor);
                     }
                 }
+                */
             }
         }
         texture.filterMode = FilterMode.Point;

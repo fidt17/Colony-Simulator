@@ -3,7 +3,31 @@ guid: dc8e4a58ceb89004fb11d9d921939b30
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - prefab: {instanceID: 0}
+  - prefabSprite: {instanceID: 0}
+  - sand_central: {fileID: -4743005804774045339, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - water_border_N: {fileID: -89533908723591481, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - water_border_E: {fileID: 6900206889160500208, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - water_border_S: {fileID: -1141799023321265235, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - water_border_W: {fileID: 2758772168323404995, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - grass_border_corner: {fileID: 7445496974405382553, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - grass_border_Lcorner: {fileID: 5717776428800766030, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - grass_border_side: {fileID: 7666434569925838446, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - grass_border_pi: {fileID: -793943671134504141, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - grass_border_tunnel: {fileID: 8311634869345633331, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
+  - grass_border_all: {fileID: -5377247009674673478, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
