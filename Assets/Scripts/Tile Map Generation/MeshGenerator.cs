@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class MeshGenerator : Singleton<MeshGenerator> {
@@ -151,7 +152,7 @@ public class MeshGenerator : Singleton<MeshGenerator> {
         return mesh;
     }
 
-    private Mesh GenerateMeshOverNodes(List<PathNode> nodes) {
+    private Mesh GenerateMeshOverNodes(List<Node> nodes) {
 
         int verticesCount = nodes.Count * 4;
         int trianglesCount = nodes.Count * 2;
@@ -165,11 +166,11 @@ public class MeshGenerator : Singleton<MeshGenerator> {
 
         int verticesIndex = 0;//4
         int triangleIndex = 0;//6
-        foreach (PathNode node in nodes) {
-            vertices[verticesIndex + 0] = new Vector3(node.x - 0.5f, node.y + 0.5f, 90);
-            vertices[verticesIndex + 1] = new Vector3(node.x + 0.5f, node.y + 0.5f, 90);
-            vertices[verticesIndex + 2] = new Vector3(node.x - 0.5f, node.y - 0.5f, 90);
-            vertices[verticesIndex + 3] = new Vector3(node.x + 0.5f, node.y - 0.5f, 90);
+        foreach (Node node in nodes) {
+            vertices[verticesIndex + 0] = new Vector3(node.X - 0.5f, node.Y + 0.5f, 90);
+            vertices[verticesIndex + 1] = new Vector3(node.X + 0.5f, node.Y + 0.5f, 90);
+            vertices[verticesIndex + 2] = new Vector3(node.X - 0.5f, node.Y - 0.5f, 90);
+            vertices[verticesIndex + 3] = new Vector3(node.X + 0.5f, node.Y - 0.5f, 90);
             
             normals[verticesIndex + 0] = new Vector3(0, 0, 1);
             normals[verticesIndex + 1] = new Vector3(0, 0, 1);
@@ -242,17 +243,19 @@ public class MeshGenerator : Singleton<MeshGenerator> {
     }
 
     //Due to the fact that Unit has a limit of max 65535 verices per mesh, I am spliting one mesh into multiple.
-    public List<GameObject> GenerateOverlapAreaOverNodes(List<PathNode> nodes, Color color) {
+    public List<GameObject> GenerateOverlapAreaOverNodes(List<Node> n, Color color)
+    {
+        List<Node> nodes = new List<Node>(n);
         List<GameObject> areas = new List<GameObject>();
         while (nodes.Count != 0) {
-            List<PathNode> extra = new List<PathNode>();
+            List<Node> extra = new List<Node>();
             if (nodes.Count * 4 > 65535) {
                 for (int i = nodes.Count - 1; i >= 0 && extra.Count * 4 < 65535 - 4; i--) {
                     extra.Add(nodes[i]);
                     nodes.RemoveAt(i);
                 }
             } else {
-                extra = new List<PathNode>(nodes);
+                extra = new List<Node>(nodes);
                 nodes.Clear();
             }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public abstract class Job {
@@ -31,9 +32,9 @@ public abstract class Job {
             return false;
         }
 
-        PathNode jobNode = Utils.NodeAt(Position);
-        PathNode workerNode = Utils.NodeAt(worker.MotionComponent.GridPosition);
-        if (Pathfinder.FindNodeNear(jobNode, workerNode) is null) {
+        Node jobNode = Utils.NodeAt(Position);
+        Node workerNode = Utils.NodeAt(worker.MotionComponent.GridPosition);
+        if (SearchEngine.FindNodeNear(jobNode, workerNode) is null) {
             return false;
         }
 
@@ -71,10 +72,10 @@ public abstract class Job {
         }
     }
 
-    protected PathNode GetDestinationNode() {
-        PathNode jobNode = Utils.NodeAt(_jobPosition);
-        PathNode workerNode = Utils.NodeAt(_worker.MotionComponent.GridPosition);
-        return Pathfinder.FindNodeNear(jobNode, workerNode);
+    protected Node GetDestinationNode() {
+        Node jobNode = Utils.NodeAt(_jobPosition);
+        Node workerNode = Utils.NodeAt(_worker.MotionComponent.GridPosition);
+        return SearchEngine.FindNodeNear(jobNode, workerNode);
     }
 
     protected virtual void OnJobFinish(object source, System.EventArgs e) {

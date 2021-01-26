@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
@@ -23,14 +26,76 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07e02c4e-df3a-4231-ba33-5fd2294c0551" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Settings/Single Human.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Settings/Single Human.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Settings/normal.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Settings/normal.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IPrefab.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IPrefab.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStarSearch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStarSearch.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/PathNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/PathNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/Pathfinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/Pathfinder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding/PathfindingTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding/PathfindingTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character Components/AI Components/IdleAIComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character Components/AI Components/IdleAIComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character Components/HungerComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character Components/HungerComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character Components/InventoryComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character Components/InventoryComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character Components/MotionComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character Components/MotionComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character Components/SelectableComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character Components/SelectableComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/MoveCommandInputState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/MoveCommandInputState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/StockpileState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/StockpileState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/MoveCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/MoveCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/RotateToCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/RotateToCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/EatFoodTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/EatFoodTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulToItemHolderTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulToItemHolderTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debug/DebugManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Debug/DebugManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debug/PathfinderRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Debug/PathfinderRenderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/HaulJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/HaulJob.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/HaulToItemHolderJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/HaulToItemHolderJob.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Job.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Job.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/BuildJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/BuildJob.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/CutJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/CutJob.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/StaticJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/StaticJob.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/Construction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/Construction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Items/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Items/Item.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Items/WoodLog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Items/WoodLog.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Nature/Grass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Nature/Grass.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Tile/Tile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Tile/Tile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStarSearch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStarSearch.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStartSubregionSearch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStartSubregionSearch.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/PathGrid.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/PathGrid.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/PathNode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/PathNode.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/Pathfinder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/Pathfinder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/Region.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/Region.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/RegionContent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/RegionContent.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/RegionSystem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/RegionSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/Subregion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/Subregion.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/SubregionSystem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/SubregionSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SearchEngine/Dijkstra.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SearchEngine/Dijkstra.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SearchEngine/SearchEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SearchEngine/SearchEngine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Stockpile/Stockpile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Stockpile/Stockpile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding/PathfindingTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding/PathfindingTests.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding/Tests Pathfinding.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding/Tests Pathfinding.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests/CommandProcessorTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tests/CommandProcessorTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests/ItemTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tests/ItemTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests/StaticObjectTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tests/StaticObjectTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tile Map Generation/MeshGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tile Map Generation/MeshGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/WorldGeneration/WorldGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/WorldGeneration/WorldGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/fidt17 Utils/Utils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/fidt17 Utils/Utils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/Packages-Update.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/Packages-Update.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,74 +113,75 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Tests/StaticObjectTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/NUnitExtensions/Commands/EnumerableTestMethodCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/NUnitExtensions/Runner/UnityLogCheckDelegatingCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/Utils/CoroutineRunner.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/NUnitExtensions/Runner/DefaultTestWorkItem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/NUnitExtensions/Runner/CompositeWorkItem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9577AC7A-62EF-4317-9789-031239BA8798/0c/02a6575a/Activator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59819BE1-42C3-4115-ADE6-88F6962021F1/0a/965ff9f2/Reflect.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/ITraversable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Subregion.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Tests/StaticObjectTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E5B75411-C8CD-4BFA-A9E7-60BE20206F29/03/b5206a27/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/TestRunner/PlaymodeTestsController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.18/UnityEngine.TestRunner/NUnitExtensions/Commands/ImmediateEnumerableCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/MinHeap.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Pathfinder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Region.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06B52E9A-9966-4909-A152-2344E6AC3FEC/a3/aa162f4d/Grid.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Node.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/RPathfinding.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/RegionSystem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9577AC7A-62EF-4317-9789-031239BA8798/0c/02a6575a/Activator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/SubregionSystem.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/Stockpile/StockpileCreator.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Stockpile/StockpilePart.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Nature/Tree.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Nature/Grass.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/Subregion.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Characters/Character.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/SelectableComponent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStartSubregionSearch.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Game Settings/GameSettingsScriptableObject.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Debug/PathfinderRenderer.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/CommandTests.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/AI Controllers/HumanAI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/AI Controllers/RabbitAI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/AI Controllers/AIController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Characters/Human.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Characters/Rabbit.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interfaces/ITask.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/MoveCommand.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulTask.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulToItemHolderTask.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/Task.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/Command.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/CommandProcessor.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/CutTask.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/ItemTests.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/VegetationTests.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/HungerComponent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/MoveTask.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/WaitTask.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/CharacterTests.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/InventoryComponent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding/RegionSystem/RegionContent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/JobSystem.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/JobTests.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/CommandProcessorTests.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/StaticObjectTests.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Factories/Factory.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Constructions/ConstructionScriptableObject.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Job.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/ConstructionTests.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Tests Pathfinding/PathfindingTests.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Objects/StaticObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interfaces/IPrefab.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Nature/Vegetation.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/WorldGeneration/WorldGenerator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding/AStarSearch.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding/PathNode.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/AI Components/IdleAIComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/MinHeap.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/ITraversable.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/RegionSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/SubregionSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Region.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/ASubregionSearch.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding/Pathfinder.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Subregion.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/HaulJob.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/fidt17 Utils/Utils.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/Construction.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/HaulToItemHolderJob.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Job.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/RotateToCommand.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/StaticJob.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SearchEngine/Dijkstra.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/EatFoodTask.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/SelectableComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/HungerComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/AI Components/IdleAIComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/MoveCommandInputState.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/MoveCommand.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Debug/DebugManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulTask.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/HaulToItemHolderTask.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/BuildJob.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Nature/Grass.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/CutJob.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Items/WoodLog.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Tile/Tile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Stockpile/Stockpile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Pathfinder.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Grid.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SearchEngine/SearchEngine.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/StaticObjectTests.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/ItemTests.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/WorldGeneration/WorldGenerator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/Node.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/MotionComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/PathGrid.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/CommandProcessorTests.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pathfinding 2.0/RPathfinding.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Debug/PathfinderRenderer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tile Map Generation/MeshGenerator.cs" />
       </list>
     </option>
   </component>
@@ -140,10 +206,10 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+  <component name="RunManager">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
@@ -187,6 +253,10 @@
       <workItem from="1604486710956" duration="1500000" />
       <workItem from="1604563828048" duration="1108000" />
       <workItem from="1604570041472" duration="73000" />
+      <workItem from="1611423107607" duration="248000" />
+      <workItem from="1611506631033" duration="2010000" />
+      <workItem from="1611677522719" duration="9063000" />
+      <workItem from="1611686689647" duration="171000" />
     </task>
     <servers />
   </component>
@@ -215,6 +285,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="781" y="0" key="#Code_Folding/0.0.1920.1080@0.0.1920.1080" timestamp="1604095572587" />
+    <state x="414" y="179" width="1092" height="791" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1611684883195">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="414" y="179" width="1092" height="791" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611684883195" />
+    <state x="703" y="360" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1611682430948">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="703" y="360" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611682430948" />
     <state width="465" height="466" key="DebuggerActiveHint" timestamp="1604361347850">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -303,13 +381,15 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="630" y="353" key="LayersDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604247517198" />
-    <state x="792" y="255" key="RiderGenerateDialog" timestamp="1604357966365">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="792" y="248" key="RiderGenerateDialog" timestamp="1611683741906">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="792" y="248" key="RiderGenerateDialog/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611683741906" />
     <state x="792" y="255" key="RiderGenerateDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604357966365" />
-    <state x="648" y="93" key="SettingsEditor" timestamp="1604330565885">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="648" y="90" key="SettingsEditor" timestamp="1611679272271">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="648" y="90" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611679272271" />
     <state x="648" y="93" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1604330565885" />
     <state x="92" y="92" width="1736" height="896" key="VCS.FileHistoryDialog" timestamp="1604091671265">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -331,13 +411,15 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="600" height="428" key="javadoc.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1604098087481" />
-    <state x="616" y="250" key="run.anything.popup" timestamp="1604256273053">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="616" y="243" key="run.anything.popup" timestamp="1611681058096">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="616" y="243" key="run.anything.popup/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611681058096" />
     <state x="616" y="250" key="run.anything.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1604256273053" />
-    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1604411857669">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="623" y="228" width="672" height="660" key="search.everywhere.popup" timestamp="1611683392781">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="623" y="228" width="672" height="660" key="search.everywhere.popup/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611683392781" />
     <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1604411857669" />
   </component>
   <component name="XDebuggerManager">

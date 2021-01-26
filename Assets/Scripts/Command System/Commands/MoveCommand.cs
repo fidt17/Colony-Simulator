@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class MoveCommand : Command {
@@ -18,8 +19,8 @@ public class MoveCommand : Command {
     #endregion
 
     private Vector2Int _destination;
-    private List<PathNode> _path;
-    private PathNode _destinationNode => Utils.NodeAt(_destination);
+    private List<Node> _path;
+    private Node _destinationNode => Utils.NodeAt(_destination);
 
     private MotionComponent _motionComponent;
 
@@ -58,7 +59,7 @@ public class MoveCommand : Command {
             Finish(false);
             return;
         }
-        _path = Pathfinder.GetPath(_motionComponent.PathNode, _destinationNode);
+        _path = Pathfinder.GetPath(_motionComponent.Node.Position, _destinationNode.Position);
     }
 
     private void MoveTowardsDestination() {
@@ -67,8 +68,8 @@ public class MoveCommand : Command {
             return;
         }
 
-        Vector2Int nextNode = _path[0].position;
-        if (_path[0].isTraversable == false) {
+        Vector2Int nextNode = _path[0].Position;
+        if (_path[0].IsTraversable == false) {
             _path = null;
             bool b = HasPath();
             if (b == false) {

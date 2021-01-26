@@ -39,7 +39,7 @@ namespace Tests {
 			}
 
 			//check region content
-			RegionContent rc = Utils.NodeAt(item.Position).subregion.content;
+			RegionContent rc = Utils.NodeAt(item.Position).Subregion.Content;
 			if (rc.Get<T>().Contains(item) == false) {
 				Assert.Fail();
 			}
@@ -123,7 +123,7 @@ namespace Tests {
 			}
 
 			//check region contents
-			if (Utils.NodeAt(item.Position).subregion.content.Get<T>().Contains(item)) {
+			if (Utils.NodeAt(item.Position).Subregion.Content.Get<T>().Contains(item)) {
 				return false;
 			}
 

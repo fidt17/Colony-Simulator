@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class HaulJob : Job {
@@ -7,7 +8,7 @@ public class HaulJob : Job {
     public Item Item => _item;
 
     private Vector2Int _destinationPosition;
-    private PathNode _destinationNode => Utils.NodeAt(_destinationPosition);
+    private Node _destinationNode => Utils.NodeAt(_destinationPosition);
     private Item _item;
 
     public HaulJob(Vector2Int destinationPosition) : base(destinationPosition) {}
@@ -24,7 +25,7 @@ public class HaulJob : Job {
         _worker.CommandProcessor.AddTask(_task);
         _task.ResultHandler += OnJobFinish;
 
-        StockpilePart part = Utils.TileAt(_destinationNode.position).Contents.StockpilePart;
+        StockpilePart part = Utils.TileAt(_destinationNode.Position).Contents.StockpilePart;
         if (part != null) {
             JobResultHandler += part.HaulJobResultHandler;
         }

@@ -45,7 +45,7 @@ public class SelectableComponent : MonoBehaviour {
             return false;
         }
 
-        if (_selectionRim.active == true) {
+        if (_selectionRim.activeSelf) {
             return false;
         }
 

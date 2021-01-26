@@ -17,7 +17,7 @@ public class CutJob : StaticJob {
     protected override void AddJobIcon() => _jobIcon = (_jobIcon is null) ? Factory.Create("cut job", _jobPosition) : _jobIcon;
 
     protected override void PlanJob() {
-        _task = new CutTask(_worker.MotionComponent, GetDestinationNode().position, _cuttable) as ITask;
+        _task = new CutTask(_worker.MotionComponent, GetDestinationNode().Position, _cuttable) as ITask;
         _worker.CommandProcessor.AddTask(_task);
         _task.ResultHandler += OnJobFinish;
     }

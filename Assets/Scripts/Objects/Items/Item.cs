@@ -43,8 +43,8 @@ public abstract class Item : IPrefab, IDestroyable {
 
     public void PutOnTile() {
         
-        bool RequirementsFunction(Tile t) => t != null && !t.Contents.HasItem && t.isTraversable;
-        var tile = SearchEngine.FindClosestTileWhere(Position, RequirementsFunction, Utils.TileAt(Position).isTraversable);
+        bool RequirementsFunction(Tile t) => t != null && !t.Contents.HasItem && t.IsTraversable;
+        var tile = SearchEngine.FindClosestTileWhere(Position, RequirementsFunction, Utils.TileAt(Position).IsTraversable);
         
         if (tile != null) {
             SetPosition(tile.position);

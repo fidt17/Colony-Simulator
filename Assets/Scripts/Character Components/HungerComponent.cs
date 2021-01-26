@@ -61,7 +61,7 @@ public class HungerComponent : CharacterComponent {
             grass = SearchEngine.FindClosestGrass(_character.MotionComponent.GridPosition);
         }
         
-        _eatFoodTask = new EatFoodTask(_character, Pathfinder.FindNodeNear(Utils.NodeAt(grass.Position), _character.MotionComponent.PathNode), grass);
+        _eatFoodTask = new EatFoodTask(_character, SearchEngine.FindNodeNear(Utils.NodeAt(grass.Position), _character.MotionComponent.Node), grass);
         _eatFoodTask.ResultHandler += HandleGetFoodResult;
         _character.AI.CommandProcessor.AddTask(_eatFoodTask);
 

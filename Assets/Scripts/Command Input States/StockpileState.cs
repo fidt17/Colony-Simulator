@@ -60,7 +60,7 @@ public class StockpileState : CommandInputState {
         List<Tile> tiles = new List<Tile>();
         foreach (Vector2Int position in _selectionArea.GetPositions()) {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t is null || !t.isTraversable) {
+            if (t is null || !t.IsTraversable) {
                 continue;
             }
             tiles.Add(t);

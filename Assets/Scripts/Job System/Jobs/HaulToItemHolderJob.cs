@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class HaulToItemHolderJob : HaulJob {
@@ -9,7 +10,6 @@ public class HaulToItemHolderJob : HaulJob {
 
     protected Vector2Int _dropPosition;
     protected IItemHolder _itemHolder;
-    protected PathNode _destinationNode => Utils.NodeAt(_dropPosition);
     protected Item _item;
     protected Type _itemType;
 

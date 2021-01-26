@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Pathfinding;
 
 public class HaulToItemHolderTask : Task {
 
     public HaulToItemHolderTask(Item item, IItemHolder itemHolder, MotionComponent motionComponent, InventoryComponent inventory) {
-        PathNode itemNode = Utils.NodeAt(item.Position);
-        PathNode humanNode = Utils.NodeAt(motionComponent.GridPosition);
-        PathNode destinationNode = Utils.NodeAt((itemHolder as StaticObject).Position);
+        Node itemNode = Utils.NodeAt(item.Position);
+        Node humanNode = Utils.NodeAt(motionComponent.GridPosition);
+        Node destinationNode = Utils.NodeAt((itemHolder as StaticObject).Position);
 
-        AddCommand(new MoveCommand(motionComponent, Pathfinder.FindNodeNear(itemNode, humanNode).position));
+        AddCommand(new MoveCommand(motionComponent, SearchEngine.FindNodeNear(itemNode, humanNode).Position));
         AddCommand(new PickCommand(item, inventory));
-        AddCommand(new MoveCommand(motionComponent, Pathfinder.FindNodeNear(destinationNode, Pathfinder.FindNodeNear(itemNode, humanNode)).position));
+        AddCommand(new MoveCommand(motionComponent, SearchEngine.FindNodeNear(destinationNode, SearchEngine.FindNodeNear(itemNode, humanNode)).Position));
         AddCommand(new DropIntoCommand(item, inventory, itemHolder));
     }
 

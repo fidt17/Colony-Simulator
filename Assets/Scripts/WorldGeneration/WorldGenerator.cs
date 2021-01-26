@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public static class WorldGenerator {
@@ -13,15 +14,15 @@ public static class WorldGenerator {
         grid = new Tile[Utils.MapSize, Utils.MapSize];
 
         if (gameSettings.testWorld) {
-            GenerateTestTerrain(grid);
+            GenerateTestTerrain(ref grid);
             MeshGenerator.GetInstance().Initialize();
-            Pathfinder.Initialize();
+            Pathfinder.Initialize(Utils.MapSize, Utils.MapSize, ref grid);
         }
         else {
             perlinSeed = gameSettings.seed;
-            GenerateTerrainWithPerlinNoise(grid);
+            GenerateTerrainWithPerlinNoise(ref grid);
             MeshGenerator.GetInstance().Initialize();
-            Pathfinder.Initialize();
+            Pathfinder.Initialize(Utils.MapSize, Utils.MapSize, ref grid);
             if (gameSettings.vegetation == true) {
                 GenerateVegetation(ref grid);
             }
@@ -29,7 +30,7 @@ public static class WorldGenerator {
         }
     }
 
-    private static void GenerateTestTerrain(Tile[,] grid) {
+    private static void GenerateTestTerrain(ref Tile[,] grid) {
         for (int x = 0; x < Utils.MapSize; x++) {
             for (int y = 0; y < Utils.MapSize; y++) {
                 grid[x, y] = Factory.CreateData<Tile>("grass tile", new Vector2Int(x, y));
@@ -37,7 +38,7 @@ public static class WorldGenerator {
         }
     }
     
-    private static void GenerateTerrainWithPerlinNoise(Tile[,] grid, float seaLevel = 0.33f) {
+    private static void GenerateTerrainWithPerlinNoise(ref Tile[,] grid, float seaLevel = 0.33f) {
         PerlinNoise pn = new PerlinNoise(perlinSeed);
         int nOctaves = pn.CalculateMaxOctavesCount(Utils.MapSize);
         float fBias = 2f;
@@ -105,7 +106,7 @@ public static class WorldGenerator {
         
         for (int i = 0; i < _gameSettings.humanCount; i++) {
             Tile t = null;
-            while (t == null || !t.isTraversable) {
+            while (t == null || !t.IsTraversable) {
                 t = Utils.RandomTile();
             }
             Human human = Factory.Create<Human>("human", t.position);
@@ -113,7 +114,7 @@ public static class WorldGenerator {
 
         for (int i = 0; i < _gameSettings.rabbitCount; i++) {
             Tile t = null;
-            while (t == null || !t.isTraversable) {
+            while (t == null || !t.IsTraversable) {
                 t = Utils.RandomTile();
             }
             Rabbit rabbit = Factory.Create<Rabbit>("rabbit", t.position);

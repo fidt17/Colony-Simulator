@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class MoveCommandInputState : CommandInputState {
@@ -40,16 +41,16 @@ public class MoveCommandInputState : CommandInputState {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
             return;
         }
-        PathNode cursorNode = Utils.NodeAt(Utils.CursorToCoordinates());
+        Node cursorNode = Utils.NodeAt(Utils.CursorToCoordinates());
         if (cursorNode is null) {
             return;
         }
 
         List<Human> colonists = SelectionTracker.GetInstance().GetSelected<Human>();
-        List<PathNode> targetNodes = Dijkstra.DijkstraFor(colonists.Count, cursorNode);
+        List<Node> targetNodes = Dijkstra.DijkstraFor(colonists.Count, cursorNode);
         for (int i = 0; i < targetNodes.Count; i++) {
             Task moveTask = new Task();
-            moveTask.AddCommand(new MoveCommand(colonists[i].MotionComponent, targetNodes[i].position));
+            moveTask.AddCommand(new MoveCommand(colonists[i].MotionComponent, targetNodes[i].Position));
             colonists[i].AI.CommandProcessor.AddUrgentTask(moveTask);
         }
     }

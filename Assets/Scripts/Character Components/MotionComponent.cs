@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public enum FacingDirection {
@@ -21,14 +22,14 @@ public class MotionComponent : CharacterComponent {
     public event GridPositionHandler OnGridPositionChange;
 
     public Vector2 WorldPosition => (Vector2) _gameObject.transform.position;
-    public Vector2Int GridPosition => _lastTraversableNode.position;
-    public PathNode PathNode => Utils.NodeAt(GridPosition);
+    public Vector2Int GridPosition => _lastTraversableNode.Position;
+    public Node Node => Utils.NodeAt(GridPosition);
     public float SpeedValue => _speed;
 
     public FacingDirection facingDirection = FacingDirection.south;
 
     private float _speed;
-    private PathNode _lastTraversableNode;
+    private Node _lastTraversableNode;
     private GameObject _gameObject;
 
     public MotionComponent(float speed, Vector2Int position, GameObject gameObject) {
@@ -39,15 +40,15 @@ public class MotionComponent : CharacterComponent {
     }
         
     public void Stop() {
-        if (PathNode.isTraversable == false) {
-            SetPosition(_lastTraversableNode.position);
+        if (Node.IsTraversable == false) {
+            SetPosition(_lastTraversableNode.Position);
         }
         VelocityHandler?.Invoke(Vector2.zero, facingDirection);
     }
 
     public void SetPosition(Vector2 position) {
         _gameObject.transform.position = position;
-        OnGridPositionChange?.Invoke(_lastTraversableNode.position, Utils.ToVector2Int(position));
+        OnGridPositionChange?.Invoke(_lastTraversableNode.Position, Utils.ToVector2Int(position));
         _lastTraversableNode = Utils.NodeAt(Utils.ToVector2Int(position));
     } 
 
@@ -55,9 +56,9 @@ public class MotionComponent : CharacterComponent {
         _gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
         VelocityHandler?.Invoke(normalizedDestination, facingDirection);
 
-        PathNode currentNode = Utils.NodeAt(Utils.ToVector2Int(WorldPosition));
-        if (currentNode.isTraversable) {
-            OnGridPositionChange?.Invoke(_lastTraversableNode.position, currentNode.position);
+        Node currentNode = Utils.NodeAt(Utils.ToVector2Int(WorldPosition));
+        if (currentNode.IsTraversable) {
+            OnGridPositionChange?.Invoke(_lastTraversableNode.Position, currentNode.Position);
             _lastTraversableNode = currentNode;
         }
         OnPositionChange?.Invoke(WorldPosition);
@@ -68,7 +69,7 @@ public class MotionComponent : CharacterComponent {
             if (t == null) {
                 return false;
             } else {
-                return t.isTraversable;
+                return t.IsTraversable;
             }
         };
         Tile tile = SearchEngine.FindClosestTileWhere(GridPosition, requirementsFunction, false);
@@ -115,7 +116,7 @@ public class MotionComponent : CharacterComponent {
             return false;
         }
 
-        if (_lastTraversableNode.position != supposedPosition) {
+        if (_lastTraversableNode.Position != supposedPosition) {
             return false;
         }
 

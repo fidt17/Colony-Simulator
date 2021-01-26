@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Random = UnityEngine.Random;
@@ -176,17 +177,17 @@ namespace Tests
         [UnityTest]
         public IEnumerator eat_food_task() {
             Human human = CreateHuman();
-            PathNode grassNode = Utils.NodeAt(_spawnPosition + new Vector2Int(0, 10));
-            Grass grass = Factory.Create<Grass>("grass", grassNode.position);
+            Node grassNode = Utils.NodeAt(_spawnPosition + new Vector2Int(0, 10));
+            Grass grass = Factory.Create<Grass>("grass", grassNode.Position);
             float defaultHungerLevel = human.HungerComponent.HungerLevel;
-            PathNode targetNode = Pathfinder.FindNodeNear(grassNode, human.MotionComponent.PathNode);
+            Node targetNode = SearchEngine.FindNodeNear(grassNode, human.MotionComponent.Node);
             var task = new EatFoodTask(human, targetNode, grass);
 
             yield return AddTaskAndWaitUntilFinished(task, human.CommandProcessor);
             yield return null;
             
             //check position
-            if (human.MotionComponent.PathNode != targetNode) {
+            if (human.MotionComponent.Node != targetNode) {
                 Assert.Fail();
             }
             //check hunger
@@ -300,9 +301,9 @@ namespace Tests
         public IEnumerator cut_task() {
             Human human = CreateHuman();
             Vector2Int vegetationSpawnPosition = _spawnPosition + new Vector2Int(0, 10);
-            ICuttable vegetation = Factory.Create<CuttableTestClass>("tall tree", vegetationSpawnPosition);
+            ICuttable vegetation = Factory.Create<CuttableTestClass>("tall tree", vegetationSpawnPosition);    
             Vector2Int targetPosition =
-                Pathfinder.FindNodeNear(Utils.NodeAt(vegetationSpawnPosition), human.MotionComponent.PathNode).position;
+                SearchEngine.FindNodeNear(Utils.NodeAt(vegetationSpawnPosition), human.MotionComponent.Node).Position;
             Task task = new CutTask(human.MotionComponent, targetPosition, vegetation);
             
             yield return AddTaskAndWaitUntilFinished(task, human.CommandProcessor);
@@ -319,6 +320,7 @@ namespace Tests
             }
             //check human position
             if (human.MotionComponent.GridPosition != targetPosition) {
+                Debug.Log(human.MotionComponent.GridPosition + " " + targetPosition);
                 Assert.Fail();
             }
 

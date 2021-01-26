@@ -5,13 +5,13 @@ using System;
 
 public class Construction : StaticObject {
 
-    public new ConstructionScriptableObject data { get; protected set; }
+    public ConstructionScriptableObject data { get; protected set; }
     
     public Construction() : base() {}
 
     #region IPrefab
 
-    public new void SetData(ConstructionScriptableObject data, Vector2Int position) {
+    public void SetData(ConstructionScriptableObject data, Vector2Int position) {
         this.data = data as ConstructionScriptableObject;
         this.Position = position;
         PutOnTile();

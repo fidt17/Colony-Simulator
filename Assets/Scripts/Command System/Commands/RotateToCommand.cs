@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class RotateToCommand : Command {
@@ -17,18 +18,18 @@ public class RotateToCommand : Command {
 
     #endregion
 
-    private PathNode _destinationNode;
-    private List<PathNode> _path;
+    private Node _destinationNode;
+    private List<Node> _path;
 
     private MotionComponent _motionComponent;
 
-    public RotateToCommand(MotionComponent motionComponent, PathNode destinationNode) {
+    public RotateToCommand(MotionComponent motionComponent, Node destinationNode) {
         _motionComponent = motionComponent;
         _destinationNode = destinationNode;
     }
 
     public override void Execute() {
-        SetFacingDirection(_destinationNode.position - _motionComponent.GridPosition);
+        SetFacingDirection(_destinationNode.Position - _motionComponent.GridPosition);
         _motionComponent.Stop();
         Finish(true);
     }

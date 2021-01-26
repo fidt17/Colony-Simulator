@@ -2,13 +2,14 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public static class Dijkstra {
 
-    public static List<PathNode> DijkstraFor(int steps, PathNode startNode) {
-        List<PathNode> closedSet = new List<PathNode>();
-        List<PathNode> openSet = new List<PathNode>();
+    public static List<Node> DijkstraFor(int steps, Node startNode) {
+        List<Node> closedSet = new List<Node>();
+        List<Node> openSet = new List<Node>();
         openSet.Add(startNode);
 
         while (closedSet.Count != steps) {
@@ -21,16 +22,16 @@ public static class Dijkstra {
         return closedSet;
     }
 
-    public static int NextDijkstraIteration(ref List<PathNode> openSet, ref List<PathNode> closedSet, PathNode startNode, bool checkEqualityOfRegions) {
+    public static int NextDijkstraIteration(ref List<Node> openSet, ref List<Node> closedSet, Node startNode, bool checkEqualityOfRegions) {
         if (openSet.Count == 0) {
             return 0;
         }
 
-        PathNode initialNode = null;
+        Node initialNode = null;
         float minDistance = float.MaxValue;
         
-        foreach (PathNode node in openSet) {
-            float sqrMagnitude = (node.position - startNode.position).sqrMagnitude;
+        foreach (Node node in openSet) {
+            float sqrMagnitude = (node.Position - startNode.Position).sqrMagnitude;
             if (sqrMagnitude < minDistance) {
                 minDistance = sqrMagnitude;
                 initialNode = node;
@@ -42,9 +43,9 @@ public static class Dijkstra {
         }
         
         //Adding surrounding nodes to available list
-        for (int x = initialNode.x - 1; x <= initialNode.x + 1; x++) {
-            for(int y = initialNode.y - 1; y <= initialNode.y + 1; y++) {
-                PathNode checkNode = Utils.NodeAt(new Vector2Int(x, y));
+        for (int x = initialNode.X - 1; x <= initialNode.X + 1; x++) {
+            for(int y = initialNode.Y - 1; y <= initialNode.Y + 1; y++) {
+                Node checkNode = Utils.NodeAt(new Vector2Int(x, y));
                 if (checkNode is null
                     || checkNode == initialNode
                     || openSet.Contains(checkNode)
@@ -87,7 +88,7 @@ public static class Dijkstra {
         closedSet.Insert(0, subregion);
         
         //Adding surrounding nodes to available list
-        foreach (Subregion neighbour in subregion.neighbouringSubregions) {
+        foreach (Subregion neighbour in subregion.NeighbouringSubregions) {
             if (openSet.Contains(neighbour) || closedSet.Contains(neighbour)) {
                 continue;
             }

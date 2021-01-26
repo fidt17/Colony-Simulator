@@ -35,12 +35,12 @@ namespace Tests
             }
             
             //tile traversability check
-            if (t.isTraversable != staticObject.IsTraversable) {
+            if (t.IsTraversable != staticObject.IsTraversable) {
                 Assert.Fail();
             }
             
             //node traversability check
-            if (Utils.NodeAt(staticObject.Position).isTraversable != staticObject.IsTraversable) {
+            if (Utils.NodeAt(staticObject.Position).IsTraversable != staticObject.IsTraversable) {
                 Assert.Fail();
             }
             

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class Stockpile {
@@ -25,7 +26,7 @@ public class Stockpile {
 
     public StockpilePart FindPlaceForItem(Item item) {
         foreach(StockpilePart part in _parts) {
-            PathNode node = Utils.NodeAt(part.position);
+            Node node = Utils.NodeAt(part.position);
             if (part.haulJob != null || part.HasItem) {
                 continue;
             }

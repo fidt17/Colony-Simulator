@@ -25,7 +25,7 @@ public class InventoryComponent : CharacterComponent {
             _inventory.Remove(item);
 
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t.isTraversable == false) {
+            if (t.IsTraversable == false) {
                 position = _human.MotionComponent.GridPosition;
             }
             

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class IdleAIComponent : CharacterComponent {
@@ -23,13 +24,13 @@ public class IdleAIComponent : CharacterComponent {
                 continue;
             }
             
-            PathNode targetNode = null;
-            PathNode startNode = _character.MotionComponent.PathNode;
+            Node targetNode = null;
+            Node startNode = _character.MotionComponent.Node;
 
             while (targetNode is null) {
                 Vector3 randomPosition = Random.insideUnitSphere * _searchOffset;
-                Vector2Int checkPosition = new Vector2Int((int) (startNode.x + randomPosition.x), (int) (startNode.y + randomPosition.y));
-                PathNode checkNode = Utils.NodeAt(checkPosition);
+                Vector2Int checkPosition = new Vector2Int((int) (startNode.X + randomPosition.x), (int) (startNode.Y + randomPosition.y));
+                Node checkNode = Utils.NodeAt(checkPosition);
                 if (checkNode == null) {
                     continue;
                 }
@@ -43,7 +44,7 @@ public class IdleAIComponent : CharacterComponent {
             }
 
             Task wanderTask = new Task();
-            wanderTask.AddCommand(new MoveCommand(_character.MotionComponent, targetNode.position));
+            wanderTask.AddCommand(new MoveCommand(_character.MotionComponent, targetNode.Position));
             wanderTask.AddCommand(new WaitCommand(_idleWaitTime));
             
             _character.CommandProcessor.AddTask(wanderTask);

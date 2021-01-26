@@ -9,7 +9,7 @@ public abstract class StaticJob : Job {
         AddToTile();
     }
 
-    public void DeleteJob() {
+    public new void DeleteJob() {
         RemoveFromTile();
         base.DeleteJob();
     }

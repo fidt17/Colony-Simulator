@@ -139,19 +139,18 @@
             </e>
             <e p="World.cs" t="Include" />
           </e>
-          <e p="Pathfinding" t="Include">
-            <e p="AStarSearch.cs" t="Include" />
-            <e p="AStartSubregionSearch.cs" t="Include" />
+          <e p="Pathfinding 2.0" t="Include">
+            <e p="ASubregionSearch.cs" t="Include" />
+            <e p="ITraversable.cs" t="Include" />
+            <e p="MinHeap.cs" t="Include" />
+            <e p="Node.cs" t="Include" />
             <e p="Pathfinder.cs" t="Include" />
             <e p="PathGrid.cs" t="Include" />
-            <e p="PathNode.cs" t="Include" />
-            <e p="RegionSystem" t="Include">
-              <e p="Region.cs" t="Include" />
-              <e p="RegionContent.cs" t="Include" />
-              <e p="RegionSystem.cs" t="Include" />
-              <e p="Subregion.cs" t="Include" />
-              <e p="SubregionSystem.cs" t="Include" />
-            </e>
+            <e p="Region.cs" t="Include" />
+            <e p="RegionSystem.cs" t="Include" />
+            <e p="RPathfinding.cs" t="Include" />
+            <e p="Subregion.cs" t="Include" />
+            <e p="SubregionSystem.cs" t="Include" />
           </e>
           <e p="ScriptableObjects" t="Include">
             <e p="Characters" t="Include">
@@ -173,6 +172,7 @@
           </e>
           <e p="SearchEngine" t="Include">
             <e p="Dijkstra.cs" t="Include" />
+            <e p="RegionContent.cs" t="Include" />
             <e p="SearchEngine.cs" t="Include" />
           </e>
           <e p="Singleton.cs" t="Include" />
@@ -191,10 +191,6 @@
             <e p="SceneLoaderForUnitTests.cs" t="Include" />
             <e p="StaticObjectTests.cs" t="Include" />
             <e p="Tests.asmdef" t="Include" />
-          </e>
-          <e p="Tests Pathfinding" t="Include">
-            <e p="PathfindingTests.cs" t="Include" />
-            <e p="Tests Pathfinding.asmdef" t="Include" />
           </e>
           <e p="TestScript.cs" t="Include" />
           <e p="Tile Map Generation" t="Include">
@@ -228,7 +224,6 @@
       <e p="Packages" t="ExcludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
       <e p="Tests.csproj" t="IncludeRecursive" />
-      <e p="TestsPathfinding.csproj" t="IncludeRecursive" />
     </e>
   </component>
 </project>

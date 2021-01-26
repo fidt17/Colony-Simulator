@@ -21,7 +21,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         Factory.Create<Construction>("wall", Position);
     }
     
-    public new void SetData(ConstructionScriptableObject data, Vector2Int position) {
+    public void SetData(ConstructionScriptableObject data, Vector2Int position) {
         Data = data;
         Position = position;
         IsTraversable = true;
