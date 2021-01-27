@@ -30,6 +30,22 @@ MonoBehaviour:
     type: 3}
   water_border_W: {fileID: 2758772168323404995, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
     type: 3}
+  water_border_NW: {fileID: -7810275220851683024, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_border_NE: {fileID: -2184074572826142313, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_border_SW: {fileID: -8283040573123467017, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_border_SE: {fileID: -393743680778197223, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_corner_NW: {fileID: 1480740438046476273, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_corner_NE: {fileID: 5312902607815018753, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_corner_SW: {fileID: 9092625218931522844, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
+  water_corner_SE: {fileID: 2099713331964190689, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
+    type: 3}
   grass_border_corner: {fileID: 7445496974405382553, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,
     type: 3}
   grass_border_Lcorner: {fileID: 5717776428800766030, guid: 0a6ad67bc5a7d5640aa79d00da5b5b83,

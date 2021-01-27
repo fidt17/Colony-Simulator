@@ -1020,6 +1020,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c77507cb2c3b054ab9416adc620a314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileSO:
+  - {fileID: 11400000, guid: 427bf1ed5bcde50409a1cd6511fb56f2, type: 2}
+  - {fileID: 11400000, guid: 0a86edb40098ea64088e7d79a093256d, type: 2}
+  - {fileID: 11400000, guid: 9e70a4966b4d0284f816de66a8402ef2, type: 2}
   itemPrefab: {fileID: 8234888425552447895, guid: 2c8e7f74f211e7c45bfa12ca651035ec,
     type: 3}
 --- !u!4 &332170674
@@ -4512,8 +4516,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437401148}
   m_HandleRect: {fileID: 1437401147}
   m_Direction: 2
-  m_Value: 0.9999997
-  m_Size: 0.71511847
+  m_Value: 0.99999917
+  m_Size: 0.7151185
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -5,6 +5,8 @@ using System;
 
 public class TestScript : Singleton<TestScript>
 {
+    public List<TileScriptableObject> tileSO = new List<TileScriptableObject>();
+    
     public GameObject itemPrefab;
 
     private void Update() {
@@ -30,7 +32,7 @@ public class TestScript : Singleton<TestScript>
     }
 
     private void TestB() {
-        
+        tileSO.ForEach(t => t.CalculateAvgColor());
     }
 
     private void TestT() {
