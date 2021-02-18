@@ -28,6 +28,13 @@ public class DropCommand : Command {
         }
         _picker.DropItem(_item);
     }
+    
+    public override void AbortDueToDestroy()
+    {
+        if (_item != null) {  
+            _item.OnDestroyed -= OnObjectDestroyedOutside;
+        }
+    }
 
     private void OnObjectDestroyedOutside(object source, EventArgs e) {
         (source as Item).OnDestroyed -= OnObjectDestroyedOutside;

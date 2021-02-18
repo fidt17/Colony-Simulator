@@ -533,7 +533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -34.1, y: -0.6000004}
+  m_AnchoredPosition: {x: -34.100098, y: -0.6000004}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &131783214
@@ -1020,10 +1020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c77507cb2c3b054ab9416adc620a314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSO:
-  - {fileID: 11400000, guid: 427bf1ed5bcde50409a1cd6511fb56f2, type: 2}
-  - {fileID: 11400000, guid: 0a86edb40098ea64088e7d79a093256d, type: 2}
-  - {fileID: 11400000, guid: 9e70a4966b4d0284f816de66a8402ef2, type: 2}
   itemPrefab: {fileID: 8234888425552447895, guid: 2c8e7f74f211e7c45bfa12ca651035ec,
     type: 3}
 --- !u!4 &332170674
@@ -3914,7 +3910,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 61.661, y: 162.24}
+  m_AnchoredPosition: {x: 61.66089, y: 162.23999}
   m_SizeDelta: {x: 57.129425, y: 96.191025}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418336755

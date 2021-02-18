@@ -21,7 +21,12 @@ public class EatCommand : Command {
     }
 
     public override void Abort() => (_food as IDestroyable).OnDestroyed -= OnFoodDestroyed;
-    
+
+    public override void AbortDueToDestroy()
+    {
+        Abort();
+    }
+
     private void OnFoodDestroyed(object source, EventArgs e) {
         (source as IDestroyable).OnDestroyed -= OnFoodDestroyed;
         Finish(false);

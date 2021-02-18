@@ -6,6 +6,7 @@ public class Task : ITask {
     public event EventHandler ResultHandler;
     public class TaskResultEventArgs : EventArgs {
         public bool Result;
+        public bool Death;
     }
 
     public int  CommandsCount => CommandQueue.Count;
@@ -38,7 +39,21 @@ public class Task : ITask {
         
         Finish(false);
     }
-    
+
+    public void AbortTaskDueToDeath()
+    {
+        foreach(Command command in CommandQueue) {
+            command.AbortDueToDestroy();
+        }
+
+        if (CurrentCommand != null) {
+            CurrentCommand.ResultHandler -= OnCommandFinish;
+            CurrentCommand.AbortDueToDestroy();
+        }
+        
+        Finish(false, true);
+    }
+
     public System.Delegate[] GetResultHandlerSubscribers() {
         return ResultHandler?.GetInvocationList();
     }
@@ -60,9 +75,10 @@ public class Task : ITask {
         }
     }
 
-    protected void Finish(bool result) {
+    protected void Finish(bool result, bool death = false) {
         var e = new TaskResultEventArgs {
-            Result = result
+            Result = result,
+            Death = death
         };
         ResultHandler?.Invoke(this, e);
     }

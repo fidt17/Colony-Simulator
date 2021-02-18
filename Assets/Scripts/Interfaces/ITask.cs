@@ -7,4 +7,5 @@ public interface ITask {
     event EventHandler ResultHandler;
     void ExecuteTask();
     void AbortTask();
+    void AbortTaskDueToDeath();
 }

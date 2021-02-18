@@ -24,6 +24,11 @@ public class PickCommand : Command {
             _item.OnDestroyed -= OnObjectDestroyedOutside;
         }
     }
+    
+    public override void AbortDueToDestroy()
+    {
+        Abort();
+    }
 
     private void OnObjectDestroyedOutside(object source, EventArgs e) {
         _item.OnDestroyed -= OnObjectDestroyedOutside;

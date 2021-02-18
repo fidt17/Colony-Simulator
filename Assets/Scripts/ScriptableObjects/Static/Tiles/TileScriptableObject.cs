@@ -74,6 +74,10 @@ public class TileScriptableObject : StaticScriptableObject {
                     continue;
                 }
 
+                if (checkTile.data.avgColor == Vector3.zero)
+                {
+                    checkTile.data.CalculateAvgColor();
+                }
                 Vector3 tileAvgColor = checkTile.data.avgColor;
                 
                 totalTileCount++;

@@ -22,44 +22,44 @@ public class MotionComponent : CharacterComponent {
     public event GridPositionHandler OnGridPositionChange;
 
     public Vector2 WorldPosition => (Vector2) _gameObject.transform.position;
-    public Vector2Int GridPosition => _lastTraversableNode.Position;
+    public Vector2Int GridPosition => _lastTraversablePosition;
     public Node Node => Utils.NodeAt(GridPosition);
     public float SpeedValue => _speed;
 
-    public FacingDirection facingDirection = FacingDirection.south;
+    public FacingDirection FacingDirection = FacingDirection.south;
 
     private float _speed;
-    private Node _lastTraversableNode;
+    private Vector2Int _lastTraversablePosition;
     private GameObject _gameObject;
 
     public MotionComponent(float speed, Vector2Int position, GameObject gameObject) {
         _speed = speed;
         _gameObject = gameObject;
         _gameObject.transform.position = Utils.ToVector3(position);
-        _lastTraversableNode = Utils.NodeAt(Utils.ToVector2Int(position));
+        _lastTraversablePosition = position;
     }
         
     public void Stop() {
         if (Node.IsTraversable == false) {
-            SetPosition(_lastTraversableNode.Position);
+            SetPosition(_lastTraversablePosition);
         }
-        VelocityHandler?.Invoke(Vector2.zero, facingDirection);
+        VelocityHandler?.Invoke(Vector2.zero, FacingDirection);
     }
 
     public void SetPosition(Vector2 position) {
         _gameObject.transform.position = position;
-        OnGridPositionChange?.Invoke(_lastTraversableNode.Position, Utils.ToVector2Int(position));
-        _lastTraversableNode = Utils.NodeAt(Utils.ToVector2Int(position));
+        OnGridPositionChange?.Invoke(_lastTraversablePosition, Utils.ToVector2Int(position));
+        _lastTraversablePosition = Utils.ToVector2Int(position);
     } 
 
     public void Translate(Vector2 normalizedDestination) {
-        _gameObject.transform.Translate(normalizedDestination * _speed * Time.deltaTime);
-        VelocityHandler?.Invoke(normalizedDestination, facingDirection);
+        _gameObject.transform.Translate(normalizedDestination * (_speed * Time.deltaTime));
+        VelocityHandler?.Invoke(normalizedDestination, FacingDirection);
 
         Node currentNode = Utils.NodeAt(Utils.ToVector2Int(WorldPosition));
         if (currentNode.IsTraversable) {
-            OnGridPositionChange?.Invoke(_lastTraversableNode.Position, currentNode.Position);
-            _lastTraversableNode = currentNode;
+            OnGridPositionChange?.Invoke(_lastTraversablePosition, currentNode.Position);
+            _lastTraversablePosition = currentNode.Position;
         }
         OnPositionChange?.Invoke(WorldPosition);
     }
@@ -87,18 +87,12 @@ public class MotionComponent : CharacterComponent {
         VelocityHandler      = null;
         OnPositionChange     = null;
         OnGridPositionChange = null;
-
-        _lastTraversableNode = null;
     }
 
     #region Testing
 
     public override bool CheckInitialization() {
         if (SpeedValue < 0) {
-            return false;
-        }
-
-        if (_lastTraversableNode is null) {
             return false;
         }
 
@@ -116,7 +110,7 @@ public class MotionComponent : CharacterComponent {
             return false;
         }
 
-        if (_lastTraversableNode.Position != supposedPosition) {
+        if (_lastTraversablePosition != supposedPosition) {
             return false;
         }
 

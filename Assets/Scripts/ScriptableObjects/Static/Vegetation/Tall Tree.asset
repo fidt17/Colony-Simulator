@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataName: tall tree
   prefab: {fileID: 5173927831834522179, guid: d97b82d612c38f14d9b58b3324491420, type: 3}
+  prefabSprite: {fileID: 0}
   dimensions: {x: 1, y: 1}
   isTraversable: 0

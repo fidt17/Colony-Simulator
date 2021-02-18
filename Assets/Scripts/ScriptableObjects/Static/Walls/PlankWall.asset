@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0abcb3bb47bbdd4a9ff4d3a705b732a, type: 3}
+  m_Name: PlankWall
+  m_EditorClassIdentifier: 
+  dataName: plank wall
+  prefab: {fileID: 2973704291348783822, guid: 5e8977b29de7a144a8543e1de1fbc5f7, type: 3}
+  prefabSprite: {fileID: 0}
+  dimensions: {x: 1, y: 1}
+  isTraversable: 0
+  wallColorFilter: {r: 1, g: 1, b: 1, a: 1}
+  wall_c: {fileID: -679900243589699011, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_n: {fileID: 9207895620284821452, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_e: {fileID: 8649400996848996672, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_ne: {fileID: 5712957433908179882, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_s: {fileID: 5288887416370810275, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_ns: {fileID: -1648268180247122174, guid: 81c629a16baf6774ab2bf431319373fa,
+    type: 3}
+  wall_es: {fileID: -2661841568540198005, guid: 81c629a16baf6774ab2bf431319373fa,
+    type: 3}
+  wall_nes: {fileID: 7763351068132173073, guid: 81c629a16baf6774ab2bf431319373fa,
+    type: 3}
+  wall_w: {fileID: 5339337556912790168, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_wn: {fileID: 8757125832884745479, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_we: {fileID: 5230240753641395155, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_wne: {fileID: -597035120902153430, guid: 81c629a16baf6774ab2bf431319373fa,
+    type: 3}
+  wall_ws: {fileID: 6890697578465124607, guid: 81c629a16baf6774ab2bf431319373fa, type: 3}
+  wall_wns: {fileID: -630310825142230399, guid: 81c629a16baf6774ab2bf431319373fa,
+    type: 3}
+  wall_wes: {fileID: -2538715492366774834, guid: 81c629a16baf6774ab2bf431319373fa,
+    type: 3}
+  wall_wnes: {fileID: -2808605145808739319, guid: 81c629a16baf6774ab2bf431319373fa,
+    type: 3}

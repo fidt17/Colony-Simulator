@@ -16,9 +16,10 @@ public abstract class Command {
             Result = result
         };
         ResultHandler?.Invoke(this, e);
-    } 
+    }
 
-    public virtual void Abort() {}
+    public abstract void Abort();
+    public abstract void AbortDueToDestroy();
 
     public System.Delegate[] GetResultHandlerSubscribers() {
         return ResultHandler?.GetInvocationList();

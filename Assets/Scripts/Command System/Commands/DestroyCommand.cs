@@ -24,6 +24,11 @@ public class DestroyCommand : Command {
         }
     }
 
+    public override void AbortDueToDestroy()
+    {
+        Abort();
+    }
+
     private void OnObjectDestroyedOutside(object sender, EventArgs e) {
         (sender as IDestroyable).OnDestroyed -= OnObjectDestroyedOutside;
         _objectToDestroy = null;

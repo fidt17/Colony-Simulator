@@ -18,7 +18,12 @@ public class ConstructionPlan : StaticObject, IItemHolder {
 
     public void Build() {
         Destroy();
-        Factory.Create<Construction>("wall", Position);
+        Construction newConstruction = Factory.Create<Construction>(Data.construction.dataName, Position);
+        //TODO: MOVE ME SOMEWHERE ELSE. find a better place for this check
+        if (Data.construction is WallScriptableObject data)
+        {
+            data.ApplyCorrectWallSprite(newConstruction);
+        }
     }
     
     public void SetData(ConstructionScriptableObject data, Vector2Int position) {
@@ -141,7 +146,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         }
     }
     
-    //FIX THIS// item count
+    //TODO: item count
     private void CalculateNewIngredientsValues(Item newItem) {
         for (int i = Ingredients.Count - 1; i >= 0; i--) {
             Ingredients[i].count--;
@@ -151,7 +156,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         }
     }
 
-    //when plan is created the tile, that the plan was placed on stays traversable until at least 1 ingredient comes in
+    //when plan is created, the tile, that the plan was placed on, stays traversable until at least 1 ingredient comes in
     //afterwards tile's traversability changes to false and plan sprite changes.
     private bool _isChangePlanToActiveStateRunning = false;
     private IEnumerator ChangePlanToActiveState() {

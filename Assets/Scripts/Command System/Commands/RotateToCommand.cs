@@ -36,15 +36,19 @@ public class RotateToCommand : Command {
 
     public override void Abort() => _motionComponent.Stop();
 
+    public override void AbortDueToDestroy()
+    {
+    }
+    
     private void SetFacingDirection(Vector2Int destination) {
         if (destination == NORTH || destination == NORTH_EAST || destination == NORTH_WEST) {
-            _motionComponent.facingDirection = FacingDirection.north;
+            _motionComponent.FacingDirection = FacingDirection.north;
         } else if (destination == EAST) {
-            _motionComponent.facingDirection = FacingDirection.east;
+            _motionComponent.FacingDirection = FacingDirection.east;
         } else if (destination == WEST) {
-            _motionComponent.facingDirection = FacingDirection.west;
+            _motionComponent.FacingDirection = FacingDirection.west;
         } else if (destination == SOUTH || destination == SOUTH_EAST || destination == SOUTH_WEST) {
-            _motionComponent.facingDirection = FacingDirection.south;
+            _motionComponent.FacingDirection = FacingDirection.south;
         }
     }
 }

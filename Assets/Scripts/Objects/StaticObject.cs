@@ -9,8 +9,8 @@ public abstract class StaticObject : IPrefab, IDestroyable {
 
     public event EventHandler OnDestroyed;
 
-    public StaticScriptableObject Data       { get; private set; }
-    public GameObject             gameObject { get; private set; }
+    public StaticScriptableObject Data       { get; protected set; }
+    public GameObject             gameObject { get; protected set; }
 
     public Vector2Int Position   { get; protected set; }
     public bool IsTraversable    { get; protected set; }

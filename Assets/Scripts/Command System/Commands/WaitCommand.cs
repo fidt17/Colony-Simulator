@@ -14,4 +14,12 @@ public class WaitCommand : Command {
             Finish(true);
         }
     }
+
+    public override void Abort()
+    {
+    }
+
+    public override void AbortDueToDestroy()
+    {
+    }
 }

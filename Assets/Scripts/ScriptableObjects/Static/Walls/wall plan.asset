@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 726c4f9635193bb4f9a9d6b11da77c30, type: 3}
   m_Name: wall plan
   m_EditorClassIdentifier: 
-  dataName: wall
-  construction: {fileID: 11400000, guid: 8433e12a8cf33ab4992c745698a5dd1a, type: 2}
+  dataName: plank wall
+  construction: {fileID: 11400000, guid: 47fb24dae00443240b1cf45683123c7d, type: 2}
   planPrefab: {fileID: 2973704291348783822, guid: a87cb6a13a068544f9ef4a21c95a4f39,
     type: 3}
   ingredients:

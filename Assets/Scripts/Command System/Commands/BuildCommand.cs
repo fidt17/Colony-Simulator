@@ -15,4 +15,10 @@ public class BuildCommand : Command {
         _plan.Build();
         Finish(true);
     }
+
+    public override void Abort()
+    { }
+
+    public override void AbortDueToDestroy()
+    { }
 }

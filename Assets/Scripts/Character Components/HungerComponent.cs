@@ -9,14 +9,12 @@ public class HungerComponent : CharacterComponent {
 
     public readonly List<Type> Edibles = new List<Type>(); // List of things character can eat.
 
-    private readonly float _hungerDecreasePerSecond;
 
     private Character   _character;
     private EatFoodTask _eatFoodTask;
 
     public HungerComponent(Character character) {
         _character = character;
-        _hungerDecreasePerSecond = _character.Data.hungerDecreasePerSecond;
         RunCoroutine(DecreaseHunger());
     }
 
@@ -32,15 +30,16 @@ public class HungerComponent : CharacterComponent {
 
     private IEnumerator DecreaseHunger() {
         while (true) {
+            ChangeHunger(-_character.Data.hungerDecreasePerSecond);
             yield return new WaitForSeconds(1);
-            ChangeHunger(-_hungerDecreasePerSecond);
-            CheckHunger();
         }
     }
 
     private void CheckHunger() {
         if (HungerLevel < _character.Data.hungerSearchThreshold) {
-            RunCoroutine(StartFoodSearch());
+            if (!_isSearchingForFood && Edibles.Count != 0) {
+                RunCoroutine(StartFoodSearch());
+            }
         }
 
         if (HungerLevel == 0) {
@@ -72,6 +71,10 @@ public class HungerComponent : CharacterComponent {
     }
 
     private void HandleGetFoodResult(object source, EventArgs e) {
+        if (_eatFoodTask is null)
+        {
+            return;
+        }
         _eatFoodTask.ResultHandler -= HandleGetFoodResult;
         _eatFoodTask = null;
     }
@@ -90,7 +93,7 @@ public class HungerComponent : CharacterComponent {
            return false;
         }
 
-        if (_hungerDecreasePerSecond == -1) {
+        if (_character.Data.hungerDecreasePerSecond < 0) {
             return false;
         }
 

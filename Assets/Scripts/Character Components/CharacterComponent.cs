@@ -12,8 +12,12 @@ public abstract class CharacterComponent {
         IsDisabled = true;
         var gameManager = GameManager.GetInstance();
         foreach (var coroutine in _coroutines) {
-            gameManager.StopCoroutine(coroutine);
+            if (coroutine != null)
+            {
+                gameManager.StopCoroutine(coroutine);
+            }
         }
+        _coroutines.Clear();
     }
     
     public abstract bool CheckInitialization();

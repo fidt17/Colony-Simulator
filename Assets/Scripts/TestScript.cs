@@ -5,8 +5,6 @@ using System;
 
 public class TestScript : Singleton<TestScript>
 {
-    public List<TileScriptableObject> tileSO = new List<TileScriptableObject>();
-    
     public GameObject itemPrefab;
 
     private void Update() {
@@ -21,7 +19,10 @@ public class TestScript : Singleton<TestScript>
             TestT();
 
         if (Input.GetKey(KeyCode.Y))
-            Factory.Create<Construction>("wall", Utils.CursorToCoordinates());
+        {
+            Construction wall = Factory.Create<Construction>("plank wall", Utils.CursorToCoordinates());
+            ((WallScriptableObject) wall.Data).ApplyCorrectWallSprite(wall);
+        }
 
         if (Input.GetKeyDown(KeyCode.U))
             SearchEngine.GetTypeDerivativeOf<Item>("WoodLog");
@@ -31,8 +32,8 @@ public class TestScript : Singleton<TestScript>
         PathfinderRenderer.GetInstance().drawSubregions = !PathfinderRenderer.GetInstance().drawSubregions;
     }
 
-    private void TestB() {
-        tileSO.ForEach(t => t.CalculateAvgColor());
+    private void TestB()
+    {
     }
 
     private void TestT() {

@@ -50,6 +50,21 @@ public class CommandProcessor : MonoBehaviour {
         _taskQueue.Clear();
     }
 
+    private void AbortTaskDueToDeath()
+    {
+        foreach(var task in _taskQueue) {
+            task.AbortTaskDueToDeath();
+        }
+
+        if (_currentTask != null) {
+            _currentTask.ResultHandler -= OnTaskFinish;
+            _currentTask.AbortTaskDueToDeath();
+            _currentTask = null;
+        }
+        
+        _taskQueue.Clear();
+    }
+
     private void OnTaskFinish(object source, System.EventArgs e) {
         ((ITask) source).ResultHandler -= OnTaskFinish;
         _currentTask = null;
@@ -57,6 +72,6 @@ public class CommandProcessor : MonoBehaviour {
     }
     
     private void OnDestroy() {
-        AbortTasks();
+        AbortTaskDueToDeath();
     }
 }

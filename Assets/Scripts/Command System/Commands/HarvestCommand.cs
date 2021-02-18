@@ -23,6 +23,11 @@ public class HarvestCommand : Command {
             (_objectToHarvest as IDestroyable).OnDestroyed -= OnObjectDestroyedOutside;
         }
     }
+    
+    public override void AbortDueToDestroy()
+    {
+        Abort();
+    }
 
     protected void OnObjectDestroyedOutside(object source, EventArgs e) {
         (source as IDestroyable).OnDestroyed -= OnObjectDestroyedOutside;
