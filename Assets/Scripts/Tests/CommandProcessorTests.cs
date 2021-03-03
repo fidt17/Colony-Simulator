@@ -266,7 +266,7 @@ namespace Tests
             Human human = CreateHuman();
             WoodLog item = Factory.Create<WoodLog>("wood log", _spawnPosition);
             Vector2Int holderPosition = _spawnPosition + new Vector2Int(0, 10);
-            ItemHolder holder = Factory.Create<ItemHolder>("wall", holderPosition);
+            ItemHolder holder = Factory.Create<ItemHolder>("plank wall", holderPosition);
             Task task = new HaulToItemHolderTask(item, holder, human.MotionComponent, human.InventoryComponent);
             
             yield return AddTaskAndWaitUntilFinished(task, human.CommandProcessor);

@@ -49,18 +49,16 @@ public class CutCommandInputState : CommandInputState {
     private void OnLeftClickDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
     private void OnLeftClickUp()   => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 
-    protected virtual void OnAreaChange(object source, EventArgs e) {
-        if (source is SelectionTracker) {
-            SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
+    protected virtual void OnAreaChange(SelectionTracker.OnAreaChangeArgs args) {
+        if (_selectionArea?.CompareTo(args.rectangle) == false || _selectionArea == null)
+        {
+            _selectionArea = args.rectangle;
+            GetNewTrees();
+        }
 
-            if (_selectionArea?.CompareTo(args.rectangle) == false || _selectionArea == null) {
-                _selectionArea = args.rectangle;
-                GetNewTrees();
-            }
-
-            if (args.dragEnded) {
-                CreateJobs();
-            }
+        if (args.dragEnded)
+        {
+            CreateJobs();
         }
     }
 

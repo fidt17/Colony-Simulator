@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Interfaces;
 
-public class CancelJobInputState : CommandInputState {
-
-    private Dictionary<Tile, StaticJob> _staticJobs = new Dictionary<Tile, StaticJob>();
-    private Dictionary<Tile, ConstructionPlan> _constructionPlans = new Dictionary<Tile, ConstructionPlan>();
+public class CancelJobInputState : CommandInputState
+{
+    private readonly List<StaticJob> _staticJobs = new List<StaticJob>();
+    private readonly List<ConstructionPlan> _constructionPlans = new List<ConstructionPlan>();
     private fidt17.Utils.IntRectangle _selectionArea;
 
-    protected override void SubscribeToEvents() {
+    protected override void SubscribeToEvents()
+    {
         InputListener.GetInstance().OnMouse0_Down += OnLeftClickDown;
         InputListener.GetInstance().OnMouse0_Up   += OnLeftClickUp;
         InputListener.GetInstance().OnMouse1_Down += SwitchToDefaultState;
@@ -19,7 +21,8 @@ public class CancelJobInputState : CommandInputState {
         SelectionTracker.GetInstance().OnAreaChange += OnAreaChange;
     }
 
-    protected override void UnsubscribeFromEvents() {
+    protected override void UnsubscribeFromEvents()
+    {
         InputListener.GetInstance().OnMouse0_Down -= OnLeftClickDown;
         InputListener.GetInstance().OnMouse0_Up   -= OnLeftClickUp;
         InputListener.GetInstance().OnMouse1_Down -= SwitchToDefaultState;
@@ -33,65 +36,62 @@ public class CancelJobInputState : CommandInputState {
     private void OnLeftClickDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
     private void OnLeftClickUp()   => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 
-    protected virtual void OnAreaChange(object source, EventArgs e) {
-        if (source is SelectionTracker) {
-            SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
+    protected virtual void OnAreaChange(SelectionTracker.OnAreaChangeArgs args)
+    {
+        if (_selectionArea?.CompareTo(args.rectangle) == false || _selectionArea == null)
+        {
+            _selectionArea = args.rectangle;
+            GetNewStaticJobs();
+        }
 
-            if (_selectionArea?.CompareTo(args.rectangle) == false || _selectionArea == null) {
-                _selectionArea = args.rectangle;
-                GetNewStaticJobs();
-            }
-
-            if (args.dragEnded) {
-                CancelJobs();
-            }
+        if (args.dragEnded)
+        {
+            CancelJobs();
         }
     }
 
-    private void GetNewStaticJobs() {
+    private void GetNewStaticJobs()
+    {
         FilterTilesBySelectionArea<StaticJob>(_staticJobs);
         FilterTilesBySelectionArea<ConstructionPlan>(_constructionPlans);
     
-        foreach (Vector2Int position in _selectionArea.GetPositions()) {
+        foreach (Vector2Int position in _selectionArea.GetPositions())
+        {
             Tile t = Utils.TileAt(position.x, position.y);
-            if (t is null || t.Contents is null || (t.Contents.StaticJobs.Count == 0 && t.Contents.ConstructionPlan is null)) {
+            if (t?.Contents is null || t.Contents.StaticJobs.Count == 0 && t.Contents.ConstructionPlan is null)
+            {
                 continue;
             }
-
-            if (t.Contents.StaticJobs.Count > 0) {
-                if (_staticJobs.ContainsKey(t) == false) {
-                    foreach (StaticJob sj in t.Contents.StaticJobs) {
-                        _staticJobs.Add(t, sj);
-                    }
-                }
+            
+            foreach (StaticJob sj in t.Contents.StaticJobs)
+            { 
+                _staticJobs.Add(sj);
             }
 
-            if (t.Contents.ConstructionPlan != null && _constructionPlans.ContainsKey(t) == false) {
-                _constructionPlans.Add(t, t.Contents.ConstructionPlan);
+            if (t.Contents.ConstructionPlan != null)
+            {
+                _constructionPlans.Add(t.Contents.ConstructionPlan);
             }
         }
     }
 
-    private void FilterTilesBySelectionArea<T>(Dictionary<Tile, T> dic) {
-        Dictionary<Tile, T> temp = new Dictionary<Tile, T>(dic);
-        foreach (KeyValuePair<Tile, T> pair in temp) {
-            if (_selectionArea.Contains(pair.Key.position) == false) {
-                dic.Remove(pair.Key);
+    private void FilterTilesBySelectionArea<T>(IList<T> origin) where T : IPosition
+    {
+        for (int i = origin.Count - 1; i >= 0; i--)
+        {
+            if (_selectionArea.Contains(origin[i].Position) == false)
+            {
+                origin.Remove(origin[i]);
             }
         }
     }   
 
-    private void CancelJobs() {
-        Dictionary<Tile, StaticJob> temp = new Dictionary<Tile, StaticJob>(_staticJobs);
-        foreach (KeyValuePair<Tile, StaticJob> pair in temp) {
-            pair.Value.DeleteJob();
-            _staticJobs.Remove(pair.Key);
-        }
+    private void CancelJobs()
+    {
+        _staticJobs.ForEach(s => s.DeleteJob());
+        _staticJobs.Clear();
 
-        Dictionary<Tile, ConstructionPlan> tempPlan = new Dictionary<Tile, ConstructionPlan>(_constructionPlans);
-        foreach (KeyValuePair<Tile, ConstructionPlan> pair in tempPlan) {
-            pair.Value.CancelPlan();
-            _constructionPlans.Remove(pair.Key);
-        }
+        _constructionPlans.ForEach(c => c.CancelPlan());
+        _constructionPlans.Clear();
     }
 }

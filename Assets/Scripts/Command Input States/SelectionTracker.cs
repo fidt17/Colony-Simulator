@@ -12,7 +12,7 @@ public class SelectionTracker : Singleton<SelectionTracker> {
     public delegate void DragHandler(List<SelectableComponent> s);
     public event DragHandler OnDrag;
 
-    public event EventHandler OnAreaChange;
+    public event Action<OnAreaChangeArgs> OnAreaChange;
     public class OnAreaChangeArgs : EventArgs {
         public fidt17.Utils.IntRectangle rectangle;
         public Vector2 startMousePosition;
@@ -82,7 +82,7 @@ public class SelectionTracker : Singleton<SelectionTracker> {
             e.startMousePosition = cursorCoords;
             e.currentMousePosition = cursorCoords;
             e.dragEnded = false;
-            OnAreaChange.Invoke(this, e);
+            OnAreaChange.Invoke(e);
         }
     }
 
@@ -114,7 +114,7 @@ public class SelectionTracker : Singleton<SelectionTracker> {
                 e.startMousePosition = startMousePosition;
                 e.currentMousePosition = currentMousePosition;
                 e.dragEnded = false;
-                OnAreaChange.Invoke(this, e);
+                OnAreaChange.Invoke(e);
             }
             yield return null;
         }
@@ -141,7 +141,7 @@ public class SelectionTracker : Singleton<SelectionTracker> {
                 OnAreaChangeArgs e = new OnAreaChangeArgs();
                 e.rectangle = new fidt17.Utils.IntRectangle(Utils.WorldToGrid(start), Utils.WorldToGrid(end));
                 e.dragEnded = true;
-                OnAreaChange.Invoke(this, e);
+                OnAreaChange.Invoke(e);
         }
     }
 }

@@ -75,7 +75,7 @@ public class MotionComponent : CharacterComponent {
         Tile tile = SearchEngine.FindClosestTileWhere(GridPosition, requirementsFunction, false);
         
         if (tile != null) {
-            SetPosition(tile.position);
+            SetPosition(tile.Position);
         } else {
             Debug.LogError("Cannot find traversable tile for character at" + GridPosition);
         }

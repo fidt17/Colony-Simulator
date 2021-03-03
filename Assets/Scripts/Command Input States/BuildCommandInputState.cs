@@ -12,12 +12,10 @@ public class BuildCommandInputState : CommandInputState {
     private ConstructionScriptableObject _constructionData;
 
     public BuildCommandInputState(ConstructionScriptableObject constructionData) : base() {
-        Debug.Log("Entered build command input state");
         _constructionData = constructionData;
     }
 
     public override void ExitState() {
-        Debug.Log("Exited build command input state");
         base.ExitState();
 
         Dictionary<Tile, GameObject> temp = new Dictionary<Tile, GameObject>(_tiles);
@@ -61,34 +59,36 @@ public class BuildCommandInputState : CommandInputState {
     private void OnLeftClickDown() => SelectionTracker.GetInstance().OnLeftMouseButtonDown();
     private void OnLeftClickUp()   => SelectionTracker.GetInstance().OnLeftMouseButtonUp();
 
-    protected virtual void OnAreaChange(object source, EventArgs e) {
-        if (source is SelectionTracker) {
-            SelectionTracker.OnAreaChangeArgs args = e as SelectionTracker.OnAreaChangeArgs;
-            Vector2Int startPosition = Utils.WorldToGrid(args.startMousePosition);
-            Vector2Int currentPosition = Utils.WorldToGrid(args.currentMousePosition);
+    protected virtual void OnAreaChange(SelectionTracker.OnAreaChangeArgs args)
+    {
+        Vector2Int startPosition = Utils.WorldToGrid(args.startMousePosition);
+        Vector2Int currentPosition = Utils.WorldToGrid(args.currentMousePosition);
 
-            int width = Mathf.Abs(currentPosition.x - startPosition.x) + 1;
-            int height = Mathf.Abs(currentPosition.y - startPosition.y) + 1;
+        int width = Mathf.Abs(currentPosition.x - startPosition.x) + 1;
+        int height = Mathf.Abs(currentPosition.y - startPosition.y) + 1;
 
-            Vector2Int start = startPosition;
-            fidt17.Utils.IntRectangle rect;
+        Vector2Int start = startPosition;
+        fidt17.Utils.IntRectangle rect;
 
-            if (width >= height) {
-                Vector2Int end = new Vector2Int(currentPosition.x, startPosition.y);
-                rect = new fidt17.Utils.IntRectangle(start, end);
-            } else {
-                Vector2Int end = new Vector2Int(startPosition.x, currentPosition.y);
-                rect = new fidt17.Utils.IntRectangle(start, end);
-            }
+        if (width >= height)
+        {
+            Vector2Int end = new Vector2Int(currentPosition.x, startPosition.y);
+            rect = new fidt17.Utils.IntRectangle(start, end);
+        } else
+        {
+            Vector2Int end = new Vector2Int(startPosition.x, currentPosition.y);
+            rect = new fidt17.Utils.IntRectangle(start, end);
+        }
 
-            if (args.dragEnded) {
-                CreateJobs();
-            }
+        if (args.dragEnded)
+        {
+            CreateJobs();
+        }
 
-            if (_selectionArea?.CompareTo(rect) == false || _selectionArea == null) {
-                _selectionArea = rect;
-                GetNewPlans();
-            }
+        if (_selectionArea?.CompareTo(rect) == false || _selectionArea == null)
+        {
+            _selectionArea = rect;
+            GetNewPlans();
         }
     }
 
@@ -96,7 +96,7 @@ public class BuildCommandInputState : CommandInputState {
         //Removing non-valid plans from existing dictionary
         Dictionary<Tile, GameObject> temp = new Dictionary<Tile, GameObject>(_tiles);
         foreach (KeyValuePair<Tile, GameObject> pair in temp) {
-            if (_selectionArea.Contains(pair.Key.position) == false) {
+            if (_selectionArea.Contains(pair.Key.Position) == false) {
                 pair.Value.SetActive(false);
                 _jobIconsPool.Push(pair.Value);
                 _tiles.Remove(pair.Key);
@@ -122,21 +122,23 @@ public class BuildCommandInputState : CommandInputState {
     private GameObject CreateJobIcon(Tile tile) {
        if (_jobIconsPool.Count != 0) {
            GameObject jobIcon = _jobIconsPool.Pop();
-           jobIcon.transform.position = Utils.ToVector3(tile.position);
+           jobIcon.transform.position = Utils.ToVector3(tile.Position);
            jobIcon.SetActive(true);
            return jobIcon;
        }
        GameObject obj = GameObject.Instantiate(_constructionData.planPrefab);
-       obj.transform.position = Utils.ToVector3(tile.position);
+       obj.transform.position = Utils.ToVector3(tile.Position);
        obj.SetActive(true);
        return obj;
     }
 
     private void CreateJobs() {
         Dictionary<Tile, GameObject> temp = new Dictionary<Tile, GameObject>(_tiles);
-        foreach(KeyValuePair<Tile, GameObject> pair in temp) {
+        foreach(KeyValuePair<Tile, GameObject> pair in temp)
+        {
+            if (pair.Key.Contents.ConstructionPlan != null) continue;
             ConstructionPlan plan = new ConstructionPlan();
-            plan.SetData(_constructionData, pair.Key.position);
+            plan.SetData(_constructionData, pair.Key.Position);
             plan.SetGameObject(pair.Value);
             _tiles.Remove(pair.Key);
         }

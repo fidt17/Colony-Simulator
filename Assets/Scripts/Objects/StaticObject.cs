@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using Interfaces;
 using Object = UnityEngine.Object;
 
-public abstract class StaticObject : IPrefab, IDestroyable {
+public abstract class StaticObject : IPrefab, IDestroyable, IPosition {
 
     public event EventHandler OnDestroyed;
 

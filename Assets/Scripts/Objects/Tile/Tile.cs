@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Interfaces;
 using Pathfinding;
 using UnityEngine;
 
-public class Tile : IData, ITraversable {
+public class Tile : IData, ITraversable, IPosition {
     
     public event EventHandler OnTraversabilityChange;
     
@@ -15,14 +16,14 @@ public class Tile : IData, ITraversable {
     public Sprite GetSprite() => data.prefabSprite;
     public Color GetColor() => data.defaultColor;
 
-    public Vector2Int position   { get; protected set; }
+    public Vector2Int Position   { get; protected set; }
     public bool IsTraversable    { get; protected set; }
 
     public void SetData(PrefabScriptableObject data, Vector2Int position) {
         this.data = data as TileScriptableObject;
         IsTraversable = this.data.isTraversable;
         type = this.data.tileType;
-        this.position = position;
+        this.Position = position;
 
         Contents = new TileContent(this);
     }

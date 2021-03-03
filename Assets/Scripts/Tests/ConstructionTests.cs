@@ -12,7 +12,7 @@ namespace Tests {
 		};
 		
 		private ConstructionPlan create_construction_plan(string dataName) {
-			ConstructionPlan plan = Factory.CreateConstructionPlan("wall", _spawnPosition);
+			ConstructionPlan plan = Factory.CreateConstructionPlan("plank wall", _spawnPosition);
 			
 			//check data + check all fields
 			if (plan.Data is null) {

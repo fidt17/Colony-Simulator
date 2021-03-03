@@ -47,7 +47,7 @@ public abstract class Item : IPrefab, IDestroyable {
         var tile = SearchEngine.FindClosestTileWhere(Position, RequirementsFunction, Utils.TileAt(Position).IsTraversable);
         
         if (tile != null) {
-            SetPosition(tile.position);
+            SetPosition(tile.Position);
             tile.Contents.PutItemOnTile(this);
             AddToRegionContent();
             StockpileManager.GetInstance().AddItem(this);

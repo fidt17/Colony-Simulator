@@ -25,7 +25,12 @@ public class TileContent {
     public void RemoveStockpilePart()                 => StockpilePart = null;
 
     public void SetConstructionPlan(ConstructionPlan value) => ConstructionPlan = value;
-    public void RemoveConstructionPlan()                    => ConstructionPlan = null;
+
+    public void RemoveConstructionPlan()
+    {
+        ConstructionPlan = null;
+        _tile.SetTraversability(true);
+    }
     
     public void AddStaticJob(StaticJob job)    => StaticJobs.Add(job);
     public void RemoveStaticJob(StaticJob job) => StaticJobs.Remove(job);

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Interfaces;
 using Pathfinding;
 using UnityEngine;
 
-public abstract class Job {
+public abstract class Job : IPosition {
     
     public event EventHandler JobResultHandler;
     public class JobResultEventArgs : EventArgs {

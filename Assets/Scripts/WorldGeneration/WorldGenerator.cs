@@ -109,7 +109,7 @@ public static class WorldGenerator {
             while (t == null || !t.IsTraversable) {
                 t = Utils.RandomTile();
             }
-            Human human = Factory.Create<Human>("human", t.position);
+            Human human = Factory.Create<Human>("human", t.Position);
         }
 
         for (int i = 0; i < _gameSettings.rabbitCount; i++) {
@@ -117,7 +117,7 @@ public static class WorldGenerator {
             while (t == null || !t.IsTraversable) {
                 t = Utils.RandomTile();
             }
-            Rabbit rabbit = Factory.Create<Rabbit>("rabbit", t.position);
+            Rabbit rabbit = Factory.Create<Rabbit>("rabbit", t.Position);
         }
     }
 }

@@ -22,7 +22,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         //TODO: MOVE ME SOMEWHERE ELSE. find a better place for this check
         if (Data.construction is WallScriptableObject data)
         {
-            data.ApplyCorrectWallSprite(newConstruction);
+            //data.ApplyCorrectWallSprite(newConstruction);
         }
     }
     
@@ -33,7 +33,8 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         ConfigureIngredients();
     } 
 
-    public override void SetGameObject(GameObject gameObject) {
+    public override void SetGameObject(GameObject gameObject)
+    {
         base.SetGameObject(gameObject);
         Utils.TileAt(Position).Contents.SetConstructionPlan(this);
         CheckCurrentTileContents();
@@ -102,7 +103,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         Tile haulToTile = SearchEngine.FindClosestTileWhere(Position, RequirementsFunction);
         
         if (haulToTile != null) {
-            Job job = new HaulJob(Utils.TileAt(Position).Contents.Item, haulToTile.position);
+            Job job = new HaulJob(Utils.TileAt(Position).Contents.Item, haulToTile.Position);
             _jobs.Add(job);
             JobSystem.GetInstance().AddJob(job);
             job.JobResultHandler += OnTileClearJobFinish;
@@ -138,7 +139,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
                 job.JobResultHandler -= HandleHaulJobResult;
                 _jobs.Remove(job);
                 CalculateNewIngredientsValues((source as HaulToItemHolderJob).Item);
-                //think of a better solution, also don't forget to stop coroutine incase the job get canceled
+                //think of a better solution, also don't forget to stop coroutine in case the job gets canceled
                 _waitUntilCharacterMovesFromTheTile = GameManager.GetInstance().StartCoroutine(ChangePlanToActiveState());
             } else {
                 CreateHaulingJobForIngredient(job.ItemType);

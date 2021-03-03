@@ -28,7 +28,7 @@ public class PathfinderRenderer : Singleton<PathfinderRenderer> {
         List<Node> list = region.GetNodes();
         List<GameObject> areas = MeshGenerator.GetInstance().GenerateOverlapAreaOverNodes(list, Utils.GetRandomColor(0.25f));
 
-        while ((Utils.NodeAt(Utils.CursorToCoordinates()).Region == _selectedRegion || Utils.NodeAt(Utils.CursorToCoordinates()).Region == null) && drawRegions) {
+        while ((Utils.NodeAt(Utils.CursorToCoordinates())?.Region == _selectedRegion || Utils.NodeAt(Utils.CursorToCoordinates())?.Region == null) && drawRegions) {
             yield return null;
         }
 

@@ -96,8 +96,8 @@ public class TileScriptableObject : StaticScriptableObject {
         Color[,] colorMatrix = new Color[_tileResolution, _tileResolution];
         MergeSprites(ref colorMatrix, tile.GetSprite());
 
-        int tileX = tile.position.x;
-        int tileY = tile.position.y;
+        int tileX = tile.Position.x;
+        int tileY = tile.Position.y;
 
         int width = 3;
         int offset = 3;

@@ -18,5 +18,5 @@ MonoBehaviour:
   seed: 1
   vegetation: 1
   humanCount: 40
-  rabbitCount: 44
+  rabbitCount: 0
   testWorld: 0

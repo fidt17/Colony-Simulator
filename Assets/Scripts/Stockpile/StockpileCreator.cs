@@ -9,7 +9,7 @@ public static class StockpileCreator {
         Stockpile stockpile = new Stockpile();
         foreach (Tile tile in tiles) {
             if (tile.Contents.StockpilePart is null) {
-                tile.Contents.SetStockpilePart(new StockpilePart(tile.position, stockpile));
+                tile.Contents.SetStockpilePart(new StockpilePart(tile.Position, stockpile));
             } else {
                 tile.Contents.StockpilePart.ChangeStockpiles(stockpile);
             }
