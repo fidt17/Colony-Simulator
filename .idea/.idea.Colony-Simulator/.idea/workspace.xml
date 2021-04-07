@@ -26,33 +26,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07e02c4e-df3a-4231-ba33-5fd2294c0551" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IPosition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IPosition.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Colony-Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character Components/MotionComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character Components/MotionComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/CancelJobInputState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/CancelJobInputState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/CutCommandInputState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/CutCommandInputState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/RemoveStockpileState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/RemoveStockpileState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/SelectionTracker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/SelectionTracker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command Input States/StockpileState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command Input States/StockpileState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Job.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Job.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/StaticJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/StaticJob.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Settings/normal.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Settings/normal.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Items/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Items/Item.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/StaticObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/StaticObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Tile/Tile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Tile/Tile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Static/Tiles/TileScriptableObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Static/Tiles/TileScriptableObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Stockpile/StockpileCreator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Stockpile/StockpileCreator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests/CommandProcessorTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tests/CommandProcessorTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests/ConstructionTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tests/ConstructionTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Debug Windows/DebugWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Debug Windows/DebugWindow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/WorldGeneration/WorldGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/WorldGeneration/WorldGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Static/Walls/WallScriptableObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Static/Walls/WallScriptableObject.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +38,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="hiddenUrls">
@@ -85,7 +70,6 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/Construction.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Factories/Factory.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Static/Walls/WallScriptableObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/CharacterComponent.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/MotionComponent.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/TestScript.cs" />
@@ -105,7 +89,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Commands/WaitCommand.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Command System/Tasks/Task.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character Components/HungerComponent.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Tests/ConstructionTests.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Tests/CommandProcessorTests.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Interfaces/IPosition.cs" />
@@ -114,11 +97,15 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Job System/Jobs/Static Jobs/StaticJob.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Objects/StaticObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/SelectionTracker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/CancelJobInputState.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/CutCommandInputState.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/StockpileState.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/RemoveStockpileState.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Debug/PathfinderRenderer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Tile/TileContent.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Static/Walls/WallScriptableObject.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1jc2qX3cLt3qxCie9Ik16hoLkKn" />
@@ -157,10 +144,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="6100">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="17432">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="6100" />
+      <option name="pid" value="17432" />
       <option name="selectedOptions">
         <list />
       </option>
@@ -202,7 +189,8 @@
       <workItem from="1611756868485" duration="2730000" />
       <workItem from="1611765454136" duration="7652000" />
       <workItem from="1613088347112" duration="33000" />
-      <workItem from="1614765654003" duration="4077000" />
+      <workItem from="1614765654003" duration="5745000" />
+      <workItem from="1616006735591" duration="1266000" />
     </task>
     <servers />
   </component>
@@ -230,17 +218,17 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Command Input States/BuildCommandInputState.cs</url>
-          <line>137</line>
-          <properties documentPath="D:\Repositories\Colony-Simulator\Assets\Scripts\Command Input States\BuildCommandInputState.cs" initialLine="137" containingFunctionPresentation="method 'CreateJobs'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Objects/Constructions/ConstructionPlan.cs</url>
+          <line>22</line>
+          <properties documentPath="D:\Repositories\Colony-Simulator\Assets\Scripts\Objects\Constructions\ConstructionPlan.cs" initialLine="22" containingFunctionPresentation="method 'Build'">
             <startOffsets>
-              <option value="5209" />
+              <option value="821" />
             </startOffsets>
             <endOffsets>
-              <option value="5256" />
+              <option value="872" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

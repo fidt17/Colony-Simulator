@@ -22,7 +22,7 @@ public class ConstructionPlan : StaticObject, IItemHolder {
         //TODO: MOVE ME SOMEWHERE ELSE. find a better place for this check
         if (Data.construction is WallScriptableObject data)
         {
-            //data.ApplyCorrectWallSprite(newConstruction);
+            data.ApplyCorrectWallSprite(newConstruction);
         }
     }
     

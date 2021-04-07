@@ -53,7 +53,7 @@ public class WallScriptableObject : StaticScriptableObject
         y = 0;
         t = Utils.TileAt(wall.Position.x + x, wall.Position.y + y);
         neighbour = t?.Contents.StaticObject;
-        if (neighbour?.Data.dataName == wall.Data.dataName)
+        if (neighbour?.Data?.dataName == wall.Data.dataName)
         {
             borders[(int)Directions.WEST] = true;
             if (recursive)
@@ -70,7 +70,7 @@ public class WallScriptableObject : StaticScriptableObject
         y = 1;
         t = Utils.TileAt(wall.Position.x + x, wall.Position.y + y);
         neighbour = t?.Contents.StaticObject;
-        if (neighbour?.Data.dataName == wall.Data.dataName)
+        if (neighbour?.Data?.dataName == wall.Data.dataName)
         {
             borders[(int)Directions.NORTH] = true;
             if (recursive)
@@ -87,7 +87,7 @@ public class WallScriptableObject : StaticScriptableObject
         y = 0;
         t = Utils.TileAt(wall.Position.x + x, wall.Position.y + y);
         neighbour = t?.Contents.StaticObject;
-        if (neighbour?.Data.dataName == wall.Data.dataName)
+        if (neighbour?.Data?.dataName == wall.Data.dataName)
         {
             borders[(int)Directions.EAST] = true;
             if (recursive)
@@ -104,7 +104,7 @@ public class WallScriptableObject : StaticScriptableObject
         y = -1;
         t = Utils.TileAt(wall.Position.x + x, wall.Position.y + y);
         neighbour = t?.Contents.StaticObject;
-        if (neighbour?.Data.dataName == wall.Data.dataName)
+        if (neighbour?.Data?.dataName == wall.Data.dataName)
         {
             borders[(int)Directions.SOUTH] = true;
             if (recursive)
